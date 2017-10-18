@@ -1,0 +1,300 @@
+﻿@model StockManager.Models.PurchaseOrder
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h4>PurchaseOrder</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="container">
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VendorId, "VendorId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control", @id = "Vendor"  })
+                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InvoiceNumber, "Invoice#", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.InvoiceNumber, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceNo" } })
+                            @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
+                                @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
+                                <span class="add-on"><i class="icon-remove"></i></span>
+                                <span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                            <input type="hidden" id="dtp_input1" value="" /><br />
+                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                @*<div id="div2" class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>*@
+
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-xs-12 col-md-8">
+                            <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-12 col-xs-12">
+                    <div class="form-group">
+                        <table class="table table-striped table-advance table-hover" id="purchaseOrderItems">
+                            <tr id="productItemRow">
+                                <td>
+                                    <label class="productName">Product Name</label>
+                                    <input type="hidden" class="productId" value="" />
+                                </td>
+                                <td>
+                                    <label class="productQuantity">Quantity</label>
+                                </td>
+                                <td>
+                                    <label class="productFold">Fold</label>
+                                </td>
+                                <td class="productRate">
+                                    <label class="productRate">Rate</label>
+                                </td>
+                                <td class="itemEditRow"></td>
+                            </tr>
+                        </table>
+                        @*@if (Model != null && Model.PurchaseDetails != null)
+                            {
+                                foreach (var item in Model.PurchaseDetails)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Product.ProductName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Fold)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Rate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-success btn-xs" href="" title="Edit"><i class="fa fa-pencil"></i></a>|
+                                            <a class="btn btn-success btn-xs" href="" title="Delet>"><i class="fa fa-pencil"></i></a>
+                                            </ td >
+                                    </ tr >
+                                }
+                            }*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-xs-12 col-md-8">
+                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Purchase Order"/>
+                            @Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="itemModel"
+                 data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                ×
+                            </button>
+                            <h4 class="modal-title">Add Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
+                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Rate", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" } })
+                                        @Html.ValidationMessage("Rate", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
+                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
+                            <button type="button" id="btnHideModal" class="btn btn-danger">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnShowModal").click(function () {
+                $("#itemModel").modal('show');
+            });
+
+            $("#btnHideModal").click(function () {
+                $("#itemModel").modal('hide');
+            });
+
+            $("#btnHideModal").click(function () {
+
+            });
+
+            $('#addProductItem').click(function () {
+                //validation and add order items
+                var isAllValid = true;
+
+                if (isAllValid) {
+                    var $newRow = $('#productItemRow').clone().removeAttr('id');
+
+                    $('.productId', $newRow).val($('#product').val());
+                    $('.productName', $newRow).text($('#product').text());
+                    $('.productQuantity', $newRow).text($('#quantity').val());
+                    $('.productFold', $newRow).text($('#fold').val());
+                    $('.productRate', $newRow).text($('#rate').val());
+                    //$('.itemEditRow', $newRow).append('<a class="btn btn-success btn-xs" href="" title="Edit"><i class="fa fa-pencil"></i></a>|<a class="btn btn-danger btn-xs" href="" title="Delet>"><i class="fa fa-trash-o"></i></a>');
+                    $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
+                    $('#purchaseOrderItems').append($newRow);
+                    $('#quantity').val('');
+                    $('#fold').val('');
+                    $('#rate').val('');
+                    $("#itemModel").modal('hide');
+                }
+            });
+
+            //remove button click event
+            $('#purchaseOrderItems').on('click', '.remove', function () {
+                $(this).parents('tr').remove();
+            });
+
+            $('#btnSubmit').click(function () {
+                var isAllValid = true;
+
+                //validate order items
+                var list = [];
+                var errorItemCount = 0;
+                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+
+                    if($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "")
+                    {
+                        var orderItem = {
+                            ProductId: $('.productId', this).val(),
+                            Quantity: $('.productQuantity', this).text(),
+                            Fold: $('.productFold', this).text(),
+                            Rate: $('.productRate', this).text()
+                        }
+                        list.push(orderItem);
+                    }
+                }
+                )
+
+                var data = {
+                    VendorId: $('#Vendor').val(),
+                    InvoiceNumber: $('#InvoiceNo').val(),
+                    InvoiceDate: $('#InvoiceDate').val(),
+                    PurchaseDetails: list
+                }
+
+                $(this).val('Please wait...');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/PurchaseOrders/Create',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data != "0") {
+                            alert('Purchase Order Saved Successfully.');
+                            list = [];
+                            $('#Vender,#InvoiceNo,#InvoiceDate').val('');
+                            $('#purchaseOrderItems').empty();
+                            $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+
+                                if($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "")
+                                {
+                                    $('#purchaseOrderItems tbody tr', this).remove();
+                                }
+                            });
+                            $(this).val('Save Purchase Order');
+                            window.location.href = '/PurchaseOrders/Details/' + data;
+                        }
+                        else {
+                            alert('Error in saving purchase order');
+                            $(this).val('Save Purchase Order');
+                        }                        
+                    },
+                    error: function (error) {
+                        console.log(error);                       
+                    }
+                });
+            });
+        });
+    </script>
+}
+

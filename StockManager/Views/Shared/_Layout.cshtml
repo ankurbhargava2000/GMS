@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Manager</title>
+    @Styles.Render("~/Content/css") 
+    @Styles.Render("~/Content/DateCSS")
+</head>
+<body>
+
+    <section id="container">
+        <!-- **********************************************************************************************************************************************************
+        TOP BAR CONTENT & NOTIFICATIONS
+        *********************************************************************************************************************************************************** -->
+        <!--header start-->
+        <header class="header black-bg">
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+            </div>
+            <!--logo start-->
+            <a href="#" class="logo"><b>Stock Manager</b></a>
+            <!--logo end-->       
+        </header>
+        <!--header end-->
+        <!-- **********************************************************************************************************************************************************
+        MAIN SIDEBAR MENU
+        *********************************************************************************************************************************************************** -->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    <p class="centered"><a href="#"><img src="~/Content/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+                    <h5 class="centered">Stock Manager</h5>
+                    <li class="mt">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i>
+                            <span>DashBoard</span>
+                        </a>
+                    </li>
+                    <li class="sub-menu">
+                        <a href="~/PurchaseOrders/Index">
+                            <i class="fa fa-plus-square"></i>
+                            <span>Purchase</span>
+                        </a>                        
+                    </li>        
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-file-pdf-o"></i>
+                            <span>Job Work</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="#">Printer Work</a></li>
+                            <li><a href="#">Tailor Work</a></li>
+                        </ul>
+                    </li>       
+                    <li class="mt">
+                        <a href="~/Vendors/Index">
+                            <i class="fa fa-female"></i>
+                            <span>Vendor</span>
+                        </a>
+                    </li>                   
+                    <li class="mt">
+                        <a  href="~/Products/Index">
+                            <i class="fa fa-life-bouy"></i>
+                            <span>Product</span>
+                        </a>
+                    </li>                   
+                    <li class="sub-menu">
+                        <a href="javascript:;">
+                            <i class="fa fa-file-pdf-o"></i>
+                            <span>Reports</span>
+                        </a>
+                        <ul class="sub">
+                            <li><a href="#">Vendor Wise Stock</a></li>
+                            <li><a href="#">Product Wise Stock</a></li>
+                        </ul>
+                    </li>                   
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                @RenderBody()
+            </section>
+        </section>
+        <!--main content end-->
+        <!--footer start-->
+        <footer class="site-footer">
+            <div class="text-center">
+                2017 - Stock Manager
+                <a href="#" class="go-top">
+                    <i class="fa fa-angle-up"></i>
+                </a>
+            </div>
+        </footer>
+        <!--footer end-->
+    </section>
+
+    @Scripts.Render("~/bundles/theme")
+    @Scripts.Render("~/bundles/DatePicker")
+    @RenderSection("scripts", required: false)  
+    <script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+	$('.form_date').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+	$('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 1,
+		minView: 0,
+		maxView: 1,
+		forceParse: 0
+    });
+    </script>  
+</body>
+</html>
