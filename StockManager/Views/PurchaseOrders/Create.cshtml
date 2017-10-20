@@ -7,7 +7,7 @@
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
-        <h4>PurchaseOrder</h4>
+        <h4>Purchase</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -15,7 +15,7 @@
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.VendorId, "VendorId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.VendorId, "Vendor", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control", @id = "Vendor"  })
                             @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
