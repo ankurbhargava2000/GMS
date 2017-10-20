@@ -1,0 +1,47 @@
+﻿@model IEnumerable<StockManager.Models.PrinterChalan>
+
+@{
+    ViewBag.Title = "Printer Chalan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Printer Chalan</h2>
+@Html.ActionLink("Create new printer chalan", "Create", "", new { @class = "btn btn-success" })
+
+<table class="table">
+    <tr>
+        <th>
+            Vendor Name
+        </th>
+        <th>
+            Chalan Date
+        </th>       
+        <th>
+            Given To Printing
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChalanDate)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.IsGivenToPrinting)
+        </td>        
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+            |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-xs" })
+            |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this printer chalan?');", @class = "btn btn-danger btn-xs" })            
+        </td>
+    </tr>
+}
+
+</table>
