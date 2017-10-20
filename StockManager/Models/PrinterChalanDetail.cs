@@ -19,6 +19,9 @@ namespace StockManager.Models
         public int ProductId { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<int> Fold { get; set; }
+        public Nullable<int> ExpectedFold { get; set; }
+        public Nullable<decimal> NetQuantity { get; set; }
+        public Nullable<decimal> Shrinkage { get; set; }
         public string Description { get; set; }
     
         public virtual PrinterChalan PrinterChalan { get; set; }

@@ -14,18 +14,9 @@ namespace StockManager.Models
     
     public partial class ChalanType
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ChalanType()
-        {
-            this.PrinterChalans = new HashSet<PrinterChalan>();
-        }
-    
         public int Id { get; set; }
         public string ChalanType1 { get; set; }
         public string Description { get; set; }
         public bool IsInput { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrinterChalan> PrinterChalans { get; set; }
     }
 }

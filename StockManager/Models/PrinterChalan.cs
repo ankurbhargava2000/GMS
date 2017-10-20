@@ -14,7 +14,6 @@ namespace StockManager.Models
     
     public partial class PrinterChalan
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PrinterChalan()
         {
             this.PrinterChalanDetails = new HashSet<PrinterChalanDetail>();
@@ -23,13 +22,11 @@ namespace StockManager.Models
         public int Id { get; set; }
         public int VendorId { get; set; }
         public System.DateTime ChalanDate { get; set; }
-        public int ChalanTypeId { get; set; }
         public Nullable<System.DateTime> Created { get; set; }
         public Nullable<System.DateTime> Updated { get; set; }
         public string Description { get; set; }
+        public bool IsGivenToPrinting { get; set; }
     
-        public virtual ChalanType ChalanType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrinterChalanDetail> PrinterChalanDetails { get; set; }
         public virtual Vendor Vendor { get; set; }
     }
