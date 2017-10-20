@@ -159,7 +159,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\PurchaseDetailsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\StockEntriesController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
@@ -454,11 +453,6 @@
     <Content Include="Views\PurchaseOrders\Create.cshtml" />
     <Content Include="Views\PurchaseOrders\Edit.cshtml" />
     <Content Include="Views\PurchaseOrders\Index.cshtml" />
-    <Content Include="Views\PurchaseDetails\Create.cshtml" />
-    <Content Include="Views\PurchaseDetails\Delete.cshtml" />
-    <Content Include="Views\PurchaseDetails\Details.cshtml" />
-    <Content Include="Views\PurchaseDetails\Edit.cshtml" />
-    <Content Include="Views\PurchaseDetails\Index.cshtml" />
     <Content Include="Views\PurchaseOrders\Details.cshtml" />
     <Content Include="Views\Shared\_LayoutModelPopup.cshtml" />
   </ItemGroup>
