@@ -190,20 +190,17 @@
     <Compile Include="Models\StockEntry.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockManager.Context.cs" />
-    <Compile Include="Models\StockManager.Context1.cs">
+    <Compile Include="Models\StockManager.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StockManager.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockManager.cs" />
-    <Compile Include="Models\StockManager.Designer.cs" />
-    <Compile Include="Models\StockManager1.cs">
+    <Compile Include="Models\StockManager.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockManager1.Designer.cs">
+    <Compile Include="Models\StockManager.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StockManager.edmx</DependentUpon>
@@ -436,18 +433,22 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\StockManager.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>StockManager.Context1.cs</LastGenOutput>
-    </Content>
     <EntityDeploy Include="Models\StockManager.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StockManager1.Designer.cs</LastGenOutput>
+      <LastGenOutput>StockManager.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\StockManager.edmx.diagram" />
+    <Content Include="Models\StockManager.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StockManager.edmx</DependentUpon>
+      <LastGenOutput>StockManager.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\StockManager.edmx.diagram">
+      <DependentUpon>StockManager.edmx</DependentUpon>
+    </Content>
     <Content Include="Models\StockManager.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>StockManager1.cs</LastGenOutput>
+      <DependentUpon>StockManager.edmx</DependentUpon>
+      <LastGenOutput>StockManager.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\StockManager.pubxml" />
     <Content Include="Views\PurchaseOrders\Create.cshtml" />
