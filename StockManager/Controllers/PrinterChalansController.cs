@@ -17,7 +17,7 @@ namespace StockManager.Controllers
         // GET: PrinterChalans
         public ActionResult Index()
         {
-            var printerChalans = db.PrinterChalans.Include(p => p.Vendor);
+            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Include(p => p.PrinterChalanDetails);
             return View(printerChalans.ToList());
         }
 
@@ -39,6 +39,7 @@ namespace StockManager.Controllers
         // GET: PrinterChalans/Create
         public ActionResult Create()
         {
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
             return View();
         }
@@ -56,7 +57,7 @@ namespace StockManager.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
             return View(printerChalan);
         }
@@ -73,6 +74,7 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
             return View(printerChalan);
         }
@@ -90,6 +92,7 @@ namespace StockManager.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
             return View(printerChalan);
         }
@@ -102,24 +105,11 @@ namespace StockManager.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             PrinterChalan printerChalan = db.PrinterChalans.Find(id);
-            if (printerChalan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(printerChalan);
-        }
-
-        // POST: PrinterChalans/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
             db.PrinterChalans.Remove(printerChalan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
