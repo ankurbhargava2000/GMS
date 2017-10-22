@@ -37,29 +37,40 @@ namespace StockManager.Controllers
         }
 
         // GET: PrinterChalans/Create
-        public ActionResult Create()
+        public ActionResult Create(int ?id)
         {
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.GivenToPrinter = id;
             return View();
         }
 
-        // POST: PrinterChalans/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: PrinterChalans/Create       
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,VendorId,ChalanDate,Created,Updated,Description,IsGivenToPrinting")] PrinterChalan printerChalan)
+        public JsonResult Create(PrinterChalan printerChalan)
         {
-            if (ModelState.IsValid)
+            using (var transaction = db.Database.BeginTransaction())
             {
-                db.PrinterChalans.Add(printerChalan);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    DateTime dtDate = DateTime.Now;
+                    printerChalan.Created = dtDate;
+                    printerChalan.Updated = dtDate;
+
+                    db.PrinterChalans.Add(printerChalan);
+                    db.SaveChanges();
+                    int scope_id = printerChalan.Id;
+                    transaction.Commit();
+                    return Json(Convert.ToString(scope_id));
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
+                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                }
             }
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
-            return View(printerChalan);
+            return Json("0");
         }
 
         // GET: PrinterChalans/Edit/5
@@ -79,22 +90,42 @@ namespace StockManager.Controllers
             return View(printerChalan);
         }
 
-        // POST: PrinterChalans/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: PrinterChalans/Edit/5        
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,VendorId,ChalanDate,Created,Updated,Description,IsGivenToPrinting")] PrinterChalan printerChalan)
+        public JsonResult Edit(PrinterChalan printerChalan)
         {
-            if (ModelState.IsValid)
+            using (var transaction = db.Database.BeginTransaction())
             {
-                db.Entry(printerChalan).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    foreach (var objPurchaseDetails in printerChalan.PrinterChalanDetails)
+                    {
+                        if (objPurchaseDetails.Id == 0)
+                        {
+                            db.Entry(objPurchaseDetails).State = EntityState.Added;
+                            db.SaveChanges();
+                        }
+                    }
+
+                    while (printerChalan.PrinterChalanDetails.Where(x => x.Id == 0).Count() > 0)
+                        printerChalan.PrinterChalanDetails.Remove(printerChalan.PrinterChalanDetails.Where(x => x.Id == 0).ToList()[0]);
+
+                    DateTime dtDate = DateTime.Now;
+                    printerChalan.Updated = dtDate;
+                    db.Entry(printerChalan).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    transaction.Commit();
+                    return Json(Convert.ToString(printerChalan.Id));
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
+                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                }
             }
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
-            return View(printerChalan);
+            return Json("0");
         }
 
         // GET: PrinterChalans/Delete/5
@@ -109,7 +140,29 @@ namespace StockManager.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        
+
+        public JsonResult DeleteProduct(int? id)
+        {
+            if (id == null)
+            {
+                return Json("Error in deleting product.");
+            }
+            try
+            {
+                if (id != null && id != 0)
+                {
+                    PrinterChalanDetail printerChalanDetail = (PrinterChalanDetail)db.PrinterChalanDetails.Where(x => x.Id == id).FirstOrDefault();
+                    db.PrinterChalanDetails.Remove(printerChalanDetail);
+                    db.SaveChanges();
+                    return Json("product deleted Successfully.");
+                }
+            }
+            catch
+            {
+            }
+            return Json("Error in deleting product.");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

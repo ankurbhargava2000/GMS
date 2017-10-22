@@ -98,33 +98,20 @@ namespace StockManager.Controllers
                 {
                     foreach (var objPurchaseDetails in purchaseOrder.PurchaseDetails)
                     {
-                        if(objPurchaseDetails.Id == 0)
+                        if (objPurchaseDetails.Id == 0)
                         {
                             db.Entry(objPurchaseDetails).State = EntityState.Added;
                             db.SaveChanges();
-                            purchaseOrder.PurchaseDetails.Remove(objPurchaseDetails);
                         }
                     }
-                    
+
+                    while (purchaseOrder.PurchaseDetails.Where(x => x.Id == 0).Count() > 0)
+                        purchaseOrder.PurchaseDetails.Remove(purchaseOrder.PurchaseDetails.Where(x => x.Id == 0).ToList()[0]);
+
                     DateTime dtDate = DateTime.Now;
                     purchaseOrder.Updated = dtDate;
-                    db.Entry(purchaseOrder).State = EntityState.Modified;                    
-                    db.SaveChanges();
-
-                    //foreach (var objPurchaseDetails in purchaseOrder.PurchaseDetails)
-                    //{
-                    //    if (db.PurchaseDetails.Find(objPurchaseDetails.Id) != null && db.PurchaseDetails.Find(objPurchaseDetails.Id).Id != 0)
-                    //    {
-                    //        db.Entry(objPurchaseDetails).State = EntityState.Detached;
-                    //        db.SaveChanges();
-                    //    }
-                    //    else
-                    //    {
-                    //        objPurchaseDetails.PurchaseId = purchaseOrder.Id;
-                    //        db.PurchaseDetails.Add(objPurchaseDetails);
-                    //        db.SaveChanges();
-                    //    }
-                    //}
+                    db.Entry(purchaseOrder).State = EntityState.Modified;
+                    db.SaveChanges();                 
 
                     transaction.Commit();
                     return Json(Convert.ToString(purchaseOrder.Id));

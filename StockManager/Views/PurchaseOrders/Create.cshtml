@@ -85,7 +85,7 @@
                                 <td>
                                     <label class="productFold">Fold</label>
                                 </td>
-                                <td class="productRate">
+                                <td>
                                     <label class="productRate">Rate</label>
                                 </td>
                                 <td class="itemEditRow"></td>
@@ -261,7 +261,7 @@
                     PurchaseDetails: list
                 }
 
-                $(this).val('Please wait...');
+                //$(this).val('Please wait...');
 
                 $.ajax({
                     type: 'POST',
@@ -273,7 +273,6 @@
                             alert('Purchase Order Saved Successfully.');
                             list = [];
                             $('#Vender,#InvoiceNo,#InvoiceDate').val('');
-                            $('#purchaseOrderItems').empty();
                             $('#purchaseOrderItems tbody tr').each(function (index, ele) {
 
                                 if($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "")
@@ -281,12 +280,12 @@
                                     $('#purchaseOrderItems tbody tr', this).remove();
                                 }
                             });
-                            $(this).val('Save Purchase Order');
+                            //$(this).val('Save Purchase Order');
                             window.location.href = '/PurchaseOrders/Details/' + data;
                         }
                         else {
-                            alert('Error in saving purchase order');
-                            $(this).val('Save Purchase Order');
+                            //$(this).val('Save Purchase Order');
+                            alert('Error in saving purchase order');                            
                         }                        
                     },
                     error: function (error) {

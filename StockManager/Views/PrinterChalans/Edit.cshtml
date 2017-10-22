@@ -1,80 +1,399 @@
 ﻿@model StockManager.Models.PrinterChalan
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Printer Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Edit</h2>
-
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
-        <h4>PrinterChalan</h4>
+        <h4>Printer Chalan for Chalan# @Model.Id</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VendorId, "VendorId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ChalanDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsGivenToPrinting, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsGivenToPrinting)
-                    @Html.ValidationMessageFor(model => model.IsGivenToPrinting, "", new { @class = "text-danger" })
+        <div class="container">
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
+                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
+                                @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
+                                <span class="add-on"><i class="icon-remove"></i></span>
+                                <span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                            <input type="hidden" id="dtp_input1" value="" /><br />
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12 mt">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-xs-12 col-md-8">
+                            <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+            <div class="row">
+                <div id="div1" class="col-md-12 col-xs-12">
+                    <div class="form-group">
+                        <table class="table table-striped table-advance table-hover" id="printerChalanItems">
+                            <tr id="productItemRow">
+                                <td>
+                                    <label class="productName">Product Name</label>
+                                    <input type="hidden" class="productId" value="" />
+                                    <input type="hidden" class="Id" value="" />
+                                    <input type="hidden" class="rowCount" value="" />
+                                </td>
+                                <td>
+                                    <label class="productQuantity">Quantity</label>
+                                </td>
+                                <td>
+                                    <label class="productFold">Fold</label>
+                                </td>
+                                <td>
+                                    <label class="expectedFold">Rate</label>
+                                </td>
+                                <td>
+                                    <label class="netQuantity">Rate</label>
+                                </td>
+                                <td>
+                                    <label class="shrinkage">Rate</label>
+                                </td>
+                                <td class="itemEditRow"></td>
+                            </tr>
+                            @if (Model != null && Model.PrinterChalanDetails != null)
+                            {
+                                var count = 0;
+                                foreach (var item in Model.PrinterChalanDetails)
+                                {
+                                    count++;
+                                    <tr id="productItemRow">
+                                        <td>
+                                            <label class="productName">@item.Product.ProductName</label>
+                                            <input type="hidden" class="productId" value="@item.Product.Id" />
+                                            <input type="hidden" class="Id" value="@item.Id" />
+                                            <input type="hidden" class="rowCount" value="@count" />
+                                        </td>
+                                        <td>
+                                            <label class="productQuantity">@item.Quantity</label>
+                                        </td>
+                                        <td>
+                                            <label class="productFold">@item.Fold</label>
+                                        </td>
+                                        <td>
+                                            <label class="expectedFold">@item.ExpectedFold</label>
+                                        </td>
+                                        <td>
+                                            <label class="netQuantity">@item.NetQuantity</label>
+                                        </td>
+                                        <td>
+                                            <label class="shrinkage">@item.Shrinkage</label>
+                                        </td>
+                                        <td class="itemEditRow">
+                                            <button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button>
+                                            <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-xs-12 col-md-8">
+                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Printer Chalan" />
+                            @Html.ActionLink("Close", "Index", "PrinterChalans", new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="itemModel"
+                 data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                ×
+                            </button>
+                            <h4 class="modal-title">Add Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
+                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
+                                        <input type="hidden" class="IdEdit" id="IdEdit" />
+                                        <input type="hidden" class="countEdit" id="countEdit" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
+                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Expected Fold", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Expected Fold", new { htmlAttributes = new { @class = "form-control", @id = "expectedFold" } })
+                                        @Html.ValidationMessage("ExpectedFold", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Net Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Net Quantity", new { htmlAttributes = new { @class = "form-control", @id = "netQuantity" } })
+                                        @Html.ValidationMessage("NetQuantity", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Shrinkage", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Shrinkage", new { htmlAttributes = new { @class = "form-control", @id = "shrinkage" } })
+                                        @Html.ValidationMessage("Shrinkage", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
+                            <button type="button" id="btnHideModal" class="btn btn-danger">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section scripts
+{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnShowModal").click(function () {
+            $('#quantity').val('');
+            $('#fold').val('');
+            $('#expectedFold').val('');
+            $('#netQuantity').val('');
+            $('#shrinkage').val('');
+            $('#IdEdit').val('');
+            $('#countEdit').val('');
+            $("#itemModel").modal('show');
+        });
+
+        $("#btnHideModal").click(function () {
+            $("#itemModel").modal('hide');
+            $('#quantity').val('');
+            $('#fold').val('');
+            $('#expectedFold').val('');
+            $('#netQuantity').val('');
+            $('#shrinkage').val('');
+            $('#IdEdit').val('');
+            $('#countEdit').val('');
+
+        });
+
+        $("#btnHideModal").click(function () {
+
+        });
+
+        $('#addProductItem').click(function () {
+            //validation and add order items
+            var isAllValid = true;
+
+            if (isAllValid) {
+
+                if($('#countEdit').val() == '')
+                {
+                    //add new row of items
+                    var $newRow = $('#productItemRow').clone().removeAttr('id');
+
+                    $('.productId', $newRow).val($('#product').val());
+                    $('.productName', $newRow).text($('#product').find("option:selected").text());
+                    $('.productQuantity', $newRow).text($('#quantity').val());
+                    $('.productFold', $newRow).text($('#fold').val());
+                    $('.expectedFold', $newRow).text($('#expectedFold').val());
+                    $('.netQuantity', $newRow).text($('#netQuantity').val());
+                    $('.shrinkage', $newRow).text($('#shrinkage').val());
+                    $('.rowCount', $newRow).val($('#printerChalanItems tr').length + 1);
+                    $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
+                    $('#printerChalanItems').append($newRow);
+                    $('#quantity').val('');
+                    $('#fold').val('');
+                    $('#expectedFold').val('')
+                    $('#netQuantity').val('')
+                    $('#shrinkage').val('')
+                    $('#IdEdit').val('');
+                    $('#countEdit').val('');
+                    $("#itemModel").modal('hide');
+                }
+                else
+                {
+                    $('#printerChalanItems tbody tr').each(function (index, ele) {
+                        //update product list
+                        if($('.rowCount', this).val() == $('#countEdit').val())
+                        {
+                            $('.productId', this).val($('#product').val());
+                            $('.productName', this).text($('#product').find("option:selected").text());
+                            $('.productQuantity', this).text($('#quantity').val());
+                            $('.productFold', this).text($('#fold').val());
+                            $('.expectedFold', this).text($('#expectedFold').val());
+                            $('.netQuantity', this).text($('#netQuantity').val());
+                            $('.shrinkage', this).text($('#shrinkage').val());
+                            //empty model popup
+                            $('#quantity').val('');
+                            $('#fold').val('');
+                            $('#rate').val('');
+                            $('#expectedFold').val('');
+                            $('#netQuantity').val('');
+                            $('#shrinkage').val('');
+                            $('#IdEdit').val('');
+                            $('#countEdit').val('');
+                            $("#itemModel").modal('hide');
+                            $('#addProductItem').text("Add Product");
+                        }
+                    });
+                }
+            }
+        });
+
+
+        $('#printerChalanItems').on('click', '.editItem', function(){
+            //show modelpopup with edit item
+            $('#product').val($('.productId', $(this).parents('tr')).val());
+            $('#quantity').val($('.productQuantity', $(this).parents('tr')).text());
+            $('#fold').val($('.productFold', $(this).parents('tr')).text());
+            $('#rate').val($('.productRate', $(this).parents('tr')).text());
+            $('#expectedFold').val($('.expectedFold', $(this).parents('tr')).text());
+            $('#netQuantity').val($('.netQuantity', $(this).parents('tr')).text());
+            $('#shrinkage').val($('.shrinkage', $(this).parents('tr')).text());
+            $('#IdEdit').val($('.Id', $(this).parents('tr')).val());
+            $('#countEdit').val($('.rowCount', $(this).parents('tr')).val());
+            $('#addProductItem').text("Update product");
+            $("#itemModel").modal('show');
+        });
+
+        $('#btnSubmit').click(function () {
+            var isAllValid = true;
+
+            //validate order items
+
+            var list = [];
+            var errorItemCount = 0;
+            $('#printerChalanItems tbody tr').each(function (index, ele) {
+                if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                    var orderItem = {
+                        Id:$('.Id', this).val(),
+                        ChalanId: @Model.Id,
+                        ProductId: $('.productId', this).val(),
+                        Quantity: $('.productQuantity', this).text(),
+                        Fold: $('.productFold', this).text(),
+                        ExpectedFold: $('.expectedFold', this).text(),
+                        NetQuantity: $('.netQuantity', this).text(),
+                        Shrinkage: $('.shrinkage', this).text()
+                    }
+                    list.push(orderItem);
+                }
+            });
+
+            var data = {
+                Id:@Model.Id,
+                    VendorId: $('#Vendor').val(),
+                    ChalanDate: $('#ChalanDate').val(),
+                    IsGivenToPrinting: (('@Model.IsGivenToPrinting' == 'True') ? 1 : 0),
+                    PrinterChalanDetails: list
+                }
+
+                //$(this).val('Please wait...');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/PrinterChalans/Edit',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data != "0") {
+                            alert('Printer Chalan Updated Successfully.');
+                            window.location.href = '/PurchaseOrders/Details/' + data;
+                        }
+                        else {
+                            //$(this).val('Save Printer Chalan');
+                            alert('Error in updating Printer Chalan.');
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            //remove button click event
+            $('#printerChalanItems').on('click', '.remove', function () {
+                if($('.Id', $(this).parents('tr')).val() != undefined && $('.Id', $(this).parents('tr')).val() != "")
+                {
+                    if(confirm('Are you sure you wish to delete this product.'))
+                    {
+                        $.ajax({
+                            type: 'Get',
+                            url: '/PurchaseOrders/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                if (data == "product deleted Successfully.") {
+                                    $(this).parents('tr').remove();
+                                }
+                                else {
+                                    alert('Error in deleting product.');
+                                }
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    $(this).parents('tr').remove();
+                }
+
+            });
+        });
+    </script>
+}

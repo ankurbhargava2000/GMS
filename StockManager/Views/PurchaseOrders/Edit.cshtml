@@ -86,7 +86,7 @@
                                 <td>
                                     <label class="productFold">Fold</label>
                                 </td>
-                                <td class="productRate">
+                                <td>
                                     <label class="productRate">Rate</label>
                                 </td>
                                 <td class="itemEditRow"></td>
@@ -315,7 +315,7 @@
                     PurchaseDetails: list
                 }
 
-                $(this).val('Please wait...');
+                //$(this).val('Please wait...');
 
                 $.ajax({
                     type: 'POST',
@@ -328,7 +328,7 @@
                             window.location.href = '/PurchaseOrders/Details/' + data;
                         }
                         else {                            
-                            $(this).val('Save Purchase Order');
+                           // $(this).val('Save Purchase Order');
                             alert('Error in updating purchase order.');
                         }
                     },
