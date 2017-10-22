@@ -14,7 +14,7 @@
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.VendorId, "VendorId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.VendorId, "Vendor", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control", @id = "Vendor" })
                             @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.InvoiceDate, "Invoice Date", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
                                 @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
