@@ -2240,3 +2240,6 @@ label {
     min-height: 900px;
 }
 
+.align-md {
+	vertical-align: middle !important;
+}

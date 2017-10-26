@@ -4,7 +4,18 @@
     ViewBag.Title = "Product Wise Stock";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Product Wise Stock Report</h2>
+<table class="table">
+    <tr class="row">
+        <td class="col-md-10">
+            <h2>Product Wise Stock Report</h2>
+        </td>
+        <td class="align-md col-md-2">
+            <a href="~/Report/PrintProduct">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </a>
+        </td>
+    </tr>
+</table>
 <table class="table">
     <tr>
         <th>
