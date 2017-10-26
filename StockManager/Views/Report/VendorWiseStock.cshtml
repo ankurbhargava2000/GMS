@@ -1,0 +1,55 @@
+﻿@model  List<StockManager.Models.USP_VendorWiseStock_Result>
+
+@{
+    ViewBag.Title = "Vendor Wise Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Vendor Wise Stock Report</h2>
+<table class="table">
+    <tr>
+        <th>
+            Vendor Name
+        </th>
+        <th>
+            Given For Printing
+        </th>
+        <th>
+            Received After Printing
+        </th>
+        <th>
+            Total Quantity Left
+        </th>
+        <th>
+            Total Shrinkage
+        </th>
+    </tr>
+    @{
+        if (Model != null && Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VendorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GivenForPrinting)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReceivedAfterPrinting)
+                    </td>
+                    <td>
+                        @Convert.ToString((Convert.ToDecimal(item.GivenForPrinting) - Convert.ToDecimal(item.ReceivedAfterPrinting)))
+                        
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalShrinkage)
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
+
+
+

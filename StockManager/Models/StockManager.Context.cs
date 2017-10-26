@@ -12,6 +12,8 @@ namespace StockManager.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class StockManagerEntities : DbContext
     {
@@ -36,5 +38,15 @@ namespace StockManager.Models
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
+    
+        public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_ProductWiseStock_Result>("USP_ProductWiseStock");
+        }
+    
+        public virtual ObjectResult<USP_VendorWiseStock_Result> USP_VendorWiseStock()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_VendorWiseStock_Result>("USP_VendorWiseStock");
+        }
     }
 }

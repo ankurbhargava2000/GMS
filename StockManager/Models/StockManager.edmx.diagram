@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b7283fa8f14448dab23677f205b3be0d" Name="Diagram1">
+      <Diagram DiagramId="f8545d9ad1fb4269847140740bdad433" Name="Diagram1">
         <EntityTypeShape EntityType="StockManagerModel.ChalanType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StockManagerModel.PrinterChalan" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="StockManagerModel.PrinterChalanDetail" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />

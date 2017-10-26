@@ -15,9 +15,10 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: PrinterChalans
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Include(p => p.PrinterChalanDetails);
+            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Where(p => p.IsGivenToPrinting == (id==1? true:false)).Include(p => p.PrinterChalanDetails);
+            ViewBag.Send = id;
             return View(printerChalans.ToList());
         }
 

@@ -1,0 +1,48 @@
+﻿@model  List<StockManager.Models.USP_ProductWiseStock_Result>
+
+@{
+    ViewBag.Title = "Product Wise Stock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Product Wise Stock Report</h2>
+<table class="table">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Total Purchase
+        </th>
+        <th>
+            Total Received
+        </th>
+        <th>
+            Total Quantity Given For Printing
+        </th>
+    </tr>
+    @{
+        if (Model != null && Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPurchase)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalReceived)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalProductGivenForPrinting)
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
+
+
+

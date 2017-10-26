@@ -161,6 +161,7 @@
     <Compile Include="Controllers\PrinterChalansController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StockEntriesController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,6 +207,12 @@
       <DependentUpon>StockManager.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USP_ProductWiseStock_Result.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USP_VendorWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Vendor.cs">
@@ -460,6 +467,8 @@
     <Content Include="Views\PrinterChalans\Details.cshtml" />
     <Content Include="Views\PrinterChalans\Edit.cshtml" />
     <Content Include="Views\PrinterChalans\Index.cshtml" />
+    <Content Include="Views\Report\VendorWiseStock.cshtml" />
+    <Content Include="Views\Report\ProductWiseStock.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

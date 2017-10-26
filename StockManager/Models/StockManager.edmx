@@ -274,6 +274,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="USP_ProductWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="USP_VendorWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="StockManagerModelStoreContainer">
           <EntitySet Name="ChalanType" EntityType="Self.ChalanType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrinterChalan" EntityType="Self.PrinterChalan" Schema="dbo" store:Type="Tables" />
@@ -693,7 +695,25 @@
             <End Role="VendorType" EntitySet="VendorTypes" />
             <End Role="Vendor" EntitySet="Vendors" />
           </AssociationSet>
+          <FunctionImport Name="USP_ProductWiseStock" ReturnType="Collection(StockManagerModel.USP_ProductWiseStock_Result)" />
+          <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)" />
         </EntityContainer>
+        <ComplexType Name="USP_ProductWiseStock_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="TotalPurchase" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalProductGivenForPrinting" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalReceived" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalShrinkage" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="USP_VendorWiseStock_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="GivenForPrinting" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="ReceivedAfterPrinting" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalNetQuantity" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalShrinkage" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -836,6 +856,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="USP_ProductWiseStock" FunctionName="StockManagerModel.Store.USP_ProductWiseStock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StockManagerModel.USP_ProductWiseStock_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="TotalPurchase" ColumnName="TotalPurchase" />
+                <ScalarProperty Name="TotalProductGivenForPrinting" ColumnName="TotalProductGivenForPrinting" />
+                <ScalarProperty Name="TotalReceived" ColumnName="TotalReceived" />
+                <ScalarProperty Name="TotalShrinkage" ColumnName="TotalShrinkage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_VendorWiseStock" FunctionName="StockManagerModel.Store.USP_VendorWiseStock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StockManagerModel.USP_VendorWiseStock_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="GivenForPrinting" ColumnName="GivenForPrinting" />
+                <ScalarProperty Name="ReceivedAfterPrinting" ColumnName="ReceivedAfterPrinting" />
+                <ScalarProperty Name="TotalNetQuantity" ColumnName="TotalNetQuantity" />
+                <ScalarProperty Name="TotalShrinkage" ColumnName="TotalShrinkage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
