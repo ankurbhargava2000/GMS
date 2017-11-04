@@ -19,6 +19,7 @@ namespace StockManager.Models
             this.PrinterChalans = new HashSet<PrinterChalan>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.StockEntries = new HashSet<StockEntry>();
+            this.TailorChalans = new HashSet<TailorChalan>();
             this.Transactions = new HashSet<Transaction>();
         }
     
@@ -33,6 +34,7 @@ namespace StockManager.Models
         public virtual ICollection<PrinterChalan> PrinterChalans { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual ICollection<StockEntry> StockEntries { get; set; }
+        public virtual ICollection<TailorChalan> TailorChalans { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual VendorType VendorType { get; set; }
     }

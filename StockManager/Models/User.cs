@@ -10,14 +10,18 @@
 namespace StockManager.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class USP_VendorWiseStock_Result
+    public partial class User
     {
-        public int Id { get; set; }
-        public string VendorName { get; set; }
-        public Nullable<decimal> GivenForPrinting { get; set; }
-        public Nullable<decimal> ReceivedAfterPrinting { get; set; }
-        public decimal TotalNetQuantity { get; set; }
-        public decimal TotalShrinkage { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string Mobile { get; set; }
+        public string Phone { get; set; }
+        public Nullable<int> TenantId { get; set; }
+    
+        public virtual Tenant Tenant { get; set; }
     }
 }
