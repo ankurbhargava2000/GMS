@@ -324,6 +324,21 @@
             $("#itemModel").modal('show');
         });
 
+        function getmatatialobj(str)
+        {
+            var matObj = JSON.parse("[" + str + "]");
+            var matarialList = [];
+            for(var i = 0; i < matObj.length; i++)
+            {
+                var objMat = {
+                    ProductId: matObj[i].ProductId,
+                    Quantity: matObj[i].Quantity
+                }
+                matarialList.push(objMat);
+            }
+            return matarialList;
+        }
+
         $('#btnSubmit').click(function () {
             var isAllValid = true;
 
@@ -342,29 +357,14 @@
                     list.push(orderItem);
                 }
             }
-            )
-
-            function getmatatialobj(str)
-            {
-                var matObj = JSON.parse("[" + str + "]");
-                var matarialList = [];
-                for(var i = 0; i < matObj.length; i++)
-                {
-                    var objMat = {
-                        ProductId: matObj[i].ProductId,
-                        Quantity: matObj[i].Quantity
-                    }
-                    matarialList.push(objMat);
-                }
-                return matarialList;
-            }
+            );
 
             var data = {
                 Id:@Model.Id,
                 VendorId: $('#Vendor').val(),
                 ChalanDate: $('#ChalanDate').val(),
                 ChalanNo: $('#ChalanNo').val(),
-                IsGivenToTailor: @Model.IsGivenToTailor,
+                IsGivenToTailor: (('@Model.IsGivenToTailor' == 'True') ? 1 : 0),
                 TailorChalanDetails: list,
             }
 
