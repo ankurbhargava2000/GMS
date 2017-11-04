@@ -213,212 +213,212 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnShowModal").click(function () {
-                $('#quantity').val('');
-                $('#laborCost').val('');
-                $('#IdEdit').val('');
-                $('#countEdit').val('');
-                $('#tailorMaterialDetails').html('');
-            });
+    $(document).ready(function () {
+        $("#btnShowModal").click(function () {
+            $('#quantity').val('');
+            $('#laborCost').val('');
+            $('#IdEdit').val('');
+            $('#countEdit').val('');
+            $('#tailorMaterialDetails').html('');
+        });
 
-            $("#btnHideModal").click(function () {
-                $('#quantity').val('');
-                $('#laborCost').val('');
-                $('#IdEdit').val('');
-                $('#countEdit').val('');
-                $('#tailorMaterialDetails').html('');
-                $("#itemModel").modal('hide');
-            });
+        $("#btnHideModal").click(function () {
+            $('#quantity').val('');
+            $('#laborCost').val('');
+            $('#IdEdit').val('');
+            $('#countEdit').val('');
+            $('#tailorMaterialDetails').html('');
+            $("#itemModel").modal('hide');
+        });
 
-            $("#addMaterial").click(function(){
-                var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
-                $('#materialId', $newRow).val($('#materialId').val());
-                //$('.materialId', $newRow).text($('#materialId').text());
-                $('#materialQuantity', $newRow).val($('#materialQuantity').val());
-                $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
-                //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
-                $('#tailorMaterialDetails').append($newRow);
-            });
+        $("#addMaterial").click(function(){
+            var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
+            $('#materialId', $newRow).val($('#materialId').val());
+            //$('.materialId', $newRow).text($('#materialId').text());
+            $('#materialQuantity', $newRow).val($('#materialQuantity').val());
+            $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
+            //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
+            $('#tailorMaterialDetails').append($newRow);
+        });
 
-            $('#addProductItem').click(function () {
-                //validation and add order items
-                var isAllValid = true;
+        $('#addProductItem').click(function () {
+            //validation and add order items
+            var isAllValid = true;
 
-                if (isAllValid) {
-                    if($('#countEdit').val() == '')
-                    {
-                        var matarialDetail = "";
-                        $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
-                            matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
-                        });
+            if (isAllValid) {
+                if($('#countEdit').val() == '')
+                {
+                    var matarialDetail = "";
+                    $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                        matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
+                    });
 
-                        var $newRow = $('#productItemRow').clone().removeAttr('id');
+                    var $newRow = $('#productItemRow').clone().removeAttr('id');
 
-                        $('.productId', $newRow).val($('#product').val());
-                        $('.productName', $newRow).text($('#product').text());
-                        $('.productQuantity', $newRow).text($('#quantity').val());
-                        $('.laborCost', $newRow).text($('#laborCost').val());
-                        $('.matarialDetails', $newRow).val(matarialDetail);
-                        $('.rowCount', $newRow).val($('#tailorChalanItems tr').length);
-                        $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-success btn-xs remove" title="View Material Used"><i class="fa fa-edit"></i></button> | <button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
-                        //$('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
-                        $('#tailorChalanItems').append($newRow);
-                        $('#materialQuantity').val('');
-                        $('#laborCost').val('');
-                        $('#tailorMaterialDetails').html('');
-                        $("#itemModel").modal('hide');
-                    }
-                    else
-                    {
-                        $('#printerChalanItems tbody tr').each(function (index, ele) {
-                            //update product list
-                            if($('.rowCount', this).val() == $('#countEdit').val())
-                            {
-                                var matarialDetail = "";
-                                $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
-                                    matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
-                                });
-
-                                $('.productId', this).val($('#product').val());
-                                $('.productName', this).text($('#product').text());
-                                $('.productQuantity', this).text($('#quantity').val());
-                                $('.laborCost', this).text($('#laborCost').val());
-                                $('.matarialDetails', this).val(matarialDetail);
-                                $('.rowCount', this).val($('#tailorChalanItems tr').length);
-
-                                $('#quantity').val('');
-                                $('#laborCost').val('');
-                                $('#IdEdit').val('');
-                                $('#countEdit').val('');
-                                $('#materialQuantity').val('');
-                                $('#tailorMaterialDetails').html('');
-                                $("#itemModel").modal('hide');
-                            }
-                        });
-                    }
+                    $('.productId', $newRow).val($('#product').val());
+                    $('.productName', $newRow).text($('#product').text());
+                    $('.productQuantity', $newRow).text($('#quantity').val());
+                    $('.laborCost', $newRow).text($('#laborCost').val());
+                    $('.matarialDetails', $newRow).val(matarialDetail);
+                    $('.rowCount', $newRow).val($('#tailorChalanItems tr').length);
+                    $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-success btn-xs remove" title="View Material Used"><i class="fa fa-edit"></i></button> | <button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
+                    //$('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
+                    $('#tailorChalanItems').append($newRow);
+                    $('#materialQuantity').val('');
+                    $('#laborCost').val('');
+                    $('#tailorMaterialDetails').html('');
+                    $("#itemModel").modal('hide');
                 }
-            });
+                else
+                {
+                    $('#printerChalanItems tbody tr').each(function (index, ele) {
+                        //update product list
+                        if($('.rowCount', this).val() == $('#countEdit').val())
+                        {
+                            var matarialDetail = "";
+                            $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                                matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
+                            });
+
+                            $('.productId', this).val($('#product').val());
+                            $('.productName', this).text($('#product').text());
+                            $('.productQuantity', this).text($('#quantity').val());
+                            $('.laborCost', this).text($('#laborCost').val());
+                            $('.matarialDetails', this).val(matarialDetail);
+                            $('.rowCount', this).val($('#tailorChalanItems tr').length);
+
+                            $('#quantity').val('');
+                            $('#laborCost').val('');
+                            $('#IdEdit').val('');
+                            $('#countEdit').val('');
+                            $('#materialQuantity').val('');
+                            $('#tailorMaterialDetails').html('');
+                            $("#itemModel").modal('hide');
+                        }
+                    });
+                }
+            }
+        });
 
 
-            $('#tailorChalanItems').on('click', '.editItem', function(){
-                //show modelpopup with edit item
-                $('#product').val($('.productId', $(this).parents('tr')).val());
-                $('#quantity').val($('.productQuantity', $(this).parents('tr')).text());
-                $('#laborCost').val($('.laborCost', $(this).parents('tr')).text());
-                $('#IdEdit').val($('.Id', $(this).parents('tr')).val());
-                $('#countEdit').val($('.rowCount', $(this).parents('tr')).val());
-                $('#addProductItem').text("Update product");
+        $('#tailorChalanItems').on('click', '.editItem', function(){
+            //show modelpopup with edit item
+            $('#product').val($('.productId', $(this).parents('tr')).val());
+            $('#quantity').val($('.productQuantity', $(this).parents('tr')).text());
+            $('#laborCost').val($('.laborCost', $(this).parents('tr')).text());
+            $('#IdEdit').val($('.Id', $(this).parents('tr')).val());
+            $('#countEdit').val($('.rowCount', $(this).parents('tr')).val());
+            $('#addProductItem').text("Update product");
 
-                var str = $('.matarialDetails', this).val()
+            var str = $('.matarialDetails', $(this).parents('tr')).val()
+            var matObj = JSON.parse("[" + str + "]");
+            var matarialList = [];
+            for(var i = 0; i < matObj.length; i++)
+            {
+                var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
+                $('#materialId', $newRow).val(matObj[i].ProductId);
+                $('#materialQuantity', $newRow).val(matObj[i].Quantity);
+                $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
+                $('#tailorMaterialDetails').append($newRow);
+            }
+            $("#itemModel").modal('show');
+        });
+
+        $('#btnSubmit').click(function () {
+            var isAllValid = true;
+
+            //validate order items
+            var list = [];
+            var errorItemCount = 0;
+            $('#tailorChalanItems tbody tr').each(function (index, ele) {
+                if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                    var orderItem = {
+                        Id:$('.Id', this).val(),
+                        ProductId: $('.productId', this).val(),
+                        Quantity: $('.productQuantity', this).text(),
+                        LaborCost: $('.laborCost', this).text(),
+                        TailorMaterialDetails: getmatatialobj($('.matarialDetails', this).val())
+                    }
+                    list.push(orderItem);
+                }
+            }
+            )
+
+            function getmatatialobj(str)
+            {
                 var matObj = JSON.parse("[" + str + "]");
                 var matarialList = [];
                 for(var i = 0; i < matObj.length; i++)
                 {
-                    var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
-                    $('#materialId', $newRow).val(matObj[i].ProductId);
-                    $('#materialQuantity', $newRow).val(matObj[i].Quantity);
-                    $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
-                    $('#tailorMaterialDetails').append($newRow);
-                }
-                $("#itemModel").modal('show');
-            });
-
-            $('#btnSubmit').click(function () {
-                var isAllValid = true;
-
-                //validate order items
-                var list = [];
-                var errorItemCount = 0;
-                $('#tailorChalanItems tbody tr').each(function (index, ele) {
-                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                        var orderItem = {
-                            Id:$('.Id', this).val(),
-                            ProductId: $('.productId', this).val(),
-                            Quantity: $('.productQuantity', this).text(),
-                            LaborCost: $('.laborCost', this).text(),
-                            TailorMaterialDetails: getmatatialobj($('.matarialDetails', this).val())
-                        }
-                        list.push(orderItem);
+                    var objMat = {
+                        ProductId: matObj[i].ProductId,
+                        Quantity: matObj[i].Quantity
                     }
+                    matarialList.push(objMat);
                 }
-                )
+                return matarialList;
+            }
 
-                function getmatatialobj(str)
-                {
-                    var matObj = JSON.parse("[" + str + "]");
-                    var matarialList = [];
-                    for(var i = 0; i < matObj.length; i++)
-                    {
-                        var objMat = {
-                            ProductId: matObj[i].ProductId,
-                            Quantity: matObj[i].Quantity
-                        }
-                        matarialList.push(objMat);
+            var data = {
+                Id:@Model.Id,
+                VendorId: $('#Vendor').val(),
+                ChalanDate: $('#ChalanDate').val(),
+                ChalanNo: $('#ChalanNo').val(),
+                IsGivenToTailor: @Model.IsGivenToTailor,
+                TailorChalanDetails: list,
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/tailorChalan/Edit',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != "0") {
+                        alert('Printer Chalan Updated Successfully.');
+                        window.location.href = '/TailorChalan/Details/' + data;
                     }
-                    return matarialList;
-                }
-
-                var data = {
-                    Id:@Model.Id,
-                    VendorId: $('#Vendor').val(),
-                    ChalanDate: $('#ChalanDate').val(),
-                    ChalanNo: $('#ChalanNo').val(),
-                    IsGivenToTailor: @Html.Raw(ViewBag.GivenToTailor),
-                    TailorChalanDetails: list,
-                }
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/tailorChalan/Edit',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data != "0") {
-                            alert('Printer Chalan Updated Successfully.');                            
-                            window.location.href = '/TailorChalan/Details/' + data;
-                        }
-                        else {
-                            //$(this).val('Save Printer Chalan');
-                            alert('Error in saving printer chalan');
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
+                    else {
+                        //$(this).val('Save Printer Chalan');
+                        alert('Error in saving printer chalan');
                     }
-                });
-            });
-
-            //remove button click event
-            $('#tailorChalanItems').on('click', '.remove', function () {
-                if($('.Id', $(this).parents('tr')).val() != undefined && $('.Id', $(this).parents('tr')).val() != "")
-                {
-                    if(confirm('Are you sure you wish to delete this product.'))
-                    {
-                        $.ajax({
-                            type: 'Get',
-                            url: '/TailorChalan/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
-                            contentType: 'application/json',
-                            success: function (data) {
-                                if (data == "product deleted Successfully.") {
-                                    $(this).parents('tr').remove();
-                                }
-                                else {
-                                    alert('Error in deleting product.');
-                                }
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            }
-                        });
-                    }
-                }
-                else
-                {
-                    $(this).parents('tr').remove();
+                },
+                error: function (error) {
+                    console.log(error);
                 }
             });
         });
+
+        //remove button click event
+        $('#tailorChalanItems').on('click', '.remove', function () {
+            if($('.Id', $(this).parents('tr')).val() != undefined && $('.Id', $(this).parents('tr')).val() != "")
+            {
+                if(confirm('Are you sure you wish to delete this product.'))
+                {
+                    $.ajax({
+                        type: 'Get',
+                        url: '/TailorChalan/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data == "product deleted Successfully.") {
+                                $(this).parents('tr').remove();
+                            }
+                            else {
+                                alert('Error in deleting product.');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            }
+            else
+            {
+                $(this).parents('tr').remove();
+            }
+        });
+    });
 </script>
 }
 
