@@ -10,14 +10,17 @@
 namespace StockManager.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class USP_VendorWiseStock_Result
+    public partial class TailorMaterialDetail
     {
         public int Id { get; set; }
-        public string VendorName { get; set; }
-        public Nullable<decimal> GivenForPrinting { get; set; }
-        public Nullable<decimal> ReceivedAfterPrinting { get; set; }
-        public decimal TotalNetQuantity { get; set; }
-        public decimal TotalShrinkage { get; set; }
+        public int TailorChalanDetailsId { get; set; }
+        public int ProductId { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public string Description { get; set; }
+    
+        public virtual Product Product { get; set; }
+        public virtual TailorChalanDetail TailorChalanDetail { get; set; }
     }
 }

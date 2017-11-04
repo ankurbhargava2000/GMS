@@ -10,14 +10,20 @@
 namespace StockManager.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class USP_VendorWiseStock_Result
+    public partial class FinancialYear
     {
+        public FinancialYear()
+        {
+            this.Tenants = new HashSet<Tenant>();
+        }
+    
         public int Id { get; set; }
-        public string VendorName { get; set; }
-        public Nullable<decimal> GivenForPrinting { get; set; }
-        public Nullable<decimal> ReceivedAfterPrinting { get; set; }
-        public decimal TotalNetQuantity { get; set; }
-        public decimal TotalShrinkage { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+    
+        public virtual ICollection<Tenant> Tenants { get; set; }
     }
 }

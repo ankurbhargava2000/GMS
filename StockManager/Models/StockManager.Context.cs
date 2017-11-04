@@ -28,6 +28,7 @@ namespace StockManager.Models
         }
     
         public virtual DbSet<ChalanType> ChalanTypes { get; set; }
+        public virtual DbSet<FinancialYear> FinancialYears { get; set; }
         public virtual DbSet<PrinterChalan> PrinterChalans { get; set; }
         public virtual DbSet<PrinterChalanDetail> PrinterChalanDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -35,7 +36,12 @@ namespace StockManager.Models
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<StockEntry> StockEntries { get; set; }
+        public virtual DbSet<TailorChalan> TailorChalans { get; set; }
+        public virtual DbSet<TailorChalanDetail> TailorChalanDetails { get; set; }
+        public virtual DbSet<TailorMaterialDetail> TailorMaterialDetails { get; set; }
+        public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
     

@@ -167,11 +167,15 @@
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StockEntriesController.cs" />
+    <Compile Include="Controllers\TailorChalanController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChalanType.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FinancialYear.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PrinterChalan.cs">
@@ -210,7 +214,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StockManager.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\TailorChalan.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TailorChalanDetail.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TailorMaterialDetail.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tenant.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Transaction.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USP_ProductWiseStock_Result.cs">
@@ -474,6 +493,10 @@
     <Content Include="Views\PrinterChalans\Index.cshtml" />
     <Content Include="Views\Report\VendorWiseStock.cshtml" />
     <Content Include="Views\Report\ProductWiseStock.cshtml" />
+    <Content Include="Views\TailorChalan\Index.cshtml" />
+    <Content Include="Views\TailorChalan\Details.cshtml" />
+    <Content Include="Views\TailorChalan\Create.cshtml" />
+    <Content Include="Views\TailorChalan\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
