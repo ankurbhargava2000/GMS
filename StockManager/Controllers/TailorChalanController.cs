@@ -80,14 +80,14 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
-            if (printerChalan == null)
+            TailorChalan tailorChalan = db.TailorChalans.Find(id);
+            if (tailorChalan == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
-            return View(printerChalan);
+            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", tailorChalan.VendorId);
+            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
+            return View(tailorChalan);
         }
 
         // POST: TailorChalan/Edit/5        
