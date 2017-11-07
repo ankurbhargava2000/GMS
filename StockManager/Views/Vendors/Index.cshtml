@@ -19,8 +19,18 @@
             Phone Number
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            Mobile
         </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Pan Number
+        </th>
+        <th>
+            GST Number
+        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>      
@@ -39,8 +49,18 @@
             @Html.DisplayFor(modelItem => item.PhoneNumber)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Address)
+            @Html.DisplayFor(modelItem => item.mobile)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pan_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gst_number)
+        </td>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>       

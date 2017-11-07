@@ -26,6 +26,10 @@ namespace StockManager.Models
         public Nullable<System.DateTime> Updated { get; set; }
         public string Description { get; set; }
         public bool IsGivenToPrinting { get; set; }
+        public string chalan_number { get; set; }
+        public string dispatch_document_number { get; set; }
+        public string dispatched_through { get; set; }
+        public string bale_numbers { get; set; }
     
         public virtual ICollection<PrinterChalanDetail> PrinterChalanDetails { get; set; }
         public virtual Vendor Vendor { get; set; }
