@@ -92,36 +92,53 @@ namespace StockManager.Controllers
 
         // POST: TailorChalan/Edit/5        
         [HttpPost]
-        public JsonResult Edit(PrinterChalan printerChalan)
+        public JsonResult Edit(TailorChalan tailorChalan)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    foreach (var objPurchaseDetails in printerChalan.PrinterChalanDetails)
+                    foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
                     {
-                        if (objPurchaseDetails.Id == 0)
+                        db.TailorMaterialDetails.RemoveRange(db.TailorMaterialDetails.Where(x => x.TailorChalanDetailsId == objTailorDetails.Id));
+                        db.SaveChanges();
+                        foreach (var objTailorMaterial in objTailorDetails.TailorMaterialDetails)
                         {
-                            db.Entry(objPurchaseDetails).State = EntityState.Added;
+                            objTailorMaterial.TailorChalanDetailsId = objTailorDetails.Id;
+                            db.Entry(objTailorMaterial).State = EntityState.Added;
+                            db.SaveChanges();
+                        }                        
+                    }
+
+                    foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
+                    {
+                        if (objTailorDetails.Id == 0)
+                        {
+                            db.Entry(objTailorDetails).State = EntityState.Added;
                             db.SaveChanges();
                         }
                     }
 
-                    while (printerChalan.PrinterChalanDetails.Where(x => x.Id == 0).Count() > 0)
-                        printerChalan.PrinterChalanDetails.Remove(printerChalan.PrinterChalanDetails.Where(x => x.Id == 0).ToList()[0]);
+                    while (tailorChalan.TailorChalanDetails.Where(x => x.Id == 0).Count() > 0)
+                        tailorChalan.TailorChalanDetails.Remove(tailorChalan.TailorChalanDetails.Where(x => x.Id == 0).ToList()[0]);
 
+                    foreach(var x in tailorChalan.TailorChalanDetails)
+                    {
+                        x.TailorMaterialDetails = null;
+                    }
+                    
                     DateTime dtDate = DateTime.Now;
-                    printerChalan.Updated = dtDate;
-                    db.Entry(printerChalan).State = EntityState.Modified;
+                    tailorChalan.Updated = dtDate;
+                    db.Entry(tailorChalan).State = EntityState.Modified;
                     db.SaveChanges();
 
                     transaction.Commit();
-                    return Json(Convert.ToString(printerChalan.Id));
+                    return Json(Convert.ToString(tailorChalan.Id));
                 }
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }

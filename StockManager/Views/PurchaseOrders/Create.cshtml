@@ -27,7 +27,7 @@
                         @Html.LabelFor(model => model.InvoiceNumber, "Invoice#", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             @Html.EditorFor(model => model.InvoiceNumber, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceNo" } })
-                            @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger InvoiceNoVal" })
                         </div>
                     </div>
                 </div>
@@ -39,12 +39,12 @@
                         @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
+                                @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control InvoiceDateVal", @id = "InvoiceDate" } })
                                 <span class="add-on"><i class="icon-remove"></i></span>
                                 <span class="add-on"><i class="icon-th"></i></span>
                             </div>
                             <input type="hidden" id="dtp_input1" value="" /><br />
-                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
                         </div>
                     </div>
                 </div>
@@ -150,28 +150,28 @@
                                     @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
-                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger productIdVal" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
-                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger quantityVal" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Rate", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" } })
-                                        @Html.ValidationMessage("Rate", "", new { @class = "text-danger" })
+                                        @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" }})
+                                        @Html.ValidationMessage("Rate", "", new { @class = "text-danger rateVal" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
-                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger foldVal" })
                                     </div>
                                 </div>
                             </form>
@@ -196,6 +196,9 @@
         $(document).ready(function () {
             $("#btnShowModal").click(function () {
                 $("#itemModel").modal('show');
+                $('#quantity').siblings('span.quantityVal').text("");
+                $('#fold').siblings('span.foldVal').text("");
+                $('#rate').siblings('span.rateVal').text("");
             });
 
             $("#btnHideModal").click(function () {
@@ -206,9 +209,85 @@
 
             });
 
+            function validateModel()
+            {
+                var result = true;
+                if($('#quantity').val() == "")
+                {
+                    $('#quantity').siblings('span.quantityVal').text("Please Enter Quantity.");
+                    result = false;
+                }
+                if (isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.quantityVal').text("Please Enter number in quantity.");
+                    result = false;
+                }
+                if ($('#fold').val() == "") {
+                    $('#fold').siblings('span.foldVal').text("Please Enter Fold value.");                   
+                    result = false;
+                }
+                if (isNaN($('#fold').val())) {
+                    $('#fold').siblings('span.foldVal').text("Please Enter number in Fold.");
+                    result = false;
+                }
+                if ($('#rate').val() == "") {
+                    $('#rate').siblings('span.rateVal').text("Please Enter Rate value.");
+                    result = false;
+                }
+                if (isNaN($('#rate').val())) {
+                    $('#rate').siblings('span.rateVal').text("Please Enter number in Rate value.");
+                    result = false;
+                }
+                return result;
+            }
+
+            $('input[name=quantity]').change(function () {
+                if ($('#quantity').val() != "" && !isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.quantityVal').text("");                    
+                }
+            });
+            $('input[name=fold]').change(function () {
+                if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
+                    $('#fold').siblings('span.foldVal').text("");
+                }
+            });
+            $('input[name=rate]').change(function () {
+                if ($('#rate').val() != "" && !isNaN($('#rate').val())) {
+                    $('#rate').siblings('span.rateVal').text("");
+                }
+            });
+
+            function validateMainPage()
+            {
+                var result = true;
+                if ($('#InvoiceNo').val() == "") {
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter Fold Invoice Number.");
+                    result = false;
+                }
+                if (isNaN($('#InvoiceNo').val())) {
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter number in Invoice Number.");
+                    result = false;
+                }
+                if ($('#InvoiceDate').val() == "") {
+                    $('#InvoiceDate').siblings('span.InvoiceDateVal').text("Please Enter Invoice Date value.");
+                    result = false;
+                }
+                return result;
+            }
+
+            $('input[name=InvoiceNo]').change(function () {
+                if ($('#InvoiceNo').val() != "" && !isNaN($('#InvoiceNo'))) {
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("");
+                }
+            });
+            $('input[name=InvoiceDate]').change(function () {
+                if ($('#InvoiceDate').val() != "") {
+                    $('#InvoiceDate').siblings('span.InvoiceDateVal').text("");
+                }
+            });
+
             $('#addProductItem').click(function () {
                 //validation and add order items
-                var isAllValid = true;
+                var isAllValid = validateModel();
 
                 if (isAllValid) {
                     var $newRow = $('#productItemRow').clone().removeAttr('id');
@@ -234,64 +313,63 @@
             });
 
             $('#btnSubmit').click(function () {
-                var isAllValid = true;
+                var isAllValid = validateMainPage();
+                if (isAllValid) {
+                    //validate order items
+                    var list = [];
+                    var errorItemCount = 0;
+                    $('#purchaseOrderItems tbody tr').each(function (index, ele) {
 
-                //validate order items
-                var list = [];
-                var errorItemCount = 0;
-                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
-
-                    if($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "")
-                    {
-                        var orderItem = {
-                            ProductId: $('.productId', this).val(),
-                            Quantity: $('.productQuantity', this).text(),
-                            Fold: $('.productFold', this).text(),
-                            Rate: $('.productRate', this).text()
+                        if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                            var orderItem = {
+                                ProductId: $('.productId', this).val(),
+                                Quantity: $('.productQuantity', this).text(),
+                                Fold: $('.productFold', this).text(),
+                                Rate: $('.productRate', this).text()
+                            }
+                            list.push(orderItem);
                         }
-                        list.push(orderItem);
                     }
-                }
-                )
+                    )
 
-                var data = {
-                    VendorId: $('#Vendor').val(),
-                    InvoiceNumber: $('#InvoiceNo').val(),
-                    InvoiceDate: $('#InvoiceDate').val(),
-                    PurchaseDetails: list
-                }
+                    var data = {
+                        VendorId: $('#Vendor').val(),
+                        InvoiceNumber: $('#InvoiceNo').val(),
+                        InvoiceDate: $('#InvoiceDate').val(),
+                        PurchaseDetails: list
+                    }
 
-                //$(this).val('Please wait...');
+                    //$(this).val('Please wait...');
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/PurchaseOrders/Create',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data != "0") {
-                            alert('Purchase Order Saved Successfully.');
-                            list = [];
-                            $('#Vender,#InvoiceNo,#InvoiceDate').val('');
-                            $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/PurchaseOrders/Create',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data != "0") {
+                                alert('Purchase Order Saved Successfully.');
+                                list = [];
+                                $('#Vender,#InvoiceNo,#InvoiceDate').val('');
+                                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
 
-                                if($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "")
-                                {
-                                    $('#purchaseOrderItems tbody tr', this).remove();
-                                }
-                            });
-                            //$(this).val('Save Purchase Order');
-                            window.location.href = '/PurchaseOrders/Details/' + data;
+                                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                                        $('#purchaseOrderItems tbody tr', this).remove();
+                                    }
+                                });
+                                //$(this).val('Save Purchase Order');
+                                window.location.href = '/PurchaseOrders/Details/' + data;
+                            }
+                            else {
+                                //$(this).val('Save Purchase Order');
+                                alert('Error in saving purchase order');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
                         }
-                        else {
-                            //$(this).val('Save Purchase Order');
-                            alert('Error in saving purchase order');                            
-                        }                        
-                    },
-                    error: function (error) {
-                        console.log(error);                       
-                    }
-                });
+                    });
+                }
             });
         });
     </script>

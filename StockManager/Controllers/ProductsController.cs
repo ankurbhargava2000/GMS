@@ -106,7 +106,9 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+            db.Products.Remove(product);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: Products/Delete/5

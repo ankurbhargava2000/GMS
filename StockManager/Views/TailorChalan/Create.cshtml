@@ -130,34 +130,37 @@
                                         @Html.ValidationMessage("LaborCost", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="details form-horizontal">
-                                        <h2>
-                                            &nbsp; Tailor Material Details
-                                        </h2>
-                                        <table class="table table-responsive">
-                                            <tr>
-                                                <td>Product</td>
-                                                <td>Quantity</td>
-                                                <td>&nbsp;</td>
-                                            </tr>
-                                            <tr class="mycontainer" id="mainrow">
-                                                <td class="col-md-6 col-xs-6">
-                                                    @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId" , id ="materialId"})
-                                                </td>
-                                                <td class="col-md-3 col-xs-3">
-                                                    <input type="text" id="materialQuantity" class="materialQuantity" value="0" />
-                                                </td>
-                                                <td class="col-md-3 col-xs-3">
-                                                    <input type="button" id="addMaterial" value="add Material" class="btn-xs btn-success" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <div id="orderItems">
-                                            <table class="table table-responsive" id="tailorMaterialDetails"></table>
+                                @if (ViewBag.GivenToTailor == 0)
+                                {
+                                    <div class="form-group">
+                                        <div class="details form-horizontal">
+                                            <h2>
+                                                &nbsp; Tailor Material Details
+                                            </h2>
+                                            <table class="table table-responsive">
+                                                <tr>
+                                                    <td>Product</td>
+                                                    <td>Quantity</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr class="mycontainer" id="mainrow">
+                                                    <td class="col-md-6 col-xs-6">
+                                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
+                                                    </td>
+                                                    <td class="col-md-3 col-xs-3">
+                                                        <input type="text" id="materialQuantity" class="materialQuantity" value="0" />
+                                                    </td>
+                                                    <td class="col-md-3 col-xs-3">
+                                                        <input type="button" id="addMaterial" value="add Material" class="btn-xs btn-success" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div id="orderItems">
+                                                <table class="table table-responsive" id="tailorMaterialDetails"></table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -178,36 +181,39 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnShowModal").click(function () {
-                $("#itemModel").modal('show');
-            });
+    $(document).ready(function () {
+        $("#btnShowModal").click(function () {
+            $("#itemModel").modal('show');
+        });
 
-            $("#btnHideModal").click(function () {
-                $("#itemModel").modal('hide');
-            });
+        $("#btnHideModal").click(function () {
+            $("#itemModel").modal('hide');
+        });
 
-            $("#btnHideModal").click(function () {
+        $("#btnHideModal").click(function () {
 
-            });
+        });
 
-            $("#addMaterial").click(function(){
-                var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
-                $('#materialId', $newRow).val($('#materialId').val());
-                //$('.materialId', $newRow).text($('#materialId').text());
-                $('#materialQuantity', $newRow).val($('#materialQuantity').val());
-                $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
-                //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
-                $('#tailorMaterialDetails').append($newRow);
-            });
+        $("#addMaterial").click(function(){
+            var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
+            $('#materialId', $newRow).val($('#materialId').val());
+            //$('.materialId', $newRow).text($('#materialId').text());
+            $('#materialQuantity', $newRow).val($('#materialQuantity').val());
+            $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
+            //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
+            $('#tailorMaterialDetails').append($newRow);
+        });
 
-            $('#addProductItem').click(function () {
-                //validation and add order items
-                var isAllValid = true;
-                var matarialDetail = "";
-                $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
-                    matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
-                });
+        $('#addProductItem').click(function () {
+            //validation and add order items
+            var isAllValid = true;
+            var matarialDetail = "";
+            if(@Html.Raw(ViewBag.GivenToTailor) == 0)
+                {
+                    $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                        matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
+                    });
+                }
 
                 if (isAllValid) {
                     var $newRow = $('#productItemRow').clone().removeAttr('id');
@@ -255,59 +261,60 @@
 
                 function getmatatialobj(str)
                 {
-                    var matObj = JSON.parse("[" + str + "]");
                     var matarialList = [];
-                    for(var i = 0; i < matObj.length; i++)
+                    if(@Html.Raw(ViewBag.GivenToTailor) == 0)
                     {
-                        var objMat = {
-                            ProductId: matObj[i].ProductId,
-                            Quantity: matObj[i].Quantity
-                        }                    
-                        matarialList.push(objMat);
+                        var matObj = JSON.parse("[" + str + "]");                        
+                        for(var i = 0; i < matObj.length; i++)
+                        {
+                            var objMat = {
+                                ProductId: matObj[i].ProductId,
+                                Quantity: matObj[i].Quantity
+                            }
+                            matarialList.push(objMat);
+                        }
                     }
                     return matarialList;
                 }
-        
+
                 var data = {
                     VendorId: $('#Vendor').val(),
                     ChalanDate: $('#ChalanDate').val(),
                     ChalanNo: $('#ChalanNo').val(),
                     IsGivenToTailor: @Html.Raw(ViewBag.GivenToTailor),
-                    TailorChalanDetails: list,
-                }
-
-                //$(this).val('Please wait...');
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/tailorChalan/Create',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data != "0") {
-                            alert('Printer Chalan Saved Successfully.');
-                            list = [];
-                            $('#Vender,#InvoiceDate').val('');
-                            $('#TailorChalanItems tbody tr').each(function (index, ele) {
-                                if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                                    $('#tailorChalanItems tbody tr', this).remove();
-                                }
-                            });
-                            //$(this).val('Save Purchase Order');
-                            window.location.href = '/TailorChalan/Details/' + data;
-                        }
-                        else {
-                            //$(this).val('Save Printer Chalan');
-                            alert('Error in saving printer chalan');
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
+                TailorChalanDetails: list,
+            }
+                
+            $.ajax({
+                type: 'POST',
+                url: '/tailorChalan/Create',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != "0") {
+                        alert('Printer Chalan Saved Successfully.');
+                        list = [];
+                        $('#Vender,#InvoiceDate').val('');
+                        $('#TailorChalanItems tbody tr').each(function (index, ele) {
+                            if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                                $('#tailorChalanItems tbody tr', this).remove();
+                            }
+                        });
+                        //$(this).val('Save Purchase Order');
+                        window.location.href = '/TailorChalan/Details/' + data;
                     }
-                });
+                    else {
+                        //$(this).val('Save Printer Chalan');
+                        alert('Error in saving printer chalan');
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
             });
         });
-    </script>
+    });
+</script>
 }
 
 
