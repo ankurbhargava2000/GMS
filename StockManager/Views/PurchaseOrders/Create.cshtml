@@ -240,17 +240,17 @@
                 return result;
             }
 
-            $('input[name=quantity]').change(function () {
+            $('#quantity').change(function () {
                 if ($('#quantity').val() != "" && !isNaN($('#quantity').val())) {
                     $('#quantity').siblings('span.quantityVal').text("");                    
                 }
             });
-            $('input[name=fold]').change(function () {
+            $('#fold').change(function () {
                 if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
                     $('#fold').siblings('span.foldVal').text("");
                 }
             });
-            $('input[name=rate]').change(function () {
+            $('#rate').change(function () {
                 if ($('#rate').val() != "" && !isNaN($('#rate').val())) {
                     $('#rate').siblings('span.rateVal').text("");
                 }
