@@ -30,6 +30,10 @@ namespace StockManager.Models
         public string Address { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public string email { get; set; }
+        public string pan_number { get; set; }
+        public string gst_number { get; set; }
+        public string mobile { get; set; }
     
         public virtual ICollection<PrinterChalan> PrinterChalans { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }

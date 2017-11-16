@@ -28,6 +28,7 @@ namespace StockManager.Models
         public Nullable<System.DateTime> Updated { get; set; }
         public string Description { get; set; }
         public bool IsGivenToTailor { get; set; }
+        public string bill_number { get; set; }
     
         public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
         public virtual ICollection<TailorChalanDetail> TailorChalanDetails1 { get; set; }
