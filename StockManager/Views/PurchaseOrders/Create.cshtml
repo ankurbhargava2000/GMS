@@ -48,6 +48,15 @@
                         </div>
                     </div>
                 </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.dispatch_document_number, "Dispatch Document Number#", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatch_document_number, new { htmlAttributes = new { @class = "form-control", @id = "DocumentNo" } })
+                            @Html.ValidationMessageFor(model => model.dispatch_document_number, "", new { @class = "text-danger InvoiceNoVal" })
+                        </div>
+                    </div>
+                </div>
                 @*<div id="div2" class="col-md-6 col-xs-12">
                         <div class="form-group">
                             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -62,131 +71,171 @@
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-xs-12 col-md-8">
-                            <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
+                        @Html.LabelFor(model => model.dispatched_through, "Dispatch Through", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatched_through, new { htmlAttributes = new { @class = "form-control", @id = "DispatchThrough" } })
+                            @Html.ValidationMessageFor(model => model.dispatched_through, "", new { @class = "text-danger InvoiceNoVal" })
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-12 col-xs-12">
+                <div id="div2" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        <table class="table table-striped table-advance table-hover" id="purchaseOrderItems">
-                            <tr id="productItemRow">
-                                <td>
-                                    <label class="productName">Product Name</label>
-                                    <input type="hidden" class="productId" value="" />
-                                </td>
-                                <td>
-                                    <label class="productQuantity">Quantity</label>
-                                </td>
-                                <td>
-                                    <label class="productFold">Fold</label>
-                                </td>
-                                <td>
-                                    <label class="productRate">Rate</label>
-                                </td>
-                                <td class="itemEditRow"></td>
-                            </tr>
-                        </table>
-                        @*@if (Model != null && Model.PurchaseDetails != null)
-                            {
-                                foreach (var item in Model.PurchaseDetails)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Product.ProductName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Quantity)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Fold)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Rate)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Description)
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-success btn-xs" href="" title="Edit"><i class="fa fa-pencil"></i></a>|
-                                            <a class="btn btn-success btn-xs" href="" title="Delet>"><i class="fa fa-pencil"></i></a>
-                                            </ td >
-                                    </ tr >
-                                }
-                            }*@
+                        @Html.LabelFor(model => model.destination, "Destination", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.destination, new { htmlAttributes = new { @class = "form-control", @id = "Destination" } })
+                            @Html.ValidationMessageFor(model => model.destination, "", new { @class = "text-danger InvoiceNoVal" })
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        <div class="col-md-2">
+                        @Html.LabelFor(model => model.bale_numbers, "Bale Nos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.bale_numbers, new { htmlAttributes = new { @class = "form-control", @id = "BaleNo" } })
+                            @Html.ValidationMessageFor(model => model.bale_numbers, "", new { @class = "text-danger InvoiceNoVal" })
                         </div>
-                        <div class="col-xs-12 col-md-8">
-                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Purchase Order"/>
-                            @Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger InvoiceNoVal" })
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" tabindex="-1" id="itemModel"
-                 data-keyboard="false" data-backdrop="static">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                ×
-                            </button>
-                            <h4 class="modal-title">Add Product</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
-                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger productIdVal" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
-                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger quantityVal" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Rate", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" }})
-                                        @Html.ValidationMessage("Rate", "", new { @class = "text-danger rateVal" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
-                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger foldVal" })
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
-                            <button type="button" id="btnHideModal" class="btn btn-danger">
-                                Close
-                            </button>
+                <div class="row">
+                    <div id="div1" class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-xs-12 col-md-8">
+                                <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div id="div1" class="col-md-12 col-xs-12">
+                        <div class="form-group">
+                            <table class="table table-striped table-advance table-hover" id="purchaseOrderItems">
+                                <tr id="productItemRow">
+                                    <td>
+                                        <label class="productName">Product Name</label>
+                                        <input type="hidden" class="productId" value="" />
+                                    </td>
+                                    <td>
+                                        <label class="productQuantity">Quantity</label>
+                                    </td>
+                                    <td>
+                                        <label class="productFold">Fold</label>
+                                    </td>
+                                    <td>
+                                        <label class="productRate">Rate</label>
+                                    </td>
+                                    <td class="itemEditRow"></td>
+                                </tr>
+                            </table>
+                            @*@if (Model != null && Model.PurchaseDetails != null)
+                        {
+                            foreach (var item in Model.PurchaseDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fold)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Rate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success btn-xs" href="" title="Edit"><i class="fa fa-pencil"></i></a>|
+                                        <a class="btn btn-success btn-xs" href="" title="Delet>"><i class="fa fa-pencil"></i></a>
+                                        </ td >
+                                </ tr >
+                            }
+                        }*@
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="div1" class="col-md-6 col-xs-12">
+                        <div class="form-group">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-xs-12 col-md-8">
+                                <input type="button" id="btnSubmit" class="btn btn-success" value="Save Purchase Order" />
+                                @Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
+                <div class="modal fade" tabindex="-1" id="itemModel"
+                     data-keyboard="false" data-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    ×
+                                </button>
+                                <h4 class="modal-title">Add Product</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
+                                            @Html.ValidationMessage("ProductId", "", new { @class = "text-danger productIdVal" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                                            @Html.ValidationMessage("Quantity", "", new { @class = "text-danger quantityVal" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.Label("Rate", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" } })
+                                            @Html.ValidationMessage("Rate", "", new { @class = "text-danger rateVal" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
+                                            @Html.ValidationMessage("Fold", "", new { @class = "text-danger foldVal" })
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
+                                <button type="button" id="btnHideModal" class="btn btn-danger">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
     </div>
 }
 
