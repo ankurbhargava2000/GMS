@@ -9,7 +9,6 @@
         <h4>PurchaseOrder for Invoice# @Model.InvoiceNumber</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
         <div class="container">
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
@@ -26,7 +25,7 @@
                         @Html.LabelFor(model => model.InvoiceNumber, "Invoice#", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             @Html.EditorFor(model => model.InvoiceNumber, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceNo" } })
-                            @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger InvoiceNoVal" })
                         </div>
                     </div>
                 </div>
@@ -35,28 +34,67 @@
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.InvoiceDate, "Invoice Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
                                 @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
                                 <span class="add-on"><i class="icon-remove"></i></span>
                                 <span class="add-on"><i class="icon-th"></i></span>
+                                @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
                             </div>
                             <input type="hidden" id="dtp_input1" value="" /><br />
-                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
-                @*<div id="div2" class="col-md-6 col-xs-12">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                            </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.dispatch_document_number, "Dispatch Document Number#", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatch_document_number, new { htmlAttributes = new { @class = "form-control", @id = "DocumentNo" } })
+                            @Html.ValidationMessageFor(model => model.dispatch_document_number, "", new { @class = "text-danger DocumentNoVal" })
                         </div>
-                    </div>*@
-
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.dispatched_through, "Dispatch Through", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatched_through, new { htmlAttributes = new { @class = "form-control", @id = "DispatchThrough" } })
+                            @Html.ValidationMessageFor(model => model.dispatched_through, "", new { @class = "text-danger DispatchThroughVal" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.destination, "Destination", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.destination, new { htmlAttributes = new { @class = "form-control", @id = "Destination" } })
+                            @Html.ValidationMessageFor(model => model.destination, "", new { @class = "text-danger DestinationVal" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bale_numbers, "Bale Nos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.bale_numbers, new { htmlAttributes = new { @class = "form-control", @id = "BaleNo" } })
+                            @Html.ValidationMessageFor(model => model.bale_numbers, "", new { @class = "text-danger BaleNoVal" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger InvoiceNoVal" })
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
@@ -153,7 +191,7 @@
                                     @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
-                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger productIdVal" })
                                         <input type="hidden" class="IdEdit" id="IdEdit" />
                                         <input type="hidden" class="countEdit" id="countEdit" />
                                     </div>
@@ -162,21 +200,21 @@
                                     @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
-                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger quantityVal" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Rate", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" } })
-                                        @Html.ValidationMessage("Rate", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("Rate", "", new { @class = "text-danger rateVal" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
-                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger foldVal" })
                                     </div>
                                 </div>
                             </form>
@@ -215,7 +253,7 @@
                 $('#rate').val('');
                 $('#IdEdit').val('');
                 $('#countEdit').val('');
-               
+
             });
 
             $("#btnHideModal").click(function () {
@@ -224,10 +262,8 @@
 
             $('#addProductItem').click(function () {
                 //validation and add order items
-                var isAllValid = true;
-
+                var isAllValid = validateModel();
                 if (isAllValid) {
-
                     if($('#countEdit').val() == '')
                     {
                         //add new row of items
@@ -287,55 +323,59 @@
             });
 
             $('#btnSubmit').click(function () {
-                var isAllValid = true;
-
-                //validate order items
-
-                var list = [];
-                var errorItemCount = 0;
-                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
-                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                        var orderItem = {
-                            Id:$('.Id', this).val(),
-                            PurchaseId: @Model.Id,
-                            ProductId: $('.productId', this).val(),
-                            Quantity: $('.productQuantity', this).text(),
-                            Fold: $('.productFold', this).text(),
-                            Rate: $('.productRate', this).text()
+                var isAllValid = validateMainPage();
+                if (isAllValid) {
+                    var list = [];
+                    var errorItemCount = 0;
+                    $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                        if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                            var orderItem = {
+                                Id:$('.Id', this).val(),
+                                PurchaseId: @Model.Id,
+                                ProductId: $('.productId', this).val(),
+                                Quantity: $('.productQuantity', this).text(),
+                                Fold: $('.productFold', this).text(),
+                                Rate: $('.productRate', this).text()
+                            }
+                            list.push(orderItem);
                         }
-                        list.push(orderItem);
-                    }
-                });
+                    });
 
-                var data = {
-                    Id:@Model.Id,
-                    VendorId: $('#Vendor').val(),
-                    InvoiceNumber: $('#InvoiceNo').val(),
-                    InvoiceDate: $('#InvoiceDate').val(),
-                    PurchaseDetails: list
+                    var data = {
+                        Id:@Model.Id,
+                        VendorId: $('#Vendor').val(),
+                        InvoiceNumber: $('#InvoiceNo').val(),
+                        InvoiceDate: $('#InvoiceDate').val(),
+                        dispatch_document_number: $('#DocumentNo').val(),
+                        dispatched_through: $('#DispatchThrough').val(),
+                        destination: $('#Destination').val(),
+                        bale_numbers: $('#BaleNo').val(),
+                        Description: $('#Description').val(),
+                        PurchaseDetails: list
+                    }
+
+                    //$(this).val('Please wait...');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/PurchaseOrders/Edit',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data != "0") {
+                                alert('Purchase Order Updated Successfully.');
+                                window.location.href = '/PurchaseOrders/Details/' + data;
+                            }
+                            else {
+                                // $(this).val('Save Purchase Order');
+                                alert('Error in updating purchase order.');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
                 }
-
-                //$(this).val('Please wait...');
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/PurchaseOrders/Edit',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data != "0") {
-                            alert('Purchase Order Updated Successfully.');  
-                            window.location.href = '/PurchaseOrders/Details/' + data;
-                        }
-                        else {                            
-                           // $(this).val('Save Purchase Order');
-                            alert('Error in updating purchase order.');
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
             });
 
             //remove button click event
@@ -367,6 +407,116 @@
                     $(this).parents('tr').remove();
                 }
 
+            });
+
+            // validation scripts
+            function validateModel() {
+                var result = true;
+                if ($('#quantity').val() == "") {
+                    $('#quantity').siblings('span.quantityVal').text("Please Enter Quantity.");
+                    result = false;
+                }
+                if (isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.quantityVal').text("Please Enter number in quantity.");
+                    result = false;
+                }
+                if ($('#fold').val() == "") {
+                    $('#fold').siblings('span.foldVal').text("Please Enter Fold value.");
+                    result = false;
+                }
+                if (isNaN($('#fold').val())) {
+                    $('#fold').siblings('span.foldVal').text("Please Enter number in Fold.");
+                    result = false;
+                }
+                if ($('#rate').val() == "") {
+                    $('#rate').siblings('span.rateVal').text("Please Enter Rate value.");
+                    result = false;
+                }
+                if (isNaN($('#rate').val())) {
+                    $('#rate').siblings('span.rateVal').text("Please Enter number in Rate value.");
+                    result = false;
+                }
+                return result;
+            }
+
+            $('#quantity').change(function () {
+                if ($('#quantity').val() != "" && !isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.quantityVal').text("");
+                }
+            });
+            $('#fold').change(function () {
+                if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
+                    $('#fold').siblings('span.foldVal').text("");
+                }
+            });
+            $('#rate').change(function () {
+                if ($('#rate').val() != "" && !isNaN($('#rate').val())) {
+                    $('#rate').siblings('span.rateVal').text("");
+                }
+            });
+
+            function validateMainPage() {
+                var result = true;
+                if ($('#InvoiceNo').val() == "") {
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter Fold Invoice Number.");
+                    result = false;
+                }
+                if (isNaN($('#InvoiceNo').val())) {
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter number in Invoice Number.");
+                    result = false;
+                }
+                if ($('#InvoiceDate').val() == "") {
+                    $('#InvoiceDate').siblings('span.InvoiceDateVal').text("Please Enter Invoice Date value.");
+                    result = false;
+                }
+                if ($('#DocumentNo').val() == "") {
+                    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
+                    result = false;
+                }
+                if ($('#DispatchThrough').val() == "") {
+                    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
+                    result = false;
+                }
+                if ($('#Destination').val() == "") {
+                    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
+                    result = false;
+                }
+                if ($('#BaleNo').val() == "") {
+                    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
+                    result = false;
+                }
+                return result;
+            }
+
+            $('#InvoiceNo').change(function () {
+                if ($('#InvoiceNo').val() != "" && !isNaN($('#InvoiceNo'))) {
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("");
+                }
+            });
+            $('#InvoiceDate').change(function () {
+                if ($('#InvoiceDate').val() != "") {
+                    $('#InvoiceDate').siblings('span.InvoiceDateVal').text("");
+                }
+            });
+            $('#DocumentNo').change(function () {
+                if ($('#DocumentNo').val() != "") {
+                    $('#DocumentNo').siblings('span.DocumentNoVal').text("");
+                }
+            });
+            $('#DispatchThrough').change(function () {
+                if ($('#DispatchThrough').val() != "") {
+                    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("");
+                }
+            });
+            $('#Destination').change(function () {
+                if ($('#Destination').val() != "") {
+                    $('#Destination').siblings('span.DestinationVal').text("");
+                }
+            });
+            $('#BaleNo').change(function () {
+                if ($('#BaleNo').val() != "") {
+                    $('#BaleNo').siblings('span.BaleNoVal').text("");
+                }
             });
         });
     </script>
