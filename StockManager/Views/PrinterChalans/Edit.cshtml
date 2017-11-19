@@ -15,8 +15,8 @@
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
+                        @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
                             @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
                             @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
                         </div>
@@ -24,8 +24,8 @@
                 </div>
                 <div id="div2" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
+                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
                             <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
                                 @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
                                 <span class="add-on"><i class="icon-remove"></i></span>
@@ -37,7 +37,46 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.dispatched_through, "Dispatch Through", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatched_through, new { htmlAttributes = new { @class = "form-control", @id = "DispatchThrough" } })
+                            @Html.ValidationMessageFor(model => model.dispatched_through, "", new { @class = "text-danger DispatchThroughVal" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.dispatch_document_number, "Destination", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatch_document_number, new { htmlAttributes = new { @class = "form-control", @id = "DocumentNo" } })
+                            @Html.ValidationMessageFor(model => model.dispatch_document_number, "", new { @class = "text-danger DocumentNoVal" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bale_numbers, "Bale Nos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.bale_numbers, new { htmlAttributes = new { @class = "form-control", @id = "BaleNo" } })
+                            @Html.ValidationMessageFor(model => model.bale_numbers, "", new { @class = "text-danger BaleNoVal" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger InvoiceNoVal" })
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12 mt">
                     <div class="form-group">
@@ -333,6 +372,10 @@
                     VendorId: $('#Vendor').val(),
                     ChalanDate: $('#ChalanDate').val(),
                     IsGivenToPrinting: (('@Model.IsGivenToPrinting' == 'True') ? 1 : 0),
+                    dispatch_document_number: $('#DocumentNo').val(),
+                    dispatched_through: $('#DispatchThrough').val(),                
+                    bale_numbers: $('#BaleNo').val(),
+                    Description: $('#Description').val(),
                     PrinterChalanDetails: list
                 }
 
