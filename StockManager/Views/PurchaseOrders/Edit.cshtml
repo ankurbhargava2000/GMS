@@ -469,22 +469,22 @@
                     $('#InvoiceDate').siblings('span.InvoiceDateVal').text("Please Enter Invoice Date value.");
                     result = false;
                 }
-                if ($('#DocumentNo').val() == "") {
-                    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
-                    result = false;
-                }
-                if ($('#DispatchThrough').val() == "") {
-                    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
-                    result = false;
-                }
-                if ($('#Destination').val() == "") {
-                    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
-                    result = false;
-                }
-                if ($('#BaleNo').val() == "") {
-                    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
-                    result = false;
-                }
+                //if ($('#DocumentNo').val() == "") {
+                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
+                //    result = false;
+                //}
+                //if ($('#DispatchThrough').val() == "") {
+                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
+                //    result = false;
+                //}
+                //if ($('#Destination').val() == "") {
+                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
+                //    result = false;
+                //}
+                //if ($('#BaleNo').val() == "") {
+                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
+                //    result = false;
+                //}
                 return result;
             }
 
@@ -498,26 +498,26 @@
                     $('#InvoiceDate').siblings('span.InvoiceDateVal').text("");
                 }
             });
-            $('#DocumentNo').change(function () {
-                if ($('#DocumentNo').val() != "") {
-                    $('#DocumentNo').siblings('span.DocumentNoVal').text("");
-                }
-            });
-            $('#DispatchThrough').change(function () {
-                if ($('#DispatchThrough').val() != "") {
-                    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("");
-                }
-            });
-            $('#Destination').change(function () {
-                if ($('#Destination').val() != "") {
-                    $('#Destination').siblings('span.DestinationVal').text("");
-                }
-            });
-            $('#BaleNo').change(function () {
-                if ($('#BaleNo').val() != "") {
-                    $('#BaleNo').siblings('span.BaleNoVal').text("");
-                }
-            });
+            //$('#DocumentNo').change(function () {
+            //    if ($('#DocumentNo').val() != "") {
+            //        $('#DocumentNo').siblings('span.DocumentNoVal').text("");
+            //    }
+            //});
+            //$('#DispatchThrough').change(function () {
+            //    if ($('#DispatchThrough').val() != "") {
+            //        $('#DispatchThrough').siblings('span.DispatchThroughVal').text("");
+            //    }
+            //});
+            //$('#Destination').change(function () {
+            //    if ($('#Destination').val() != "") {
+            //        $('#Destination').siblings('span.DestinationVal').text("");
+            //    }
+            //});
+            //$('#BaleNo').change(function () {
+            //    if ($('#BaleNo').val() != "") {
+            //        $('#BaleNo').siblings('span.BaleNoVal').text("");
+            //    }
+            //});
         });
     </script>
 }

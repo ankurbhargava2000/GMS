@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace StockManager.Controllers
 {
@@ -14,11 +15,13 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: TailorChalan
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, int? page)
         {
-            var tailorChalans = db.TailorChalans.Include(p => p.Vendor).Where(p => p.IsGivenToTailor == (id == 1 ? true : false)).Include(p => p.TailorChalanDetails).Include(p => p.TailorChalanDetails1);
+            var tailorChalans = db.TailorChalans.Include(p => p.Vendor).Where(p => p.IsGivenToTailor == (id == 1 ? true : false)).Include(p => p.TailorChalanDetails).Include(p => p.TailorChalanDetails1).OrderBy(x => x.ChalanDate);
             ViewBag.Send = id;
-            return View(tailorChalans.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(tailorChalans.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: TailorChalan/Details/5

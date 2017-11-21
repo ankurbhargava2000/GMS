@@ -1,5 +1,6 @@
-﻿@model IEnumerable<StockManager.Models.Product>
-
+﻿@*@model IEnumerable<StockManager.Models.Product>*@
+@model PagedList.IPagedList<StockManager.Models.Product>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,5 +50,9 @@
             </tr>
         }
     }
-
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page }))

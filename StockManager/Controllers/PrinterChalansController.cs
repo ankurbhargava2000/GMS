@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StockManager.Models;
-
+using PagedList;
 namespace StockManager.Controllers
 {
     public class PrinterChalansController : Controller
@@ -15,11 +15,13 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: PrinterChalans
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id, int? page)
         {
-            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Where(p => p.IsGivenToPrinting == (id==1? true:false)).Include(p => p.PrinterChalanDetails);
+            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Where(p => p.IsGivenToPrinting == (id==1? true:false)).Include(p => p.PrinterChalanDetails).OrderBy(x => x.ChalanDate);
             ViewBag.Send = id;
-            return View(printerChalans.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(printerChalans.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: PrinterChalans/Details/5

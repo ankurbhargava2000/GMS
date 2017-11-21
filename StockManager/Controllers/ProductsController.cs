@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StockManager.Models;
+using PagedList;
 
 namespace StockManager.Controllers
 {
@@ -15,10 +16,12 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var products = db.Products.Include(p => p.ProductType);
-            return View(products.ToList());
+            var products = db.Products.Include(p => p.ProductType).OrderBy(x => x.ProductName);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(products.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Products/Details/5

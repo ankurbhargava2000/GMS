@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StockManager.Models;
-
+using PagedList;
 namespace StockManager.Controllers
 {
     public class PurchaseOrdersController : Controller
@@ -15,10 +15,12 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: PurchaseOrders
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails);
-            return View(purchaseOrders.ToList());
+            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails).OrderBy(x => x.InvoiceDate).OrderBy(x => x.InvoiceDate);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(purchaseOrders.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: PurchaseOrders/Details/5
@@ -40,7 +42,7 @@ namespace StockManager.Controllers
         public ActionResult Create()
         {
             var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails);
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName");
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             return View();
         }
@@ -65,7 +67,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", purchaseOrder.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName", purchaseOrder.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }
@@ -83,7 +85,7 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", purchaseOrder.VendorId);
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName", purchaseOrder.VendorId);
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             return View(purchaseOrder);
         }
@@ -119,7 +121,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", purchaseOrder.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName", purchaseOrder.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }

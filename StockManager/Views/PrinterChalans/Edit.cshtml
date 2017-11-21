@@ -13,31 +13,79 @@
 
         <div class="container">
             <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
+                        @Html.Label("Vendor", "Vendor", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
                             @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
                             @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
-                <div id="div2" class="col-md-6 col-xs-12">
+                <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
+                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
                             <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
                                 @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
                                 <span class="add-on"><i class="icon-remove"></i></span>
                                 <span class="add-on"><i class="icon-th"></i></span>
                             </div>
                             <input type="hidden" id="dtp_input1" value="" /><br />
-                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
                         </div>
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.chalan_number, "Chalan Number", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.chalan_number, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
+                            @Html.ValidationMessageFor(model => model.chalan_number, "", new { @class = "text-danger ChalanNoVal" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.dispatched_through, "Dispatch Through", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatched_through, new { htmlAttributes = new { @class = "form-control", @id = "DispatchThrough" } })
+                            @Html.ValidationMessageFor(model => model.dispatched_through, "", new { @class = "text-danger DispatchThroughVal" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.dispatch_document_number, "Destination", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.dispatch_document_number, new { htmlAttributes = new { @class = "form-control", @id = "DocumentNo" } })
+                            @Html.ValidationMessageFor(model => model.dispatch_document_number, "", new { @class = "text-danger DocumentNoVal" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bale_numbers, "Bale Nos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.bale_numbers, new { htmlAttributes = new { @class = "form-control", @id = "BaleNo" } })
+                            @Html.ValidationMessageFor(model => model.bale_numbers, "", new { @class = "text-danger BaleNoVal" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger InvoiceNoVal" })
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12 mt">
                     <div class="form-group">
@@ -49,8 +97,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="row">
                 <div id="div1" class="col-md-12 col-xs-12">
                     <div class="form-group">
@@ -68,15 +114,18 @@
                                 <td>
                                     <label class="productFold">Fold</label>
                                 </td>
-                                <td>
-                                    <label class="expectedFold">Rate</label>
-                                </td>
-                                <td>
-                                    <label class="netQuantity">Rate</label>
-                                </td>
-                                <td>
-                                    <label class="shrinkage">Rate</label>
-                                </td>
+                                @if (@Model.IsGivenToPrinting == true)
+                                {
+                                    <td>
+                                        <label class="expectedFold">ExpectedFold</label>
+                                    </td>
+                                    <td>
+                                        <label class="shrinkage">Shrinkage</label>
+                                    </td>
+                                    <td>
+                                        <label class="netQuantity">NetQuantity</label>
+                                    </td>
+                                }
                                 <td class="itemEditRow"></td>
                             </tr>
                             @if (Model != null && Model.PrinterChalanDetails != null)
@@ -98,15 +147,18 @@
                                         <td>
                                             <label class="productFold">@item.Fold</label>
                                         </td>
-                                        <td>
-                                            <label class="expectedFold">@item.ExpectedFold</label>
-                                        </td>
-                                        <td>
-                                            <label class="netQuantity">@item.NetQuantity</label>
-                                        </td>
-                                        <td>
-                                            <label class="shrinkage">@item.Shrinkage</label>
-                                        </td>
+                                        @if (@Model.IsGivenToPrinting == true)
+                                        {
+                                            <td>
+                                                <label class="expectedFold">@item.ExpectedFold</label>
+                                            </td>
+                                            <td>
+                                                <label class="shrinkage">@item.Shrinkage</label>
+                                            </td>
+                                            <td>
+                                                <label class="netQuantity">@item.NetQuantity</label>
+                                            </td>
+                                        }
                                         <td class="itemEditRow">
                                             <button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button>
                                             <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>
@@ -166,27 +218,30 @@
                                         @Html.ValidationMessage("Fold", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    @Html.Label("Expected Fold", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Expected Fold", new { htmlAttributes = new { @class = "form-control", @id = "expectedFold" } })
-                                        @Html.ValidationMessage("ExpectedFold", "", new { @class = "text-danger" })
+                                @if (@Model.IsGivenToPrinting == true)
+                                {
+                                    <div class="form-group">
+                                        @Html.Label("Expected Fold", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Editor("Expected Fold", new { htmlAttributes = new { @class = "form-control", @id = "expectedFold" } })
+                                            @Html.ValidationMessage("ExpectedFold", "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Net Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Net Quantity", new { htmlAttributes = new { @class = "form-control", @id = "netQuantity" } })
-                                        @Html.ValidationMessage("NetQuantity", "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.Label("Net Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Editor("Net Quantity", new { htmlAttributes = new { @class = "form-control", @id = "netQuantity" } })
+                                            @Html.ValidationMessage("NetQuantity", "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Shrinkage", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Shrinkage", new { htmlAttributes = new { @class = "form-control", @id = "shrinkage" } })
-                                        @Html.ValidationMessage("Shrinkage", "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.Label("Shrinkage", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.Editor("Shrinkage", new { htmlAttributes = new { @class = "form-control", @id = "shrinkage" } })
+                                            @Html.ValidationMessage("Shrinkage", "", new { @class = "text-danger" })
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -206,157 +261,159 @@
 @section scripts
 {
     <script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnShowModal").click(function () {
-            $('#quantity').val('');
-            $('#fold').val('');
-            $('#expectedFold').val('');
-            $('#netQuantity').val('');
-            $('#shrinkage').val('');
-            $('#IdEdit').val('');
-            $('#countEdit').val('');
-            $("#itemModel").modal('show');
-        });
+        $(document).ready(function () {
+            $("#btnShowModal").click(function () {
+                $('#quantity').val('');
+                $('#fold').val('');
+                $('#expectedFold').val('');
+                $('#netQuantity').val('');
+                $('#shrinkage').val('');
+                $('#IdEdit').val('');
+                $('#countEdit').val('');
+                $("#itemModel").modal('show');
+            });
 
-        $("#btnHideModal").click(function () {
-            $("#itemModel").modal('hide');
-            $('#quantity').val('');
-            $('#fold').val('');
-            $('#expectedFold').val('');
-            $('#netQuantity').val('');
-            $('#shrinkage').val('');
-            $('#IdEdit').val('');
-            $('#countEdit').val('');
-        });
+            $("#btnHideModal").click(function () {
+                $("#itemModel").modal('hide');
+                $('#quantity').val('');
+                $('#fold').val('');
+                $('#expectedFold').val('');
+                $('#netQuantity').val('');
+                $('#shrinkage').val('');
+                $('#IdEdit').val('');
+                $('#countEdit').val('');
+            });
 
-        $('#addProductItem').click(function () {
-            //validation and add order items
-            var isAllValid = true;
+            $('#addProductItem').click(function () {
+                //validation and add order items
+                var isAllValid = validateModel();
+                if (isAllValid) {
 
-            if (isAllValid) {
+                    if($('#countEdit').val() == '')
+                    {
+                        //add new row of items
+                        var $newRow = $('#productItemRow').clone().removeAttr('id');
 
-                if($('#countEdit').val() == '')
-                {
-                    //add new row of items
-                    var $newRow = $('#productItemRow').clone().removeAttr('id');
-
-                    $('.productId', $newRow).val($('#product').val());
-                    $('.productName', $newRow).text($('#product').find("option:selected").text());
-                    $('.productQuantity', $newRow).text($('#quantity').val());
-                    $('.productFold', $newRow).text($('#fold').val());
-                    $('.expectedFold', $newRow).text($('#expectedFold').val());
-                    $('.netQuantity', $newRow).text($('#netQuantity').val());
-                    $('.shrinkage', $newRow).text($('#shrinkage').val());
-                    $('.rowCount', $newRow).val($('#printerChalanItems tr').length + 1);
-                    $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
-                    $('#printerChalanItems').append($newRow);
-                    $('#quantity').val('');
-                    $('#fold').val('');
-                    $('#expectedFold').val('')
-                    $('#netQuantity').val('')
-                    $('#shrinkage').val('')
-                    $('#IdEdit').val('');
-                    $('#countEdit').val('');
-                    $("#itemModel").modal('hide');
-                }
-                else
-                {
-                    $('#printerChalanItems tbody tr').each(function (index, ele) {
-                        //update product list
-                        if($('.rowCount', this).val() == $('#countEdit').val())
-                        {
-                            $('.productId', this).val($('#product').val());
-                            $('.productName', this).text($('#product').find("option:selected").text());
-                            $('.productQuantity', this).text($('#quantity').val());
-                            $('.productFold', this).text($('#fold').val());
-                            $('.expectedFold', this).text($('#expectedFold').val());
-                            $('.netQuantity', this).text($('#netQuantity').val());
-                            $('.shrinkage', this).text($('#shrinkage').val());
-                            //empty model popup
-                            $('#quantity').val('');
-                            $('#fold').val('');
-                            $('#rate').val('');
-                            $('#expectedFold').val('');
-                            $('#netQuantity').val('');
-                            $('#shrinkage').val('');
-                            $('#IdEdit').val('');
-                            $('#countEdit').val('');
-                            $("#itemModel").modal('hide');
-                            $('#addProductItem').text("Add Product");
-                        }
-                    });
-                }
-            }
-        });
-
-
-        $('#printerChalanItems').on('click', '.editItem', function(){
-            //show modelpopup with edit item
-            $('#product').val($('.productId', $(this).parents('tr')).val());
-            $('#quantity').val($('.productQuantity', $(this).parents('tr')).text());
-            $('#fold').val($('.productFold', $(this).parents('tr')).text());
-            $('#rate').val($('.productRate', $(this).parents('tr')).text());
-            $('#expectedFold').val($('.expectedFold', $(this).parents('tr')).text());
-            $('#netQuantity').val($('.netQuantity', $(this).parents('tr')).text());
-            $('#shrinkage').val($('.shrinkage', $(this).parents('tr')).text());
-            $('#IdEdit').val($('.Id', $(this).parents('tr')).val());
-            $('#countEdit').val($('.rowCount', $(this).parents('tr')).val());
-            $('#addProductItem').text("Update product");
-            $("#itemModel").modal('show');
-        });
-
-        $('#btnSubmit').click(function () {
-            var isAllValid = true;
-
-            //validate order items
-
-            var list = [];
-            var errorItemCount = 0;
-            $('#printerChalanItems tbody tr').each(function (index, ele) {
-                if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                    var orderItem = {
-                        Id:$('.Id', this).val(),
-                        ChalanId: @Model.Id,
-                        ProductId: $('.productId', this).val(),
-                        Quantity: $('.productQuantity', this).text(),
-                        Fold: $('.productFold', this).text(),
-                        ExpectedFold: $('.expectedFold', this).text(),
-                        NetQuantity: $('.netQuantity', this).text(),
-                        Shrinkage: $('.shrinkage', this).text()
+                        $('.productId', $newRow).val($('#product').val());
+                        $('.productName', $newRow).text($('#product').find("option:selected").text());
+                        $('.productQuantity', $newRow).text($('#quantity').val());
+                        $('.productFold', $newRow).text($('#fold').val());
+                        $('.expectedFold', $newRow).text($('#expectedFold').val());
+                        $('.netQuantity', $newRow).text($('#netQuantity').val());
+                        $('.shrinkage', $newRow).text($('#shrinkage').val());
+                        $('.rowCount', $newRow).val($('#printerChalanItems tr').length + 1);
+                        $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
+                        $('#printerChalanItems').append($newRow);
+                        $('#quantity').val('');
+                        $('#fold').val('');
+                        $('#expectedFold').val('')
+                        $('#netQuantity').val('')
+                        $('#shrinkage').val('')
+                        $('#IdEdit').val('');
+                        $('#countEdit').val('');
+                        $("#itemModel").modal('hide');
                     }
-                    list.push(orderItem);
+                    else
+                    {
+                        $('#printerChalanItems tbody tr').each(function (index, ele) {
+                            //update product list
+                            if($('.rowCount', this).val() == $('#countEdit').val())
+                            {
+                                $('.productId', this).val($('#product').val());
+                                $('.productName', this).text($('#product').find("option:selected").text());
+                                $('.productQuantity', this).text($('#quantity').val());
+                                $('.productFold', this).text($('#fold').val());
+                                $('.expectedFold', this).text($('#expectedFold').val());
+                                $('.netQuantity', this).text($('#netQuantity').val());
+                                $('.shrinkage', this).text($('#shrinkage').val());
+                                //empty model popup
+                                $('#quantity').val('');
+                                $('#fold').val('');
+                                $('#rate').val('');
+                                $('#expectedFold').val('');
+                                $('#netQuantity').val('');
+                                $('#shrinkage').val('');
+                                $('#IdEdit').val('');
+                                $('#countEdit').val('');
+                                $("#itemModel").modal('hide');
+                                $('#addProductItem').text("Add Product");
+                            }
+                        });
+                    }
                 }
             });
 
-            var data = {
-                Id:@Model.Id,
-                    VendorId: $('#Vendor').val(),
-                    ChalanDate: $('#ChalanDate').val(),
-                    IsGivenToPrinting: (('@Model.IsGivenToPrinting' == 'True') ? 1 : 0),
-                    PrinterChalanDetails: list
-                }
 
-                //$(this).val('Please wait...');
+            $('#printerChalanItems').on('click', '.editItem', function(){
+                //show modelpopup with edit item
+                $('#product').val($('.productId', $(this).parents('tr')).val());
+                $('#quantity').val($('.productQuantity', $(this).parents('tr')).text());
+                $('#fold').val($('.productFold', $(this).parents('tr')).text());
+                $('#rate').val($('.productRate', $(this).parents('tr')).text());
+                $('#expectedFold').val($('.expectedFold', $(this).parents('tr')).text());
+                $('#netQuantity').val($('.netQuantity', $(this).parents('tr')).text());
+                $('#shrinkage').val($('.shrinkage', $(this).parents('tr')).text());
+                $('#IdEdit').val($('.Id', $(this).parents('tr')).val());
+                $('#countEdit').val($('.rowCount', $(this).parents('tr')).val());
+                $('#addProductItem').text("Update product");
+                $("#itemModel").modal('show');
+            });
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/PrinterChalans/Edit',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data != "0") {
-                            alert('Printer Chalan Updated Successfully.');
-                            window.location.href = '/PurchaseOrders/Details/' + data;
+            $('#btnSubmit').click(function () {
+                var isAllValid = validateMainPage();
+                if (isAllValid) {
+                    var list = [];
+                    var errorItemCount = 0;
+                    $('#printerChalanItems tbody tr').each(function (index, ele) {
+                        if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                            var orderItem = {
+                                Id:$('.Id', this).val(),
+                                ChalanId: @Model.Id,
+                                ProductId: $('.productId', this).val(),
+                                Quantity: $('.productQuantity', this).text(),
+                                Fold: $('.productFold', this).text(),
+                                ExpectedFold: @Model.IsGivenToPrinting ? $('.expectedFold', this).text() : 0,
+                                NetQuantity: @Model.IsGivenToPrinting ? $('.netQuantity', this).text() : 0,
+                                Shrinkage: @Model.IsGivenToPrinting ? $('.shrinkage', this).text() : 0
+                            }
+                            list.push(orderItem);
                         }
-                        else {
-                            //$(this).val('Save Printer Chalan');
-                            alert('Error in updating Printer Chalan.');
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
+                    });
+
+                    var data = {
+                        Id:@Model.Id,
+                        VendorId: $('#Vendor').val(),
+                        ChalanDate: $('#ChalanDate').val(),
+                        IsGivenToPrinting: (('@Model.IsGivenToPrinting' == 'True') ? 1 : 0),
+                        dispatch_document_number: (('@Model.IsGivenToPrinting' == 'True') ? $('#DocumentNo').val() : ''),
+                        dispatched_through: (('@Model.IsGivenToPrinting' == 'True') ? $('#DispatchThrough').val() : ''),
+                        bale_numbers: (('@Model.IsGivenToPrinting' == 'True') ? $('#BaleNo').val() : ''),
+                        Description: $('#Description').val(),
+                        PrinterChalanDetails: list
                     }
-                });
+
+                    //$(this).val('Please wait...');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/PrinterChalans/Edit',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data != "0") {
+                                alert('Printer Chalan Updated Successfully.');
+                                window.location.href = '/PurchaseOrders/Details/' + data;
+                            }
+                            else {
+                                //$(this).val('Save Printer Chalan');
+                                alert('Error in updating Printer Chalan.');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
             });
 
             //remove button click event
@@ -387,8 +444,85 @@
                 {
                     $(this).parents('tr').remove();
                 }
-
             });
+
+            // validation scripts
+            function validateModel() {
+                var result = true;
+                if ($('#quantity').val() == "") {
+                    $('#quantity').siblings('span.QuantityVal').text("Please Enter Quantity.");
+                    result = false;
+                }
+                if (isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.QuantityVal').text("Please Enter number in quantity.");
+                    result = false;
+                }
+                if ($('#fold').val() == "") {
+                    $('#fold').siblings('span.FoldVal').text("Please Enter Fold value.");
+                    result = false;
+                }
+                if (isNaN($('#fold').val())) {
+                    $('#fold').siblings('span.FoldVal').text("Please Enter number in Fold.");
+                    result = false;
+                }                
+                return result;
+            }
+
+            $('#quantity').change(function () {
+                if ($('#quantity').val() != "" && !isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.QuantityVal').text("");
+                }
+            });
+            $('#fold').change(function () {
+                if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
+                    $('#fold').siblings('span.FoldVal').text("");
+                }
+            });           
+
+            function validateMainPage() {
+                var result = true;
+                if ($('#ChalanNo').val() == "") {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter Fold Chalan Number.");
+                    result = false;
+                }
+                if (isNaN($('#ChalanNo').val())) {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter number in Chalan Number.");
+                    result = false;
+                }
+                if ($('#ChalanDate').val() == "") {
+                    $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
+                    result = false;
+                }
+                //if ($('#DocumentNo').val() == "") {
+                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
+                //    result = false;
+                //}
+                //if ($('#DispatchThrough').val() == "") {
+                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
+                //    result = false;
+                //}
+                //if ($('#Destination').val() == "") {
+                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
+                //    result = false;
+                //}
+                //if ($('#BaleNo').val() == "") {
+                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
+                //    result = false;
+                //}
+                return result;
+            }
+
+            $('#ChalanNo').change(function () {
+                if ($('#ChalanNo').val() != "" && !isNaN($('#ChalanNo'))) {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("");
+                }
+            });
+            $('#ChalanDate').change(function () {
+                if ($('#ChalanDate').val() != "") {
+                    $('#ChalanDate').siblings('span.ChalanDateVal').text("");
+                }
+            });
+
         });
     </script>
 }
