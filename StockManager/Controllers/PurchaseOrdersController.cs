@@ -40,7 +40,7 @@ namespace StockManager.Controllers
         public ActionResult Create()
         {
             var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails);
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName");
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             return View();
         }
@@ -65,7 +65,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", purchaseOrder.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName", purchaseOrder.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }
@@ -83,7 +83,7 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", purchaseOrder.VendorId);
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName", purchaseOrder.VendorId);
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             return View(purchaseOrder);
         }
@@ -119,7 +119,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", purchaseOrder.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName", purchaseOrder.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }
