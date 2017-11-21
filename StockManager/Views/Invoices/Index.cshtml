@@ -1,0 +1,60 @@
+﻿@model IEnumerable<StockManager.Models.InvoiceMaster>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Invoices</h2>
+
+<p>
+    @Html.ActionLink("Create New Invoice", "Create", null, new { @class = "btn btn-success" })
+</p>
+<table class="table table-striped table-advance table-hover mt">
+    <tr>
+        <th>
+            Invoice #
+        </th>
+        <th>
+            Vendor
+        </th>
+        <th>
+            Gross
+        </th>
+        <th>
+            Net
+        </th>
+        <th>
+            Created On
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.invoice_no, "Details", new { id = item.invoice_no })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+            </td>
+            <td>
+                $ @Html.DisplayFor(modelItem => item.gross_amount)
+            </td>
+            <td>
+                $ @Html.DisplayFor(modelItem => item.net_amount)
+            </td>
+            <td>
+                @(item.created_on?.ToString("MM/dd/yyyy"))
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.invoice_no }, new { @class = "btn btn-xs btn-warning" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.invoice_no }, new { @class = "btn btn-xs btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

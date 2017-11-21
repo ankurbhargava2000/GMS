@@ -162,6 +162,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\PrinterChalansController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
@@ -176,6 +177,12 @@
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FinancialYear.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InvoiceDetail.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InvoiceMaster.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PrinterChalan.cs">
@@ -194,6 +201,12 @@
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PurchaseOrder.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalesInvoice.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalesInvoiceDetail.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockEntry.cs">
@@ -497,6 +510,11 @@
     <Content Include="Views\TailorChalan\Details.cshtml" />
     <Content Include="Views\TailorChalan\Create.cshtml" />
     <Content Include="Views\TailorChalan\Edit.cshtml" />
+    <Content Include="Views\Invoices\Create.cshtml" />
+    <Content Include="Views\Invoices\Delete.cshtml" />
+    <Content Include="Views\Invoices\Details.cshtml" />
+    <Content Include="Views\Invoices\Edit.cshtml" />
+    <Content Include="Views\Invoices\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

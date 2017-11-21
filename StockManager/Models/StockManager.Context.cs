@@ -29,12 +29,16 @@ namespace StockManager.Models
     
         public virtual DbSet<ChalanType> ChalanTypes { get; set; }
         public virtual DbSet<FinancialYear> FinancialYears { get; set; }
+        public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
         public virtual DbSet<PrinterChalan> PrinterChalans { get; set; }
         public virtual DbSet<PrinterChalanDetail> PrinterChalanDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual DbSet<SalesInvoice> SalesInvoices { get; set; }
+        public virtual DbSet<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
         public virtual DbSet<StockEntry> StockEntries { get; set; }
         public virtual DbSet<TailorChalan> TailorChalans { get; set; }
         public virtual DbSet<TailorChalanDetail> TailorChalanDetails { get; set; }
