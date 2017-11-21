@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StockManager.Models;
-
+using PagedList;
 namespace StockManager.Controllers
 {
     public class PurchaseOrdersController : Controller
@@ -15,10 +15,12 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: PurchaseOrders
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails);
-            return View(purchaseOrders.ToList());
+            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails).OrderBy(x => x.InvoiceDate).OrderBy(x => x.InvoiceDate);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(purchaseOrders.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: PurchaseOrders/Details/5

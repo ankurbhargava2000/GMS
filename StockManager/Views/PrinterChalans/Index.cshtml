@@ -1,5 +1,6 @@
-﻿@model IEnumerable<StockManager.Models.PrinterChalan>
-
+﻿@*@model IEnumerable<StockManager.Models.PrinterChalan>*@
+@model PagedList.IPagedList<StockManager.Models.PrinterChalan>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Printer Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -66,5 +67,9 @@ else
             </td>
         </tr>
     }
-
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+        new { ViewBag.Send, page }))
