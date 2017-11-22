@@ -11,6 +11,7 @@ using PagedList;
 
 namespace StockManager.Controllers
 {
+    [CheckAuth]
     public class VendorsController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();

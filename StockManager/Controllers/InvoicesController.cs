@@ -7,18 +7,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using StockManager.Models;
+using PagedList;
 
 namespace StockManager.Controllers
 {
+    [CheckAuth]
     public class InvoicesController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: InvoiceMasters
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var invoiceMasters = db.InvoiceMasters.Include(i => i.FinancialYear).Include(i => i.User).Include(i => i.Vendor).Include(i => i.Tenant);
-            return View(invoiceMasters.ToList());
+            var invoiceMasters = db.InvoiceMasters.Include(i => i.FinancialYear).Include(i => i.User).Include(i => i.Vendor).Include(i => i.Tenant).OrderBy(x => x.created_on);
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(invoiceMasters.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: InvoiceMasters/Details/5

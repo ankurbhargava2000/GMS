@@ -10,6 +10,7 @@ using StockManager.Models;
 using PagedList;
 namespace StockManager.Controllers
 {
+    [CheckAuth]
     public class PrinterChalansController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
