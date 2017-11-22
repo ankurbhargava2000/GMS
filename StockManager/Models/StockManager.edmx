@@ -243,6 +243,7 @@
           <Property Name="Mobile" Type="varchar" MaxLength="50" />
           <Property Name="Phone" Type="varchar" MaxLength="50" />
           <Property Name="TenantId" Type="int" Nullable="false" />
+          <Property Name="password_reset_token" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -1119,6 +1120,7 @@
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__creat__778AC167" FromRole="User" ToRole="InvoiceDetails" />
           <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__creat__71D1E811" FromRole="User" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_User_Tenant" FromRole="User" ToRole="Tenant" />
+          <Property Name="password_reset_token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -1977,6 +1979,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="StockManagerModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="password_reset_token" ColumnName="password_reset_token" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

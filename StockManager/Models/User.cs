@@ -28,6 +28,7 @@ namespace StockManager.Models
         public string Mobile { get; set; }
         public string Phone { get; set; }
         public int TenantId { get; set; }
+        public string password_reset_token { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }

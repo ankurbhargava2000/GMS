@@ -182,6 +182,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GMailer.cs" />
     <Compile Include="Models\ChalanType.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -536,6 +537,8 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Users\ForgotPassword.cshtml" />
+    <Content Include="Views\Users\ResetPassword.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

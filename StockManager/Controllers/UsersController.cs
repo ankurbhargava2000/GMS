@@ -12,12 +12,84 @@ using System.Text;
 using System.Web.Security;
 using System.Security.Principal;
 using PagedList;
+using System.Net.Mail;
+using StockManager.Helpers;
 
 namespace StockManager.Controllers
 {
     public class UsersController : Controller
     {
+       
+
         private StockManagerEntities db = new StockManagerEntities();
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(string email)
+        {
+
+            if ( !String.IsNullOrEmpty(email) )
+            {
+
+                string token = Guid.NewGuid().ToString();
+
+                var url = ResolveServerUrl(VirtualPathUtility.ToAbsolute("/Users/ResetPassword"), false)
+                     + "?token=" + token;
+                var message = "<a href='"+url+"'>Click here to reset your password.</a>";                
+
+                var user = db.Users.Where(x => x.Email == email).FirstOrDefault();
+                user.password_reset_token = token;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+                GMailer.Send(email, "Password reset link", message);
+
+            }
+
+            return View();
+        }
+
+        public ActionResult ResetPassword(string token)
+        {
+            ViewBag.token = token;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(string token, string password, string confirm_password)
+        {
+            if ( !String.IsNullOrEmpty(password) && !String.IsNullOrEmpty(password) )
+            {
+                if ( password == confirm_password )
+                {
+                    var user = db.Users.Where(x => x.password_reset_token == token).FirstOrDefault();
+                    user.Password = Hash(password);
+                    user.password_reset_token = String.Empty;
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["SUCCESS"] = "Please login with your new password";
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ViewBag.ERR = "Password & Confirm password do not match";
+                }
+            }
+            else
+            {
+                ViewBag.ERR = "Please type password and confirm password fields";
+            }
+            
+            ViewBag.token = token;
+            return View();
+
+        }
 
         [CheckAuth]
         public ActionResult Index(int? page)
@@ -174,8 +246,7 @@ namespace StockManager.Controllers
             return View(login);
 
         }
-
-        //GET: SignInAsync
+        
         private void SignInRemember(string userName, bool isPersistent = false)
         {
             // Clear any lingering authencation data
@@ -191,8 +262,7 @@ namespace StockManager.Controllers
             if (Request.IsAuthenticated)
                 Logout();
         }
-
-        //POST: Logout
+        
         public ActionResult Logout()
         {
             try
@@ -269,6 +339,18 @@ namespace StockManager.Controllers
         public JsonResult IsEmailExists(string Email)
         {
             return Json(!db.Users.Any(x => x.Email == Email), JsonRequestBehavior.AllowGet);
+        }
+
+        public static string ResolveServerUrl(string serverUrl, bool forceHttps)
+        {
+            if (serverUrl.IndexOf("://") > -1)
+                return serverUrl;
+
+            string newUrl = serverUrl;
+            Uri originalUri = System.Web.HttpContext.Current.Request.Url;
+            newUrl = (forceHttps ? "https" : originalUri.Scheme) +
+                "://" + originalUri.Authority + newUrl;
+            return newUrl;
         }
 
     }

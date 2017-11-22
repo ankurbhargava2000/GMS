@@ -45,7 +45,7 @@ namespace StockManager.Controllers
         {
             ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
             ViewBag.product_id = db.Products.ToList();
-            ViewBag.invoice_no = this.RandomDigits(7);
+            ViewBag.invoice_no = db.InvoiceMasters.Last().Id + 1;
             return View();
         }
         
@@ -58,7 +58,6 @@ namespace StockManager.Controllers
             {                
                 db.InvoiceMasters.Add(invoice);
                 db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
 
