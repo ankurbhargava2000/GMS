@@ -45,7 +45,10 @@ namespace StockManager.Controllers
         {
             ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
             ViewBag.product_id = db.Products.ToList();
-            ViewBag.invoice_no = db.InvoiceMasters.Last().Id + 1;
+
+            var last = db.InvoiceMasters.OrderByDescending(o => o.Id).FirstOrDefault();
+
+            ViewBag.invoice_no = (last.Id+1);
             return View();
         }
         

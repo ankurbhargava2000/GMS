@@ -173,6 +173,26 @@
     <script>
         $(document).ready(function () {
 
+
+            $('form').submit(function () {
+
+                var tableRows = $("#products_table tr.itemrow");
+                var count = 0;
+
+                $.each(tableRows, function () {
+                    if ( $(this).is(":visible") )
+                    {
+                        count++;
+                    }
+                });
+                
+                if (count == 0) {
+                    alert('Please select at least 1 product for this invoice');
+                    return false;
+                }
+
+            });
+
             $('.selectpicker').selectpicker();
             $("#products_table").on('mouseup keyup', 'input', function () { CalculateTotal(); });
             $("#discount").keyup(function () { CalculateTotal(); });
