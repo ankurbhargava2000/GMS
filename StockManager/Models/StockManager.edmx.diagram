@@ -58,6 +58,11 @@
         <AssociationConnector Association="StockManagerModel.FK__Transacti__Vendo__45F365D3" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Vendor__VendorTy__47DBAE45" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__InvoiceDe__invoi__02FC7413" />
+        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceived" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceivedDetail" Width="1.5" PointX="8.25" PointY="7.125" />
+        <AssociationConnector Association="StockManagerModel.FK__PrintJobW__Chala__06CD04F7" />
+        <AssociationConnector Association="StockManagerModel.FK__PrintJobW__Vendo__05D8E0BE" />
+        <AssociationConnector Association="StockManagerModel.FK__PrintJobW__Produ__07C12930" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

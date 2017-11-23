@@ -48,6 +48,8 @@ namespace StockManager.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
+        public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
+        public virtual DbSet<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
     
         public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock()
         {
