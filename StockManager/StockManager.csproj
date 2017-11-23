@@ -170,22 +170,33 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\PrinterChalansController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StockEntriesController.cs" />
     <Compile Include="Controllers\TailorChalanController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GMailer.cs" />
     <Compile Include="Models\ChalanType.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CheckAuth.cs" />
     <Compile Include="Models\FinancialYear.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InvoiceDetail.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InvoiceMaster.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Models\PrinterChalan.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -202,6 +213,12 @@
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PurchaseOrder.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalesInvoice.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalesInvoiceDetail.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockEntry.cs">
@@ -240,6 +257,7 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserExtend.cs" />
     <Compile Include="Models\USP_ProductWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -305,6 +323,7 @@
     <Content Include="Content\lineicons\index.html" />
     <Content Include="Content\lineicons\lte-ie7.js" />
     <Content Include="Content\lineicons\style.css" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -447,6 +466,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Downloads\" />
+    <Folder Include="Views\Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -506,6 +526,19 @@
     <Content Include="Views\TailorChalan\Details.cshtml" />
     <Content Include="Views\TailorChalan\Create.cshtml" />
     <Content Include="Views\TailorChalan\Edit.cshtml" />
+    <Content Include="Views\Invoices\Create.cshtml" />
+    <Content Include="Views\Invoices\Delete.cshtml" />
+    <Content Include="Views\Invoices\Details.cshtml" />
+    <Content Include="Views\Invoices\Edit.cshtml" />
+    <Content Include="Views\Invoices\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Users\ForgotPassword.cshtml" />
+    <Content Include="Views\Users\ResetPassword.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

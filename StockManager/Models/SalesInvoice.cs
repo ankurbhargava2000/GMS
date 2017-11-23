@@ -12,25 +12,28 @@ namespace StockManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TailorChalanDetail
+    public partial class SalesInvoice
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TailorChalanDetail()
+        public SalesInvoice()
         {
-            this.TailorMaterialDetails = new HashSet<TailorMaterialDetail>();
+            this.SalesInvoiceDetails = new HashSet<SalesInvoiceDetail>();
         }
     
         public int Id { get; set; }
-        public int ChalanId { get; set; }
-        public int ProductId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> LaborCost { get; set; }
+        public int VendorId { get; set; }
+        public int InvoiceNumber { get; set; }
+        public System.DateTime InvoiceDate { get; set; }
+        public Nullable<System.DateTime> Created { get; set; }
+        public Nullable<System.DateTime> Updated { get; set; }
         public string Description { get; set; }
+        public string dispatch_document_number { get; set; }
+        public string dispatched_through { get; set; }
+        public string destination { get; set; }
+        public string bale_numbers { get; set; }
     
-        public virtual Product Product { get; set; }
-        public virtual TailorChalan TailorChalan { get; set; }
-        public virtual TailorChalan TailorChalan1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TailorMaterialDetail> TailorMaterialDetails { get; set; }
+        public virtual ICollection<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }

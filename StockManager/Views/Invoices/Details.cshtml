@@ -1,0 +1,112 @@
+﻿@model StockManager.Models.InvoiceMaster
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top: 50px;">
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <h4>Invoice #</h4>
+                <div>
+                    @Model.invoice_no
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <h4>Vendor</h4>
+                <div>
+                    @Model.Vendor.VendorName
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <h4>Date</h4>
+                <div>
+                    @(Model.created_on?.ToString("MM/dd/yyyy"))
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-8">
+            <h4>Products</h4>
+            <table id="products_table" class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Sale rate</th>
+                    <th>Qty</th>
+                    <th>Discount</th>
+                    <th>P.Total</th>
+                </tr>
+                @{
+                    if (Model.InvoiceDetails.Count() > 0)
+                    {
+                        foreach (var item in Model.InvoiceDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                                </td>
+                                <td style='width: 15%' class='sale'>
+                                    $ @item.sale_rate
+                                </td>
+                                <td style='width: 15%' class='qty'>
+                                    @item.quantity
+                                </td>
+
+                                <td style='width: 15%' class='dscnt'>
+                                    $ @item.discount
+                                </td>
+                                <td class='ptotal'>
+                                    $ @((item.quantity * item.sale_rate) - item.discount)
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h4>Total</h4>
+            <table class="table">
+                <tr>
+                    <td style="width: 70%">
+                        Subtotal
+                    </td>
+                    <td id="sub_total">
+                        $ @Model.gross_amount
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Discount
+                    </td>
+                    <td>
+                        $ @Model.discount
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Total
+                    </td>
+                    <td id="total_discount">
+                        $ @Model.net_amount
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+</div>

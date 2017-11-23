@@ -4,6 +4,7 @@
     <title>Stock Manager</title>
     @Styles.Render("~/Content/css") 
     @Styles.Render("~/Content/DateCSS")
+    @RenderSection("css", false)
 </head>
 <body>
 
@@ -74,6 +75,18 @@
                             <i class="fa fa-life-bouy"></i>
                             <span>Product</span>
                         </a>
+                    </li>   
+                    <li class="mt">
+                        <a href="@Url.Action("Index", "Invoices")">
+                            <i class="fa fa-life-bouy"></i>
+                            <span>Invoices</span>
+                        </a>
+                    </li>    
+                    <li class="mt">
+                        <a href="@Url.Action("Index", "Users")">
+                            <i class="fa fa-life-bouy"></i>
+                            <span>Users</span>
+                        </a>
                     </li>                   
                     <li class="sub-menu">
                         <a href="javascript:;">
@@ -84,7 +97,13 @@
                             <li><a href="~/Report/VendorWiseStock">Vendor Wise Stock</a></li>
                             <li><a href="~/Report/ProductWiseStock">Product Wise Stock</a></li>
                         </ul>
-                    </li>                   
+                    </li>            
+                    <li class="mt">
+                        <a href="@Url.Action("Logout", "Users")">
+                            <i class="fa fa-file-pdf-o"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>       
                 <!-- sidebar menu end-->
             </div>
         </aside>

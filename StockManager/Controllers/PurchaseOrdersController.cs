@@ -10,6 +10,7 @@ using StockManager.Models;
 using PagedList;
 namespace StockManager.Controllers
 {
+    [CheckAuth]
     public class PurchaseOrdersController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();

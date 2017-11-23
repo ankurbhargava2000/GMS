@@ -12,26 +12,30 @@ namespace StockManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FinancialYear
+    public partial class InvoiceMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FinancialYear()
+        public InvoiceMaster()
         {
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
-            this.InvoiceMasters = new HashSet<InvoiceMaster>();
-            this.Tenants = new HashSet<Tenant>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public string invoice_no { get; set; }
+        public Nullable<int> customer_id { get; set; }
+        public double gross_amount { get; set; }
+        public double net_amount { get; set; }
+        public Nullable<System.DateTime> created_on { get; set; }
+        public Nullable<int> created_by { get; set; }
+        public Nullable<int> financial_year { get; set; }
+        public Nullable<int> tenant_id { get; set; }
+        public Nullable<double> discount { get; set; }
     
+        public virtual FinancialYear FinancialYear { get; set; }
+        public virtual User User { get; set; }
+        public virtual Vendor Vendor { get; set; }
+        public virtual Tenant Tenant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tenant> Tenants { get; set; }
     }
 }

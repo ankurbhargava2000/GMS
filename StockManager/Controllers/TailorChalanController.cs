@@ -10,6 +10,7 @@ using PagedList;
 
 namespace StockManager.Controllers
 {
+    [CheckAuth]
     public class TailorChalanController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
@@ -110,7 +111,7 @@ namespace StockManager.Controllers
                             objTailorMaterial.TailorChalanDetailsId = objTailorDetails.Id;
                             db.Entry(objTailorMaterial).State = EntityState.Added;
                             db.SaveChanges();
-                        }                        
+                        }
                     }
 
                     foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
@@ -125,11 +126,11 @@ namespace StockManager.Controllers
                     while (tailorChalan.TailorChalanDetails.Where(x => x.Id == 0).Count() > 0)
                         tailorChalan.TailorChalanDetails.Remove(tailorChalan.TailorChalanDetails.Where(x => x.Id == 0).ToList()[0]);
 
-                    foreach(var x in tailorChalan.TailorChalanDetails)
+                    foreach (var x in tailorChalan.TailorChalanDetails)
                     {
                         x.TailorMaterialDetails = null;
                     }
-                    
+
                     DateTime dtDate = DateTime.Now;
                     tailorChalan.Updated = dtDate;
                     db.Entry(tailorChalan).State = EntityState.Modified;

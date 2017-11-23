@@ -12,20 +12,16 @@ namespace StockManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class VendorType
+    public partial class SalesInvoiceDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public VendorType()
-        {
-            this.Vendors = new HashSet<Vendor>();
-        }
-    
         public int Id { get; set; }
-        public string VendorType1 { get; set; }
+        public int SalesInvoiceId { get; set; }
+        public int ProductId { get; set; }
+        public decimal Quantity { get; set; }
+        public Nullable<decimal> Rate { get; set; }
         public string Description { get; set; }
-        public Nullable<bool> IsActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vendor> Vendors { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual SalesInvoice SalesInvoice { get; set; }
     }
 }

@@ -1,0 +1,299 @@
+﻿@model StockManager.Models.InvoiceMaster
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+}
+
+<h4 style="margin-top: 20px">Invoice | Create</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("deleted_items", "", new { Id = "deleted_array" })
+   
+    <div class="container-fluid">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Invoice #</label>
+                    @Html.EditorFor(model => model.invoice_no, new { htmlAttributes = new { @class = "form-control", Value = @ViewBag.invoice_no, required = true } })
+                    @Html.ValidationMessageFor(model => model.invoice_no, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Vendor</label>
+                    @Html.DropDownList("customer_id", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = "on" })
+                    @Html.ValidationMessageFor(model => model.customer_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Date</label>
+                    @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control form_date" } })
+                    @Html.ValidationMessageFor(model => model.created_on, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <label>Vendor</label>
+                            <select class="form-control selectpicker" id="product_selector" data-live-search="on">
+                                @{
+                                    foreach (var item in ViewBag.product_id)
+                                    {
+                                        <option data-sale-rate="0" value="@item.Id">@item.ProductName</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td style="width: 10%">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-block btn-success" id="addProduct">Add</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+
+            <div class="col-md-8">
+                <h4>Products</h4>
+                <table id="products_table" class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Sale rate</th>
+                        <th>Qty</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>x</th>
+                    </tr>
+                    @{
+                        if (Model.InvoiceDetails.Count() > 0)
+                        {
+                            int i = 0;
+
+                            foreach (var item in Model.InvoiceDetails)
+                            {
+                                <tr id='item_@item.product_id' class='itemrow'>
+                                    <td>
+                                        <input type="hidden" name="InvoiceDetails[@i].Id" value="@item.Id" />
+                                        <input type="hidden" name="InvoiceDetails[@i].invoice_id" value="@item.invoice_id" />
+                                        <input type='hidden' name='InvoiceDetails[@i].product_id' value='@item.product_id' />
+                                        <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                                    </td>
+                                    <td style='width: 15%' class='sale'>
+                                        <input type='text' name='InvoiceDetails[@i].sale_rate' class='itemInput form-control' value='@item.sale_rate' />
+                                    </td>
+                                    <td style='width: 15%' class='qty'>
+                                        <input type='number' name='InvoiceDetails[@i].quantity' class='itemInput form-control' value='@item.quantity' />
+                                    </td>
+
+                                    <td style='width: 15%' class='dscnt'>
+                                        <input type='text' name='InvoiceDetails[@i].discount' class='itemInput form-control' value='@item.discount' />
+                                    </td>
+                                    <td class='ptotal'>
+                                        @((item.quantity * item.sale_rate) - item.discount)
+                                    </td>
+                                    <td>
+                                        <a data-detail-id="@item.Id" style='margin-top: 5px;' href='#' class='delete btn btn-xs btn-danger'>X</a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    }
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table class="table">
+                    <tr>
+                        <td style="width: 70%">
+                            Subtotal
+                        </td>
+                        <td id="sub_total">
+                            @Model.gross_amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Discount
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.discount, new { htmlAttributes = new { @class = "form-control", id = "discount" } })
+                            @Html.ValidationMessageFor(model => model.discount, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <td id="total_discount">
+                            @Model.net_amount
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <div>
+                        <button class="btn btn-block btn-success">
+                            Generate Invoice
+                        </button>
+                    </div>
+                    <div>
+                        <input type="hidden" name="gross_amount" id="gross" value="@Model.gross_amount">
+                        <input type="hidden" name="net_amount" id="total" value="@Model.net_amount">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                        }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+
+            $('form').submit(function () {
+
+                var tableRows = $("#products_table tr.itemrow");
+                var count = 0;
+
+                $.each(tableRows, function () {
+                    if ( $(this).is(":visible") )
+                    {
+                        count++;
+                    }
+                });
+                
+                if (count == 0) {
+                    alert('Please select at least 1 product for this invoice');
+                    return false;
+                }
+
+            });
+
+            $('.selectpicker').selectpicker();
+            $("#products_table").on('mouseup keyup', 'input', function () { CalculateTotal(); });
+            $("#discount").keyup(function () { CalculateTotal(); });
+
+            $(".delete").on('click', function () {
+
+                var id = $(this).data('detail-id');
+
+                var deleted_array = $("#deleted_array").val();
+                deleted_array = deleted_array + "," + id;
+
+                $("#deleted_array").val(deleted_array);
+
+                $(this).parent().parent().hide();
+                event.preventDefault();
+                CalculateTotal();
+            });
+
+            $("#addProduct").on('click', function () {
+
+                event.preventDefault();
+
+                var i = $('.newItem').length;
+
+                var option = $("#product_selector option:selected");
+
+                if (($('#item_' + option.val()).length)) {
+
+                    $($('#item_' + option.val()).children('.qty').children('input')).val(function (i, oldval) {
+                        return ++oldval;
+                    });
+                    CalculateTotal();
+                    return;
+                }
+
+                var row = "<tr id='item_" + option.val() + "' class='itemrow newItem'>";
+
+                // Name
+                row += "<td>"
+                row += "<input type='hidden' name='nInvoiceDetails[" + i + "].product_id' value='" + option.val() + "' />";
+                row += "<div style='margin-top: 5px;'>" + option.text() + "</div>";
+                row += "</td>"
+
+                // Sale rate
+                row += "<td style='width: 15%' class='sale'>"
+                row += "<input type='text' name='nInvoiceDetails[" + i + "].sale_rate' class='itemInput form-control' value='" + 0 + "' />";
+                row += "</td>"
+
+                // Quantity
+                row += "<td style='width: 15%' class='qty'>"
+                row += "<input type='number' name='nInvoiceDetails[" + i + "].quantity' class='itemInput form-control' value='" + 1 + "' />";
+                row += "</td>"
+
+                // Discount
+                row += "<td style='width: 15%' class='dscnt'>"
+                row += "<input type='text' name='nInvoiceDetails[" + i + "].discount' class='itemInput form-control' value='" + 0 + "' />";
+                row += "</td>"
+
+                // Product total
+                row += "<td class='ptotal'>"
+                row += "</td>"
+
+                // Delete Btn
+                row += "<td>";
+                row += "<a  style='margin-top: 5px;' href='#' class='delete btn btn-xs btn-danger'>X</a>"
+                row += "</td>";
+
+                row += "</tr>"
+
+                $("#products_table").append(row);
+                CalculateTotal();
+            });
+
+        });
+
+        function CalculateTotal() {
+
+            var subtotal = 0;
+            var total_discount = $("#discount").val();
+
+            $('.itemrow').each(function () {
+
+                var qty = $(this).children('.qty').children('input').val();
+                var discount = $(this).children('.dscnt').children('input').val();
+                var sale_price = $(this).children('.sale').children('input').val();
+
+                var ptotal = (qty * sale_price) - discount;
+
+                $(this).children('.ptotal').text(ptotal);
+
+                subtotal += ptotal;
+
+            });
+
+            $("#sub_total").html(subtotal);
+            $("#total_discount").html(subtotal - total_discount);
+
+            $("input#gross").val(subtotal);
+            $("input#total").val(subtotal - total_discount);
+
+        };
+
+    </script>
+}

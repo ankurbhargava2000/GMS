@@ -10,6 +10,7 @@ using StockManager.Models;
 
 namespace StockManager.Controllers
 {
+    [CheckAuth]
     public class StockEntriesController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();

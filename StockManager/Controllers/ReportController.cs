@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace StockManager.Controllers
 {
+    [CheckAuth]
     public class ReportController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
