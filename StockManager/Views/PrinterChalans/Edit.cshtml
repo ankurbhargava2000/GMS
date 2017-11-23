@@ -114,8 +114,7 @@
                                 <td>
                                     <label class="productFold">Fold</label>
                                 </td>
-                                @if (@Model.IsGivenToPrinting == true)
-                                {
+                                
                                     <td>
                                         <label class="expectedFold">ExpectedFold</label>
                                     </td>
@@ -125,7 +124,7 @@
                                     <td>
                                         <label class="netQuantity">NetQuantity</label>
                                     </td>
-                                }
+                                
                                 <td class="itemEditRow"></td>
                             </tr>
                             @if (Model != null && Model.PrinterChalanDetails != null)
@@ -147,8 +146,7 @@
                                         <td>
                                             <label class="productFold">@item.Fold</label>
                                         </td>
-                                        @if (@Model.IsGivenToPrinting == true)
-                                        {
+                                        
                                             <td>
                                                 <label class="expectedFold">@item.ExpectedFold</label>
                                             </td>
@@ -158,7 +156,7 @@
                                             <td>
                                                 <label class="netQuantity">@item.NetQuantity</label>
                                             </td>
-                                        }
+                                        
                                         <td class="itemEditRow">
                                             <button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button>
                                             <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>
@@ -372,9 +370,9 @@
                                 ProductId: $('.productId', this).val(),
                                 Quantity: $('.productQuantity', this).text(),
                                 Fold: $('.productFold', this).text(),
-                                ExpectedFold: @Model.IsGivenToPrinting ? $('.expectedFold', this).text() : 0,
-                                NetQuantity: @Model.IsGivenToPrinting ? $('.netQuantity', this).text() : 0,
-                                Shrinkage: @Model.IsGivenToPrinting ? $('.shrinkage', this).text() : 0
+                                ExpectedFold: $('.expectedFold', this).text(),
+                                NetQuantity: $('.netQuantity', this).text(),
+                                Shrinkage: $('.shrinkage', this).text()
                             }
                             list.push(orderItem);
                         }
@@ -384,10 +382,9 @@
                         Id:@Model.Id,
                         VendorId: $('#Vendor').val(),
                         ChalanDate: $('#ChalanDate').val(),
-                        IsGivenToPrinting: (('@Model.IsGivenToPrinting' == 'True') ? 1 : 0),
-                        dispatch_document_number: (('@Model.IsGivenToPrinting' == 'True') ? $('#DocumentNo').val() : ''),
-                        dispatched_through: (('@Model.IsGivenToPrinting' == 'True') ? $('#DispatchThrough').val() : ''),
-                        bale_numbers: (('@Model.IsGivenToPrinting' == 'True') ? $('#BaleNo').val() : ''),
+                        dispatch_document_number: $('#DocumentNo').val(),
+                        dispatched_through: $('#DispatchThrough').val(),
+                        bale_numbers: $('#BaleNo').val(),
                         Description: $('#Description').val(),
                         PrinterChalanDetails: list
                     }

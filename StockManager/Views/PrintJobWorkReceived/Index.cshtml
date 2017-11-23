@@ -1,19 +1,20 @@
-﻿@*@model IEnumerable<StockManager.Models.PrinterChalan>*@
-@model PagedList.IPagedList<StockManager.Models.PrinterChalan>
+﻿@*@model IEnumerable<StockManager.Models.PrintJobWorkReceived>*@
+@model PagedList.IPagedList<StockManager.Models.PrintJobWorkReceived>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Printer Chalan";
+    ViewBag.Title = "Printing Job Work Chalans";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Printer Chalan</h2>
-    <table class="table-responsive">
-        <tr>
-            <td class="col-md-12 col-xs-12">
-                @Html.ActionLink("Create new chalan", "Create", null, new { @class = "btn btn-success" })
-            </td>
-        </tr>
-    </table>
+<h2>Printing Job Work Chalans</h2>
+
+<table class="table-responsive">
+    <tr>
+        <td class="col-md-12 col-xs-12">
+            @Html.ActionLink("Create new chalan", "Create", new { id = 0 }, new { @class = "btn btn-success " })
+        </td>
+    </tr>
+</table>
 
 <table class="table table-striped table-advance table-hover mt">
     <tr>
@@ -27,7 +28,6 @@
             Chalan Date
         </th>
         
-
         <th></th>
     </tr>
 

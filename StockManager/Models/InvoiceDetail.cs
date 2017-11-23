@@ -21,8 +21,9 @@ namespace StockManager.Models
         public int quantity { get; set; }
         public double discount { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
-    
+
         public virtual InvoiceMaster InvoiceMaster { get; set; }
         public virtual Product Product { get; set; }
+
     }
 }

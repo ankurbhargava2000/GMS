@@ -11,14 +11,14 @@ using PagedList;
 namespace StockManager.Controllers
 {
     [CheckAuth]
-    public class PrinterChalansController : Controller
+    public class PrintJobWorkReceivedController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: PrinterChalans
         public ActionResult Index( int? page)
         {
-            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Include(p => p.PrinterChalanDetails).OrderBy(x => x.ChalanDate);
+            var printerChalans = db.PrintJobWorkReceiveds.Include(p => p.Vendor).Include(p => p.PrintJobWorkReceivedDetails).OrderBy(x => x.ChalanDate);
             
             int pageSize = 3;
             int pageNumber = (page ?? 1);
@@ -32,7 +32,7 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
+            PrintJobWorkReceived printerChalan = db.PrintJobWorkReceiveds.Find(id);
             if (printerChalan == null)
             {
                 return HttpNotFound();
@@ -44,14 +44,13 @@ namespace StockManager.Controllers
         public ActionResult Create()
         {
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");
-           
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");            
             return View();
         }
 
         // POST: PrinterChalans/Create       
         [HttpPost]
-        public JsonResult Create(PrinterChalan printerChalan)
+        public JsonResult Create(PrintJobWorkReceived printerChalan)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -61,7 +60,7 @@ namespace StockManager.Controllers
                     printerChalan.Created = dtDate;
                     printerChalan.Updated = dtDate;
 
-                    db.PrinterChalans.Add(printerChalan);
+                    db.PrintJobWorkReceiveds.Add(printerChalan);
                     db.SaveChanges();
                     int scope_id = printerChalan.Id;
                     transaction.Commit();
@@ -84,7 +83,7 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
+            PrintJobWorkReceived printerChalan = db.PrintJobWorkReceiveds.Find(id);
             if (printerChalan == null)
             {
                 return HttpNotFound();
@@ -96,13 +95,13 @@ namespace StockManager.Controllers
 
         // POST: PrinterChalans/Edit/5        
         [HttpPost]
-        public JsonResult Edit(PrinterChalan printerChalan)
+        public JsonResult Edit(PrintJobWorkReceived printerChalan)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    foreach (var objPurchaseDetails in printerChalan.PrinterChalanDetails)
+                    foreach (var objPurchaseDetails in printerChalan.PrintJobWorkReceivedDetails)
                     {
                         if (objPurchaseDetails.Id == 0)
                         {
@@ -111,8 +110,8 @@ namespace StockManager.Controllers
                         }
                     }
 
-                    while (printerChalan.PrinterChalanDetails.Where(x => x.Id == 0).Count() > 0)
-                        printerChalan.PrinterChalanDetails.Remove(printerChalan.PrinterChalanDetails.Where(x => x.Id == 0).ToList()[0]);
+                    while (printerChalan.PrintJobWorkReceivedDetails.Where(x => x.Id == 0).Count() > 0)
+                        printerChalan.PrintJobWorkReceivedDetails.Remove(printerChalan.PrintJobWorkReceivedDetails.Where(x => x.Id == 0).ToList()[0]);
 
                     DateTime dtDate = DateTime.Now;
                     printerChalan.Updated = dtDate;
@@ -122,7 +121,7 @@ namespace StockManager.Controllers
                     transaction.Commit();
                     return Json(Convert.ToString(printerChalan.Id));
                 }
-                catch
+                catch(Exception ex)
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
@@ -139,8 +138,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
-            db.PrinterChalans.Remove(printerChalan);
+            PrintJobWorkReceived printerChalan = db.PrintJobWorkReceiveds.Find(id);
+            db.PrintJobWorkReceiveds.Remove(printerChalan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -155,8 +154,8 @@ namespace StockManager.Controllers
             {
                 if (id != null && id != 0)
                 {
-                    PrinterChalanDetail printerChalanDetail = (PrinterChalanDetail)db.PrinterChalanDetails.Where(x => x.Id == id).FirstOrDefault();
-                    db.PrinterChalanDetails.Remove(printerChalanDetail);
+                    PrintJobWorkReceivedDetail printerChalanDetail = (PrintJobWorkReceivedDetail)db.PrintJobWorkReceivedDetails.Where(x => x.Id == id).FirstOrDefault();
+                    db.PrintJobWorkReceivedDetails.Remove(printerChalanDetail);
                     db.SaveChanges();
                     return Json("product deleted Successfully.");
                 }

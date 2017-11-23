@@ -18,7 +18,7 @@ namespace StockManager.Controllers
         // GET: PurchaseOrders
         public ActionResult Index(int? page)
         {
-            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails).OrderBy(x => x.InvoiceDate).OrderBy(x => x.InvoiceDate);
+            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails).OrderBy(x => x.InvoiceDate);
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(purchaseOrders.ToPagedList(pageNumber, pageSize));
