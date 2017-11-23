@@ -43,7 +43,7 @@ namespace StockManager.Controllers
         public ActionResult Create(int ?id)
         {
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");
             ViewBag.GivenToPrinter = id;
             return View();
         }
@@ -69,7 +69,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }
@@ -89,7 +89,7 @@ namespace StockManager.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
             return View(printerChalan);
         }
 
@@ -124,7 +124,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", printerChalan.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }
