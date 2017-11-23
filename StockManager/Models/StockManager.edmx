@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChalanType">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,8 +20,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="StartDate" Type="datetime2" Precision="7" />
-          <Property Name="EndDate" Type="datetime2" Precision="7" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="InvoiceDetails">
           <Key>
@@ -32,18 +32,15 @@
           <Property Name="product_id" Type="int" />
           <Property Name="sale_rate" Type="float" Nullable="false" />
           <Property Name="quantity" Type="int" Nullable="false" />
-          <Property Name="created_on" Type="datetime" />
-          <Property Name="created_by" Type="int" />
           <Property Name="discount" Type="float" Nullable="false" />
-          <Property Name="financial_year" Type="int" />
-          <Property Name="tenant_id" Type="int" />
+          <Property Name="created_at" Type="datetime" />
         </EntityType>
         <EntityType Name="InvoiceMaster">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="invoice_no" Type="varchar(max)" Nullable="false" />
+          <Property Name="invoice_no" Type="int" Nullable="false" />
           <Property Name="customer_id" Type="int" />
           <Property Name="gross_amount" Type="float" Nullable="false" />
           <Property Name="net_amount" Type="float" Nullable="false" />
@@ -52,6 +49,7 @@
           <Property Name="financial_year" Type="int" />
           <Property Name="tenant_id" Type="int" />
           <Property Name="discount" Type="float" />
+          <Property Name="created_at" Type="datetime" />
         </EntityType>
         <EntityType Name="PrinterChalan">
           <Key>
@@ -238,7 +236,7 @@
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Mobile" Type="varchar" MaxLength="50" />
           <Property Name="Phone" Type="varchar" MaxLength="50" />
@@ -270,36 +268,10 @@
           <Property Name="Description" Type="varchar" MaxLength="200" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
-        <Association Name="FK__InvoiceDe__creat__778AC167">
-          <End Role="User" Type="Self.User" Multiplicity="0..1">
+        <Association Name="FK__InvoiceDe__invoi__17036CC0">
+          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="InvoiceDetails">
-              <PropertyRef Name="created_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__InvoiceDe__finan__76969D2E">
-          <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FinancialYear">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceDetails">
-              <PropertyRef Name="financial_year" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__InvoiceDe__invoi__02FC7413">
-          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="0..1" />
           <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InvoiceMaster">
@@ -321,20 +293,6 @@
             </Principal>
             <Dependent Role="InvoiceDetails">
               <PropertyRef Name="product_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__InvoiceDe__tenan__787EE5A0">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceDetails">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -694,24 +652,12 @@
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorType" EntityType="Self.VendorType" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__InvoiceDe__creat__778AC167" Association="Self.FK__InvoiceDe__creat__778AC167">
-            <End Role="User" EntitySet="User" />
-            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__finan__76969D2E" Association="Self.FK__InvoiceDe__finan__76969D2E">
-            <End Role="FinancialYear" EntitySet="FinancialYear" />
-            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__invoi__02FC7413" Association="Self.FK__InvoiceDe__invoi__02FC7413">
+          <AssociationSet Name="FK__InvoiceDe__invoi__17036CC0" Association="Self.FK__InvoiceDe__invoi__17036CC0">
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__InvoiceDe__produ__797309D9" Association="Self.FK__InvoiceDe__produ__797309D9">
             <End Role="Product" EntitySet="Product" />
-            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__tenan__787EE5A0" Association="Self.FK__InvoiceDe__tenan__787EE5A0">
-            <End Role="Tenant" EntitySet="Tenant" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__InvoiceMa__creat__71D1E811" Association="Self.FK__InvoiceMa__creat__71D1E811">
@@ -823,7 +769,8 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -842,9 +789,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StartDate" Type="DateTime" Precision="7" />
-          <Property Name="EndDate" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__finan__76969D2E" FromRole="FinancialYear" ToRole="InvoiceDetails" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__finan__72C60C4A" FromRole="FinancialYear" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Tenants" Relationship="Self.FK_Tenant_FinancialYear" FromRole="FinancialYear" ToRole="Tenant" />
         </EntityType>
@@ -857,23 +803,17 @@
           <Property Name="product_id" Type="Int32" />
           <Property Name="sale_rate" Type="Double" Nullable="false" />
           <Property Name="quantity" Type="Int32" Nullable="false" />
-          <Property Name="created_on" Type="DateTime" Precision="3" />
-          <Property Name="created_by" Type="Int32" />
           <Property Name="discount" Type="Double" Nullable="false" />
-          <Property Name="financial_year" Type="Int32" />
-          <Property Name="tenant_id" Type="Int32" />
-          <NavigationProperty Name="FinancialYear" Relationship="Self.FK__InvoiceDe__finan__76969D2E" FromRole="InvoiceDetails" ToRole="FinancialYear" />
-          <NavigationProperty Name="User" Relationship="Self.FK__InvoiceDe__creat__778AC167" FromRole="InvoiceDetails" ToRole="User" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="InvoiceMaster" Relationship="Self.FK__InvoiceDe__invoi__17036CC0" FromRole="InvoiceDetails" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Product" Relationship="Self.FK__InvoiceDe__produ__797309D9" FromRole="InvoiceDetails" ToRole="Product" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK__InvoiceDe__tenan__787EE5A0" FromRole="InvoiceDetails" ToRole="Tenant" />
-          <NavigationProperty Name="InvoiceMaster" Relationship="StockManagerModel.FK__InvoiceDe__invoi__02FC7413" FromRole="InvoiceDetail" ToRole="InvoiceMaster" />
         </EntityType>
         <EntityType Name="InvoiceMaster">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="invoice_no" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="invoice_no" Type="Int32" Nullable="false" />
           <Property Name="customer_id" Type="Int32" />
           <Property Name="gross_amount" Type="Double" Nullable="false" />
           <Property Name="net_amount" Type="Double" Nullable="false" />
@@ -882,11 +822,12 @@
           <Property Name="financial_year" Type="Int32" />
           <Property Name="tenant_id" Type="Int32" />
           <Property Name="discount" Type="Double" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK__InvoiceMa__finan__72C60C4A" FromRole="InvoiceMaster" ToRole="FinancialYear" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__invoi__17036CC0" FromRole="InvoiceMaster" ToRole="InvoiceDetails" />
           <NavigationProperty Name="User" Relationship="Self.FK__InvoiceMa__creat__71D1E811" FromRole="InvoiceMaster" ToRole="User" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__InvoiceMa__custo__6FE99F9F" FromRole="InvoiceMaster" ToRole="Vendor" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK__InvoiceMa__tenan__73BA3083" FromRole="InvoiceMaster" ToRole="Tenant" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="StockManagerModel.FK__InvoiceDe__invoi__02FC7413" FromRole="InvoiceMaster" ToRole="InvoiceDetail" />
         </EntityType>
         <EntityType Name="PrinterChalan">
           <Key>
@@ -1087,7 +1028,6 @@
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CurrentFinYear" Type="Int32" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_Tenant_FinancialYear" FromRole="Tenant" ToRole="FinancialYear" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__tenan__787EE5A0" FromRole="Tenant" ToRole="InvoiceDetails" />
           <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__tenan__73BA3083" FromRole="Tenant" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Tenant" FromRole="Tenant" ToRole="User" />
         </EntityType>
@@ -1112,15 +1052,14 @@
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TenantId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__creat__778AC167" FromRole="User" ToRole="InvoiceDetails" />
+          <Property Name="password_reset_token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__creat__71D1E811" FromRole="User" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_User_Tenant" FromRole="User" ToRole="Tenant" />
-          <Property Name="password_reset_token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -1156,20 +1095,6 @@
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Vendors" Relationship="Self.FK__Vendor__VendorTy__47DBAE45" FromRole="VendorType" ToRole="Vendor" />
         </EntityType>
-        <Association Name="FK__InvoiceDe__finan__76969D2E">
-          <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InvoiceDetails" Type="Self.InvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FinancialYear">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceDetails">
-              <PropertyRef Name="financial_year" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__InvoiceMa__finan__72C60C4A">
           <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1196,17 +1121,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceDe__creat__778AC167">
-          <End Role="User" Type="Self.User" Multiplicity="0..1">
+        <Association Name="FK__InvoiceDe__invoi__17036CC0">
+          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="InvoiceDetails" Type="Self.InvoiceDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
+            <Principal Role="InvoiceMaster">
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="InvoiceDetails">
-              <PropertyRef Name="created_by" />
+              <PropertyRef Name="invoice_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1221,20 +1146,6 @@
             </Principal>
             <Dependent Role="InvoiceDetails">
               <PropertyRef Name="product_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__InvoiceDe__tenan__787EE5A0">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InvoiceDetails" Type="Self.InvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceDetails">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1566,10 +1477,6 @@
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="VendorTypes" EntityType="Self.VendorType" />
-          <AssociationSet Name="FK__InvoiceDe__finan__76969D2E" Association="Self.FK__InvoiceDe__finan__76969D2E">
-            <End Role="FinancialYear" EntitySet="FinancialYears" />
-            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK__InvoiceMa__finan__72C60C4A" Association="Self.FK__InvoiceMa__finan__72C60C4A">
             <End Role="FinancialYear" EntitySet="FinancialYears" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
@@ -1578,16 +1485,12 @@
             <End Role="FinancialYear" EntitySet="FinancialYears" />
             <End Role="Tenant" EntitySet="Tenants" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__creat__778AC167" Association="Self.FK__InvoiceDe__creat__778AC167">
-            <End Role="User" EntitySet="Users" />
+          <AssociationSet Name="FK__InvoiceDe__invoi__17036CC0" Association="Self.FK__InvoiceDe__invoi__17036CC0">
+            <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__InvoiceDe__produ__797309D9" Association="Self.FK__InvoiceDe__produ__797309D9">
             <End Role="Product" EntitySet="Products" />
-            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__tenan__787EE5A0" Association="Self.FK__InvoiceDe__tenan__787EE5A0">
-            <End Role="Tenant" EntitySet="Tenants" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__InvoiceMa__creat__71D1E811" Association="Self.FK__InvoiceMa__creat__71D1E811">
@@ -1692,10 +1595,6 @@
           </AssociationSet>
           <FunctionImport Name="USP_ProductWiseStock" ReturnType="Collection(StockManagerModel.USP_ProductWiseStock_Result)" />
           <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)" />
-          <AssociationSet Name="FK__InvoiceDe__invoi__02FC7413" Association="StockManagerModel.FK__InvoiceDe__invoi__02FC7413">
-            <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
-            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="USP_ProductWiseStock_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1713,18 +1612,6 @@
           <Property Type="Decimal" Name="TotalNetQuantity" Nullable="false" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="TotalShrinkage" Nullable="false" Precision="38" Scale="2" />
         </ComplexType>
-        <Association Name="FK__InvoiceDe__invoi__02FC7413">
-          <End Type="StockManagerModel.InvoiceMaster" Role="InvoiceMaster" Multiplicity="0..1" />
-          <End Type="StockManagerModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InvoiceMaster">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceDetail">
-              <PropertyRef Name="invoice_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1759,11 +1646,8 @@
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="sale_rate" ColumnName="sale_rate" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="created_on" ColumnName="created_on" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
-                <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1780,6 +1664,7 @@
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
                 <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1979,7 +1864,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="StockManagerModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="password_reset_token" ColumnName="password_reset_token" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1987,6 +1871,7 @@
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="password_reset_token" ColumnName="password_reset_token" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

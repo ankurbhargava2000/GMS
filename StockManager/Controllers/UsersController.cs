@@ -19,85 +19,13 @@ namespace StockManager.Controllers
 {
     public class UsersController : Controller
     {
-       
-
-        private StockManagerEntities db = new StockManagerEntities();
-
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword(string email)
-        {
-
-            if ( !String.IsNullOrEmpty(email) )
-            {
-
-                string token = Guid.NewGuid().ToString();
-
-                var url = ResolveServerUrl(VirtualPathUtility.ToAbsolute("/Users/ResetPassword"), false)
-                     + "?token=" + token;
-                var message = "<a href='"+url+"'>Click here to reset your password.</a>";                
-
-                var user = db.Users.Where(x => x.Email == email).FirstOrDefault();
-                user.password_reset_token = token;
-
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-
-                GMailer.Send(email, "Password reset link", message);
-
-            }
-
-            return View();
-        }
-
-        public ActionResult ResetPassword(string token)
-        {
-            ViewBag.token = token;
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ResetPassword(string token, string password, string confirm_password)
-        {
-            if ( !String.IsNullOrEmpty(password) && !String.IsNullOrEmpty(password) )
-            {
-                if ( password == confirm_password )
-                {
-                    var user = db.Users.Where(x => x.password_reset_token == token).FirstOrDefault();
-                    user.Password = Hash(password);
-                    user.password_reset_token = String.Empty;
-                    db.Entry(user).State = EntityState.Modified;
-                    db.SaveChanges();
-                    Session["SUCCESS"] = "Please login with your new password";
-                    return RedirectToAction("Login");
-                }
-                else
-                {
-                    ViewBag.ERR = "Password & Confirm password do not match";
-                }
-            }
-            else
-            {
-                ViewBag.ERR = "Please type password and confirm password fields";
-            }
-            
-            ViewBag.token = token;
-            return View();
-
-        }
+       private StockManagerEntities db = new StockManagerEntities();
 
         [CheckAuth]
         public ActionResult Index(int? page)
         {
-            var users = db.Users.Include(u => u.Tenant).OrderBy(x => x.UserId);
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(users.ToPagedList(pageNumber, pageSize));
+            var users = db.Users.Include(u => u.Tenant).ToList();
+            return View(users);
         }
 
         [CheckAuth]
@@ -303,6 +231,73 @@ namespace StockManager.Controllers
             {
                 throw;
             }
+        }
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(string email)
+        {
+
+            if (!String.IsNullOrEmpty(email))
+            {
+
+                string token = Guid.NewGuid().ToString();
+
+                var url = ResolveServerUrl(VirtualPathUtility.ToAbsolute("/Users/ResetPassword"), false)
+                     + "?token=" + token;
+                var message = "<a href='" + url + "'>Click here to reset your password.</a>";
+
+                var user = db.Users.Where(x => x.Email == email).FirstOrDefault();
+                user.password_reset_token = token;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+                GMailer.Send(email, "Password reset link", message);
+
+            }
+
+            return View();
+        }
+
+        public ActionResult ResetPassword(string token)
+        {
+            ViewBag.token = token;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(string token, string password, string confirm_password)
+        {
+            if (!String.IsNullOrEmpty(password) && !String.IsNullOrEmpty(password))
+            {
+                if (password == confirm_password)
+                {
+                    var user = db.Users.Where(x => x.password_reset_token == token).FirstOrDefault();
+                    user.Password = Hash(password);
+                    user.password_reset_token = String.Empty;
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    Session["SUCCESS"] = "Please login with your new password";
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ViewBag.ERR = "Password & Confirm password do not match";
+                }
+            }
+            else
+            {
+                ViewBag.ERR = "Please type password and confirm password fields";
+            }
+
+            ViewBag.token = token;
+            return View();
+
         }
 
         protected override void Dispose(bool disposing)

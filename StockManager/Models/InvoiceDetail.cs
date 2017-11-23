@@ -19,16 +19,10 @@ namespace StockManager.Models
         public Nullable<int> product_id { get; set; }
         public double sale_rate { get; set; }
         public int quantity { get; set; }
-        public Nullable<System.DateTime> created_on { get; set; }
-        public Nullable<int> created_by { get; set; }
         public double discount { get; set; }
-        public Nullable<int> financial_year { get; set; }
-        public Nullable<int> tenant_id { get; set; }
+        public Nullable<System.DateTime> created_at { get; set; }
     
-        public virtual FinancialYear FinancialYear { get; set; }
-        public virtual User User { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual Tenant Tenant { get; set; }
         public virtual InvoiceMaster InvoiceMaster { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

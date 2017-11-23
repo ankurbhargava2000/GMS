@@ -193,6 +193,7 @@
     <Compile Include="Models\InvoiceDetail.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InvoiceExtend.cs" />
     <Compile Include="Models\InvoiceMaster.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
