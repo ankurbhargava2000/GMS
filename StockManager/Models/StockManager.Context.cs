@@ -48,9 +48,13 @@ namespace StockManager.Models
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
     
-        public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock()
+        public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> userId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_ProductWiseStock_Result>("USP_ProductWiseStock");
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_ProductWiseStock_Result>("USP_ProductWiseStock", userIdParameter);
         }
     
         public virtual ObjectResult<USP_VendorWiseStock_Result> USP_VendorWiseStock()
