@@ -14,7 +14,6 @@ namespace StockManager.Models
     
     public partial class PurchaseOrder
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PurchaseOrder()
         {
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
@@ -32,7 +31,6 @@ namespace StockManager.Models
         public string destination { get; set; }
         public string bale_numbers { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
         public virtual Vendor Vendor { get; set; }
     }

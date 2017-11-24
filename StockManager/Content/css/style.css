@@ -2243,3 +2243,7 @@ label {
 .align-md {
 	vertical-align: middle !important;
 }
+
+.hiddenDiv {
+  display:none !important;
+}

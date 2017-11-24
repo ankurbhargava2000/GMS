@@ -14,7 +14,6 @@ namespace StockManager.Models
     
     public partial class Tenant
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tenant()
         {
             this.InvoiceMasters = new HashSet<InvoiceMaster>();
@@ -32,9 +31,7 @@ namespace StockManager.Models
         public Nullable<int> CurrentFinYear { get; set; }
     
         public virtual FinancialYear FinancialYear { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (id == 1 ? 1 : 0) && x.IsActive == true), "Id", "ProductName", tailorChalan.VendorId);
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (tailorChalan.IsGivenToTailor == true ? 1 : 0) && x.IsActive == true), "Id", "ProductName", tailorChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
             return View(tailorChalan);
         }
