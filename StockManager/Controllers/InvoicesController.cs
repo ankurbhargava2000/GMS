@@ -83,7 +83,7 @@ namespace StockManager.Controllers
 
             if (ModelState.IsValid)
             {
-                invoice.created_at = DateTime.Now;
+                invoice.created_at = DateTime.Now;                                
                 db.InvoiceMasters.Add(invoice);
                 db.SaveChanges();
                 return RedirectToAction("Index");

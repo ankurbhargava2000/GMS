@@ -97,6 +97,7 @@
                                         <input type="hidden" name="InvoiceDetails[@i].Id" value="@item.Id" />
                                         <input type="hidden" name="InvoiceDetails[@i].invoice_id" value="@item.invoice_id" />
                                         <input type='hidden' name='InvoiceDetails[@i].product_id' value='@item.product_id' />
+                                        <input type='hidden' name='InvoiceDetails[@i].created_at' value='@DateTime.Now' />
                                         <div style='margin-top: 5px;'>@item.Product.ProductName</div>
                                     </td>
                                     <td style='width: 15%' class='sale'>
@@ -152,7 +153,7 @@
                 </table>
                 <div>
                     <div>
-                        <button class="btn btn-block btn-success">
+                        <button id="formBtn" class="btn btn-block btn-success">
                             Update Invoice
                         </button>
                     </div>
@@ -180,7 +181,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     <script>
         $(document).ready(function () {
-
+            
             $('#date_range').daterangepicker({
                 locale: {
                     format: 'DD-MMM-YYYY'
@@ -191,7 +192,7 @@
                 "maxDate": "@ViewBag.EndYear"
             });
 
-            $('form').submit(function () {
+            $('#formBtn').on('click', function () {
 
                 var tableRows = $("#products_table tr.itemrow");
                 var count = 0;
@@ -249,6 +250,7 @@
                 // Name
                 row += "<td>"
                 row += "<input type='hidden' name='nInvoiceDetails[" + i + "].product_id' value='" + option.val() + "' />";
+                row += "<input type='hidden' name='nInvoiceDetails[" + i + "].created_at' value='@DateTime.Now' />";
                 row += "<div style='margin-top: 5px;'>" + option.text() + "</div>";
                 row += "</td>"
 

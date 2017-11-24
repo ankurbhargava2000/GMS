@@ -114,7 +114,7 @@
                 </table>
                 <div>
                     <div>
-                        <button class="btn btn-block btn-success">
+                        <button id="formBtn" class="btn btn-block btn-success">
                             Generate Invoice
                         </button>
                     </div>
@@ -147,17 +147,7 @@
     <script>
         $(document).ready(function () {
 
-            $('#date_range').daterangepicker({
-                locale: {
-                    format: 'DD-MMM-YYYY'
-                },
-                "singleDatePicker": true,
-                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
-                "minDate": "@ViewBag.StartYear",
-                "maxDate": "@ViewBag.EndYear"
-            });
-
-            $('form').submit(function () {
+            $('#formBtn').on('click', function () {
 
                 var tableRows = $("#products_table tr.itemrow").length;
 
@@ -166,6 +156,16 @@
                     return false;
                 }
 
+            });
+
+            $('#date_range').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
             });
 
             $('.selectpicker').selectpicker();
@@ -200,6 +200,7 @@
                 // Name
                 row += "<td>"
                 row += "<input type='hidden' name='InvoiceDetails[" + i + "].product_id' value='" + option.val() + "' />";
+                row += "<input type='hidden' name='InvoiceDetails[" + i + "].created_at' value='@DateTime.Now' />";
                 row += "<div style='margin-top: 5px;'>" + option.text() + "</div>";
                 row += "</td>"
 
