@@ -18,7 +18,7 @@
                         @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-7">
                             @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
-                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger VendorVal" })
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                         @Html.LabelFor(model => model.ChalanNo, "Chalan#", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
-                            @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger ChalanNoVal" })
                         </div>
                     </div>
                 </div>
@@ -41,13 +41,34 @@
                                 @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
                                 <span class="add-on"><i class="icon-remove"></i></span>
                                 <span class="add-on"><i class="icon-th"></i></span>
+                                @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
                             </div>
                             <input type="hidden" id="dtp_input1" value="" /><br />
-                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bill_number, "Bill Number", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
+                            @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12 mt">
                     <div class="form-group">
@@ -141,9 +162,13 @@
                                                 <tr>
                                                     <td>Product</td>
                                                     <td>Quantity</td>
-                                                    <td>&nbsp;</td>
+                                                    <td>
+                                                        @*<input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success ">*@
+                                                        <i id="addNewMaterial" class="fa fa-plus-circle"></i>
+                                                        <span>Add Material</span>
+                                                    </td>
                                                 </tr>
-                                                <tr class="mycontainer" id="mainrow">
+                                                <tr class="mycontainer" style="visibility:hidden" id="mainrow">
                                                     <td class="col-md-6 col-xs-6">
                                                         @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
                                                     </td>
@@ -181,34 +206,34 @@
 @section scripts
 {
     <script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnShowModal").click(function () {
-            $("#itemModel").modal('show');
-        });
+        $(document).ready(function () {
+            $("#btnShowModal").click(function () {
+                $("#itemModel").modal('show');
+            });
 
-        $("#btnHideModal").click(function () {
-            $("#itemModel").modal('hide');
-        });
+            $("#btnHideModal").click(function () {
+                $("#itemModel").modal('hide');
+            });
 
-        $("#btnHideModal").click(function () {
+            $("#btnHideModal").click(function () {
 
-        });
+            });
 
-        $("#addMaterial").click(function(){
-            var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
-            $('#materialId', $newRow).val($('#materialId').val());
-            //$('.materialId', $newRow).text($('#materialId').text());
-            $('#materialQuantity', $newRow).val($('#materialQuantity').val());
-            $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
-            //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
-            $('#tailorMaterialDetails').append($newRow);
-        });
+            $("#addNewMaterial").click(function(){
+                var $newRow = $('#mainrow').clone(true, true).removeAttr('id').removeClass('hiddenDiv');
+                $('#materialId', $newRow).val($('#materialId').val());
+                //$('.materialId', $newRow).text($('#materialId').text());
+                $('#materialQuantity', $newRow).val($('#materialQuantity').val());
+                $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
+                //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
+                $('#tailorMaterialDetails').append($newRow);
+            });
 
-        $('#addProductItem').click(function () {
-            //validation and add order items
-            var isAllValid = true;
-            var matarialDetail = "";
-            if(@Html.Raw(ViewBag.GivenToTailor) == 0)
+            $('#addProductItem').click(function () {
+                //validation and add order items
+                var isAllValid = true;
+                var matarialDetail = "";
+                if(@Html.Raw(ViewBag.GivenToTailor) == 0)
                 {
                     $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
                         matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
@@ -264,7 +289,7 @@
                     var matarialList = [];
                     if(@Html.Raw(ViewBag.GivenToTailor) == 0)
                     {
-                        var matObj = JSON.parse("[" + str + "]");                        
+                        var matObj = JSON.parse("[" + str + "]");
                         for(var i = 0; i < matObj.length; i++)
                         {
                             var objMat = {
@@ -282,39 +307,39 @@
                     ChalanDate: $('#ChalanDate').val(),
                     ChalanNo: $('#ChalanNo').val(),
                     IsGivenToTailor: @Html.Raw(ViewBag.GivenToTailor),
-                TailorChalanDetails: list,
-            }
-                
-            $.ajax({
-                type: 'POST',
-                url: '/tailorChalan/Create',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data != "0") {
-                        alert('Printer Chalan Saved Successfully.');
-                        list = [];
-                        $('#Vender,#InvoiceDate').val('');
-                        $('#TailorChalanItems tbody tr').each(function (index, ele) {
-                            if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                                $('#tailorChalanItems tbody tr', this).remove();
-                            }
-                        });
-                        //$(this).val('Save Purchase Order');
-                        window.location.href = '/TailorChalan/Details/' + data;
-                    }
-                    else {
-                        //$(this).val('Save Printer Chalan');
-                        alert('Error in saving printer chalan');
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
+                    TailorChalanDetails: list,
                 }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/tailorChalan/Create',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data != "0") {
+                            alert('Printer Chalan Saved Successfully.');
+                            list = [];
+                            $('#Vender,#InvoiceDate').val('');
+                            $('#TailorChalanItems tbody tr').each(function (index, ele) {
+                                if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                                    $('#tailorChalanItems tbody tr', this).remove();
+                                }
+                            });
+                            //$(this).val('Save Purchase Order');
+                            window.location.href = '/TailorChalan/Details/' + data;
+                        }
+                        else {
+                            //$(this).val('Save Printer Chalan');
+                            alert('Error in saving printer chalan');
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 }
 
 

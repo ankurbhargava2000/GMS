@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="StockManagerProModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChalanType">
           <Key>
             <PropertyRef Name="Id" />
@@ -250,7 +250,7 @@
           <Property Name="Description" Type="varchar" MaxLength="200" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
-        <Association Name="FK__InvoiceDe__invoi__04E4BC85">
+        <Association Name="FK__InvoiceDe__invoi__5DCAEF64">
           <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -264,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceDe__produ__05D8E0BE">
+        <Association Name="FK__InvoiceDe__produ__5EBF139D">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -278,7 +278,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__creat__06CD04F7">
+        <Association Name="FK__InvoiceMa__creat__5FB337D6">
           <End Role="User" Type="Self.User" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -292,7 +292,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__custo__07C12930">
+        <Association Name="FK__InvoiceMa__custo__60A75C0F">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -306,7 +306,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__finan__08B54D69">
+        <Association Name="FK__InvoiceMa__finan__619B8048">
           <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -320,7 +320,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__tenan__09A971A2">
+        <Association Name="FK__InvoiceMa__tenan__628FA481">
           <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -334,7 +334,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrinterCh__Chala__693CA210">
+        <Association Name="FK__PrinterCh__Chala__4222D4EF">
           <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="1" />
           <End Role="PrinterChalanDetails" Type="Self.PrinterChalanDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -346,7 +346,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrinterCh__Produ__6A30C649">
+        <Association Name="FK__PrinterCh__Produ__4316F928">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PrinterChalanDetails" Type="Self.PrinterChalanDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -358,7 +358,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrinterCh__Vendo__68487DD7">
+        <Association Name="FK__PrinterCh__Vendo__412EB0B6">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -370,7 +370,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrintJobW__Chala__6C190EBB">
+        <Association Name="FK__PrintJobW__Chala__44FF419A">
           <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="1" />
           <End Role="PrintJobWorkReceivedDetails" Type="Self.PrintJobWorkReceivedDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -382,7 +382,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrintJobW__Produ__6D0D32F4">
+        <Association Name="FK__PrintJobW__Produ__45F365D3">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PrintJobWorkReceivedDetails" Type="Self.PrintJobWorkReceivedDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -394,7 +394,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrintJobW__Vendo__6B24EA82">
+        <Association Name="FK__PrintJobW__Vendo__440B1D61">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="*" />
           <ReferentialConstraint>
@@ -406,7 +406,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Product__6E01572D">
+        <Association Name="FK__Product__Product__46E78A0C">
           <End Role="ProductType" Type="Self.ProductType" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -418,7 +418,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseD__Produ__6EF57B66">
+        <Association Name="FK__PurchaseD__Produ__47DBAE45">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PurchaseDetails" Type="Self.PurchaseDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -430,7 +430,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseD__Purch__6FE99F9F">
+        <Association Name="FK__PurchaseD__Purch__48CFD27E">
           <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="1" />
           <End Role="PurchaseDetails" Type="Self.PurchaseDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -442,7 +442,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseO__Vendo__70DDC3D8">
+        <Association Name="FK__PurchaseO__Vendo__49C3F6B7">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -454,7 +454,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Chala__72C60C4A">
+        <Association Name="FK__TailorCha__Chala__4BAC3F29">
           <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1" />
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -466,7 +466,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Chala__73BA3083">
+        <Association Name="FK__TailorCha__Chala__4CA06362">
           <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1" />
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -478,7 +478,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Produ__74AE54BC">
+        <Association Name="FK__TailorCha__Produ__4D94879B">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -490,7 +490,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Vendo__71D1E811">
+        <Association Name="FK__TailorCha__Vendo__4AB81AF0">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -502,7 +502,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorMat__Produ__75A278F5">
+        <Association Name="FK__TailorMat__Produ__4E88ABD4">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="TailorMaterialDetails" Type="Self.TailorMaterialDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -514,7 +514,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorMat__Tailo__76969D2E">
+        <Association Name="FK__TailorMat__Tailo__4F7CD00D">
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetails" Multiplicity="1" />
           <End Role="TailorMaterialDetails" Type="Self.TailorMaterialDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -526,7 +526,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Produ__787EE5A0">
+        <Association Name="FK__Transacti__Produ__5165187F">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -538,7 +538,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Vendo__797309D9">
+        <Association Name="FK__Transacti__Vendo__52593CB8">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -550,7 +550,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vendor__VendorTy__7B5B524B">
+        <Association Name="FK__Vendor__VendorTy__5441852A">
           <End Role="VendorType" Type="Self.VendorType" Multiplicity="0..1" />
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -588,7 +588,7 @@
         </Association>
         <Function Name="USP_ProductWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="USP_VendorWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="StockManagerModelStoreContainer">
+        <EntityContainer Name="StockManagerProModelStoreContainer">
           <EntitySet Name="ChalanType" EntityType="Self.ChalanType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FinancialYear" EntityType="Self.FinancialYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
@@ -609,103 +609,103 @@
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorType" EntityType="Self.VendorType" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__InvoiceDe__invoi__04E4BC85" Association="Self.FK__InvoiceDe__invoi__04E4BC85">
+          <AssociationSet Name="FK__InvoiceDe__invoi__5DCAEF64" Association="Self.FK__InvoiceDe__invoi__5DCAEF64">
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__produ__05D8E0BE" Association="Self.FK__InvoiceDe__produ__05D8E0BE">
+          <AssociationSet Name="FK__InvoiceDe__produ__5EBF139D" Association="Self.FK__InvoiceDe__produ__5EBF139D">
             <End Role="Product" EntitySet="Product" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__creat__06CD04F7" Association="Self.FK__InvoiceMa__creat__06CD04F7">
+          <AssociationSet Name="FK__InvoiceMa__creat__5FB337D6" Association="Self.FK__InvoiceMa__creat__5FB337D6">
             <End Role="User" EntitySet="User" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__custo__07C12930" Association="Self.FK__InvoiceMa__custo__07C12930">
+          <AssociationSet Name="FK__InvoiceMa__custo__60A75C0F" Association="Self.FK__InvoiceMa__custo__60A75C0F">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__finan__08B54D69" Association="Self.FK__InvoiceMa__finan__08B54D69">
+          <AssociationSet Name="FK__InvoiceMa__finan__619B8048" Association="Self.FK__InvoiceMa__finan__619B8048">
             <End Role="FinancialYear" EntitySet="FinancialYear" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__tenan__09A971A2" Association="Self.FK__InvoiceMa__tenan__09A971A2">
+          <AssociationSet Name="FK__InvoiceMa__tenan__628FA481" Association="Self.FK__InvoiceMa__tenan__628FA481">
             <End Role="Tenant" EntitySet="Tenant" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrinterCh__Chala__693CA210" Association="Self.FK__PrinterCh__Chala__693CA210">
+          <AssociationSet Name="FK__PrinterCh__Chala__4222D4EF" Association="Self.FK__PrinterCh__Chala__4222D4EF">
             <End Role="PrinterChalan" EntitySet="PrinterChalan" />
             <End Role="PrinterChalanDetails" EntitySet="PrinterChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrinterCh__Produ__6A30C649" Association="Self.FK__PrinterCh__Produ__6A30C649">
+          <AssociationSet Name="FK__PrinterCh__Produ__4316F928" Association="Self.FK__PrinterCh__Produ__4316F928">
             <End Role="Product" EntitySet="Product" />
             <End Role="PrinterChalanDetails" EntitySet="PrinterChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrinterCh__Vendo__68487DD7" Association="Self.FK__PrinterCh__Vendo__68487DD7">
+          <AssociationSet Name="FK__PrinterCh__Vendo__412EB0B6" Association="Self.FK__PrinterCh__Vendo__412EB0B6">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="PrinterChalan" EntitySet="PrinterChalan" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrintJobW__Chala__6C190EBB" Association="Self.FK__PrintJobW__Chala__6C190EBB">
+          <AssociationSet Name="FK__PrintJobW__Chala__44FF419A" Association="Self.FK__PrintJobW__Chala__44FF419A">
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
             <End Role="PrintJobWorkReceivedDetails" EntitySet="PrintJobWorkReceivedDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrintJobW__Produ__6D0D32F4" Association="Self.FK__PrintJobW__Produ__6D0D32F4">
+          <AssociationSet Name="FK__PrintJobW__Produ__45F365D3" Association="Self.FK__PrintJobW__Produ__45F365D3">
             <End Role="Product" EntitySet="Product" />
             <End Role="PrintJobWorkReceivedDetails" EntitySet="PrintJobWorkReceivedDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrintJobW__Vendo__6B24EA82" Association="Self.FK__PrintJobW__Vendo__6B24EA82">
+          <AssociationSet Name="FK__PrintJobW__Vendo__440B1D61" Association="Self.FK__PrintJobW__Vendo__440B1D61">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Product__6E01572D" Association="Self.FK__Product__Product__6E01572D">
+          <AssociationSet Name="FK__Product__Product__46E78A0C" Association="Self.FK__Product__Product__46E78A0C">
             <End Role="ProductType" EntitySet="ProductType" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseD__Produ__6EF57B66" Association="Self.FK__PurchaseD__Produ__6EF57B66">
+          <AssociationSet Name="FK__PurchaseD__Produ__47DBAE45" Association="Self.FK__PurchaseD__Produ__47DBAE45">
             <End Role="Product" EntitySet="Product" />
             <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseD__Purch__6FE99F9F" Association="Self.FK__PurchaseD__Purch__6FE99F9F">
+          <AssociationSet Name="FK__PurchaseD__Purch__48CFD27E" Association="Self.FK__PurchaseD__Purch__48CFD27E">
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
             <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseO__Vendo__70DDC3D8" Association="Self.FK__PurchaseO__Vendo__70DDC3D8">
+          <AssociationSet Name="FK__PurchaseO__Vendo__49C3F6B7" Association="Self.FK__PurchaseO__Vendo__49C3F6B7">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Chala__72C60C4A" Association="Self.FK__TailorCha__Chala__72C60C4A">
+          <AssociationSet Name="FK__TailorCha__Chala__4BAC3F29" Association="Self.FK__TailorCha__Chala__4BAC3F29">
             <End Role="TailorChalan" EntitySet="TailorChalan" />
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Chala__73BA3083" Association="Self.FK__TailorCha__Chala__73BA3083">
+          <AssociationSet Name="FK__TailorCha__Chala__4CA06362" Association="Self.FK__TailorCha__Chala__4CA06362">
             <End Role="TailorChalan" EntitySet="TailorChalan" />
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Produ__74AE54BC" Association="Self.FK__TailorCha__Produ__74AE54BC">
+          <AssociationSet Name="FK__TailorCha__Produ__4D94879B" Association="Self.FK__TailorCha__Produ__4D94879B">
             <End Role="Product" EntitySet="Product" />
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Vendo__71D1E811" Association="Self.FK__TailorCha__Vendo__71D1E811">
+          <AssociationSet Name="FK__TailorCha__Vendo__4AB81AF0" Association="Self.FK__TailorCha__Vendo__4AB81AF0">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="TailorChalan" EntitySet="TailorChalan" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorMat__Produ__75A278F5" Association="Self.FK__TailorMat__Produ__75A278F5">
+          <AssociationSet Name="FK__TailorMat__Produ__4E88ABD4" Association="Self.FK__TailorMat__Produ__4E88ABD4">
             <End Role="Product" EntitySet="Product" />
             <End Role="TailorMaterialDetails" EntitySet="TailorMaterialDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorMat__Tailo__76969D2E" Association="Self.FK__TailorMat__Tailo__76969D2E">
+          <AssociationSet Name="FK__TailorMat__Tailo__4F7CD00D" Association="Self.FK__TailorMat__Tailo__4F7CD00D">
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
             <End Role="TailorMaterialDetails" EntitySet="TailorMaterialDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Produ__787EE5A0" Association="Self.FK__Transacti__Produ__787EE5A0">
+          <AssociationSet Name="FK__Transacti__Produ__5165187F" Association="Self.FK__Transacti__Produ__5165187F">
             <End Role="Product" EntitySet="Product" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Vendo__797309D9" Association="Self.FK__Transacti__Vendo__797309D9">
+          <AssociationSet Name="FK__Transacti__Vendo__52593CB8" Association="Self.FK__Transacti__Vendo__52593CB8">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vendor__VendorTy__7B5B524B" Association="Self.FK__Vendor__VendorTy__7B5B524B">
+          <AssociationSet Name="FK__Vendor__VendorTy__5441852A" Association="Self.FK__Vendor__VendorTy__5441852A">
             <End Role="VendorType" EntitySet="VendorType" />
             <End Role="Vendor" EntitySet="Vendor" />
           </AssociationSet>
@@ -722,7 +722,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="StockManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="StockManagerProModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="ChalanType">
           <Key>
             <PropertyRef Name="Id" />
@@ -740,7 +740,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StartDate" Type="DateTime" Precision="7" />
           <Property Name="EndDate" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__finan__08B54D69" FromRole="FinancialYear" ToRole="InvoiceMaster" />
+          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__finan__619B8048" FromRole="FinancialYear" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Tenants" Relationship="Self.FK_Tenant_FinancialYear" FromRole="FinancialYear" ToRole="Tenant" />
         </EntityType>
         <EntityType Name="InvoiceDetail">
@@ -754,8 +754,8 @@
           <Property Name="quantity" Type="Int32" Nullable="false" />
           <Property Name="discount" Type="Double" Nullable="false" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="InvoiceMaster" Relationship="Self.FK__InvoiceDe__invoi__04E4BC85" FromRole="InvoiceDetails" ToRole="InvoiceMaster" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__InvoiceDe__produ__05D8E0BE" FromRole="InvoiceDetails" ToRole="Product" />
+          <NavigationProperty Name="InvoiceMaster" Relationship="Self.FK__InvoiceDe__invoi__5DCAEF64" FromRole="InvoiceDetails" ToRole="InvoiceMaster" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__InvoiceDe__produ__5EBF139D" FromRole="InvoiceDetails" ToRole="Product" />
         </EntityType>
         <EntityType Name="InvoiceMaster">
           <Key>
@@ -772,11 +772,11 @@
           <Property Name="tenant_id" Type="Int32" />
           <Property Name="discount" Type="Double" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="FinancialYear" Relationship="Self.FK__InvoiceMa__finan__08B54D69" FromRole="InvoiceMaster" ToRole="FinancialYear" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__invoi__04E4BC85" FromRole="InvoiceMaster" ToRole="InvoiceDetails" />
-          <NavigationProperty Name="User" Relationship="Self.FK__InvoiceMa__creat__06CD04F7" FromRole="InvoiceMaster" ToRole="User" />
-          <NavigationProperty Name="Vendor" Relationship="Self.FK__InvoiceMa__custo__07C12930" FromRole="InvoiceMaster" ToRole="Vendor" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK__InvoiceMa__tenan__09A971A2" FromRole="InvoiceMaster" ToRole="Tenant" />
+          <NavigationProperty Name="FinancialYear" Relationship="Self.FK__InvoiceMa__finan__619B8048" FromRole="InvoiceMaster" ToRole="FinancialYear" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__invoi__5DCAEF64" FromRole="InvoiceMaster" ToRole="InvoiceDetails" />
+          <NavigationProperty Name="User" Relationship="Self.FK__InvoiceMa__creat__5FB337D6" FromRole="InvoiceMaster" ToRole="User" />
+          <NavigationProperty Name="Vendor" Relationship="Self.FK__InvoiceMa__custo__60A75C0F" FromRole="InvoiceMaster" ToRole="Vendor" />
+          <NavigationProperty Name="Tenant" Relationship="Self.FK__InvoiceMa__tenan__628FA481" FromRole="InvoiceMaster" ToRole="Tenant" />
         </EntityType>
         <EntityType Name="PrinterChalan">
           <Key>
@@ -792,8 +792,8 @@
           <Property Name="dispatch_document_number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="dispatched_through" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="bale_numbers" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Chala__693CA210" FromRole="PrinterChalan" ToRole="PrinterChalanDetails" />
-          <NavigationProperty Name="Vendor" Relationship="Self.FK__PrinterCh__Vendo__68487DD7" FromRole="PrinterChalan" ToRole="Vendor" />
+          <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Chala__4222D4EF" FromRole="PrinterChalan" ToRole="PrinterChalanDetails" />
+          <NavigationProperty Name="Vendor" Relationship="Self.FK__PrinterCh__Vendo__412EB0B6" FromRole="PrinterChalan" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="PrinterChalanDetail">
           <Key>
@@ -808,8 +808,8 @@
           <Property Name="NetQuantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Shrinkage" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PrinterChalan" Relationship="Self.FK__PrinterCh__Chala__693CA210" FromRole="PrinterChalanDetails" ToRole="PrinterChalan" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__PrinterCh__Produ__6A30C649" FromRole="PrinterChalanDetails" ToRole="Product" />
+          <NavigationProperty Name="PrinterChalan" Relationship="Self.FK__PrinterCh__Chala__4222D4EF" FromRole="PrinterChalanDetails" ToRole="PrinterChalan" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__PrinterCh__Produ__4316F928" FromRole="PrinterChalanDetails" ToRole="Product" />
         </EntityType>
         <EntityType Name="PrintJobWorkReceived">
           <Key>
@@ -822,8 +822,8 @@
           <Property Name="Updated" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="chalan_number" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PrintJobWorkReceivedDetails" Relationship="Self.FK__PrintJobW__Chala__6C190EBB" FromRole="PrintJobWorkReceived" ToRole="PrintJobWorkReceivedDetails" />
-          <NavigationProperty Name="Vendor" Relationship="Self.FK__PrintJobW__Vendo__6B24EA82" FromRole="PrintJobWorkReceived" ToRole="Vendor" />
+          <NavigationProperty Name="PrintJobWorkReceivedDetails" Relationship="Self.FK__PrintJobW__Chala__44FF419A" FromRole="PrintJobWorkReceived" ToRole="PrintJobWorkReceivedDetails" />
+          <NavigationProperty Name="Vendor" Relationship="Self.FK__PrintJobW__Vendo__440B1D61" FromRole="PrintJobWorkReceived" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="PrintJobWorkReceivedDetail">
           <Key>
@@ -835,8 +835,8 @@
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Fold" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PrintJobWorkReceived" Relationship="Self.FK__PrintJobW__Chala__6C190EBB" FromRole="PrintJobWorkReceivedDetails" ToRole="PrintJobWorkReceived" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__PrintJobW__Produ__6D0D32F4" FromRole="PrintJobWorkReceivedDetails" ToRole="Product" />
+          <NavigationProperty Name="PrintJobWorkReceived" Relationship="Self.FK__PrintJobW__Chala__44FF419A" FromRole="PrintJobWorkReceivedDetails" ToRole="PrintJobWorkReceived" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__PrintJobW__Produ__45F365D3" FromRole="PrintJobWorkReceivedDetails" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -847,14 +847,14 @@
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__produ__05D8E0BE" FromRole="Product" ToRole="InvoiceDetails" />
-          <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Produ__6A30C649" FromRole="Product" ToRole="PrinterChalanDetails" />
-          <NavigationProperty Name="PrintJobWorkReceivedDetails" Relationship="Self.FK__PrintJobW__Produ__6D0D32F4" FromRole="Product" ToRole="PrintJobWorkReceivedDetails" />
-          <NavigationProperty Name="ProductType" Relationship="Self.FK__Product__Product__6E01572D" FromRole="Product" ToRole="ProductType" />
-          <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__Produ__6EF57B66" FromRole="Product" ToRole="PurchaseDetails" />
-          <NavigationProperty Name="TailorChalanDetails" Relationship="Self.FK__TailorCha__Produ__74AE54BC" FromRole="Product" ToRole="TailorChalanDetails" />
-          <NavigationProperty Name="TailorMaterialDetails" Relationship="Self.FK__TailorMat__Produ__75A278F5" FromRole="Product" ToRole="TailorMaterialDetails" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Produ__787EE5A0" FromRole="Product" ToRole="Transactions" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__produ__5EBF139D" FromRole="Product" ToRole="InvoiceDetails" />
+          <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Produ__4316F928" FromRole="Product" ToRole="PrinterChalanDetails" />
+          <NavigationProperty Name="PrintJobWorkReceivedDetails" Relationship="Self.FK__PrintJobW__Produ__45F365D3" FromRole="Product" ToRole="PrintJobWorkReceivedDetails" />
+          <NavigationProperty Name="ProductType" Relationship="Self.FK__Product__Product__46E78A0C" FromRole="Product" ToRole="ProductType" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__Produ__47DBAE45" FromRole="Product" ToRole="PurchaseDetails" />
+          <NavigationProperty Name="TailorChalanDetails" Relationship="Self.FK__TailorCha__Produ__4D94879B" FromRole="Product" ToRole="TailorChalanDetails" />
+          <NavigationProperty Name="TailorMaterialDetails" Relationship="Self.FK__TailorMat__Produ__4E88ABD4" FromRole="Product" ToRole="TailorMaterialDetails" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Produ__5165187F" FromRole="Product" ToRole="Transactions" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -864,7 +864,7 @@
           <Property Name="ProductType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Product__6E01572D" FromRole="ProductType" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Product__46E78A0C" FromRole="ProductType" ToRole="Product" />
         </EntityType>
         <EntityType Name="PurchaseDetail">
           <Key>
@@ -877,8 +877,8 @@
           <Property Name="Fold" Type="Int32" Nullable="false" />
           <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__PurchaseD__Produ__6EF57B66" FromRole="PurchaseDetails" ToRole="Product" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK__PurchaseD__Purch__6FE99F9F" FromRole="PurchaseDetails" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__PurchaseD__Produ__47DBAE45" FromRole="PurchaseDetails" ToRole="Product" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK__PurchaseD__Purch__48CFD27E" FromRole="PurchaseDetails" ToRole="PurchaseOrders" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -895,8 +895,8 @@
           <Property Name="dispatched_through" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="destination" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="bale_numbers" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__Purch__6FE99F9F" FromRole="PurchaseOrders" ToRole="PurchaseDetails" />
-          <NavigationProperty Name="Vendor" Relationship="Self.FK__PurchaseO__Vendo__70DDC3D8" FromRole="PurchaseOrders" ToRole="Vendor" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__Purch__48CFD27E" FromRole="PurchaseOrders" ToRole="PurchaseDetails" />
+          <NavigationProperty Name="Vendor" Relationship="Self.FK__PurchaseO__Vendo__49C3F6B7" FromRole="PurchaseOrders" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="TailorChalan">
           <Key>
@@ -911,9 +911,9 @@
           <Property Name="Description" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IsGivenToTailor" Type="Boolean" Nullable="false" />
           <Property Name="bill_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TailorChalanDetails" Relationship="Self.FK__TailorCha__Chala__72C60C4A" FromRole="TailorChalan" ToRole="TailorChalanDetails" />
-          <NavigationProperty Name="TailorChalanDetails1" Relationship="Self.FK__TailorCha__Chala__73BA3083" FromRole="TailorChalan" ToRole="TailorChalanDetails" />
-          <NavigationProperty Name="Vendor" Relationship="Self.FK__TailorCha__Vendo__71D1E811" FromRole="TailorChalan" ToRole="Vendor" />
+          <NavigationProperty Name="TailorChalanDetails" Relationship="Self.FK__TailorCha__Chala__4BAC3F29" FromRole="TailorChalan" ToRole="TailorChalanDetails" />
+          <NavigationProperty Name="TailorChalanDetails1" Relationship="Self.FK__TailorCha__Chala__4CA06362" FromRole="TailorChalan" ToRole="TailorChalanDetails" />
+          <NavigationProperty Name="Vendor" Relationship="Self.FK__TailorCha__Vendo__4AB81AF0" FromRole="TailorChalan" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="TailorChalanDetail">
           <Key>
@@ -925,10 +925,10 @@
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="LaborCost" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__TailorCha__Produ__74AE54BC" FromRole="TailorChalanDetails" ToRole="Product" />
-          <NavigationProperty Name="TailorChalan" Relationship="Self.FK__TailorCha__Chala__72C60C4A" FromRole="TailorChalanDetails" ToRole="TailorChalan" />
-          <NavigationProperty Name="TailorChalan1" Relationship="Self.FK__TailorCha__Chala__73BA3083" FromRole="TailorChalanDetails" ToRole="TailorChalan" />
-          <NavigationProperty Name="TailorMaterialDetails" Relationship="Self.FK__TailorMat__Tailo__76969D2E" FromRole="TailorChalanDetails" ToRole="TailorMaterialDetails" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__TailorCha__Produ__4D94879B" FromRole="TailorChalanDetails" ToRole="Product" />
+          <NavigationProperty Name="TailorChalan" Relationship="Self.FK__TailorCha__Chala__4BAC3F29" FromRole="TailorChalanDetails" ToRole="TailorChalan" />
+          <NavigationProperty Name="TailorChalan1" Relationship="Self.FK__TailorCha__Chala__4CA06362" FromRole="TailorChalanDetails" ToRole="TailorChalan" />
+          <NavigationProperty Name="TailorMaterialDetails" Relationship="Self.FK__TailorMat__Tailo__4F7CD00D" FromRole="TailorChalanDetails" ToRole="TailorMaterialDetails" />
         </EntityType>
         <EntityType Name="TailorMaterialDetail">
           <Key>
@@ -939,8 +939,8 @@
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__TailorMat__Produ__75A278F5" FromRole="TailorMaterialDetails" ToRole="Product" />
-          <NavigationProperty Name="TailorChalanDetail" Relationship="Self.FK__TailorMat__Tailo__76969D2E" FromRole="TailorMaterialDetails" ToRole="TailorChalanDetails" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__TailorMat__Produ__4E88ABD4" FromRole="TailorMaterialDetails" ToRole="Product" />
+          <NavigationProperty Name="TailorChalanDetail" Relationship="Self.FK__TailorMat__Tailo__4F7CD00D" FromRole="TailorMaterialDetails" ToRole="TailorChalanDetails" />
         </EntityType>
         <EntityType Name="Tenant">
           <Key>
@@ -956,7 +956,7 @@
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CurrentFinYear" Type="Int32" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_Tenant_FinancialYear" FromRole="Tenant" ToRole="FinancialYear" />
-          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__tenan__09A971A2" FromRole="Tenant" ToRole="InvoiceMaster" />
+          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__tenan__628FA481" FromRole="Tenant" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Tenant" FromRole="Tenant" ToRole="User" />
         </EntityType>
         <EntityType Name="Transaction">
@@ -971,8 +971,8 @@
           <Property Name="BillNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Created" Type="DateTime" Precision="3" />
           <Property Name="Updated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Transacti__Produ__787EE5A0" FromRole="Transactions" ToRole="Product" />
-          <NavigationProperty Name="Vendor" Relationship="Self.FK__Transacti__Vendo__797309D9" FromRole="Transactions" ToRole="Vendor" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Transacti__Produ__5165187F" FromRole="Transactions" ToRole="Product" />
+          <NavigationProperty Name="Vendor" Relationship="Self.FK__Transacti__Vendo__52593CB8" FromRole="Transactions" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -986,7 +986,7 @@
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TenantId" Type="Int32" Nullable="false" />
           <Property Name="password_reset_token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__creat__06CD04F7" FromRole="User" ToRole="InvoiceMaster" />
+          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__creat__5FB337D6" FromRole="User" ToRole="InvoiceMaster" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_User_Tenant" FromRole="User" ToRole="Tenant" />
         </EntityType>
         <EntityType Name="Vendor">
@@ -1004,13 +1004,13 @@
           <Property Name="pan_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="gst_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__custo__07C12930" FromRole="Vendor" ToRole="InvoiceMaster" />
-          <NavigationProperty Name="PrinterChalans" Relationship="Self.FK__PrinterCh__Vendo__68487DD7" FromRole="Vendor" ToRole="PrinterChalan" />
-          <NavigationProperty Name="PrintJobWorkReceiveds" Relationship="Self.FK__PrintJobW__Vendo__6B24EA82" FromRole="Vendor" ToRole="PrintJobWorkReceived" />
-          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Vendo__70DDC3D8" FromRole="Vendor" ToRole="PurchaseOrders" />
-          <NavigationProperty Name="TailorChalans" Relationship="Self.FK__TailorCha__Vendo__71D1E811" FromRole="Vendor" ToRole="TailorChalan" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Vendo__797309D9" FromRole="Vendor" ToRole="Transactions" />
-          <NavigationProperty Name="VendorType" Relationship="Self.FK__Vendor__VendorTy__7B5B524B" FromRole="Vendor" ToRole="VendorType" />
+          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__custo__60A75C0F" FromRole="Vendor" ToRole="InvoiceMaster" />
+          <NavigationProperty Name="PrinterChalans" Relationship="Self.FK__PrinterCh__Vendo__412EB0B6" FromRole="Vendor" ToRole="PrinterChalan" />
+          <NavigationProperty Name="PrintJobWorkReceiveds" Relationship="Self.FK__PrintJobW__Vendo__440B1D61" FromRole="Vendor" ToRole="PrintJobWorkReceived" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Vendo__49C3F6B7" FromRole="Vendor" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="TailorChalans" Relationship="Self.FK__TailorCha__Vendo__4AB81AF0" FromRole="Vendor" ToRole="TailorChalan" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Vendo__52593CB8" FromRole="Vendor" ToRole="Transactions" />
+          <NavigationProperty Name="VendorType" Relationship="Self.FK__Vendor__VendorTy__5441852A" FromRole="Vendor" ToRole="VendorType" />
         </EntityType>
         <EntityType Name="VendorType">
           <Key>
@@ -1020,9 +1020,9 @@
           <Property Name="VendorType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Vendors" Relationship="Self.FK__Vendor__VendorTy__7B5B524B" FromRole="VendorType" ToRole="Vendor" />
+          <NavigationProperty Name="Vendors" Relationship="Self.FK__Vendor__VendorTy__5441852A" FromRole="VendorType" ToRole="Vendor" />
         </EntityType>
-        <Association Name="FK__InvoiceMa__finan__08B54D69">
+        <Association Name="FK__InvoiceMa__finan__619B8048">
           <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1048,7 +1048,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceDe__invoi__04E4BC85">
+        <Association Name="FK__InvoiceDe__invoi__5DCAEF64">
           <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1062,7 +1062,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceDe__produ__05D8E0BE">
+        <Association Name="FK__InvoiceDe__produ__5EBF139D">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1076,7 +1076,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__creat__06CD04F7">
+        <Association Name="FK__InvoiceMa__creat__5FB337D6">
           <End Role="User" Type="Self.User" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1090,7 +1090,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__custo__07C12930">
+        <Association Name="FK__InvoiceMa__custo__60A75C0F">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1104,7 +1104,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__tenan__09A971A2">
+        <Association Name="FK__InvoiceMa__tenan__628FA481">
           <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1118,7 +1118,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrinterCh__Chala__693CA210">
+        <Association Name="FK__PrinterCh__Chala__4222D4EF">
           <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="1" />
           <End Role="PrinterChalanDetails" Type="Self.PrinterChalanDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1130,7 +1130,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrinterCh__Vendo__68487DD7">
+        <Association Name="FK__PrinterCh__Vendo__412EB0B6">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1142,7 +1142,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrinterCh__Produ__6A30C649">
+        <Association Name="FK__PrinterCh__Produ__4316F928">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PrinterChalanDetails" Type="Self.PrinterChalanDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1154,7 +1154,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrintJobW__Chala__6C190EBB">
+        <Association Name="FK__PrintJobW__Chala__44FF419A">
           <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="1" />
           <End Role="PrintJobWorkReceivedDetails" Type="Self.PrintJobWorkReceivedDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1166,7 +1166,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrintJobW__Vendo__6B24EA82">
+        <Association Name="FK__PrintJobW__Vendo__440B1D61">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1178,7 +1178,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrintJobW__Produ__6D0D32F4">
+        <Association Name="FK__PrintJobW__Produ__45F365D3">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PrintJobWorkReceivedDetails" Type="Self.PrintJobWorkReceivedDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1190,7 +1190,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Product__6E01572D">
+        <Association Name="FK__Product__Product__46E78A0C">
           <End Role="ProductType" Type="Self.ProductType" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1202,7 +1202,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseD__Produ__6EF57B66">
+        <Association Name="FK__PurchaseD__Produ__47DBAE45">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PurchaseDetails" Type="Self.PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1214,7 +1214,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Produ__74AE54BC">
+        <Association Name="FK__TailorCha__Produ__4D94879B">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1226,7 +1226,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorMat__Produ__75A278F5">
+        <Association Name="FK__TailorMat__Produ__4E88ABD4">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="TailorMaterialDetails" Type="Self.TailorMaterialDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1238,7 +1238,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Produ__787EE5A0">
+        <Association Name="FK__Transacti__Produ__5165187F">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1250,7 +1250,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseD__Purch__6FE99F9F">
+        <Association Name="FK__PurchaseD__Purch__48CFD27E">
           <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="1" />
           <End Role="PurchaseDetails" Type="Self.PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1262,7 +1262,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseO__Vendo__70DDC3D8">
+        <Association Name="FK__PurchaseO__Vendo__49C3F6B7">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1274,7 +1274,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Chala__72C60C4A">
+        <Association Name="FK__TailorCha__Chala__4BAC3F29">
           <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1" />
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1286,7 +1286,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Chala__73BA3083">
+        <Association Name="FK__TailorCha__Chala__4CA06362">
           <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1" />
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1298,7 +1298,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorCha__Vendo__71D1E811">
+        <Association Name="FK__TailorCha__Vendo__4AB81AF0">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1310,7 +1310,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TailorMat__Tailo__76969D2E">
+        <Association Name="FK__TailorMat__Tailo__4F7CD00D">
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetail" Multiplicity="1" />
           <End Role="TailorMaterialDetails" Type="Self.TailorMaterialDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1334,7 +1334,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Vendo__797309D9">
+        <Association Name="FK__Transacti__Vendo__52593CB8">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1346,7 +1346,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vendor__VendorTy__7B5B524B">
+        <Association Name="FK__Vendor__VendorTy__5441852A">
           <End Role="VendorType" Type="Self.VendorType" Multiplicity="0..1" />
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1379,7 +1379,7 @@
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="VendorTypes" EntityType="Self.VendorType" />
-          <AssociationSet Name="FK__InvoiceMa__finan__08B54D69" Association="Self.FK__InvoiceMa__finan__08B54D69">
+          <AssociationSet Name="FK__InvoiceMa__finan__619B8048" Association="Self.FK__InvoiceMa__finan__619B8048">
             <End Role="FinancialYear" EntitySet="FinancialYears" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
           </AssociationSet>
@@ -1387,91 +1387,91 @@
             <End Role="FinancialYear" EntitySet="FinancialYears" />
             <End Role="Tenant" EntitySet="Tenants" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__invoi__04E4BC85" Association="Self.FK__InvoiceDe__invoi__04E4BC85">
+          <AssociationSet Name="FK__InvoiceDe__invoi__5DCAEF64" Association="Self.FK__InvoiceDe__invoi__5DCAEF64">
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceDe__produ__05D8E0BE" Association="Self.FK__InvoiceDe__produ__05D8E0BE">
+          <AssociationSet Name="FK__InvoiceDe__produ__5EBF139D" Association="Self.FK__InvoiceDe__produ__5EBF139D">
             <End Role="Product" EntitySet="Products" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__creat__06CD04F7" Association="Self.FK__InvoiceMa__creat__06CD04F7">
+          <AssociationSet Name="FK__InvoiceMa__creat__5FB337D6" Association="Self.FK__InvoiceMa__creat__5FB337D6">
             <End Role="User" EntitySet="Users" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__custo__07C12930" Association="Self.FK__InvoiceMa__custo__07C12930">
+          <AssociationSet Name="FK__InvoiceMa__custo__60A75C0F" Association="Self.FK__InvoiceMa__custo__60A75C0F">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__tenan__09A971A2" Association="Self.FK__InvoiceMa__tenan__09A971A2">
+          <AssociationSet Name="FK__InvoiceMa__tenan__628FA481" Association="Self.FK__InvoiceMa__tenan__628FA481">
             <End Role="Tenant" EntitySet="Tenants" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrinterCh__Chala__693CA210" Association="Self.FK__PrinterCh__Chala__693CA210">
+          <AssociationSet Name="FK__PrinterCh__Chala__4222D4EF" Association="Self.FK__PrinterCh__Chala__4222D4EF">
             <End Role="PrinterChalan" EntitySet="PrinterChalans" />
             <End Role="PrinterChalanDetails" EntitySet="PrinterChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrinterCh__Vendo__68487DD7" Association="Self.FK__PrinterCh__Vendo__68487DD7">
+          <AssociationSet Name="FK__PrinterCh__Vendo__412EB0B6" Association="Self.FK__PrinterCh__Vendo__412EB0B6">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="PrinterChalan" EntitySet="PrinterChalans" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrinterCh__Produ__6A30C649" Association="Self.FK__PrinterCh__Produ__6A30C649">
+          <AssociationSet Name="FK__PrinterCh__Produ__4316F928" Association="Self.FK__PrinterCh__Produ__4316F928">
             <End Role="Product" EntitySet="Products" />
             <End Role="PrinterChalanDetails" EntitySet="PrinterChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrintJobW__Chala__6C190EBB" Association="Self.FK__PrintJobW__Chala__6C190EBB">
+          <AssociationSet Name="FK__PrintJobW__Chala__44FF419A" Association="Self.FK__PrintJobW__Chala__44FF419A">
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceiveds" />
             <End Role="PrintJobWorkReceivedDetails" EntitySet="PrintJobWorkReceivedDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrintJobW__Vendo__6B24EA82" Association="Self.FK__PrintJobW__Vendo__6B24EA82">
+          <AssociationSet Name="FK__PrintJobW__Vendo__440B1D61" Association="Self.FK__PrintJobW__Vendo__440B1D61">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceiveds" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrintJobW__Produ__6D0D32F4" Association="Self.FK__PrintJobW__Produ__6D0D32F4">
+          <AssociationSet Name="FK__PrintJobW__Produ__45F365D3" Association="Self.FK__PrintJobW__Produ__45F365D3">
             <End Role="Product" EntitySet="Products" />
             <End Role="PrintJobWorkReceivedDetails" EntitySet="PrintJobWorkReceivedDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Product__6E01572D" Association="Self.FK__Product__Product__6E01572D">
+          <AssociationSet Name="FK__Product__Product__46E78A0C" Association="Self.FK__Product__Product__46E78A0C">
             <End Role="ProductType" EntitySet="ProductTypes" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseD__Produ__6EF57B66" Association="Self.FK__PurchaseD__Produ__6EF57B66">
+          <AssociationSet Name="FK__PurchaseD__Produ__47DBAE45" Association="Self.FK__PurchaseD__Produ__47DBAE45">
             <End Role="Product" EntitySet="Products" />
             <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Produ__74AE54BC" Association="Self.FK__TailorCha__Produ__74AE54BC">
+          <AssociationSet Name="FK__TailorCha__Produ__4D94879B" Association="Self.FK__TailorCha__Produ__4D94879B">
             <End Role="Product" EntitySet="Products" />
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorMat__Produ__75A278F5" Association="Self.FK__TailorMat__Produ__75A278F5">
+          <AssociationSet Name="FK__TailorMat__Produ__4E88ABD4" Association="Self.FK__TailorMat__Produ__4E88ABD4">
             <End Role="Product" EntitySet="Products" />
             <End Role="TailorMaterialDetails" EntitySet="TailorMaterialDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Produ__787EE5A0" Association="Self.FK__Transacti__Produ__787EE5A0">
+          <AssociationSet Name="FK__Transacti__Produ__5165187F" Association="Self.FK__Transacti__Produ__5165187F">
             <End Role="Product" EntitySet="Products" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseD__Purch__6FE99F9F" Association="Self.FK__PurchaseD__Purch__6FE99F9F">
+          <AssociationSet Name="FK__PurchaseD__Purch__48CFD27E" Association="Self.FK__PurchaseD__Purch__48CFD27E">
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
             <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseO__Vendo__70DDC3D8" Association="Self.FK__PurchaseO__Vendo__70DDC3D8">
+          <AssociationSet Name="FK__PurchaseO__Vendo__49C3F6B7" Association="Self.FK__PurchaseO__Vendo__49C3F6B7">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Chala__72C60C4A" Association="Self.FK__TailorCha__Chala__72C60C4A">
+          <AssociationSet Name="FK__TailorCha__Chala__4BAC3F29" Association="Self.FK__TailorCha__Chala__4BAC3F29">
             <End Role="TailorChalan" EntitySet="TailorChalans" />
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Chala__73BA3083" Association="Self.FK__TailorCha__Chala__73BA3083">
+          <AssociationSet Name="FK__TailorCha__Chala__4CA06362" Association="Self.FK__TailorCha__Chala__4CA06362">
             <End Role="TailorChalan" EntitySet="TailorChalans" />
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorCha__Vendo__71D1E811" Association="Self.FK__TailorCha__Vendo__71D1E811">
+          <AssociationSet Name="FK__TailorCha__Vendo__4AB81AF0" Association="Self.FK__TailorCha__Vendo__4AB81AF0">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="TailorChalan" EntitySet="TailorChalans" />
           </AssociationSet>
-          <AssociationSet Name="FK__TailorMat__Tailo__76969D2E" Association="Self.FK__TailorMat__Tailo__76969D2E">
+          <AssociationSet Name="FK__TailorMat__Tailo__4F7CD00D" Association="Self.FK__TailorMat__Tailo__4F7CD00D">
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
             <End Role="TailorMaterialDetails" EntitySet="TailorMaterialDetails" />
           </AssociationSet>
@@ -1479,16 +1479,16 @@
             <End Role="Tenant" EntitySet="Tenants" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Vendo__797309D9" Association="Self.FK__Transacti__Vendo__797309D9">
+          <AssociationSet Name="FK__Transacti__Vendo__52593CB8" Association="Self.FK__Transacti__Vendo__52593CB8">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vendor__VendorTy__7B5B524B" Association="Self.FK__Vendor__VendorTy__7B5B524B">
+          <AssociationSet Name="FK__Vendor__VendorTy__5441852A" Association="Self.FK__Vendor__VendorTy__5441852A">
             <End Role="VendorType" EntitySet="VendorTypes" />
             <End Role="Vendor" EntitySet="Vendors" />
           </AssociationSet>
-          <FunctionImport Name="USP_ProductWiseStock" ReturnType="Collection(StockManagerModel.USP_ProductWiseStock_Result)" />
-          <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)" />
+          <FunctionImport Name="USP_ProductWiseStock" ReturnType="Collection(StockManagerProModel.USP_ProductWiseStock_Result)" />
+          <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerProModel.USP_VendorWiseStock_Result)" />
         </EntityContainer>
         <ComplexType Name="USP_ProductWiseStock_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1511,9 +1511,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StockManagerModelStoreContainer" CdmEntityContainer="StockManagerEntities">
+        <EntityContainerMapping StorageEntityContainer="StockManagerProModelStoreContainer" CdmEntityContainer="StockManagerEntities">
           <EntitySetMapping Name="ChalanTypes">
-            <EntityTypeMapping TypeName="StockManagerModel.ChalanType">
+            <EntityTypeMapping TypeName="StockManagerProModel.ChalanType">
               <MappingFragment StoreEntitySet="ChalanType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ChalanType1" ColumnName="ChalanType" />
@@ -1523,7 +1523,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FinancialYears">
-            <EntityTypeMapping TypeName="StockManagerModel.FinancialYear">
+            <EntityTypeMapping TypeName="StockManagerProModel.FinancialYear">
               <MappingFragment StoreEntitySet="FinancialYear">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1533,7 +1533,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InvoiceDetails">
-            <EntityTypeMapping TypeName="StockManagerModel.InvoiceDetail">
+            <EntityTypeMapping TypeName="StockManagerProModel.InvoiceDetail">
               <MappingFragment StoreEntitySet="InvoiceDetails">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
@@ -1546,7 +1546,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InvoiceMasters">
-            <EntityTypeMapping TypeName="StockManagerModel.InvoiceMaster">
+            <EntityTypeMapping TypeName="StockManagerProModel.InvoiceMaster">
               <MappingFragment StoreEntitySet="InvoiceMaster">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="invoice_no" ColumnName="invoice_no" />
@@ -1563,7 +1563,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PrinterChalans">
-            <EntityTypeMapping TypeName="StockManagerModel.PrinterChalan">
+            <EntityTypeMapping TypeName="StockManagerProModel.PrinterChalan">
               <MappingFragment StoreEntitySet="PrinterChalan">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
@@ -1579,7 +1579,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PrinterChalanDetails">
-            <EntityTypeMapping TypeName="StockManagerModel.PrinterChalanDetail">
+            <EntityTypeMapping TypeName="StockManagerProModel.PrinterChalanDetail">
               <MappingFragment StoreEntitySet="PrinterChalanDetails">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ChalanId" ColumnName="ChalanId" />
@@ -1594,7 +1594,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PrintJobWorkReceiveds">
-            <EntityTypeMapping TypeName="StockManagerModel.PrintJobWorkReceived">
+            <EntityTypeMapping TypeName="StockManagerProModel.PrintJobWorkReceived">
               <MappingFragment StoreEntitySet="PrintJobWorkReceived">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
@@ -1607,7 +1607,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PrintJobWorkReceivedDetails">
-            <EntityTypeMapping TypeName="StockManagerModel.PrintJobWorkReceivedDetail">
+            <EntityTypeMapping TypeName="StockManagerProModel.PrintJobWorkReceivedDetail">
               <MappingFragment StoreEntitySet="PrintJobWorkReceivedDetails">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ChalanId" ColumnName="ChalanId" />
@@ -1619,7 +1619,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="StockManagerModel.Product">
+            <EntityTypeMapping TypeName="StockManagerProModel.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
@@ -1630,7 +1630,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductTypes">
-            <EntityTypeMapping TypeName="StockManagerModel.ProductType">
+            <EntityTypeMapping TypeName="StockManagerProModel.ProductType">
               <MappingFragment StoreEntitySet="ProductType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
@@ -1640,7 +1640,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PurchaseDetails">
-            <EntityTypeMapping TypeName="StockManagerModel.PurchaseDetail">
+            <EntityTypeMapping TypeName="StockManagerProModel.PurchaseDetail">
               <MappingFragment StoreEntitySet="PurchaseDetails">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PurchaseId" ColumnName="PurchaseId" />
@@ -1653,7 +1653,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PurchaseOrders">
-            <EntityTypeMapping TypeName="StockManagerModel.PurchaseOrder">
+            <EntityTypeMapping TypeName="StockManagerProModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrders">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
@@ -1670,7 +1670,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TailorChalans">
-            <EntityTypeMapping TypeName="StockManagerModel.TailorChalan">
+            <EntityTypeMapping TypeName="StockManagerProModel.TailorChalan">
               <MappingFragment StoreEntitySet="TailorChalan">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
@@ -1685,7 +1685,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TailorChalanDetails">
-            <EntityTypeMapping TypeName="StockManagerModel.TailorChalanDetail">
+            <EntityTypeMapping TypeName="StockManagerProModel.TailorChalanDetail">
               <MappingFragment StoreEntitySet="TailorChalanDetails">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ChalanId" ColumnName="ChalanId" />
@@ -1697,7 +1697,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TailorMaterialDetails">
-            <EntityTypeMapping TypeName="StockManagerModel.TailorMaterialDetail">
+            <EntityTypeMapping TypeName="StockManagerProModel.TailorMaterialDetail">
               <MappingFragment StoreEntitySet="TailorMaterialDetails">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TailorChalanDetailsId" ColumnName="TailorChalanDetailsId" />
@@ -1708,7 +1708,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tenants">
-            <EntityTypeMapping TypeName="StockManagerModel.Tenant">
+            <EntityTypeMapping TypeName="StockManagerProModel.Tenant">
               <MappingFragment StoreEntitySet="Tenant">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1723,7 +1723,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Transactions">
-            <EntityTypeMapping TypeName="StockManagerModel.Transaction">
+            <EntityTypeMapping TypeName="StockManagerProModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
@@ -1737,7 +1737,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="StockManagerModel.User">
+            <EntityTypeMapping TypeName="StockManagerProModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1751,7 +1751,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Vendors">
-            <EntityTypeMapping TypeName="StockManagerModel.Vendor">
+            <EntityTypeMapping TypeName="StockManagerProModel.Vendor">
               <MappingFragment StoreEntitySet="Vendor">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorTypeId" ColumnName="VendorTypeId" />
@@ -1768,7 +1768,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VendorTypes">
-            <EntityTypeMapping TypeName="StockManagerModel.VendorType">
+            <EntityTypeMapping TypeName="StockManagerProModel.VendorType">
               <MappingFragment StoreEntitySet="VendorType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorType1" ColumnName="VendorType" />
@@ -1777,9 +1777,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="USP_ProductWiseStock" FunctionName="StockManagerModel.Store.USP_ProductWiseStock">
+          <FunctionImportMapping FunctionImportName="USP_ProductWiseStock" FunctionName="StockManagerProModel.Store.USP_ProductWiseStock">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="StockManagerModel.USP_ProductWiseStock_Result">
+              <ComplexTypeMapping TypeName="StockManagerProModel.USP_ProductWiseStock_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="TotalPurchase" ColumnName="TotalPurchase" />
@@ -1789,9 +1789,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="USP_VendorWiseStock" FunctionName="StockManagerModel.Store.USP_VendorWiseStock">
+          <FunctionImportMapping FunctionImportName="USP_VendorWiseStock" FunctionName="StockManagerProModel.Store.USP_VendorWiseStock">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="StockManagerModel.USP_VendorWiseStock_Result">
+              <ComplexTypeMapping TypeName="StockManagerProModel.USP_VendorWiseStock_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorName" ColumnName="VendorName" />
                 <ScalarProperty Name="GivenForPrinting" ColumnName="GivenForPrinting" />

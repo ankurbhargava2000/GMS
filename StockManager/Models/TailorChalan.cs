@@ -14,7 +14,6 @@ namespace StockManager.Models
     
     public partial class TailorChalan
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TailorChalan()
         {
             this.TailorChalanDetails = new HashSet<TailorChalanDetail>();
@@ -31,9 +30,7 @@ namespace StockManager.Models
         public bool IsGivenToTailor { get; set; }
         public string bill_number { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanDetail> TailorChalanDetails1 { get; set; }
         public virtual Vendor Vendor { get; set; }
     }

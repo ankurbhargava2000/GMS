@@ -49,6 +49,28 @@
                 </div>
             </div>
             <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bill_number, "Bill Number", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
+                            @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12 mt">
                     <div class="form-group">
                         <div class="col-md-2">
@@ -179,9 +201,13 @@
                                                 <tr>
                                                     <td>Product</td>
                                                     <td>Quantity</td>
-                                                    <td>&nbsp;</td>
+                                                    <td>
+                                                        @*<input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success ">*@
+                                                        <i id="addNewMaterial" class="fa fa-plus-circle"></i>
+                                                        <span>Add Material</span>
+                                                    </td>
                                                 </tr>
-                                                <tr class="mycontainer" id="mainrow">
+                                                <tr class="mycontainer hiddenDiv" id="mainrow">
                                                     <td class="col-md-6 col-xs-6">
                                                         @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
                                                     </td>
@@ -226,6 +252,7 @@
                 $('#IdEdit').val('');
                 $('#countEdit').val('');
                 $('#tailorMaterialDetails').html('');
+                $("#itemModel").modal('show');
             });
 
             $("#btnHideModal").click(function () {
@@ -237,8 +264,8 @@
                 $("#itemModel").modal('hide');
             });
 
-            $("#addMaterial").click(function(){
-                var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
+            $("#addNewMaterial").click(function(){
+                var $newRow = $('#mainrow').clone(true, true).removeAttr('id').removeClass('hiddenDiv');
                 $('#materialId', $newRow).val($('#materialId').val());
                 //$('.materialId', $newRow).text($('#materialId').text());
                 $('#materialQuantity', $newRow).val($('#materialQuantity').val());
@@ -255,9 +282,12 @@
                     if($('#countEdit').val() == '')
                     {
                         var matarialDetail = "";
-                        $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
-                            matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
-                        });
+                        if(Model.IsGivenToTailor == false)
+                        {
+                            $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                                matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
+                            });
+                        }
 
                         var $newRow = $('#productItemRow').clone().removeAttr('id');
 
@@ -282,7 +312,7 @@
                             if($('.rowCount', this).val() == $('#countEdit').val())
                             {
                                 var matarialDetail = "";
-                                
+
                                 $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
                                     matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
                                 });
