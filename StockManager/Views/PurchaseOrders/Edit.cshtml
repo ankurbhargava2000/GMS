@@ -458,7 +458,7 @@
             function validateMainPage() {
                 var result = true;
                 if ($('#InvoiceNo').val() == "") {
-                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter Fold Invoice Number.");
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter Invoice Number.");
                     result = false;
                 }
                 if (isNaN($('#InvoiceNo').val())) {
@@ -489,7 +489,7 @@
             }
 
             $('#InvoiceNo').change(function () {
-                if ($('#InvoiceNo').val() != "" && !isNaN($('#InvoiceNo'))) {
+                if ($('#InvoiceNo').val() != "" && !isNaN($('#InvoiceNo').val())) {
                     $('#InvoiceNo').siblings('span.InvoiceNoVal').text("");
                 }
             });
