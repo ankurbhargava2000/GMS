@@ -12,16 +12,16 @@ namespace StockManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SalesInvoiceDetail
+    public partial class PrintJobWorkReceivedDetail
     {
         public int Id { get; set; }
-        public int SalesInvoiceId { get; set; }
+        public int ChalanId { get; set; }
         public int ProductId { get; set; }
-        public decimal Quantity { get; set; }
-        public Nullable<decimal> Rate { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<int> Fold { get; set; }
         public string Description { get; set; }
     
+        public virtual PrintJobWorkReceived PrintJobWorkReceived { get; set; }
         public virtual Product Product { get; set; }
-        public virtual SalesInvoice SalesInvoice { get; set; }
     }
 }

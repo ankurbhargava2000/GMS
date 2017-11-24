@@ -55,17 +55,17 @@
                                     <div style='margin-top: 5px;'>@item.Product.ProductName</div>
                                 </td>
                                 <td style='width: 15%' class='sale'>
-                                    $ @item.sale_rate
+                                    Rs @item.sale_rate
                                 </td>
                                 <td style='width: 15%' class='qty'>
                                     @item.quantity
                                 </td>
 
                                 <td style='width: 15%' class='dscnt'>
-                                    $ @item.discount
+                                    Rs @item.discount
                                 </td>
                                 <td class='ptotal'>
-                                    $ @((item.quantity * item.sale_rate) - item.discount)
+                                    Rs @((item.quantity * item.sale_rate) - item.discount)
                                 </td>
                             </tr>
                         }
@@ -81,7 +81,7 @@
                         Subtotal
                     </td>
                     <td id="sub_total">
-                        $ @Model.gross_amount
+                        Rs @Model.gross_amount
                     </td>
                 </tr>
                 <tr>
@@ -89,7 +89,7 @@
                         Discount
                     </td>
                     <td>
-                        $ @Model.discount
+                        Rs @Model.discount
                     </td>
                 </tr>
                 <tr>
@@ -97,7 +97,7 @@
                         Total
                     </td>
                     <td id="total_discount">
-                        $ @Model.net_amount
+                        Rs @Model.net_amount
                     </td>
                 </tr>
             </table>

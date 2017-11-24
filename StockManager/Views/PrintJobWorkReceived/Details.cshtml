@@ -1,0 +1,73 @@
+﻿@model StockManager.Models.PrintJobWorkReceived
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Printer Chalan # @Model.chalan_number</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Vendor Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendor.VendorName)
+        </dd>
+        <dt>
+            Chalan Date
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChalanDate)
+        </dd>       
+        <dt>
+            Description
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        
+    </dl>
+</div>
+<p>
+    Printer Chalan Details
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Fold
+        </th>
+        
+    </tr>
+    @{
+        if (Model != null && Model.PrintJobWorkReceivedDetails != null)
+        {
+            foreach (var item in Model.PrintJobWorkReceivedDetails)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fold)
+                    </td>
+                    
+                </tr>
+            }
+        }
+    }
+</table>
+<p>
+    @Html.ActionLink("Close", "Index", "PrintJobWorkReceived", new { @class = "btn btn-danger" })
+</p>

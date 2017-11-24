@@ -1,7 +1,7 @@
-﻿@model StockManager.Models.PrinterChalan
+﻿@model StockManager.Models.PrintJobWorkReceived
 
 @{
-    ViewBag.Title = "Create New Printer Chalan";
+    ViewBag.Title = "Create New Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -49,35 +49,6 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.dispatched_through, "Dispatch Through", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.dispatched_through, new { htmlAttributes = new { @class = "form-control", @id = "DispatchThrough" } })
-                            @Html.ValidationMessageFor(model => model.dispatched_through, "", new { @class = "text-danger DispatchThroughVal" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.dispatch_document_number, "Destination", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.dispatch_document_number, new { htmlAttributes = new { @class = "form-control", @id = "DocumentNo" } })
-                            @Html.ValidationMessageFor(model => model.dispatch_document_number, "", new { @class = "text-danger DocumentNoVal" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.bale_numbers, "Bale Nos", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.bale_numbers, new { htmlAttributes = new { @class = "form-control", @id = "BaleNo" } })
-                            @Html.ValidationMessageFor(model => model.bale_numbers, "", new { @class = "text-danger BaleNoVal" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="form-group">
                         @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
                             @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
@@ -86,6 +57,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12 mt">
                     <div class="form-group">
@@ -113,16 +85,6 @@
                                     <label class="productFold">Fold</label>
                                 </td>
                                 
-                                    <td>
-                                        <label class="expectedFold">Expected Fold</label>
-                                    </td>
-                                    <td>
-                                        <label class="shrinkage">Shrinkage</label>
-                                    </td>
-                                    <td>
-                                        <label class="netQuantity">Net Quantity</label>
-                                    </td>
-                                
                                 <td class="itemEditRow"></td>
                             </tr>
                         </table>
@@ -137,7 +99,7 @@
                         </div>
                         <div class="col-xs-12 col-md-8">
                             <input type="button" id="btnSubmit" class="btn btn-success" value="Save Printer Chalan" />
-                            @Html.ActionLink("Close", "Index", "PrinterChalans", new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Close", "Index", "PrintJobWorkReceivedController", new { @class = "btn btn-danger" })
                         </div>
                     </div>
                 </div>
@@ -176,30 +138,7 @@
                                         @Html.ValidationMessage("FoldVal", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                @if (ViewBag.GivenToPrinter == 1)
-                                {
-                                    <div class="form-group">
-                                        @Html.Label("Expected Fold", htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.Editor("Expected Fold", new { htmlAttributes = new { @class = "form-control", @id = "expectedFold" } })
-                                            @Html.ValidationMessage("ExpectedFoldVal", "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.Label("Shrinkage", htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.Editor("Shrinkage", new { htmlAttributes = new { @class = "form-control", @id = "shrinkage" } })
-                                            @Html.ValidationMessage("ShrinkageVal", "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.Label("Net Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.Editor("Net Quantity", new { htmlAttributes = new { @class = "form-control", @id = "netQuantity" } })
-                                            @Html.ValidationMessage("NetQuantityVal", "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                }
+                                
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -244,17 +183,12 @@
                     $('.productName', $newRow).text($('#product').text());
                     $('.productQuantity', $newRow).text($('#quantity').val());
                     $('.productFold', $newRow).text($('#fold').val());
-                    $('.expectedFold', $newRow).text($('#expectedFold').val());
-                    $('.netQuantity', $newRow).text($('#netQuantity').val());
-                    $('.shrinkage', $newRow).text($('#shrinkage').val());
+                    
                     //$('.itemEditRow', $newRow).append('<a class="btn btn-success btn-xs" href="" title="Edit"><i class="fa fa-pencil"></i></a>|<a class="btn btn-danger btn-xs" href="" title="Delet>"><i class="fa fa-trash-o"></i></a>');
                     $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                     $('#printerChalanItems').append($newRow);
                     $('#quantity').val('');
                     $('#fold').val('');
-                    $('#expectedFold').val('');
-                    $('#netQuantity').val('');
-                    $('#shrinkage').val('');
                     $("#itemModel").modal('hide');
                 }
             });
@@ -275,10 +209,7 @@
                             var orderItem = {
                                 ProductId: $('.productId', this).val(),
                                 Quantity: $('.productQuantity', this).text(),
-                                Fold: $('.productFold', this).text(),
-                                ExpectedFold: $('.expectedFold', this).text() ,
-                                NetQuantity: $('.netQuantity', this).text(),
-                                Shrinkage: $('.shrinkage', this).text()
+                                Fold: $('.productFold', this).text()
                             }
                             list.push(orderItem);
                         }
@@ -287,20 +218,17 @@
 
                     var data = {
                         VendorId: $('#Vendor').val(),
-                        ChalanDate: $('#ChalanDate').val(),
-                        dispatch_document_number: $('#DocumentNo').val(),
-                        dispatched_through: $('#DispatchThrough').val(),
-                        bale_numbers: $('#BaleNo').val(),
+                        ChalanDate: $('#ChalanDate').val(),                       
                         Description: $('#Description').val(),
                         chalan_number: $('#ChalanNo').val(),
-                        PrinterChalanDetails: list
+                        PrintJobWorkReceivedDetails: list
                     }
 
                     //$(this).val('Please wait...');
 
                     $.ajax({
                         type: 'POST',
-                        url: '/PrinterChalans/Create',
+                        url: '/PrintJobWorkReceived/Create',
                         data: JSON.stringify(data),
                         contentType: 'application/json',
                         success: function (data) {
@@ -314,7 +242,7 @@
                                     }
                                 });
                                 //$(this).val('Save Purchase Order');
-                                window.location.href = '/PrinterChalans/Details/' + data;
+                                window.location.href = '/PrintJobWorkReceived/Details/' + data;
                             }
                             else {
                                 //$(this).val('Save Printer Chalan');
@@ -364,7 +292,7 @@
             function validateMainPage() {
                 var result = true;
                 if ($('#ChalanNo').val() == "") {
-                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter Fold Chalan Number.");
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter Chalan Number.");
                     result = false;
                 }
                 if (isNaN($('#ChalanNo').val())) {
@@ -375,22 +303,7 @@
                     $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
                     result = false;
                 }
-                //if ($('#DocumentNo').val() == "") {
-                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
-                //    result = false;
-                //}
-                //if ($('#DispatchThrough').val() == "") {
-                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
-                //    result = false;
-                //}
-                //if ($('#Destination').val() == "") {
-                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
-                //    result = false;
-                //}
-                //if ($('#BaleNo').val() == "") {
-                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
-                //    result = false;
-                //}
+               
                 return result;
             }
 

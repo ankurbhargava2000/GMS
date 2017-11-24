@@ -171,11 +171,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
+    <Compile Include="Controllers\PrintJobWorkReceivedController.cs" />
     <Compile Include="Controllers\PrinterChalansController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
-    <Compile Include="Controllers\StockEntriesController.cs" />
     <Compile Include="Controllers\TailorChalanController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
@@ -184,91 +184,89 @@
     </Compile>
     <Compile Include="Helpers\GMailer.cs" />
     <Compile Include="Models\ChalanType.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CheckAuth.cs" />
     <Compile Include="Models\FinancialYear.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InvoiceDetail.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InvoiceExtend.cs" />
     <Compile Include="Models\InvoiceMaster.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Models\PrinterChalan.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PrinterChalanDetail.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintJobWorkReceived.cs">
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintJobWorkReceivedDetail.cs">
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductType.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PurchaseDetail.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PurchaseOrder.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SalesInvoice.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SalesInvoiceDetail.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StockEntry.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StockManager.Context.cs">
+    <Compile Include="Models\StockManagerEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockManager.Context.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockManager.cs">
+    <Compile Include="Models\StockManagerEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockManager.Designer.cs">
+    <Compile Include="Models\StockManagerEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockManager.edmx</DependentUpon>
+      <DependentUpon>StockManagerEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\TailorChalan.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TailorChalanDetail.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TailorMaterialDetail.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tenant.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Transaction.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserExtend.cs" />
     <Compile Include="Models\USP_ProductWiseStock_Result.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USP_VendorWiseStock_Result.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Vendor.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VendorType.cs">
-      <DependentUpon>StockManager.tt</DependentUpon>
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -351,15 +349,15 @@
     <Content Include="Content\lineicons\fonts\linecons.eot" />
     <Content Include="Content\lineicons\fonts\linecons.ttf" />
     <Content Include="Content\lineicons\fonts\linecons.woff" />
-    <Content Include="Models\StockManager.Context.tt">
+    <Content Include="Models\StockManagerEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockManager.edmx</DependentUpon>
-      <LastGenOutput>StockManager.Context.cs</LastGenOutput>
+      <DependentUpon>StockManagerEntities.edmx</DependentUpon>
+      <LastGenOutput>StockManagerEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\StockManager.tt">
+    <Content Include="Models\StockManagerEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockManager.edmx</DependentUpon>
-      <LastGenOutput>StockManager.cs</LastGenOutput>
+      <DependentUpon>StockManagerEntities.edmx</DependentUpon>
+      <LastGenOutput>StockManagerEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\js\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\js\bootstrap-inputmask\bootstrap-inputmask.min.js" />
@@ -493,22 +491,17 @@
     <Content Include="Views\Vendors\Details.cshtml" />
     <Content Include="Views\Vendors\Edit.cshtml" />
     <Content Include="Views\Vendors\Index.cshtml" />
-    <Content Include="Views\StockEntries\Create.cshtml" />
-    <Content Include="Views\StockEntries\Delete.cshtml" />
-    <Content Include="Views\StockEntries\Details.cshtml" />
-    <Content Include="Views\StockEntries\Edit.cshtml" />
-    <Content Include="Views\StockEntries\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\StockManager.edmx">
+    <EntityDeploy Include="Models\StockManagerEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StockManager.Designer.cs</LastGenOutput>
+      <LastGenOutput>StockManagerEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\StockManager.edmx.diagram">
-      <DependentUpon>StockManager.edmx</DependentUpon>
+    <Content Include="Models\StockManagerEntities.edmx.diagram">
+      <DependentUpon>StockManagerEntities.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\StockManager.pubxml" />
     <Content Include="Views\PurchaseOrders\Create.cshtml" />
@@ -539,6 +532,10 @@
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Users\ForgotPassword.cshtml" />
     <Content Include="Views\Users\ResetPassword.cshtml" />
+    <Content Include="Views\PrintJobWorkReceived\Create.cshtml" />
+    <Content Include="Views\PrintJobWorkReceived\Details.cshtml" />
+    <Content Include="Views\PrintJobWorkReceived\Edit.cshtml" />
+    <Content Include="Views\PrintJobWorkReceived\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

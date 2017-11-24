@@ -26,8 +26,7 @@ namespace StockManager.Models
         public Nullable<System.DateTime> Created { get; set; }
         public Nullable<System.DateTime> Updated { get; set; }
         public string Description { get; set; }
-        public bool IsGivenToPrinting { get; set; }
-        public string chalan_number { get; set; }
+        public Nullable<int> chalan_number { get; set; }
         public string dispatch_document_number { get; set; }
         public string dispatched_through { get; set; }
         public string bale_numbers { get; set; }

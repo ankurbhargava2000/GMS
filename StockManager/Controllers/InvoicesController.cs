@@ -17,21 +17,29 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: InvoiceMasters
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
-            var invoiceMasters = db.InvoiceMasters.Include(i => i.FinancialYear).Include(i => i.User).Include(i => i.Vendor).Include(i => i.Tenant).OrderBy(x => x.created_on);
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(invoiceMasters.ToPagedList(pageNumber, pageSize));
+            var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+
+            var invoiceMasters = db.InvoiceMasters
+                .Where( x => x.financial_year == year_id )
+                .Include(i => i.FinancialYear)
+                .Include(i => i.User)
+                .Include(i => i.Vendor)
+                .Include(i => i.Tenant)
+                .ToList();
+
+            return View(invoiceMasters);
         }
 
         // GET: InvoiceMasters/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
-            if (String.IsNullOrEmpty(id))
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
             if (invoiceMaster == null)
             {
@@ -46,9 +54,25 @@ namespace StockManager.Controllers
             ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
             ViewBag.product_id = db.Products.ToList();
 
-            var last = db.InvoiceMasters.OrderByDescending(o => o.Id).FirstOrDefault();
+            var last = db.InvoiceMasters.OrderByDescending(o => o.invoice_no).FirstOrDefault();
 
-            ViewBag.invoice_no = (last.Id+1);
+            if ( last == null )
+            {
+                ViewBag.invoice_no = 1;
+            }
+            else
+            {
+                ViewBag.invoice_no = last.invoice_no + 1;
+            }
+
+            
+
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.Value.ToString("MM/dd/yyyy");
+            ViewBag.EndYear = year.EndDate.Value.ToString("MM/dd/yyyy");
+
             return View();
         }
         
@@ -58,7 +82,8 @@ namespace StockManager.Controllers
         {
 
             if (ModelState.IsValid)
-            {                
+            {
+                invoice.created_at = DateTime.Now;
                 db.InvoiceMasters.Add(invoice);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -72,9 +97,9 @@ namespace StockManager.Controllers
         }
 
         // GET: InvoiceMasters/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
-            if (String.IsNullOrEmpty(id))
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -89,6 +114,12 @@ namespace StockManager.Controllers
             ViewBag.invoice_no = invoiceMaster.invoice_no;
             ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
             ViewBag.product_id = db.Products.ToList();
+
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.Value.ToString("MM/dd/yyyy");
+            ViewBag.EndYear = year.EndDate.Value.ToString("MM/dd/yyyy");
 
             return View(invoiceMaster);
 
@@ -108,6 +139,8 @@ namespace StockManager.Controllers
             {
                 try
                 {
+                    invoiceMaster.created_at = DateTime.Now;
+
                     //db.Entry(invoiceMaster.InvoiceDetails).State = EntityState.Unchanged;
                     db.Entry(invoiceMaster).State = EntityState.Modified;
                     foreach (var item in invoiceMaster.InvoiceDetails)
@@ -121,6 +154,7 @@ namespace StockManager.Controllers
                     {
                         foreach (var item in nInvoiceDetails)
                         {
+                            item.created_at = DateTime.Now;
                             item.invoice_id = invoiceMaster.Id;
                             db.InvoiceDetails.Add(item);
                         }
@@ -159,9 +193,9 @@ namespace StockManager.Controllers
         }
 
         // GET: InvoiceMasters/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
-            if (String.IsNullOrEmpty(id))
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -178,7 +212,7 @@ namespace StockManager.Controllers
         // POST: InvoiceMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
             db.InvoiceMasters.Remove(invoiceMaster);
@@ -202,6 +236,12 @@ namespace StockManager.Controllers
                 s = String.Concat(s, random.Next(10).ToString());
             return s;
         }
+
+        public JsonResult IsIdExists(int invoice_no)
+        {
+            return Json(!db.InvoiceMasters.Any(x => x.invoice_no == invoice_no), JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 }
