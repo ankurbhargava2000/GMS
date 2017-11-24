@@ -70,8 +70,8 @@ namespace StockManager.Controllers
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
-            ViewBag.StartYear = year.StartDate.ToString("MM/dd/yyyy");
-            ViewBag.EndYear = year.EndDate.ToString("MM/dd/yyyy");
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
 
             return View();
         }
@@ -118,8 +118,8 @@ namespace StockManager.Controllers
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
-            ViewBag.StartYear = year.StartDate.ToString("MM/dd/yyyy");
-            ViewBag.EndYear = year.EndDate.ToString("MM/dd/yyyy");
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
 
             return View(invoiceMaster);
 

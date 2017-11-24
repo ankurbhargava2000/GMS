@@ -182,9 +182,11 @@
         $(document).ready(function () {
 
             $('#date_range').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
                 "singleDatePicker": true,
-                "startDate": "@ViewBag.StartYear",
-                "endDate": "@ViewBag.EndYear",
+                "startDate": "@(Model.created_on?.ToString("dd-MMM-yyyy"))",
                 "minDate": "@ViewBag.StartYear",
                 "maxDate": "@ViewBag.EndYear"
             });

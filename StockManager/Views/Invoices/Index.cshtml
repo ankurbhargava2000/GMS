@@ -56,7 +56,7 @@
                     $ @Html.DisplayFor(modelItem => item.net_amount)
                 </td>
                 <td>
-                    @(item.created_on?.ToString("MM/dd/yyyy"))
+                    @(item.created_on?.ToString("dd-MMM-yyyy"))
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.invoice_no }, new { @class = "btn btn-xs btn-warning" }) |
