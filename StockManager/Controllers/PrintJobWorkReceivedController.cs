@@ -65,9 +65,15 @@ namespace StockManager.Controllers
             {
                 try
                 {
+                    var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+                    var tenant_id = Convert.ToInt32(Session["TenantID"]);
+                    var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     printerChalan.Created = dtDate;
                     printerChalan.Updated = dtDate;
+                    printerChalan.created_by = creaded_by;
+                    printerChalan.financial_year = year_id;
+                    printerChalan.tenant_id = tenant_id;
 
                     db.PrintJobWorkReceiveds.Add(printerChalan);
                     db.SaveChanges();

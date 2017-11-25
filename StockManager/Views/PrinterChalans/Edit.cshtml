@@ -396,6 +396,7 @@
                         tenant_id: @Model.tenant_id,
                         financial_year: @Model.financial_year,
                         created_by: @Model.created_by,
+                        chalan_number: $('#ChalanNo').val(),
                         PrinterChalanDetails: list
                     }
 
@@ -409,7 +410,7 @@
                         success: function (data) {
                             if (data != "0") {
                                 alert('Printer Chalan Updated Successfully.');
-                                window.location.href = '/PurchaseOrders/Details/' + data;
+                                window.location.href = '/PrinterChalans/Details/' + data;
                             }
                             else {
                                 //$(this).val('Save Printer Chalan');
@@ -431,7 +432,7 @@
                     {
                         $.ajax({
                             type: 'Get',
-                            url: '/PurchaseOrders/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
+                            url: '/PrinterChalans/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
                             contentType: 'application/json',
                             success: function (data) {
                                 if (data == "product deleted Successfully.") {
