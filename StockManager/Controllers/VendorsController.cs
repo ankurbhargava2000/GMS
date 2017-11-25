@@ -19,7 +19,10 @@ namespace StockManager.Controllers
         // GET: Vendors
         public ActionResult Index(int? page)
         {
-            var vendors = db.Vendors.Include(v => v.VendorType).OrderBy(s => s.VendorName);            
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var vendors = db.Vendors
+                .Where(x => x.tenant_id == tenant_id)
+                .Include(v => v.VendorType).OrderBy(s => s.VendorName);            
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(vendors.ToPagedList(pageNumber, pageSize));
@@ -52,7 +55,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number")] Vendor vendor)
+        public ActionResult Create([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number,tenant_id")] Vendor vendor)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +89,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number")] Vendor vendor)
+        public ActionResult Edit([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number,tenant_id")] Vendor vendor)
         {
             if (ModelState.IsValid)
             {

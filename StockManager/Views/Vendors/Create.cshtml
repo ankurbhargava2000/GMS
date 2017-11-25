@@ -11,7 +11,8 @@
     <div class="form-horizontal">
         <h4>Add New Vendor</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })        
+        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
         <div class="form-group">
             @Html.LabelFor(model => model.VendorTypeId, "Vendor Type", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

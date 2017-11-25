@@ -18,7 +18,13 @@ namespace StockManager.Controllers
         // GET: TailorChalan
         public ActionResult Index(int? id, int? page)
         {
-            var tailorChalans = db.TailorChalans.Include(p => p.Vendor).Where(p => p.IsGivenToTailor == (id == 1 ? true : false)).Include(p => p.TailorChalanDetails).Include(p => p.TailorChalanDetails1).OrderBy(x => x.ChalanDate);
+            var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var tailorChalans = db.TailorChalans
+                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Include(p => p.Vendor)
+                .Where(p => p.IsGivenToTailor == (id == 1 ? true : false))
+                .Include(p => p.TailorChalanDetails).Include(p => p.TailorChalanDetails1).OrderBy(x => x.ChalanDate);
             ViewBag.Send = id;
             int pageSize = 3;
             int pageNumber = (page ?? 1);
@@ -46,6 +52,11 @@ namespace StockManager.Controllers
             ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (id == 1 ? 1 : 0) && x.IsActive == true), "Id", "ProductName");
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
             ViewBag.GivenToTailor = id;
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
             return View();
         }
 
@@ -91,6 +102,11 @@ namespace StockManager.Controllers
             }
             ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (tailorChalan.IsGivenToTailor == true ? 1 : 0) && x.IsActive == true), "Id", "ProductName", tailorChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
             return View(tailorChalan);
         }
 

@@ -9,7 +9,9 @@
         <h4>Purchase</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
+        @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
+        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
         <div class="container">
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12">
@@ -37,14 +39,10 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
-                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
-                                <span class="add-on"><i class="icon-remove"></i></span>
-                                <span class="add-on"><i class="icon-th"></i></span>
-                                @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
-                            </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br />
+                            @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", Id = "InvoiceDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
                         </div>
+                        
                     </div>
                 </div>
                 <div id="div2" class="col-md-6 col-xs-12">
@@ -203,6 +201,9 @@
 
 @section scripts
 {
+    <!-- DateRanger -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btnShowModal").click(function () {
@@ -210,6 +211,16 @@
                 $('#quantity').siblings('span.quantityVal').text("");
                 $('#fold').siblings('span.foldVal').text("");
                 $('#rate').siblings('span.rateVal').text("");
+            });
+
+            $('#InvoiceDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
             });
 
             $("#btnHideModal").click(function () {
@@ -275,7 +286,7 @@
                         dispatched_through: $('#DispatchThrough').val(),
                         destination: $('#Destination').val(),
                         bale_numbers: $('#BaleNo').val(),
-                        Description: $('#Description').val(),
+                        Description: $('#Description').val(),                        
                         PurchaseDetails: list
                     }
 
@@ -372,22 +383,12 @@
                     $('#InvoiceDate').siblings('span.InvoiceDateVal').text("Please Enter Invoice Date value.");
                     result = false;
                 }
-                //if ($('#DocumentNo').val() == "") {
-                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
-                //    result = false;
-                //}
-                //if ($('#DispatchThrough').val() == "") {
-                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
-                //    result = false;
-                //}
-                //if ($('#Destination').val() == "") {
-                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
-                //    result = false;
-                //}
-                //if ($('#BaleNo').val() == "") {
-                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
-                //    result = false;
-                //}
+                var tableRows = $("#purchaseOrderItems tbody tr").length;
+                
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 product for this invoice');
+                    result = false;
+                }
                 return result;
             }
 

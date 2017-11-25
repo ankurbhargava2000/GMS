@@ -289,6 +289,9 @@
                         ChalanDate: $('#ChalanDate').val(),
                         Description: $('#Description').val(),
                         chalan_number: $('#ChalanNo').val(),
+                        tenant_id: @Model.tenant_id,
+                        financial_year: @Model.financial_year,
+                        created_by: @Model.created_by,
                         PrintJobWorkReceivedDetails: list
                     }
 
@@ -364,7 +367,7 @@
                 if (isNaN($('#fold').val())) {
                     $('#fold').siblings('span.FoldVal').text("Please Enter number in Fold.");
                     result = false;
-                }                
+                }
                 return result;
             }
 
@@ -377,7 +380,7 @@
                 if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
                     $('#fold').siblings('span.FoldVal').text("");
                 }
-            });           
+            });
 
             function validateMainPage() {
                 var result = true;

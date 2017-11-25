@@ -31,6 +31,7 @@ namespace StockManager.Models
         public string ProductName { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> tenant_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
@@ -47,5 +48,6 @@ namespace StockManager.Models
         public virtual ICollection<TailorMaterialDetail> TailorMaterialDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual Tenant Tenant { get; set; }
     }
 }

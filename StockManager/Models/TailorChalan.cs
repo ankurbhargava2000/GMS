@@ -30,11 +30,17 @@ namespace StockManager.Models
         public string Description { get; set; }
         public bool IsGivenToTailor { get; set; }
         public string bill_number { get; set; }
+        public Nullable<int> created_by { get; set; }
+        public Nullable<int> financial_year { get; set; }
+        public Nullable<int> tenant_id { get; set; }
     
+        public virtual FinancialYear FinancialYear { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanDetail> TailorChalanDetails1 { get; set; }
         public virtual Vendor Vendor { get; set; }
+        public virtual Tenant Tenant { get; set; }
+        public virtual User User { get; set; }
     }
 }

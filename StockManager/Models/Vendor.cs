@@ -36,6 +36,7 @@ namespace StockManager.Models
         public string pan_number { get; set; }
         public string gst_number { get; set; }
         public string mobile { get; set; }
+        public Nullable<int> tenant_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
@@ -47,6 +48,7 @@ namespace StockManager.Models
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalan> TailorChalans { get; set; }
+        public virtual Tenant Tenant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual VendorType VendorType { get; set; }
