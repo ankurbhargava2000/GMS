@@ -22,13 +22,25 @@
             Product Name
         </th>
         <th>
+            Opening Stock
+        </th>
+        <th>
             Total Purchase
         </th>
         <th>
-            Total Received
+            Send to Printer
         </th>
         <th>
-            Total Quantity Given For Printing
+            Received from Printer
+        </th>
+        <th>
+            Shrinkage
+        </th>
+        <th>
+            Total Sales
+        </th>
+        <th>
+            Stock In Hand
         </th>
     </tr>
     @{
@@ -41,13 +53,26 @@
                         @Html.DisplayFor(modelItem => item.ProductName)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.OpeningStock)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.TotalPurchase)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalProductGivenForPrinting)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalReceived)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TotalProductGivenForPrinting)
+                        @Html.DisplayFor(modelItem => item.Shrinkage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalSales)
+                    </td>
+                    <td>
+                        @Html.Raw((item.OpeningStock + item.TotalPurchase+ item.TotalReceived)-(item.TotalSales+ item.TotalProductGivenForPrinting))
+                       
                     </td>
                 </tr>
             }

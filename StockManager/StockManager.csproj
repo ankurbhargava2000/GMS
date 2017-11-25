@@ -183,9 +183,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GMailer.cs" />
-    <Compile Include="Models\ChalanType.cs">
-      <DependentUpon>StockManagerEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CheckAuth.cs" />
     <Compile Include="Models\FinancialYear.cs">
       <DependentUpon>StockManagerEntities.tt</DependentUpon>

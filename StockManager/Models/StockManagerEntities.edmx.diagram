@@ -4,8 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="692a064ab0194b22bce584b626b2d1f8" Name="Diagram1">
-        <EntityTypeShape EntityType="StockManagerModel.ChalanType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="6fd30d6afda842a1bcf91ebc375ac0a4" Name="Diagram1">
         <EntityTypeShape EntityType="StockManagerModel.FinancialYear" Width="1.5" PointX="0.75" PointY="21" IsExpanded="true" />
         <EntityTypeShape EntityType="StockManagerModel.InvoiceDetail" Width="1.5" PointX="10.75" PointY="46.375" IsExpanded="true" />
         <EntityTypeShape EntityType="StockManagerModel.InvoiceMaster" Width="1.5" PointX="7.5" PointY="35.625" IsExpanded="true" />

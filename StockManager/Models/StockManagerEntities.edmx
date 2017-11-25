@@ -5,15 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ChalanType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ChalanType" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="200" />
-          <Property Name="IsInput" Type="bit" Nullable="false" />
-        </EntityType>
         <EntityType Name="FinancialYear">
           <Key>
             <PropertyRef Name="Id" />
@@ -797,7 +788,6 @@
         </Function>
         <Function Name="USP_VendorWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="StockManagerModelStoreContainer">
-          <EntitySet Name="ChalanType" EntityType="Self.ChalanType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FinancialYear" EntityType="Self.FinancialYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceMaster" EntityType="Self.InvoiceMaster" Schema="dbo" store:Type="Tables" />
@@ -987,15 +977,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ChalanType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ChalanType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IsInput" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="FinancialYear">
           <Key>
             <PropertyRef Name="Id" />
@@ -1857,7 +1838,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="StockManagerEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ChalanTypes" EntityType="Self.ChalanType" />
           <EntitySet Name="FinancialYears" EntityType="Self.FinancialYear" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetail" />
           <EntitySet Name="InvoiceMasters" EntityType="Self.InvoiceMaster" />
@@ -2052,6 +2032,7 @@
           <Property Type="Int32" Name="OpeningStock" Nullable="false" />
           <Property Type="Decimal" Name="TotalPurchase" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="TotalProductGivenForPrinting" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="Shrinkage" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="TotalReceived" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Int32" Name="TotalSales" Nullable="true" />
         </ComplexType>
@@ -2069,16 +2050,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="StockManagerModelStoreContainer" CdmEntityContainer="StockManagerEntities">
-          <EntitySetMapping Name="ChalanTypes">
-            <EntityTypeMapping TypeName="StockManagerModel.ChalanType">
-              <MappingFragment StoreEntitySet="ChalanType">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ChalanType1" ColumnName="ChalanType" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="IsInput" ColumnName="IsInput" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="FinancialYears">
             <EntityTypeMapping TypeName="StockManagerModel.FinancialYear">
               <MappingFragment StoreEntitySet="FinancialYear">
@@ -2356,6 +2327,7 @@
                 <ScalarProperty Name="OpeningStock" ColumnName="OpeningStock" />
                 <ScalarProperty Name="TotalPurchase" ColumnName="TotalPurchase" />
                 <ScalarProperty Name="TotalProductGivenForPrinting" ColumnName="TotalProductGivenForPrinting" />
+                <ScalarProperty Name="Shrinkage" ColumnName="Shrinkage" />
                 <ScalarProperty Name="TotalReceived" ColumnName="TotalReceived" />
                 <ScalarProperty Name="TotalSales" ColumnName="TotalSales" />
               </ComplexTypeMapping>
