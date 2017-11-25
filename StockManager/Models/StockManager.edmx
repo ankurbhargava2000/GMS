@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StockManagerProModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StockManagerProModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ChalanType">
           <Key>
             <PropertyRef Name="Id" />
@@ -160,7 +160,7 @@
           <Property Name="ChalanNo" Type="varchar" MaxLength="10" />
           <Property Name="Created" Type="datetime" />
           <Property Name="Updated" Type="datetime" />
-          <Property Name="Description" Type="varchar" MaxLength="1" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
           <Property Name="IsGivenToTailor" Type="bit" Nullable="false" />
           <Property Name="bill_number" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -718,8 +718,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockManagerProModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -908,7 +907,7 @@
           <Property Name="ChalanNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Created" Type="DateTime" Precision="3" />
           <Property Name="Updated" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IsGivenToTailor" Type="Boolean" Nullable="false" />
           <Property Name="bill_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TailorChalanDetails" Relationship="Self.FK__TailorCha__Chala__4BAC3F29" FromRole="TailorChalan" ToRole="TailorChalanDetails" />
