@@ -24,15 +24,10 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.ChalanDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
-                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
-                                <span class="add-on"><i class="icon-remove"></i></span>
-                                <span class="add-on"><i class="icon-th"></i></span>
-                            </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br />
-                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
+                            @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", Id = "ChalanDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger InvoiceDateVal" })
                         </div>
                     </div>
                 </div>
@@ -216,8 +211,7 @@
                                         @Html.ValidationMessage("Fold", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                @if (@Model.IsGivenToPrinting == true)
-                                {
+                               
                                     <div class="form-group">
                                         @Html.Label("Expected Fold", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
@@ -239,7 +233,7 @@
                                             @Html.ValidationMessage("Shrinkage", "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                }
+                               
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -258,8 +252,21 @@
 
 @section scripts
 {
+        <!-- DateRanger -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#ChalanDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            });
             $("#btnShowModal").click(function () {
                 $('#quantity').val('');
                 $('#fold').val('');
@@ -386,6 +393,10 @@
                         dispatched_through: $('#DispatchThrough').val(),
                         bale_numbers: $('#BaleNo').val(),
                         Description: $('#Description').val(),
+                        tenant_id: @Model.tenant_id,
+                        financial_year: @Model.financial_year,
+                        created_by: @Model.created_by,
+                        chalan_number: $('#ChalanNo').val(),
                         PrinterChalanDetails: list
                     }
 
@@ -399,7 +410,7 @@
                         success: function (data) {
                             if (data != "0") {
                                 alert('Printer Chalan Updated Successfully.');
-                                window.location.href = '/PurchaseOrders/Details/' + data;
+                                window.location.href = '/PrinterChalans/Details/' + data;
                             }
                             else {
                                 //$(this).val('Save Printer Chalan');
@@ -421,7 +432,7 @@
                     {
                         $.ajax({
                             type: 'Get',
-                            url: '/PurchaseOrders/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
+                            url: '/PrinterChalans/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
                             contentType: 'application/json',
                             success: function (data) {
                                 if (data == "product deleted Successfully.") {
@@ -461,7 +472,7 @@
                 if (isNaN($('#fold').val())) {
                     $('#fold').siblings('span.FoldVal').text("Please Enter number in Fold.");
                     result = false;
-                }                
+                }
                 return result;
             }
 
@@ -474,7 +485,7 @@
                 if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
                     $('#fold').siblings('span.FoldVal').text("");
                 }
-            });           
+            });
 
             function validateMainPage() {
                 var result = true;
@@ -490,22 +501,12 @@
                     $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
                     result = false;
                 }
-                //if ($('#DocumentNo').val() == "") {
-                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
-                //    result = false;
-                //}
-                //if ($('#DispatchThrough').val() == "") {
-                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
-                //    result = false;
-                //}
-                //if ($('#Destination').val() == "") {
-                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
-                //    result = false;
-                //}
-                //if ($('#BaleNo').val() == "") {
-                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
-                //    result = false;
-                //}
+                var tableRows = $("#printerChalanItems tbody tr").length;
+
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 product for this invoice');
+                    result = false;
+                }
                 return result;
             }
 

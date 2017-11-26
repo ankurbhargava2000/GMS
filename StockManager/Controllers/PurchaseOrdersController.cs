@@ -18,8 +18,15 @@ namespace StockManager.Controllers
         // GET: PurchaseOrders
         public ActionResult Index()
         {
-            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails).ToList();
+            var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var purchaseOrders = db.PurchaseOrders
+                .Include(p => p.Vendor)
+                .Include(p => p.PurchaseDetails)
+                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .ToList();
             return View(purchaseOrders);
+
         }
 
         // GET: PurchaseOrders/Details/5
@@ -43,6 +50,11 @@ namespace StockManager.Controllers
             var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails);
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName");
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
             return View();
         }
 
@@ -53,9 +65,15 @@ namespace StockManager.Controllers
             {
                 try
                 {
+                    var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+                    var tenant_id = Convert.ToInt32(Session["TenantID"]);
+                    var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     purchaseOrder.Created = dtDate;
                     purchaseOrder.Updated = dtDate;
+                    purchaseOrder.created_by = creaded_by;
+                    purchaseOrder.financial_year = year_id;
+                    purchaseOrder.tenant_id = tenant_id;
 
                     db.PurchaseOrders.Add(purchaseOrder);
                     db.SaveChanges();
@@ -86,6 +104,11 @@ namespace StockManager.Controllers
             }
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1), "Id", "VendorName", purchaseOrder.VendorId);
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
             return View(purchaseOrder);
         }
 
@@ -112,7 +135,7 @@ namespace StockManager.Controllers
                     DateTime dtDate = DateTime.Now;
                     purchaseOrder.Updated = dtDate;
                     db.Entry(purchaseOrder).State = EntityState.Modified;
-                    db.SaveChanges();                 
+                    db.SaveChanges();
 
                     transaction.Commit();
                     return Json(Convert.ToString(purchaseOrder.Id));
@@ -154,7 +177,7 @@ namespace StockManager.Controllers
                     db.SaveChanges();
                     transaction.Commit();
                 }
-                catch(Exception ex)
+                catch
                 {
                     transaction.Rollback();
                 }

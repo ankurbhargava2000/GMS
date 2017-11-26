@@ -18,11 +18,13 @@ namespace StockManager.Models
         public int VendorId { get; set; }
         public int ProductId { get; set; }
         public Nullable<decimal> Quantity { get; set; }
-        public string ChalanNumber { get; set; }
-        public string BillNumber { get; set; }
         public Nullable<System.DateTime> Created { get; set; }
         public Nullable<System.DateTime> Updated { get; set; }
+        public string Type { get; set; }
+        public Nullable<int> ReferenceRecordId { get; set; }
+        public Nullable<int> financial_year { get; set; }
     
+        public virtual FinancialYear FinancialYear { get; set; }
         public virtual Product Product { get; set; }
         public virtual Vendor Vendor { get; set; }
     }

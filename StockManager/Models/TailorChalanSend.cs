@@ -12,28 +12,29 @@ namespace StockManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PrintJobWorkReceived
+    public partial class TailorChalanSend
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PrintJobWorkReceived()
+        public TailorChalanSend()
         {
-            this.PrintJobWorkReceivedDetails = new HashSet<PrintJobWorkReceivedDetail>();
+            this.TailorChalanSendDetails = new HashSet<TailorChalanSendDetail>();
         }
     
         public int Id { get; set; }
         public int VendorId { get; set; }
         public System.DateTime ChalanDate { get; set; }
+        public Nullable<int> ChalanNo { get; set; }
         public Nullable<System.DateTime> Created { get; set; }
         public Nullable<System.DateTime> Updated { get; set; }
         public string Description { get; set; }
-        public int chalan_number { get; set; }
+        public string bill_number { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<int> financial_year { get; set; }
         public Nullable<int> tenant_id { get; set; }
     
         public virtual FinancialYear FinancialYear { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
+        public virtual ICollection<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual Tenant Tenant { get; set; }
         public virtual User User { get; set; }

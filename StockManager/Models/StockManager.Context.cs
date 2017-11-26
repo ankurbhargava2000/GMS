@@ -27,7 +27,6 @@ namespace StockManager.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ChalanType> ChalanTypes { get; set; }
         public virtual DbSet<FinancialYear> FinancialYears { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
@@ -41,6 +40,8 @@ namespace StockManager.Models
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<TailorChalan> TailorChalans { get; set; }
         public virtual DbSet<TailorChalanDetail> TailorChalanDetails { get; set; }
+        public virtual DbSet<TailorChalanSend> TailorChalanSends { get; set; }
+        public virtual DbSet<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
         public virtual DbSet<TailorMaterialDetail> TailorMaterialDetails { get; set; }
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }

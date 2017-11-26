@@ -22,6 +22,7 @@ namespace StockManager.Models
             this.PrintJobWorkReceivedDetails = new HashSet<PrintJobWorkReceivedDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.TailorChalanDetails = new HashSet<TailorChalanDetail>();
+            this.TailorChalanSendDetails = new HashSet<TailorChalanSendDetail>();
             this.TailorMaterialDetails = new HashSet<TailorMaterialDetail>();
             this.Transactions = new HashSet<Transaction>();
         }
@@ -31,6 +32,7 @@ namespace StockManager.Models
         public string ProductName { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> tenant_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
@@ -44,8 +46,11 @@ namespace StockManager.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorMaterialDetail> TailorMaterialDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual Tenant Tenant { get; set; }
     }
 }

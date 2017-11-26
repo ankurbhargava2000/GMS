@@ -1,14 +1,17 @@
-﻿@model StockManager.Models.PrintJobWorkReceived
+﻿@model StockManager.Models.TailorChalanSend
 
 @{
-    ViewBag.Title = "Create New Chalan";
+    ViewBag.Title = "Create New Tailor Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
-        <h4>Printer Chalan</h4>
+        <h4>Tailor Chalan</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
@@ -16,46 +19,57 @@
         @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.Label("Vendor", "Vendor", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
+                        @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
                             @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
-                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger VendorVal" })
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-12">
+                <div id="div2" class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.ChalanDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.ChalanNo, "Chalan#", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", Id = "ChalanDate", required = "true" } })
-                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger InvoiceDateVal" })
+                            @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo", Value = @ViewBag.ChalanNo, required = true } })
+                            @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger ChalanNoVal" })
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div id="div2" class="col-md-6 col-xs-12">                    
                     <div class="form-group">
-                        @Html.LabelFor(model => model.chalan_number, "Chalan Number", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.ChalanDate, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.chalan_number, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
-                            @Html.ValidationMessageFor(model => model.chalan_number, "", new { @class = "text-danger ChalanNoVal" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
-                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger InvoiceNoVal" })
+                            @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control col-md-7", Id = "ChalanDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
                         </div>
                     </div>
                 </div>
             </div>
-            
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bill_number, "Bill Number", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
+                            @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div id="div1" class="col-md-6 col-xs-12 mt">
                     <div class="form-group">
@@ -67,20 +81,20 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-md-12 col-xs-12">
+                <div id="div1" class="col-md-12 col-xs-12">
                     <div class="form-group">
-                        <table class="table table-striped table-advance table-hover" id="printerChalanItems">
+                        <table class="table table-striped table-advance table-hover" id="tailorChalanItems">
                             <tr id="productItemRow">
                                 <td>
                                     <label class="productName">Product Name</label>
                                     <input type="hidden" class="productId" value="" />
+                                    <input type="hidden" class="rowCount" value="" />
+                                    <input type="hidden" class="matarialDetails" value="" />
                                 </td>
                                 <td>
                                     <label class="productQuantity">Quantity</label>
-                                </td>
-                                <td>
-                                    <label class="productFold">Fold</label>
                                 </td>
                                 
                                 <td class="itemEditRow"></td>
@@ -91,13 +105,13 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 col-xs-12">
+                <div id="div1" class="col-md-6 col-xs-12">
                     <div class="form-group">
                         <div class="col-md-2">
                         </div>
                         <div class="col-xs-12 col-md-8">
-                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Printer Chalan" />
-                            @Html.ActionLink("Close", "Index", "PrintJobWorkReceivedController", new { @class = "btn btn-danger" })
+                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Tailor Chalan" />
+                            @Html.ActionLink("Close", "Index", "tailorChalans", new { @class = "btn btn-danger" })
                         </div>
                     </div>
                 </div>
@@ -119,23 +133,17 @@
                                     @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
-                                        @Html.ValidationMessage("ProductIdVal", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
-                                        @Html.ValidationMessage("QuantityVal", "", new { @class = "text-danger" })
+                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
-                                        @Html.ValidationMessage("FoldVal", "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
+                                
                                 
                             </form>
                         </div>
@@ -148,14 +156,14 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 }
 
+
+
 @section scripts
-{   
+{
     <!-- DateRanger -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
@@ -182,9 +190,12 @@
 
             });
 
+            
             $('#addProductItem').click(function () {
                 //validation and add order items
-                var isAllValid = validateModel();
+                var isAllValid = true;
+                var matarialDetail = "";
+                
 
                 if (isAllValid) {
                     var $newRow = $('#productItemRow').clone().removeAttr('id');
@@ -192,53 +203,53 @@
                     $('.productId', $newRow).val($('#product').val());
                     $('.productName', $newRow).text($('#product').text());
                     $('.productQuantity', $newRow).text($('#quantity').val());
-                    $('.productFold', $newRow).text($('#fold').val());
-                    
-                    //$('.itemEditRow', $newRow).append('<a class="btn btn-success btn-xs" href="" title="Edit"><i class="fa fa-pencil"></i></a>|<a class="btn btn-danger btn-xs" href="" title="Delet>"><i class="fa fa-trash-o"></i></a>');
+                    $('.rowCount', $newRow).val($('#tailorChalanItems tr').length);
+                    //$('.itemEditRow', $newRow).append('<button type="button" class="btn btn-success btn-xs remove" title="View Material Used"><i class="fa fa-edit"></i></button> | <button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                     $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
-                    $('#printerChalanItems').append($newRow);
-                    $('#quantity').val('');
-                    $('#fold').val('');
+                    $('#tailorChalanItems').append($newRow);
+                    
                     $("#itemModel").modal('hide');
                 }
             });
 
             //remove button click event
-            $('#printerChalanItems').on('click', '.remove', function () {
+            $('#tailorChalanItems').on('click', '.remove', function () {
                 $(this).parents('tr').remove();
             });
 
             $('#btnSubmit').click(function () {
                 var isAllValid = validateMainPage();
                 if (isAllValid) {
+
+                    //validate order items
                     var list = [];
                     var errorItemCount = 0;
-                    $('#printerChalanItems tbody tr').each(function (index, ele) {
+                    $('#tailorChalanItems tbody tr').each(function (index, ele) {
 
                         if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
                             var orderItem = {
                                 ProductId: $('.productId', this).val(),
-                                Quantity: $('.productQuantity', this).text(),
-                                Fold: $('.productFold', this).text()
+                                Quantity: $('.productQuantity', this).text()
                             }
                             list.push(orderItem);
                         }
                     }
-                        )
+                    )
+
+
 
                     var data = {
                         VendorId: $('#Vendor').val(),
-                        ChalanDate: $('#ChalanDate').val(),                       
+                        ChalanDate: $('#ChalanDate').val(),
+                        ChalanNo: $('#ChalanNo').val(),
+                        bill_number: $('#BillNo').val(),
                         Description: $('#Description').val(),
-                        chalan_number: $('#ChalanNo').val(),
-                        PrintJobWorkReceivedDetails: list
+                        TailorChalanSendDetails: list,
                     }
-
-                    //$(this).val('Please wait...');
 
                     $.ajax({
                         type: 'POST',
-                        url: '/PrintJobWorkReceived/Create',
+                        url: '/tailorChalansend/Create',
                         data: JSON.stringify(data),
                         contentType: 'application/json',
                         success: function (data) {
@@ -246,13 +257,13 @@
                                 alert('Printer Chalan Saved Successfully.');
                                 list = [];
                                 $('#Vender,#InvoiceDate').val('');
-                                $('#printerChalanItems tbody tr').each(function (index, ele) {
+                                $('#TailorChalanItems tbody tr').each(function (index, ele) {
                                     if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                                        $('#printerChalanItems tbody tr', this).remove();
+                                        $('#tailorChalanItems tbody tr', this).remove();
                                     }
                                 });
                                 //$(this).val('Save Purchase Order');
-                                window.location.href = '/PrintJobWorkReceived/Details/' + data;
+                                window.location.href = '/TailorChalanSend/Details/' + data;
                             }
                             else {
                                 //$(this).val('Save Printer Chalan');
@@ -265,39 +276,6 @@
                     });
                 }
             });
-
-            // validation scripts
-            function validateModel() {
-                var result = true;
-                if ($('#quantity').val() == "") {
-                    $('#quantity').siblings('span.QuantityVal').text("Please Enter Quantity.");
-                    result = false;
-                }
-                if (isNaN($('#quantity').val())) {
-                    $('#quantity').siblings('span.QuantityVal').text("Please Enter number in quantity.");
-                    result = false;
-                }
-                if ($('#fold').val() == "") {
-                    $('#fold').siblings('span.FoldVal').text("Please Enter Fold value.");
-                    result = false;
-                }
-                if (isNaN($('#fold').val())) {
-                    $('#fold').siblings('span.FoldVal').text("Please Enter number in Fold.");
-                    result = false;
-                }                
-                return result;
-            }
-
-            $('#quantity').change(function () {
-                if ($('#quantity').val() != "" && !isNaN($('#quantity').val())) {
-                    $('#quantity').siblings('span.QuantityVal').text("");
-                }
-            });
-            $('#fold').change(function () {
-                if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
-                    $('#fold').siblings('span.FoldVal').text("");
-                }
-            });           
 
             function validateMainPage() {
                 var result = true;
@@ -313,7 +291,8 @@
                     $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
                     result = false;
                 }
-                var tableRows = $("#printerChalanItems tbody tr").length;
+
+                var tableRows = $("#tailorChalanItems tbody tr").length;
 
                 if (tableRows <= 1) {
                     alert('Please enter at least 1 product for this invoice');
@@ -327,12 +306,6 @@
                     $('#ChalanNo').siblings('span.ChalanNoVal').text("");
                 }
             });
-            $('#ChalanDate').change(function () {
-                if ($('#ChalanDate').val() != "") {
-                    $('#ChalanDate').siblings('span.ChalanDateVal').text("");
-                }
-            });
-
         });
     </script>
 }

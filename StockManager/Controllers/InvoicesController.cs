@@ -20,9 +20,9 @@ namespace StockManager.Controllers
         public ActionResult Index()
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
             var invoiceMasters = db.InvoiceMasters
-                .Where( x => x.financial_year == year_id )
+                .Where( x => x.financial_year == year_id && x.tenant_id == tenant_id)
                 .Include(i => i.FinancialYear)
                 .Include(i => i.User)
                 .Include(i => i.Vendor)
@@ -176,7 +176,7 @@ namespace StockManager.Controllers
                     }
                      
                 }
-                catch (Exception e)
+                catch
                 {
                     
                 }

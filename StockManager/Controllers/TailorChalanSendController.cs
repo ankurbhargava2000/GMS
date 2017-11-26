@@ -1,65 +1,78 @@
-﻿using System;
+﻿using StockManager.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using StockManager.Models;
 using PagedList;
+
 namespace StockManager.Controllers
 {
     [CheckAuth]
-    public class PrintJobWorkReceivedController : Controller
+    public class TailorChalanSendController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
 
-        // GET: PrinterChalans
-        public ActionResult Index( int? page)
+        // GET: TailorChalan
+        public ActionResult Index(int? page)
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
             var tenant_id = Convert.ToInt32(Session["TenantID"]);
-            var printerChalans = db.PrintJobWorkReceiveds
+            var tailorChalans = db.TailorChalanSends
                 .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
-                .Include(p => p.Vendor).Include(p => p.PrintJobWorkReceivedDetails).OrderBy(x => x.ChalanDate);
+                .Include(p => p.Vendor)                
+                .Include(p => p.TailorChalanSendDetails).OrderBy(x => x.ChalanDate);
             
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(printerChalans.ToPagedList(pageNumber, pageSize));
+            return View(tailorChalans.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: PrinterChalans/Details/5
+        // GET: TailorChalan/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrintJobWorkReceived printerChalan = db.PrintJobWorkReceiveds.Find(id);
-            if (printerChalan == null)
+            TailorChalanSend tailorChalan = db.TailorChalanSends.Find(id);
+            if (tailorChalan == null)
             {
                 return HttpNotFound();
             }
-            return View(printerChalan);
+            return View(tailorChalan);
         }
 
-        // GET: PrinterChalans/Create
+        // GET: TailorChalan/Create
         public ActionResult Create()
         {
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
+            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
+            
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
             ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
             ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
+
+            var last = db.TailorChalanSends.OrderByDescending(o => o.ChalanNo).FirstOrDefault();
+
+            if (last == null)
+            {
+                ViewBag.ChalanNo = 1;
+            }
+            else
+            {
+                ViewBag.ChalanNo = last.ChalanNo + 1;
+            }
             return View();
         }
 
-        // POST: PrinterChalans/Create       
+        // POST: TailorChalan/Create       
         [HttpPost]
-        public JsonResult Create(PrintJobWorkReceived printerChalan)
+        public JsonResult Create(TailorChalanSend tailorChalan)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -69,97 +82,99 @@ namespace StockManager.Controllers
                     var tenant_id = Convert.ToInt32(Session["TenantID"]);
                     var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
-                    printerChalan.Created = dtDate;
-                    printerChalan.Updated = dtDate;
-                    printerChalan.created_by = creaded_by;
-                    printerChalan.financial_year = year_id;
-                    printerChalan.tenant_id = tenant_id;
+                    tailorChalan.Created = dtDate;
+                    tailorChalan.Updated = dtDate;
+                    tailorChalan.created_by = creaded_by;
+                    tailorChalan.financial_year = year_id;
+                    tailorChalan.tenant_id = tenant_id;
 
-                    db.PrintJobWorkReceiveds.Add(printerChalan);
+                    db.TailorChalanSends.Add(tailorChalan);
                     db.SaveChanges();
-                    int scope_id = printerChalan.Id;
+                    int scope_id = tailorChalan.Id;
                     transaction.Commit();
                     return Json(Convert.ToString(scope_id));
                 }
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");
         }
 
-        // GET: PrinterChalans/Edit/5
+        // GET: TailorChalan/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrintJobWorkReceived printerChalan = db.PrintJobWorkReceiveds.Find(id);
-            if (printerChalan == null)
+            TailorChalanSend tailorChalan = db.TailorChalanSends.Find(id);
+            if (tailorChalan == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName", tailorChalan.VendorId);
+            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
             ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
             ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
-            return View(printerChalan);
+            return View(tailorChalan);
         }
 
-        // POST: PrinterChalans/Edit/5        
+        // POST: TailorChalan/Edit/5        
         [HttpPost]
-        public JsonResult Edit(PrintJobWorkReceived printerChalan)
+        public JsonResult Edit(TailorChalanSend tailorChalan)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
-                {
-                    foreach (var objPurchaseDetails in printerChalan.PrintJobWorkReceivedDetails)
+                {                    
+
+                    foreach (var objTailorDetails in tailorChalan.TailorChalanSendDetails)
                     {
-                        if (objPurchaseDetails.Id == 0)
+                        if (objTailorDetails.Id == 0)
                         {
-                            db.Entry(objPurchaseDetails).State = EntityState.Added;
+                            db.Entry(objTailorDetails).State = EntityState.Added;
                             db.SaveChanges();
                         }
                     }
 
-                    while (printerChalan.PrintJobWorkReceivedDetails.Where(x => x.Id == 0).Count() > 0)
-                        printerChalan.PrintJobWorkReceivedDetails.Remove(printerChalan.PrintJobWorkReceivedDetails.Where(x => x.Id == 0).ToList()[0]);
+                    while (tailorChalan.TailorChalanSendDetails.Where(x => x.Id == 0).Count() > 0)
+                        tailorChalan.TailorChalanSendDetails.Remove(tailorChalan.TailorChalanSendDetails.Where(x => x.Id == 0).ToList()[0]);
 
+                    
                     DateTime dtDate = DateTime.Now;
-                    printerChalan.Updated = dtDate;
-                    db.Entry(printerChalan).State = EntityState.Modified;
+                    tailorChalan.Updated = dtDate;
+                    db.Entry(tailorChalan).State = EntityState.Modified;
                     db.SaveChanges();
 
                     transaction.Commit();
-                    return Json(Convert.ToString(printerChalan.Id));
+                    return Json(Convert.ToString(tailorChalan.Id));
                 }
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");
         }
 
-        // GET: PrinterChalans/Delete/5
+        // GET: TailorChalan/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrintJobWorkReceived printerChalan = db.PrintJobWorkReceiveds.Find(id);
-            db.PrintJobWorkReceiveds.Remove(printerChalan);
+            TailorChalanSend tailorChalan = db.TailorChalanSends.Find(id);
+            db.TailorChalanSends.Remove(tailorChalan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -174,8 +189,8 @@ namespace StockManager.Controllers
             {
                 if (id != null && id != 0)
                 {
-                    PrintJobWorkReceivedDetail printerChalanDetail = (PrintJobWorkReceivedDetail)db.PrintJobWorkReceivedDetails.Where(x => x.Id == id).FirstOrDefault();
-                    db.PrintJobWorkReceivedDetails.Remove(printerChalanDetail);
+                    TailorChalanSendDetail tailorChalanDetail = (TailorChalanSendDetail)db.TailorChalanSendDetails.Where(x => x.Id == id).FirstOrDefault();
+                    db.TailorChalanSendDetails.Remove(tailorChalanDetail);
                     db.SaveChanges();
                     return Json("product deleted Successfully.");
                 }

@@ -166,7 +166,7 @@ namespace StockManager.Controllers
                 }
 
             }
-            catch (Exception e)
+            catch
             {
 
             }

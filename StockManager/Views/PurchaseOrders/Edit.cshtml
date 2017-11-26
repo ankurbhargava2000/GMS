@@ -46,6 +46,7 @@
                             </div>
                         </div>
 
+<<<<<<< HEAD
                     </div>
                     <div class="row">
                         <div id="div1" class="col-md-6 col-xs-12">
@@ -61,6 +62,16 @@
                                     <input type="hidden" id="dtp_input1" value="" /><br />
                                 </div>
                             </div>
+=======
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", Id = "InvoiceDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
+>>>>>>> f4769aafca9c4225597b59afff8c89af995c146c
                         </div>
                         <div id="div2" class="col-md-6 col-xs-12">
                             <div class="form-group">
@@ -250,7 +261,10 @@
 </div>
 
 @section scripts
-{
+{   
+    <!-- DateRanger -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btnShowModal").click(function () {
@@ -261,7 +275,15 @@
                 $('#countEdit').val('');
                 $("#itemModel").modal('show');
             });
-
+            $('#InvoiceDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            });
             $("#btnHideModal").click(function () {
                 $("#itemModel").modal('hide');
                 $('#quantity').val('');
@@ -367,6 +389,9 @@
                         destination: $('#Destination').val(),
                         bale_numbers: $('#BaleNo').val(),
                         Description: $('#Description').val(),
+                        tenant_id: @Model.tenant_id,
+                        financial_year: @Model.financial_year,
+                        created_by: @Model.created_by,
                         PurchaseDetails: list
                     }
 
@@ -485,22 +510,12 @@
                     $('#InvoiceDate').siblings('span.InvoiceDateVal').text("Please Enter Invoice Date value.");
                     result = false;
                 }
-                //if ($('#DocumentNo').val() == "") {
-                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
-                //    result = false;
-                //}
-                //if ($('#DispatchThrough').val() == "") {
-                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
-                //    result = false;
-                //}
-                //if ($('#Destination').val() == "") {
-                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
-                //    result = false;
-                //}
-                //if ($('#BaleNo').val() == "") {
-                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
-                //    result = false;
-                //}
+                var tableRows = $("#purchaseOrderItems tbody tr").length;
+                
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 product for this invoice');
+                    result = false;
+                }
                 return result;
             }
 

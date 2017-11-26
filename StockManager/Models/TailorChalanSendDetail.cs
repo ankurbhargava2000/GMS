@@ -12,11 +12,16 @@ namespace StockManager.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ChalanType
+    public partial class TailorChalanSendDetail
     {
         public int Id { get; set; }
-        public string ChalanType1 { get; set; }
+        public int ChalanId { get; set; }
+        public int ProductId { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
         public string Description { get; set; }
-        public bool IsInput { get; set; }
+    
+        public virtual Product Product { get; set; }
+        public virtual TailorChalan TailorChalan { get; set; }
+        public virtual TailorChalanSend TailorChalanSend { get; set; }
     }
 }

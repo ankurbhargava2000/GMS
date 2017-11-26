@@ -4,13 +4,19 @@
     ViewBag.Title = "Create New Printer Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
         <h4>Printer Chalan</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
+        @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
+        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
@@ -24,16 +30,12 @@
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <div class="form-group">
-                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.ChalanDate, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
-                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
-                                <span class="add-on"><i class="icon-remove"></i></span>
-                                <span class="add-on"><i class="icon-th"></i></span>
-                            </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br />
-                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
+                            @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", Id = "ChalanDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger InvoiceDateVal" })
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -42,7 +44,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.chalan_number, "Chalan Number", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.chalan_number, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
+                            @Html.EditorFor(model => model.chalan_number, new { htmlAttributes = new { @class = "form-control", Value = @ViewBag.chalan_number, required = true,@id = "ChalanNo" } })
                             @Html.ValidationMessageFor(model => model.chalan_number, "", new { @class = "text-danger ChalanNoVal" })
                         </div>
                     </div>
@@ -113,15 +115,15 @@
                                     <label class="productFold">Fold</label>
                                 </td>
                                 
-                                    <td>
-                                        <label class="expectedFold">Expected Fold</label>
-                                    </td>
-                                    <td>
-                                        <label class="shrinkage">Shrinkage</label>
-                                    </td>
-                                    <td>
-                                        <label class="netQuantity">Net Quantity</label>
-                                    </td>
+                                <td>
+                                    <label class="expectedFold">Expected Fold</label>
+                                </td>
+                                <td>
+                                    <label class="shrinkage">Shrinkage</label>
+                                </td>
+                                <td>
+                                    <label class="netQuantity">Net Quantity</label>
+                                </td>
                                 
                                 <td class="itemEditRow"></td>
                             </tr>
@@ -176,8 +178,7 @@
                                         @Html.ValidationMessage("FoldVal", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                @if (ViewBag.GivenToPrinter == 1)
-                                {
+                                
                                     <div class="form-group">
                                         @Html.Label("Expected Fold", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
@@ -195,11 +196,11 @@
                                     <div class="form-group">
                                         @Html.Label("Net Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.Editor("Net Quantity", new { htmlAttributes = new { @class = "form-control", @id = "netQuantity" } })
+                                            @Html.Editor("Net Quantity", new { htmlAttributes = new { @class = "form-control", @id = "netQuantity",@readonly=true } })
                                             @Html.ValidationMessage("NetQuantityVal", "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                }
+                                
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -219,8 +220,22 @@
 
 @section scripts
 {
+    <!-- DateRanger -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#ChalanDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            });
+
             $("#btnShowModal").click(function () {
                 $("#itemModel").modal('show');
             });
@@ -346,13 +361,37 @@
                 if (isNaN($('#fold').val())) {
                     $('#fold').siblings('span.FoldVal').text("Please Enter number in Fold.");
                     result = false;
-                }                
+                }
+                
+                if ($('#shrinkage').val() != "") {
+                    var x = parseFloat($('#shrinkage').val());
+                    if (isNaN(x) || x < 0 || x > 100) {
+                        $('#shrinkage').siblings('span.ShrinkageVal').text("Please Enter valid percentage value.");
+                        result = false;
+                        // alert("value is out of range");
+                    }
+                    else {
+                        var decimalSeparator = ".";
+                        var val = "" + x;
+                        if (val.indexOf(decimalSeparator) < val.length - 3) {
+                            $('#shrinkage').siblings('span.ShrinkageVal').text("Please Enter valid percentage value.");
+                            result = false;
+                        }
+                    }
+                }
                 return result;
             }
 
             $('#quantity').change(function () {
                 if ($('#quantity').val() != "" && !isNaN($('#quantity').val())) {
                     $('#quantity').siblings('span.QuantityVal').text("");
+                    CalculateNetQuantity();
+                }
+            });
+            $('#shrinkage').change(function () {
+                if ($('#shrinkage').val() != "" && !isNaN($('#shrinkage').val())) {
+                    $('#shrinkage').siblings('span.ShrinkageVal').text("");
+                    CalculateNetQuantity();
                 }
             });
             $('#fold').change(function () {
@@ -360,7 +399,14 @@
                     $('#fold').siblings('span.FoldVal').text("");
                 }
             });           
+            function CalculateNetQuantity() {
 
+                var netQty = 0;
+                var qty = $("#quantity").val();
+                var shrinake = $("#shrinkage").val();
+                netQty = (shrinake / 100) * qty;
+                $("input#netQuantity").val(qty-netQty);
+            }
             function validateMainPage() {
                 var result = true;
                 if ($('#ChalanNo').val() == "") {
@@ -375,22 +421,13 @@
                     $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
                     result = false;
                 }
-                //if ($('#DocumentNo').val() == "") {
-                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
-                //    result = false;
-                //}
-                //if ($('#DispatchThrough').val() == "") {
-                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
-                //    result = false;
-                //}
-                //if ($('#Destination').val() == "") {
-                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
-                //    result = false;
-                //}
-                //if ($('#BaleNo').val() == "") {
-                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
-                //    result = false;
-                //}
+                
+                var tableRows = $("#printerChalanItems tbody tr").length;
+
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 product for this invoice');
+                    result = false;
+                }
                 return result;
             }
 

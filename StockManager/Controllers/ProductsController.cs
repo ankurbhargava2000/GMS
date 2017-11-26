@@ -19,7 +19,10 @@ namespace StockManager.Controllers
         // GET: Products
         public ActionResult Index(int? page)
         {
-            var products = db.Products.Include(p => p.ProductType).ToList();
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var products = db.Products.Include(p => p.ProductType)
+                .Where(x => x.tenant_id == tenant_id)
+                .ToList();
             return View(products);
         }
 
@@ -50,7 +53,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ProductTypeId,ProductName,Description,IsActive")] Product product)
+        public ActionResult Create([Bind(Include = "Id,ProductTypeId,ProductName,Description,IsActive,tenant_id")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +87,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ProductTypeId,ProductName,Description,IsActive")] Product product)
+        public ActionResult Edit([Bind(Include = "Id,ProductTypeId,ProductName,Description,IsActive,tenant_id")] Product product)
         {
             if (ModelState.IsValid)
             {
