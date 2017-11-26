@@ -5,242 +5,257 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
-{
-    <div class="form-horizontal">
-        <h4>Tailor Chalan</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="container">
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
-                            @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
-                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div id="div2" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ChalanNo, "Chalan#", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
-                            @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="div2" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
-                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
-                                <span class="add-on"><i class="icon-remove"></i></span>
-                                <span class="add-on"><i class="icon-th"></i></span>
-                            </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br />
-                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.bill_number, "Bill Number", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
-                            @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
-                            @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div id="div2" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
-                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12 mt">
-                    <div class="form-group">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-xs-12 col-md-8">
-                            <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div id="div1" class="col-md-12 col-xs-12">
-                    <div class="form-group">
-                        <table class="table table-striped table-advance table-hover" id="tailorChalanItems">
-                            <tr id="productItemRow">
-                                <td>
-                                    <label class="productName">Product Name</label>
-                                    <input type="hidden" class="productId" value="" />
-                                    <input type="hidden" class="matarialList" value="" />
-                                    <input type="hidden" class="rowCount" value="" />
-                                    <input type="hidden" class="matarialDetails" value="" />
-                                </td>
-                                <td>
-                                    <label class="productQuantity">Quantity</label>
-                                </td>
-                                <td>
-                                    <label class="laborCost">Labor Cost</label>
-                                </td>
-                                <td class="itemEditRow"></td>
-                            </tr>
-                            @if (Model != null && Model.TailorChalanDetails != null)
-                            {
-                                var count = 0;
-                                foreach (var item in Model.TailorChalanDetails)
-                                {
-                                    count++;
-                                    var matarialDetail = "";
-                                    if (Model.IsGivenToTailor == false)
-                                    {
-                                        foreach (var matarial in item.TailorMaterialDetails)
-                                        {
-                                            matarialDetail += (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") + matarial.ProductId + "\",\"Quantity\":\"" + matarial.Quantity + "\"}";
-                                        }
-                                    }
-                                    <tr>
-                                        <td>
-                                            <label class="productName">@item.Product.ProductName</label>
-                                            <input type="hidden" class="productId" value="@item.ProductId" />
-                                            <input type="hidden" class="rowCount" value="@count" />
-                                            <input type="hidden" class="matarialDetails" value="@matarialDetail" />
-                                            <input type="hidden" class="Id" value="@item.Id" />
-                                        </td>
-                                        <td>
-                                            <label class="productQuantity">@item.Quantity</label>
-                                        </td>
-                                        <td>
-                                            <label class="laborCost">@item.LaborCost</label>
-                                        </td>
-                                        <td class="itemEditRow">
-                                            <button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button>
-                                            <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-xs-12 col-md-8">
-                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Tailor Chalan" />
-                            @Html.ActionLink("Close", "Index", "tailorChalans", new { @class = "btn btn-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" tabindex="-1" id="itemModel"
-                 data-keyboard="false" data-backdrop="static">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                ×
-                            </button>
-                            <h4 class="modal-title">Add Product</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
-                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
-                                        <input type="hidden" class="IdEdit" id="IdEdit" />
-                                        <input type="hidden" class="countEdit" id="countEdit" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
-                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("LaborCost", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("LaborCost", new { htmlAttributes = new { @class = "form-control", @id = "laborCost" } })
-                                        @Html.ValidationMessage("LaborCost", "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                @if (Model.IsGivenToTailor == false)
-                                {
-                                    <div class="form-group">
-                                        <div class="details form-horizontal">
-                                            <h2>
-                                                &nbsp; Tailor Material Details
-                                            </h2>
-                                            <table class="table table-responsive">
-                                                <tr>
-                                                    <td>Product</td>
-                                                    <td>Quantity</td>
-                                                    <td>
-                                                        @*<input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success ">*@
-                                                        <i id="addNewMaterial" class="fa fa-plus-circle"></i>
-                                                        <span>Add Material</span>
-                                                    </td>
-                                                </tr>
-                                                <tr class="mycontainer hiddenDiv" id="mainrow">
-                                                    <td class="col-md-6 col-xs-6">
-                                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
-                                                    </td>
-                                                    <td class="col-md-3 col-xs-3">
-                                                        <input type="text" id="materialQuantity" class="materialQuantity" value="0" />
-                                                    </td>
-                                                    <td class="col-md-3 col-xs-3">
-                                                        <input type="button" id="addMaterial" value="add Material" class="btn-xs btn-success" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <div id="orderItems">
-                                                <table class="table table-responsive" id="tailorMaterialDetails"></table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
-                            <button type="button" id="btnHideModal" class="btn btn-danger">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Edit Chalan</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
         </div>
     </div>
-}
+    <div class="portlet-body">
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-horizontal">
+                
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
+                                    @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div2" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ChalanNo, "Chalan#", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
+                                    @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div2" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
+                                        @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
+                                        <span class="add-on"><i class="icon-remove"></i></span>
+                                        <span class="add-on"><i class="icon-th"></i></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input1" value="" /><br />
+                                    @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.bill_number, "Bill Number", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
+                                    @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div2" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12 mt">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-xs-12 col-md-8">
+                                    <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div id="div1" class="col-md-12 col-xs-12">
+                            <div class="form-group">
+                                <table class="table table-striped table-advance table-hover" id="tailorChalanItems">
+                                    <tr id="productItemRow">
+                                        <td>
+                                            <label class="productName">Product Name</label>
+                                            <input type="hidden" class="productId" value="" />
+                                            <input type="hidden" class="matarialList" value="" />
+                                            <input type="hidden" class="rowCount" value="" />
+                                            <input type="hidden" class="matarialDetails" value="" />
+                                        </td>
+                                        <td>
+                                            <label class="productQuantity">Quantity</label>
+                                        </td>
+                                        <td>
+                                            <label class="laborCost">Labor Cost</label>
+                                        </td>
+                                        <td class="itemEditRow"></td>
+                                    </tr>
+                                    @if (Model != null && Model.TailorChalanDetails != null)
+                                    {
+                                        var count = 0;
+                                        foreach (var item in Model.TailorChalanDetails)
+                                        {
+                                            count++;
+                                            var matarialDetail = "";
+                                            if (Model.IsGivenToTailor == false)
+                                            {
+                                                foreach (var matarial in item.TailorMaterialDetails)
+                                                {
+                                                    matarialDetail += (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") + matarial.ProductId + "\",\"Quantity\":\"" + matarial.Quantity + "\"}";
+                                                }
+                                            }
+                                            <tr>
+                                                <td>
+                                                    <label class="productName">@item.Product.ProductName</label>
+                                                    <input type="hidden" class="productId" value="@item.ProductId" />
+                                                    <input type="hidden" class="rowCount" value="@count" />
+                                                    <input type="hidden" class="matarialDetails" value="@matarialDetail" />
+                                                    <input type="hidden" class="Id" value="@item.Id" />
+                                                </td>
+                                                <td>
+                                                    <label class="productQuantity">@item.Quantity</label>
+                                                </td>
+                                                <td>
+                                                    <label class="laborCost">@item.LaborCost</label>
+                                                </td>
+                                                <td class="itemEditRow">
+                                                    <button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-xs-12 col-md-8">
+                                    <input type="button" id="btnSubmit" class="btn btn-success" value="Save Tailor Chalan" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" tabindex="-1" id="itemModel"
+                         data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        ×
+                                    </button>
+                                    <h4 class="modal-title">Add Product</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
+                                                @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
+                                                <input type="hidden" class="IdEdit" id="IdEdit" />
+                                                <input type="hidden" class="countEdit" id="countEdit" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                                                @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("LaborCost", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.Editor("LaborCost", new { htmlAttributes = new { @class = "form-control", @id = "laborCost" } })
+                                                @Html.ValidationMessage("LaborCost", "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        @if (Model.IsGivenToTailor == false)
+                                        {
+                                            <div class="form-group">
+                                                <div class="details form-horizontal">
+                                                    <h2>
+                                                        &nbsp; Tailor Material Details
+                                                    </h2>
+                                                    <table class="table table-responsive">
+                                                        <tr>
+                                                            <td>Product</td>
+                                                            <td>Quantity</td>
+                                                            <td>
+                                                                @*<input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success ">*@
+                                                                <i id="addNewMaterial" class="fa fa-plus-circle"></i>
+                                                                <span>Add Material</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="mycontainer hiddenDiv" id="mainrow">
+                                                            <td class="col-md-6 col-xs-6">
+                                                                @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
+                                                            </td>
+                                                            <td class="col-md-3 col-xs-3">
+                                                                <input type="text" id="materialQuantity" class="materialQuantity" value="0" />
+                                                            </td>
+                                                            <td class="col-md-3 col-xs-3">
+                                                                <input type="button" id="addMaterial" value="add Material" class="btn-xs btn-success" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div id="orderItems">
+                                                        <table class="table table-responsive" id="tailorMaterialDetails"></table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
+                                    <button type="button" id="btnHideModal" class="btn btn-danger">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
 
 @section scripts
 {
@@ -461,8 +476,3 @@
         });
     </script>
 }
-
-
-
-
-

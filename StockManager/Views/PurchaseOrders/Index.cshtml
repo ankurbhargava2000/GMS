@@ -1,62 +1,75 @@
-﻿@*@model IEnumerable<StockManager.Models.PurchaseOrder>*@
-@model PagedList.IPagedList<StockManager.Models.PurchaseOrder>
-@using PagedList.Mvc;
+﻿@model IEnumerable<StockManager.Models.PurchaseOrder>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Purchases</h2>
-@Html.ActionLink("Create new purchase order", "Create", "", new { @class = "btn btn-success" })
-@*<a id="btnCreate" class="btn btn-success btn-sm pull-left" data-toggle="modal" href="#createModel">Create new purchase order</a>*@
-<br />
-<table class="table table-striped table-advance table-hover mt">
-    <tr>
-        <th>
-            Bill Number
-        </th>
-        <th>
-            Vendor Name
-        </th>
-        <th>
-            Purchase Date
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Purchase Orders</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Create")" class="btn btn-circle btn-default">
+                <i class="fa fa-plus"></i> New
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
 
-        </th>
-    </tr>
+        <table class="jTable table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Bill Number
+                    </th>
+                    <th>
+                        Vendor Name
+                    </th>
+                    <th>
+                        Purchase Date
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @if (item.InvoiceNumber != null)
+                @foreach (var item in Model)
                 {
-                    @Html.ActionLink(Convert.ToString(item.InvoiceNumber), "Details", new { id = item.Id })
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vendor.VendorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvoiceDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
+                    <tr>
+                        <td>
+                            @if (item.InvoiceNumber != null)
+                            {
+                                @Html.ActionLink(Convert.ToString(item.InvoiceNumber), "Details", new { id = item.Id })
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InvoiceDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
 
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
-                |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this Purchase Order?');", @class = "btn btn-danger btn-xs" })
-            </td>
-        </tr>
-    }
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page }))
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                            |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this Purchase Order?');", @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

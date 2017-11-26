@@ -16,13 +16,11 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: TailorChalan
-        public ActionResult Index(int? id, int? page)
+        public ActionResult Index(int? id)
         {
-            var tailorChalans = db.TailorChalans.Include(p => p.Vendor).Where(p => p.IsGivenToTailor == (id == 1 ? true : false)).Include(p => p.TailorChalanDetails).Include(p => p.TailorChalanDetails1).OrderBy(x => x.ChalanDate);
+            var tailorChalans = db.TailorChalans.Include(p => p.Vendor).Where(p => p.IsGivenToTailor == (id == 1 ? true : false)).Include(p => p.TailorChalanDetails).Include(p => p.TailorChalanDetails1).ToList();
             ViewBag.Send = id;
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(tailorChalans.ToPagedList(pageNumber, pageSize));
+            return View(tailorChalans);
         }
 
         // GET: TailorChalan/Details/5

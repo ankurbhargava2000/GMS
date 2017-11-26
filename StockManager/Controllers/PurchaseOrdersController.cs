@@ -16,12 +16,10 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: PurchaseOrders
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
-            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails).OrderBy(x => x.InvoiceDate);
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(purchaseOrders.ToPagedList(pageNumber, pageSize));
+            var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails).ToList();
+            return View(purchaseOrders);
         }
 
         // GET: PurchaseOrders/Details/5

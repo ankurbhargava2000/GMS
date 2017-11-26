@@ -19,10 +19,8 @@ namespace StockManager.Controllers
         // GET: Products
         public ActionResult Index(int? page)
         {
-            var products = db.Products.Include(p => p.ProductType).OrderBy(x => x.ProductName);
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(products.ToPagedList(pageNumber, pageSize));
+            var products = db.Products.Include(p => p.ProductType).ToList();
+            return View(products);
         }
 
         // GET: Products/Details/5

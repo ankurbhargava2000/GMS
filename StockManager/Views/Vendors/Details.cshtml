@@ -4,85 +4,95 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div>
-    <h4>Vendor Details</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Name
-        </dt>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Vendor Details</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.VendorName)
-        </dd>
+        <dl class="dl-horizontal">
+            <dt>
+                Name
+            </dt>
 
-        <dt>
-            Email
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.VendorName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
+            <dt>
+                Email
+            </dt>
 
-        <dt>
-            Phone Number
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
+            <dt>
+                Phone Number
+            </dt>
 
-        <dt>
-            Mobile Number
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.mobile)
-        </dd>
+            <dt>
+                Mobile Number
+            </dt>
 
-        <dt>
-            Pan Number
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.mobile)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.pan_number)
-        </dd>
+            <dt>
+                Pan Number
+            </dt>
 
-        <dt>
-            GST Number
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.pan_number)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.gst_number)
-        </dd>
+            <dt>
+                GST Number
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.gst_number)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dt>
-            Vendor Type
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.VendorType.VendorType1)
-        </dd>
+            <dt>
+                Vendor Type
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.VendorType.VendorType1)
+            </dd>
+
+        </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

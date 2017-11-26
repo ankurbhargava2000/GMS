@@ -18,11 +18,8 @@ namespace StockManager.Controllers
         // GET: PrinterChalans
         public ActionResult Index( int? page)
         {
-            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Include(p => p.PrinterChalanDetails).OrderBy(x => x.ChalanDate);
-            
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(printerChalans.ToPagedList(pageNumber, pageSize));
+            var printerChalans = db.PrinterChalans.Include(p => p.Vendor).Include(p => p.PrinterChalanDetails).ToList();            
+            return View(printerChalans);
         }
 
         // GET: PrinterChalans/Details/5

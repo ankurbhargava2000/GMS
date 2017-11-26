@@ -5,74 +5,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-@section css
-{
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-}
-
-<h2>Invoices</h2>
-
-<p>
-    @Html.ActionLink("Create New Invoice", "Create", null, new { @class = "btn btn-success" })
-</p>
-<table class="jTable table table-striped table-advance table-hover mt">
-    <thead>
-        <tr>
-            <th>
-                Invoice #
-            </th>
-            <th>
-                Vendor
-            </th>
-            <th>
-                Gross
-            </th>
-            <th>
-                Net
-            </th>
-            <th>
-                Created On
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.ActionLink(item.invoice_no.ToString(), "Details", new { id = item.invoice_no })
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vendor.VendorName)
-                </td>
-                <td>
-                    Rs @Html.DisplayFor(modelItem => item.gross_amount)
-                </td>
-                <td>
-                    Rs @Html.DisplayFor(modelItem => item.net_amount)
-                </td>
-                <td>
-                    @(item.created_on?.ToString("dd-MMM-yyyy"))
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.invoice_no }, new { @class = "btn btn-xs btn-warning" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.invoice_no }, new { @class = "btn btn-xs btn-danger" })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@section Scripts{
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.jTable').DataTable();
-        });
-    </script>
-
-}
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Invoices</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Create")" class="btn btn-circle btn-default">
+                <i class="fa fa-plus"></i> New
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="jTable table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Invoice #
+                    </th>
+                    <th>
+                        Vendor
+                    </th>
+                    <th>
+                        Gross
+                    </th>
+                    <th>
+                        Net
+                    </th>
+                    <th>
+                        Created On
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.invoice_no.ToString(), "Details", new { id = item.invoice_no })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+                        </td>
+                        <td>
+                            Rs @Html.DisplayFor(modelItem => item.gross_amount)
+                        </td>
+                        <td>
+                            Rs @Html.DisplayFor(modelItem => item.net_amount)
+                        </td>
+                        <td>
+                            @(item.created_on?.ToString("dd-MMM-yyyy"))
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.invoice_no }, new { @class = "btn btn-warning btn-xs" })
+                            |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.invoice_no }, new { @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>        
+    </div>
+</div>

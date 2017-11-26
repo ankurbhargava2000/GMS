@@ -4,117 +4,130 @@
     ViewBag.Title = "Purchase Order Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div>
-    <h4>Purchase Invoice# @Model.InvoiceNumber</h4>
-    <hr />
-    <dl class="dl-horizontal">  
-        <dt>
-            Vendor Name
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vendor.VendorName)
-        </dd> 
-        <dt>
-           Invoice Number
-        </dt>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Invoices</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.InvoiceNumber)
-        </dd>
+        <dl class="dl-horizontal">
+            <dt>
+                Vendor Name
+            </dt>
 
-        <dt>
-           Invoice Date
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Vendor.VendorName)
+            </dd>
+            <dt>
+                Invoice Number
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.InvoiceDate)
-        </dd>
-        
-        <dt>
-            Dispatch Document Number
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.InvoiceNumber)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.dispatch_document_number)
-        </dd> 
-        
-        <dt>
-            Dispatch Through
-        </dt>
+            <dt>
+                Invoice Date
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.dispatched_through)
-        </dd> 
-        
-        <dt>
-            Destination
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.InvoiceDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.destination)
-        </dd> 
-        
-        <dt>
-            Bale Nos
-        </dt>
+            <dt>
+                Dispatch Document Number
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.bale_numbers)
-        </dd> 
-        
-        <dt>
-            Description
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.dispatch_document_number)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd> 
-        
-               
-    </dl>
-</div>
-<p>
-    Purchase Details
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Product Name
-        </th>
-        <th>
-            Quantity
-        </th>
-        <th>
-            Rate
-        </th>
-        <th>
-            Fold
-        </th>        
-    </tr>
-    @{
-        if (Model != null && Model.PurchaseDetails != null)
-        {
-            foreach (var item in Model.PurchaseDetails)
+            <dt>
+                Dispatch Through
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.dispatched_through)
+            </dd>
+
+            <dt>
+                Destination
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.destination)
+            </dd>
+
+            <dt>
+                Bale Nos
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.bale_numbers)
+            </dd>
+
+            <dt>
+                Description
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+
+        </dl>
+    </div>
+    <p>
+        Purchase Details
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Rate
+            </th>
+            <th>
+                Fold
+            </th>
+        </tr>
+        @{
+            if (Model != null && Model.PurchaseDetails != null)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Product.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fold)
-                    </td>
-                </tr>
+                foreach (var item in Model.PurchaseDetails)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fold)
+                        </td>
+                    </tr>
+                }
             }
         }
-    }
-</table>
-<p> 
-    @Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })    
-</p>
+    </table>
+
+</div>

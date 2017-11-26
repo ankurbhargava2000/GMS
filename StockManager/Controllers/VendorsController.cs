@@ -17,12 +17,10 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: Vendors
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
-            var vendors = db.Vendors.Include(v => v.VendorType).OrderBy(s => s.VendorName);            
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(vendors.ToPagedList(pageNumber, pageSize));
+            var vendors = db.Vendors.Include(v => v.VendorType).ToList();
+            return View(vendors);
         }
 
         // GET: Vendors/Details/5
