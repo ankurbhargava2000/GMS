@@ -540,6 +540,10 @@
     <Content Include="Views\PrintJobWorkReceived\Details.cshtml" />
     <Content Include="Views\PrintJobWorkReceived\Edit.cshtml" />
     <Content Include="Views\PrintJobWorkReceived\Index.cshtml" />
+    <Content Include="Views\TailorChalanSend\Create.cshtml" />
+    <Content Include="Views\TailorChalanSend\Details.cshtml" />
+    <Content Include="Views\TailorChalanSend\Edit.cshtml" />
+    <Content Include="Views\TailorChalanSend\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

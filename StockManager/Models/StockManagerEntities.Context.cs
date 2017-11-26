@@ -40,14 +40,14 @@ namespace StockManager.Models
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<TailorChalan> TailorChalans { get; set; }
         public virtual DbSet<TailorChalanDetail> TailorChalanDetails { get; set; }
+        public virtual DbSet<TailorChalanSend> TailorChalanSends { get; set; }
+        public virtual DbSet<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
         public virtual DbSet<TailorMaterialDetail> TailorMaterialDetails { get; set; }
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
-        public virtual DbSet<TailorChalanSend> TailorChalanSends { get; set; }
-        public virtual DbSet<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
     
         public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> userId)
         {

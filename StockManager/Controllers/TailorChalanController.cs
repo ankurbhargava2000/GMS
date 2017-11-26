@@ -22,8 +22,7 @@ namespace StockManager.Controllers
             var tenant_id = Convert.ToInt32(Session["TenantID"]);
             var tailorChalans = db.TailorChalans
                 .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
-                .Include(p => p.Vendor)
-                .Where(p => p.IsGivenToTailor == (id == 1 ? true : false))
+                .Include(p => p.Vendor)                
                 .Include(p => p.TailorChalanDetails).Include(p => p.TailorChalanDetails1).OrderBy(x => x.ChalanDate);
             ViewBag.Send = id;
             int pageSize = 3;
@@ -82,7 +81,7 @@ namespace StockManager.Controllers
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (tailorChalan.IsGivenToTailor == true ? 1 : 0) && x.IsActive == true), "Id", "ProductName");
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");
@@ -100,7 +99,7 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (tailorChalan.IsGivenToTailor == true ? 1 : 0) && x.IsActive == true), "Id", "ProductName", tailorChalan.VendorId);
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true), "Id", "ProductName", tailorChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
@@ -159,7 +158,7 @@ namespace StockManager.Controllers
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (tailorChalan.IsGivenToTailor == true ? 1 : 0) && x.IsActive == true), "Id", "ProductName");
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");
