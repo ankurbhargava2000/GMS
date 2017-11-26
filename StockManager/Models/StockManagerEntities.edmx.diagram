@@ -65,6 +65,16 @@
         <AssociationConnector Association="StockManagerModel.FK_Vendor_Tenant" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Transacti__Vendo__778AC167" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Vendor__VendorTy__797309D9" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSend" Width="1.5" PointX="15.5" PointY="36.75" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSendDetail" Width="1.5" PointX="12.75" PointY="34.5" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalanSend_FinancialYear" />
+        <AssociationConnector Association="StockManagerModel.FK_Transactions_FinancialYear" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Produ__18EBB532" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__17036CC0" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__17F790F9" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Vendo__114A936A" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalanSend_Tenant" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalanSend_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

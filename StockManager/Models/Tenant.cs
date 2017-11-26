@@ -25,6 +25,7 @@ namespace StockManager.Models
             this.TailorChalans = new HashSet<TailorChalan>();
             this.Users = new HashSet<User>();
             this.Vendors = new HashSet<Vendor>();
+            this.TailorChalanSends = new HashSet<TailorChalanSend>();
         }
     
         public int Id { get; set; }
@@ -54,5 +55,7 @@ namespace StockManager.Models
         public virtual ICollection<User> Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vendor> Vendors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TailorChalanSend> TailorChalanSends { get; set; }
     }
 }

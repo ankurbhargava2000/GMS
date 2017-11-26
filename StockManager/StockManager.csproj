@@ -176,6 +176,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\TailorChalanSendController.cs" />
     <Compile Include="Controllers\TailorChalanController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
@@ -238,6 +239,12 @@
       <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TailorChalanDetail.cs">
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TailorChalanSend.cs">
+      <DependentUpon>StockManagerEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TailorChalanSendDetail.cs">
       <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TailorMaterialDetail.cs">
