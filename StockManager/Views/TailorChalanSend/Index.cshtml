@@ -1,24 +1,17 @@
 ﻿@*@model IEnumerable<StockManager.Models.TailorChalan>*@
-@model PagedList.IPagedList<StockManager.Models.TailorChalan>
+@model PagedList.IPagedList<StockManager.Models.TailorChalanSend>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Tailor Chalan";
+    ViewBag.Title = "Chalans Issued to Fabricator";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Tailor Chalan</h2>
-@if (ViewBag.Send == 1)
-{
 
-    @Html.ActionLink("Create new Tailor Chalan(Given)", "Create", new { id = 1 }, new { @class = "btn btn-success" })
 
-}
-else
-{
+    @Html.ActionLink("Create new Chalan", "Create", null, new { @class = "btn btn-success" })
 
-    @Html.ActionLink("Create new Tailor Chalan(Receive)", "Create", new { id = 0 }, new { @class = "btn btn-success " })
 
-}
 <table class="table table-striped table-advance table-hover mt">
     <tr>
         <th>

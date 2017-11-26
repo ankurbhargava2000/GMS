@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="FinancialYear">
           <Key>
             <PropertyRef Name="Id" />
@@ -484,10 +484,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TailorCha__Chala__17036CC0">
-          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1" />
+          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="1" />
           <End Role="TailorChalanSendDetails" Type="Self.TailorChalanSendDetails" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TailorChalan">
+            <Principal Role="TailorChalanSend">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="TailorChalanSendDetails">
@@ -1006,7 +1006,7 @@
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
           <AssociationSet Name="FK__TailorCha__Chala__17036CC0" Association="Self.FK__TailorCha__Chala__17036CC0">
-            <End Role="TailorChalan" EntitySet="TailorChalan" />
+            <End Role="TailorChalanSend" EntitySet="TailorChalanSend" />
             <End Role="TailorChalanSendDetails" EntitySet="TailorChalanSendDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__TailorCha__Chala__17F790F9" Association="Self.FK__TailorCha__Chala__17F790F9">
@@ -1138,8 +1138,7 @@
             <End Role="Vendor" EntitySet="Vendor" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2370,7 +2369,7 @@
             <End Role="Vendor" EntitySet="Vendors" />
           </AssociationSet>
           <FunctionImport Name="USP_ProductWiseStock" ReturnType="Collection(StockManagerModel.USP_ProductWiseStock_Result)">
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)" />
         </EntityContainer>

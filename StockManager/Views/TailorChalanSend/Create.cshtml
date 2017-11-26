@@ -4,7 +4,10 @@
     ViewBag.Title = "Create New Tailor Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
@@ -29,24 +32,19 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.ChalanNo, "Chalan#", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
+                            @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo", Value = @ViewBag.ChalanNo, required = true } })
                             @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger ChalanNoVal" })
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div id="div2" class="col-md-6 col-xs-12">
+                <div id="div2" class="col-md-6 col-xs-12">                    
                     <div class="form-group">
-                        @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-7">
-                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
-                                <span class="add-on"><i class="icon-remove"></i></span>
-                                <span class="add-on"><i class="icon-th"></i></span>
-                                @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
-                            </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br />
+                        @Html.LabelFor(model => model.ChalanDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control col-md-7", Id = "ChalanDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
                         </div>
                     </div>
                 </div>
@@ -98,9 +96,7 @@
                                 <td>
                                     <label class="productQuantity">Quantity</label>
                                 </td>
-                                <td>
-                                    <label class="laborCost">Labor Cost</label>
-                                </td>
+                                
                                 <td class="itemEditRow"></td>
                             </tr>
                         </table>
@@ -168,8 +164,20 @@
 
 @section scripts
 {
+    <!-- DateRanger -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#ChalanDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            });
             $("#btnShowModal").click(function () {
                 $("#itemModel").modal('show');
             });
@@ -195,12 +203,11 @@
                     $('.productId', $newRow).val($('#product').val());
                     $('.productName', $newRow).text($('#product').text());
                     $('.productQuantity', $newRow).text($('#quantity').val());
-                    $('.laborCost', $newRow).text($('#laborCost').val());
                     $('.rowCount', $newRow).val($('#tailorChalanItems tr').length);
                     //$('.itemEditRow', $newRow).append('<button type="button" class="btn btn-success btn-xs remove" title="View Material Used"><i class="fa fa-edit"></i></button> | <button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                     $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                     $('#tailorChalanItems').append($newRow);
-                    $('#laborCost').val('');
+                    
                     $("#itemModel").modal('hide');
                 }
             });
@@ -211,60 +218,93 @@
             });
 
             $('#btnSubmit').click(function () {
-                var isAllValid = true;
+                var isAllValid = validateMainPage();
+                if (isAllValid) {
 
-                //validate order items
-                var list = [];
-                var errorItemCount = 0;
-                $('#tailorChalanItems tbody tr').each(function (index, ele) {
+                    //validate order items
+                    var list = [];
+                    var errorItemCount = 0;
+                    $('#tailorChalanItems tbody tr').each(function (index, ele) {
 
-                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                        var orderItem = {
-                            ProductId: $('.productId', this).val(),
-                            Quantity: $('.productQuantity', this).text(),
-                            LaborCost: $('.laborCost', this).text()
+                        if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                            var orderItem = {
+                                ProductId: $('.productId', this).val(),
+                                Quantity: $('.productQuantity', this).text()
+                            }
+                            list.push(orderItem);
                         }
-                        list.push(orderItem);
                     }
-                }
-                )
+                    )
 
-                
 
-                var data = {
-                    VendorId: $('#Vendor').val(),
-                    ChalanDate: $('#ChalanDate').val(),
-                    ChalanNo: $('#ChalanNo').val(),                    
-                    TailorChalanDetails: list,
-                }
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/tailorChalansend/Create',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data != "0") {
-                            alert('Printer Chalan Saved Successfully.');
-                            list = [];
-                            $('#Vender,#InvoiceDate').val('');
-                            $('#TailorChalanItems tbody tr').each(function (index, ele) {
-                                if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                                    $('#tailorChalanItems tbody tr', this).remove();
-                                }
-                            });
-                            //$(this).val('Save Purchase Order');
-                            window.location.href = '/TailorChalanSend/Details/' + data;
-                        }
-                        else {
-                            //$(this).val('Save Printer Chalan');
-                            alert('Error in saving printer chalan');
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
+                    var data = {
+                        VendorId: $('#Vendor').val(),
+                        ChalanDate: $('#ChalanDate').val(),
+                        ChalanNo: $('#ChalanNo').val(),
+                        bill_number: $('#BillNo').val(),
+                        Description: $('#Description').val(),
+                        TailorChalanSendDetails: list,
                     }
-                });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/tailorChalansend/Create',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data != "0") {
+                                alert('Printer Chalan Saved Successfully.');
+                                list = [];
+                                $('#Vender,#InvoiceDate').val('');
+                                $('#TailorChalanItems tbody tr').each(function (index, ele) {
+                                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                                        $('#tailorChalanItems tbody tr', this).remove();
+                                    }
+                                });
+                                //$(this).val('Save Purchase Order');
+                                window.location.href = '/TailorChalanSend/Details/' + data;
+                            }
+                            else {
+                                //$(this).val('Save Printer Chalan');
+                                alert('Error in saving printer chalan');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+
+            function validateMainPage() {
+                var result = true;
+                if ($('#ChalanNo').val() == "") {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter Chalan Number.");
+                    result = false;
+                }
+                if (isNaN($('#ChalanNo').val())) {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter number in Chalan Number.");
+                    result = false;
+                }
+                if ($('#ChalanDate').val() == "") {
+                    $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
+                    result = false;
+                }
+
+                var tableRows = $("#tailorChalanItems tbody tr").length;
+
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 product for this invoice');
+                    result = false;
+                }
+                return result;
+            }
+
+            $('#ChalanNo').change(function () {
+                if ($('#ChalanNo').val() != "" && !isNaN($('#ChalanNo'))) {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("");
+                }
             });
         });
     </script>

@@ -46,9 +46,9 @@ namespace StockManager.Controllers
         }
 
         // GET: TailorChalan/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create()
         {
-            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == (id == 1 ? 1 : 0) && x.IsActive == true), "Id", "ProductName");
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
             ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
             
             var year_id = Session["FinancialYearID"];
@@ -133,8 +133,7 @@ namespace StockManager.Controllers
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
-                {
-                    
+                {                    
 
                     foreach (var objTailorDetails in tailorChalan.TailorChalanSendDetails)
                     {
@@ -149,7 +148,6 @@ namespace StockManager.Controllers
                         tailorChalan.TailorChalanSendDetails.Remove(tailorChalan.TailorChalanSendDetails.Where(x => x.Id == 0).ToList()[0]);
 
                     
-
                     DateTime dtDate = DateTime.Now;
                     tailorChalan.Updated = dtDate;
                     db.Entry(tailorChalan).State = EntityState.Modified;
@@ -158,7 +156,7 @@ namespace StockManager.Controllers
                     transaction.Commit();
                     return Json(Convert.ToString(tailorChalan.Id));
                 }
-                catch
+                catch(Exception ex)
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);

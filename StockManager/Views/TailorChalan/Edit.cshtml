@@ -109,7 +109,7 @@
                                 {
                                     count++;
                                     var matarialDetail = "";
-                                    if (Model.IsGivenToTailor == false)
+                                    
                                     {
                                         foreach (var matarial in item.TailorMaterialDetails)
                                         {
@@ -190,7 +190,7 @@
                                         @Html.ValidationMessage("LaborCost", "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                @if (Model.IsGivenToTailor == false)
+                                
                                 {
                                     <div class="form-group">
                                         <div class="details form-horizontal">
@@ -404,7 +404,6 @@
                     VendorId: $('#Vendor').val(),
                     ChalanDate: $('#ChalanDate').val(),
                     ChalanNo: $('#ChalanNo').val(),
-                    IsGivenToTailor: (('@Model.IsGivenToTailor' == 'True') ? 1 : 0),
                     tenant_id: @Model.tenant_id,
                     financial_year: @Model.financial_year,
                     created_by: @Model.created_by,
