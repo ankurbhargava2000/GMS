@@ -37,9 +37,6 @@
                         Phone
                     </th>
                     <th>
-                        Tenant
-                    </th>
-                    <th>
                         Actions
                     </th>
                 </tr>
@@ -59,9 +56,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Phone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Tenant.Name)
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.UserId }, new { @class = "btn btn-warning btn-xs" }) |
