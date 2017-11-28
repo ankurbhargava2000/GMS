@@ -4,19 +4,6 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<<<<<<< HEAD
-=======
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Edit Product Detail</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
->>>>>>> f4769aafca9c4225597b59afff8c89af995c146c
 
 <div class="portlet light">
     <div class="portlet-title">
@@ -43,6 +30,7 @@
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductTypeId, "Product Type", htmlAttributes: new { @class = "control-label col-md-2" })

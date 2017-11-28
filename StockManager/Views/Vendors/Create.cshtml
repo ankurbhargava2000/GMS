@@ -4,25 +4,6 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<<<<<<< HEAD
-=======
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Add New Vendor</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })        
-        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
-        <div class="form-group">
-            @Html.LabelFor(model => model.VendorTypeId, "Vendor Type", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("VendorTypeId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.VendorTypeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
->>>>>>> f4769aafca9c4225597b59afff8c89af995c146c
 
 <div class="portlet light">
     <div class="portlet-title">
@@ -47,6 +28,8 @@
             <div class="form-horizontal">
          
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.VendorTypeId, "Vendor Type", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
