@@ -185,6 +185,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GMailer.cs" />
+    <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Models\CheckAuth.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>StockManagerEntities.tt</DependentUpon>
