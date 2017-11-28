@@ -18,6 +18,7 @@ namespace StockManager.Models
         public TailorChalanSend()
         {
             this.TailorChalanSendDetails = new HashSet<TailorChalanSendDetail>();
+            this.TailorChalanSendDetails1 = new HashSet<TailorChalanSendDetail>();
         }
     
         public int Id { get; set; }
@@ -35,6 +36,8 @@ namespace StockManager.Models
         public virtual FinancialYear FinancialYear { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TailorChalanSendDetail> TailorChalanSendDetails1 { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual Tenant Tenant { get; set; }
         public virtual User User { get; set; }
