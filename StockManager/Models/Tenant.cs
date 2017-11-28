@@ -17,6 +17,7 @@ namespace StockManager.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tenant()
         {
+            this.Customers = new HashSet<Customer>();
             this.InvoiceMasters = new HashSet<InvoiceMaster>();
             this.PrinterChalans = new HashSet<PrinterChalan>();
             this.PrintJobWorkReceiveds = new HashSet<PrintJobWorkReceived>();
@@ -38,6 +39,8 @@ namespace StockManager.Models
         public string Country { get; set; }
         public Nullable<int> CurrentFinYear { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
         public virtual FinancialYear FinancialYear { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
