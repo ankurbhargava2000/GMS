@@ -110,17 +110,17 @@ namespace StockManager.Controllers
             {
                 try
                 {
-                    foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
-                    {
-                        db.TailorMaterialDetails.RemoveRange(db.TailorMaterialDetails.Where(x => x.TailorChalanDetailsId == objTailorDetails.Id));
-                        db.SaveChanges();
-                        foreach (var objTailorMaterial in objTailorDetails.TailorMaterialDetails)
-                        {
-                            objTailorMaterial.TailorChalanDetailsId = objTailorDetails.Id;
-                            db.Entry(objTailorMaterial).State = EntityState.Added;
-                            db.SaveChanges();
-                        }
-                    }
+                    //foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
+                    //{
+                    //    db.TailorMaterialDetails.RemoveRange(db.TailorMaterialDetails.Where(x => x.TailorChalanDetailsId == objTailorDetails.Id));
+                    //    db.SaveChanges();
+                    //    foreach (var objTailorMaterial in objTailorDetails.TailorMaterialDetails)
+                    //    {
+                    //        objTailorMaterial.TailorChalanDetailsId = objTailorDetails.Id;
+                    //        db.Entry(objTailorMaterial).State = EntityState.Added;
+                    //        db.SaveChanges();
+                    //    }
+                    //}
 
                     foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
                     {
