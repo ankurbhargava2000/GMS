@@ -20,9 +20,9 @@ namespace StockManager.Controllers
         public ActionResult Index()
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
             var invoiceMasters = db.InvoiceMasters
-                .Where( x => x.financial_year == year_id )
+                .Where( x => x.financial_year == year_id && x.tenant_id == tenant_id)
                 .Include(i => i.FinancialYear)
                 .Include(i => i.User)
                 .Include(i => i.Vendor)
@@ -70,8 +70,8 @@ namespace StockManager.Controllers
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
-            ViewBag.StartYear = year.StartDate.Value.ToString("MM/dd/yyyy");
-            ViewBag.EndYear = year.EndDate.Value.ToString("MM/dd/yyyy");
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
 
             return View();
         }
@@ -83,7 +83,7 @@ namespace StockManager.Controllers
 
             if (ModelState.IsValid)
             {
-                invoice.created_at = DateTime.Now;
+                invoice.created_at = DateTime.Now;                                
                 db.InvoiceMasters.Add(invoice);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -118,8 +118,8 @@ namespace StockManager.Controllers
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
-            ViewBag.StartYear = year.StartDate.Value.ToString("MM/dd/yyyy");
-            ViewBag.EndYear = year.EndDate.Value.ToString("MM/dd/yyyy");
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
 
             return View(invoiceMaster);
 
@@ -176,7 +176,7 @@ namespace StockManager.Controllers
                     }
                      
                 }
-                catch (Exception e)
+                catch
                 {
                     
                 }

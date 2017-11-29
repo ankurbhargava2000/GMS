@@ -1,6 +1,4 @@
-﻿@*@model IEnumerable<StockManager.Models.PrinterChalan>*@
-@model PagedList.IPagedList<StockManager.Models.PrinterChalan>
-@using PagedList.Mvc;
+﻿@model IEnumerable<StockManager.Models.PrinterChalan>
 @{
     ViewBag.Title = "Printer Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,7 +13,7 @@
         </tr>
     </table>
 
-<table class="table table-striped table-advance table-hover mt">
+<table class="jTable table-bordered table table-hover">
     <tr>
         <th>
             Chalan Number
@@ -52,8 +50,3 @@
         </tr>
     }
 </table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index",
-        new { ViewBag.Send, page }))

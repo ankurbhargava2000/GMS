@@ -7,189 +7,204 @@
 
 @section css{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 }
 
-<h4 style="margin-top: 20px">Invoice | Create</h4>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    @Html.Hidden("deleted_items", "", new { Id = "deleted_array" })
-
-    <div class="container-fluid">
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <input type="hidden" name="Id" value="@Model.Id" />
-        @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
-        @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
-        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
-        @Html.HiddenFor(x => x.invoice_no)
-
-        <div class="row">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>Invoice #</label>
-                    <div><h5>@Model.invoice_no</h5></div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Vendor</label>
-                    @Html.DropDownList("customer_id", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = "on" })
-                    @Html.ValidationMessageFor(model => model.customer_id, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Date</label>
-                    @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control form_date", Id = "date_range", required = true} })
-                    @Html.ValidationMessageFor(model => model.created_on, "", new { @class = "text-danger" })
-                </div>
-            </div>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Edit Invoice</span>
         </div>
-        <div class="row">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label>Vendor</label>
-                            <select class="form-control selectpicker" id="product_selector" data-live-search="on">
-                                @{
-                                    foreach (var item in ViewBag.product_id)
-                                    {
-                                        <option data-sale-rate="0" value="@item.Id">@item.ProductName</option>
-                                    }
-                                }
-                            </select>
-                        </td>
-                        <td style="width: 10%">
-                            <label>&nbsp;</label>
-                            <button class="btn btn-block btn-success" id="addProduct">Add</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="row">
-
-            <div class="col-md-8">
-                <h4>Products</h4>
-                <table id="products_table" class="table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Sale rate</th>
-                        <th>Qty</th>
-                        <th>Discount</th>
-                        <th>Total</th>
-                        <th>x</th>
-                    </tr>
-                    @{
-                        if (Model.InvoiceDetails.Count() > 0)
-                        {
-                            int i = 0;
-
-                            foreach (var item in Model.InvoiceDetails)
-                            {
-                                <tr id='item_@item.product_id' class='itemrow'>
-                                    <td>
-                                        <input type="hidden" name="InvoiceDetails[@i].Id" value="@item.Id" />
-                                        <input type="hidden" name="InvoiceDetails[@i].invoice_id" value="@item.invoice_id" />
-                                        <input type='hidden' name='InvoiceDetails[@i].product_id' value='@item.product_id' />
-                                        <div style='margin-top: 5px;'>@item.Product.ProductName</div>
-                                    </td>
-                                    <td style='width: 15%' class='sale'>
-                                        <input type='text' name='InvoiceDetails[@i].sale_rate' class='itemInput form-control' value='@item.sale_rate' />
-                                    </td>
-                                    <td style='width: 15%' class='qty'>
-                                        <input type='number' name='InvoiceDetails[@i].quantity' class='itemInput form-control' value='@item.quantity' />
-                                    </td>
-
-                                    <td style='width: 15%' class='dscnt'>
-                                        <input type='text' name='InvoiceDetails[@i].discount' class='itemInput form-control' value='@item.discount' />
-                                    </td>
-                                    <td class='ptotal'>
-                                        Rs @((item.quantity * item.sale_rate) - item.discount)
-                                    </td>
-                                    <td>
-                                        <a data-detail-id="@item.Id" style='margin-top: 5px;' href='#' class='delete btn btn-xs btn-danger'>X</a>
-                                    </td>
-                                </tr>
-                                i++;
-                            }
-                        }
-                    }
-                </table>
-            </div>
-            <div class="col-md-4">
-                <table class="table">
-                    <tr>
-                        <td style="width: 70%">
-                            Subtotal
-                        </td>
-                        <td id="sub_total">
-                            Rs @Model.gross_amount
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Discount
-                        </td>
-                        <td>
-                            @Html.EditorFor(model => model.discount, new { htmlAttributes = new { @class = "form-control", id = "discount" } })
-                            @Html.ValidationMessageFor(model => model.discount, "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Total
-                        </td>
-                        <td id="total_discount">
-                            Rs @Model.net_amount
-                        </td>
-                    </tr>
-                </table>
-                <div>
-                    <div>
-                        <button class="btn btn-block btn-success">
-                            Update Invoice
-                        </button>
-                    </div>
-                    <div>
-                        <input type="hidden" name="gross_amount" id="gross" value="@Model.gross_amount">
-                        <input type="hidden" name="net_amount" id="total" value="@Model.net_amount">
-                    </div>
-                </div>
-            </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
         </div>
     </div>
+    <div class="portlet-body">
+        
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-                        }
+            @Html.Hidden("deleted_items", "", new { Id = "deleted_array" })
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+            <div class="container-fluid">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <input type="hidden" name="Id" value="@Model.Id" />
+                @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
+                @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
+                @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
+                @Html.HiddenFor(x => x.invoice_no)
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Invoice #</label>
+                            <div><h5>@Model.invoice_no</h5></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Vendor</label>
+                            @Html.DropDownList("customer_id", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = "on" })
+                            @Html.ValidationMessageFor(model => model.customer_id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Date</label>
+                            @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control form_date", Id = "date_range", required = true } })
+                            @Html.ValidationMessageFor(model => model.created_on, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label>Vendor</label>
+                                    <select class="form-control selectpicker" id="product_selector" data-live-search="on">
+                                        @{
+                                            foreach (var item in ViewBag.product_id)
+                                            {
+                                                <option data-sale-rate="0" value="@item.Id">@item.ProductName</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                                <td style="width: 10%">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-block btn-success" id="addProduct">Add</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <h4>Products</h4>
+                        <table id="products_table" class="table">
+                            <tr>
+                                <th>Name</th>
+                                <th>Sale rate</th>
+                                <th>Qty</th>
+                                <th>Discount</th>
+                                <th>Total</th>
+                                <th>x</th>
+                            </tr>
+                            @{
+                                if (Model.InvoiceDetails.Count() > 0)
+                                {
+                                    int i = 0;
+
+                                    foreach (var item in Model.InvoiceDetails)
+                                    {
+                                        <tr id='item_@item.product_id' class='itemrow'>
+                                            <td>
+                                                <input type="hidden" name="InvoiceDetails[@i].Id" value="@item.Id" />
+                                                <input type="hidden" name="InvoiceDetails[@i].invoice_id" value="@item.invoice_id" />
+                                                <input type='hidden' name='InvoiceDetails[@i].product_id' value='@item.product_id' />
+                                                <input type='hidden' name='InvoiceDetails[@i].created_at' value='@DateTime.Now' />
+                                                <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                                            </td>
+                                            <td style='width: 15%' class='sale'>
+                                                <input type='text' name='InvoiceDetails[@i].sale_rate' class='itemInput form-control' value='@item.sale_rate' />
+                                            </td>
+                                            <td style='width: 15%' class='qty'>
+                                                <input type='number' name='InvoiceDetails[@i].quantity' class='itemInput form-control' value='@item.quantity' />
+                                            </td>
+
+                                            <td style='width: 15%' class='dscnt'>
+                                                <input type='text' name='InvoiceDetails[@i].discount' class='itemInput form-control' value='@item.discount' />
+                                            </td>
+                                            <td class='ptotal'>
+                                                Rs @((item.quantity * item.sale_rate) - item.discount)
+                                            </td>
+                                            <td>
+                                                <a data-detail-id="@item.Id" style='margin-top: 5px;' href='#' class='delete btn btn-xs btn-danger'>X</a>
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }
+                                }
+                            }
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table">
+                            <tr>
+                                <td style="width: 70%">
+                                    Subtotal
+                                </td>
+                                <td id="sub_total">
+                                    Rs @Model.gross_amount
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Discount
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.discount, new { htmlAttributes = new { @class = "form-control", id = "discount" } })
+                                    @Html.ValidationMessageFor(model => model.discount, "", new { @class = "text-danger" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total
+                                </td>
+                                <td id="total_discount">
+                                    Rs @Model.net_amount
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <div>
+                                <button id="formBtn" class="btn btn-block btn-success">
+                                    Update Invoice
+                                </button>
+                            </div>
+                            <div>
+                                <input type="hidden" name="gross_amount" id="gross" value="@Model.gross_amount">
+                                <input type="hidden" name="net_amount" id="total" value="@Model.net_amount">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                                }
+    </div>
 </div>
 
 @section Scripts {
 
     <!-- DateRanger -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     <script>
         $(document).ready(function () {
 
             $('#date_range').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
                 "singleDatePicker": true,
-                "startDate": "@ViewBag.StartYear",
-                "endDate": "@ViewBag.EndYear",
+                "startDate": "@(Model.created_on?.ToString("dd-MMM-yyyy"))",
                 "minDate": "@ViewBag.StartYear",
                 "maxDate": "@ViewBag.EndYear"
             });
 
-            $('form').submit(function () {
+            $('#formBtn').on('click', function () {
 
                 var tableRows = $("#products_table tr.itemrow");
                 var count = 0;
@@ -247,6 +262,7 @@
                 // Name
                 row += "<td>"
                 row += "<input type='hidden' name='nInvoiceDetails[" + i + "].product_id' value='" + option.val() + "' />";
+                row += "<input type='hidden' name='nInvoiceDetails[" + i + "].created_at' value='@DateTime.Now' />";
                 row += "<div style='margin-top: 5px;'>" + option.text() + "</div>";
                 row += "</td>"
 

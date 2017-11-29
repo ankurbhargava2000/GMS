@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9c7ab18d33aa4886b62236da46802b81" Name="Diagram1" ZoomLevel="91">
+        <EntityTypeShape EntityType="StockManagerModel.Customer" Width="1.5" PointX="5.25" PointY="53.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.FinancialYear" Width="1.5" PointX="0.75" PointY="26" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.InvoiceDetail" Width="1.5" PointX="16.5" PointY="53.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.InvoiceMaster" Width="1.5" PointX="7.5" PointY="44.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrinterChalan" Width="1.5" PointX="10.5" PointY="47.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrinterChalanDetail" Width="1.5" PointX="13.75" PointY="57" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceived" Width="1.5" PointX="10.5" PointY="42.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceivedDetail" Width="1.5" PointX="15.75" PointY="49.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Product" Width="1.5" PointX="8.25" PointY="55.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.ProductType" Width="1.5" PointX="6" PointY="58.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PurchaseDetail" Width="1.5" PointX="16.5" PointY="57.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PurchaseOrder" Width="1.5" PointX="7.5" PointY="50" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalan" Width="1.5" PointX="7.5" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanDetail" Width="1.5" PointX="13.5" PointY="53.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSend" Width="1.5" PointX="13.5" PointY="47.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSendDetail" Width="1.5" PointX="18.75" PointY="52.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorMaterialDetail" Width="1.5" PointX="18.75" PointY="56.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Tenant" Width="1.5" PointX="3" PointY="55.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Transaction" Width="1.5" PointX="13.5" PointY="41.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.User" Width="1.5" PointX="5.25" PointY="62.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Vendor" Width="1.5" PointX="11.25" PointY="55.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.VendorType" Width="1.5" PointX="9" PointY="60.875" IsExpanded="true" />
+        <AssociationConnector Association="StockManagerModel.FK_Customer_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__InvoiceMa__finan__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PrinterChalan_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PrintJobWorkReceived_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalan_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalanSend_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_Tenant_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_Transactions_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__InvoiceDe__invoi__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__InvoiceDe__produ__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__InvoiceMa__creat__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__InvoiceMa__custo__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__InvoiceMa__tenan__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PrinterCh__Chala__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PrinterCh__Vendo__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PrinterChalan_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PrinterChalan_User" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PrinterCh__Produ__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PrintJobW__Chala__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PrintJobW__Vendo__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PrintJobWorkReceived_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PrintJobWorkReceived_User" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PrintJobW__Produ__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__Product__Product__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PurchaseD__Produ__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Produ__18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Produ__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorMat__Produ__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__Transacti__Produ__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_Product_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PurchaseD__Purch__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PurchaseO__Vendo__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_User" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Vendo__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalan_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalan_User" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorMat__Tailo__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__17036CC0" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__17F790F9" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__TailorCha__Vendo__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalanSend_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_TailorChalanSend_User" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_User_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_Vendor_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__Transacti__Vendo__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__Vendor__VendorTy__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__Transacti__Tenan__6166761E" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -23,7 +23,8 @@ namespace StockManager.Controllers
 
         public ActionResult ProductWiseStock()
         {
-            var result = db.USP_ProductWiseStock().ToList();
+            var creaded_by = Convert.ToInt32(Session["UserID"]);
+            var result = db.USP_ProductWiseStock(creaded_by).ToList();
             return View(result);
         }
 
@@ -97,12 +98,14 @@ namespace StockManager.Controllers
 
         protected PdfPTable ProductReport(PdfPTable tableLayout)
         {
-            float[] headers = { 50, 24, 45, 35};  //Header Widths
+            float[] headers = { 50, 24, 45, 35 };  //Header Widths
             tableLayout.SetWidths(headers);        //Set the pdf headers
             tableLayout.WidthPercentage = 100;       //Set the PDF File witdh percentage
             tableLayout.HeaderRows = 1;
             //Add Title to the PDF file at the top
-            List<USP_ProductWiseStock_Result> product = db.USP_ProductWiseStock().ToList<USP_ProductWiseStock_Result>();
+            var creaded_by = Convert.ToInt32(Session["UserID"]);
+            
+            List<USP_ProductWiseStock_Result> product = db.USP_ProductWiseStock(creaded_by).ToList<USP_ProductWiseStock_Result>();
             tableLayout.AddCell(new PdfPCell(new Phrase("Product Wise Stock Report", new Font(Font.HELVETICA, 8, 1, new iTextSharp.text.Color(0, 0, 0)))) { Colspan = 12, Border = 0, PaddingBottom = 5, HorizontalAlignment = Element.ALIGN_CENTER });
 
             ////Add header

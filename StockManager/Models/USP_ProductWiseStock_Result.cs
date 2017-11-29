@@ -15,9 +15,11 @@ namespace StockManager.Models
     {
         public int Id { get; set; }
         public string ProductName { get; set; }
+        public int OpeningStock { get; set; }
         public Nullable<decimal> TotalPurchase { get; set; }
         public Nullable<decimal> TotalProductGivenForPrinting { get; set; }
+        public Nullable<decimal> Shrinkage { get; set; }
         public Nullable<decimal> TotalReceived { get; set; }
-        public Nullable<decimal> TotalShrinkage { get; set; }
+        public Nullable<int> TotalSales { get; set; }
     }
 }

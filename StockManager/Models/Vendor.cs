@@ -14,6 +14,7 @@ namespace StockManager.Models
     
     public partial class Vendor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Vendor()
         {
             this.InvoiceMasters = new HashSet<InvoiceMaster>();
@@ -21,6 +22,7 @@ namespace StockManager.Models
             this.PrintJobWorkReceiveds = new HashSet<PrintJobWorkReceived>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.TailorChalans = new HashSet<TailorChalan>();
+            this.TailorChalanSends = new HashSet<TailorChalanSend>();
             this.Transactions = new HashSet<Transaction>();
         }
     
@@ -35,12 +37,22 @@ namespace StockManager.Models
         public string pan_number { get; set; }
         public string gst_number { get; set; }
         public string mobile { get; set; }
+        public Nullable<int> tenant_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrinterChalan> PrinterChalans { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalan> TailorChalans { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TailorChalanSend> TailorChalanSends { get; set; }
+        public virtual Tenant Tenant { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual VendorType VendorType { get; set; }
     }

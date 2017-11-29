@@ -147,7 +147,7 @@ namespace StockManager.Controllers
 
                     if (user.Password == password)
                     {
-                        SignInRemember(login.username, true);
+                        SignInRemember(login.username, login.remember_me);
 
                         Session["UserID"] = user.UserId;
                         Session["TenantID"] = user.TenantId;
@@ -159,14 +159,14 @@ namespace StockManager.Controllers
                     else
                     {
                         //Login Fail
-                        TempData["ErrorMSG"] = "Access Denied! Wrong Credential";
+                        ViewBag.ErrorMsg = "Username/Password combination not found";
                         return View(login);
                     }
 
                 }
 
             }
-            catch (Exception e)
+            catch
             {
 
             }

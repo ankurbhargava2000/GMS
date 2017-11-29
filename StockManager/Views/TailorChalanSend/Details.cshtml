@@ -1,0 +1,80 @@
+﻿@model StockManager.Models.TailorChalanSend
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Printer Chalan# @Model.Id</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Vendor Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendor.VendorName)
+        </dd>
+        <dt>
+            Chalan Number
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChalanNo)
+        </dd>
+        <dt>
+            Chalan Date
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ChalanDate)
+        </dd>
+        <dt>
+            Bill Number
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.bill_number)
+        </dd>
+        <dt>
+            Description
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<p>
+    Chalan Details
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Quantity
+        </th>
+        
+    </tr>
+    @{
+        if (Model != null && Model.TailorChalanSendDetails != null)
+        {
+            foreach (var item in Model.TailorChalanSendDetails)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    
+                </tr>
+                
+            }
+        }
+    }
+</table>
+<p>
+    @Html.ActionLink("Close", "Index", "PrinterChalans", new { @class = "btn btn-danger" })
+</p>

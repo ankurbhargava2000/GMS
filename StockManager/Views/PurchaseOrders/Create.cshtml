@@ -3,206 +3,226 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using (Html.BeginForm())
-{
-    <div class="form-horizontal">
-        <h4>Purchase</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="container">
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.VendorId, "Vendor", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control", @id = "Vendor" })
-                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div id="div2" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.InvoiceNumber, "Invoice#", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.InvoiceNumber, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceNo" } })
-                            @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger InvoiceNoVal" })
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
-                                <span class="add-on"><i class="icon-remove"></i></span>
-                                <span class="add-on"><i class="icon-th"></i></span>
-                                @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
-                            </div>
-                            <input type="hidden" id="dtp_input1" value="" /><br />
-                        </div>
-                    </div>
-                </div>
-                <div id="div2" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.dispatch_document_number, "Dispatch Document Number#", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.dispatch_document_number, new { htmlAttributes = new { @class = "form-control", @id = "DocumentNo" } })
-                            @Html.ValidationMessageFor(model => model.dispatch_document_number, "", new { @class = "text-danger DocumentNoVal" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.dispatched_through, "Dispatch Through", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.dispatched_through, new { htmlAttributes = new { @class = "form-control", @id = "DispatchThrough" } })
-                            @Html.ValidationMessageFor(model => model.dispatched_through, "", new { @class = "text-danger DispatchThroughVal" })
-                        </div>
-                    </div>
-                </div>
-                <div id="div2" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.destination, "Destination", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.destination, new { htmlAttributes = new { @class = "form-control", @id = "Destination" } })
-                            @Html.ValidationMessageFor(model => model.destination, "", new { @class = "text-danger DestinationVal" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.bale_numbers, "Bale Nos", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.bale_numbers, new { htmlAttributes = new { @class = "form-control", @id = "BaleNo" } })
-                            @Html.ValidationMessageFor(model => model.bale_numbers, "", new { @class = "text-danger BaleNoVal" })
-                        </div>
-                    </div>
-                </div>
-                <div id="div2" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
-                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger InvoiceNoVal" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-xs-12 col-md-8">
-                            <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-12 col-xs-12">
-                    <div class="form-group">
-                        <table class="table table-striped table-advance table-hover" id="purchaseOrderItems">
-                            <tr id="productItemRow">
-                                <td>
-                                    <label class="productName">Product Name</label>
-                                    <input type="hidden" class="productId" value="" />
-                                </td>
-                                <td>
-                                    <label class="productQuantity">Quantity</label>
-                                </td>
-                                <td>
-                                    <label class="productFold">Fold</label>
-                                </td>
-                                <td>
-                                    <label class="productRate">Rate</label>
-                                </td>
-                                <td class="itemEditRow"></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div id="div1" class="col-md-6 col-xs-12">
-                    <div class="form-group">
-                        <div class="col-md-2">
-                        </div>
-                        <div class="col-xs-12 col-md-8">
-                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Purchase Order" />
-                            @Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" tabindex="-1" id="itemModel"
-                 data-keyboard="false" data-backdrop="static">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                ×
-                            </button>
-                            <h4 class="modal-title">Add Product</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
-                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger productIdVal" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
-                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger quantityVal" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Rate", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" } })
-                                        @Html.ValidationMessage("Rate", "", new { @class = "text-danger rateVal" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
-                                        @Html.ValidationMessage("Fold", "", new { @class = "text-danger foldVal" })
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
-                            <button type="button" id="btnHideModal" class="btn btn-danger">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<<<<<<< HEAD
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Create New Purchase Order</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
         </div>
     </div>
-}
+    <div class="portlet-body">
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-horizontal">
+                
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
+                @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
+                @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.VendorId, "Vendor", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control", @id = "Vendor" })
+                                    @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div2" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InvoiceNumber, "Invoice#", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.InvoiceNumber, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceNo" } })
+                                    @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger InvoiceNoVal" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
+                                        @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
+                                        <span class="add-on"><i class="icon-remove"></i></span>
+                                        <span class="add-on"><i class="icon-th"></i></span>
+                                        @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
+                                    </div>
+                                    <input type="hidden" id="dtp_input1" value="" /><br />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div2" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.dispatch_document_number, "Dispatch Document Number#", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.dispatch_document_number, new { htmlAttributes = new { @class = "form-control", @id = "DocumentNo" } })
+                                    @Html.ValidationMessageFor(model => model.dispatch_document_number, "", new { @class = "text-danger DocumentNoVal" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.dispatched_through, "Dispatch Through", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.dispatched_through, new { htmlAttributes = new { @class = "form-control", @id = "DispatchThrough" } })
+                                    @Html.ValidationMessageFor(model => model.dispatched_through, "", new { @class = "text-danger DispatchThroughVal" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div2" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.destination, "Destination", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.destination, new { htmlAttributes = new { @class = "form-control", @id = "Destination" } })
+                                    @Html.ValidationMessageFor(model => model.destination, "", new { @class = "text-danger DestinationVal" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.bale_numbers, "Bale Nos", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.bale_numbers, new { htmlAttributes = new { @class = "form-control", @id = "BaleNo" } })
+                                    @Html.ValidationMessageFor(model => model.bale_numbers, "", new { @class = "text-danger BaleNoVal" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div2" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger InvoiceNoVal" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-xs-12 col-md-8">
+                                    <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div1" class="col-md-12 col-xs-12">
+                            <div class="form-group">
+                                <table class="table table-striped table-advance table-hover" id="purchaseOrderItems">
+                                    <tr id="productItemRow">
+                                        <td>
+                                            <label class="productName">Product Name</label>
+                                            <input type="hidden" class="productId" value="" />
+                                        </td>
+                                        <td>
+                                            <label class="productQuantity">Quantity</label>
+                                        </td>
+                                        <td>
+                                            <label class="productFold">Fold</label>
+                                        </td>
+                                        <td>
+                                            <label class="productRate">Rate</label>
+                                        </td>
+                                        <td class="itemEditRow"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="div1" class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-xs-12 col-md-8">
+                                    <input type="button" id="btnSubmit" class="btn btn-success" value="Save Purchase Order" />
+                                    @Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" tabindex="-1" id="itemModel"
+                         data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        ×
+                                    </button>
+                                    <h4 class="modal-title">Add Product</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
+                                                @Html.ValidationMessage("ProductId", "", new { @class = "text-danger productIdVal" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                                                @Html.ValidationMessage("Quantity", "", new { @class = "text-danger quantityVal" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Rate", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control", @id = "rate" } })
+                                                @Html.ValidationMessage("Rate", "", new { @class = "text-danger rateVal" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.Label("Fold", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.Editor("Fold", new { htmlAttributes = new { @class = "form-control", @id = "fold" } })
+                                                @Html.ValidationMessage("Fold", "", new { @class = "text-danger foldVal" })
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 @section scripts
 {
+    <!-- DateRanger -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btnShowModal").click(function () {
@@ -210,6 +230,16 @@
                 $('#quantity').siblings('span.quantityVal').text("");
                 $('#fold').siblings('span.foldVal').text("");
                 $('#rate').siblings('span.rateVal').text("");
+            });
+
+            $('#InvoiceDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
             });
 
             $("#btnHideModal").click(function () {
@@ -275,7 +305,7 @@
                         dispatched_through: $('#DispatchThrough').val(),
                         destination: $('#Destination').val(),
                         bale_numbers: $('#BaleNo').val(),
-                        Description: $('#Description').val(),
+                        Description: $('#Description').val(),                        
                         PurchaseDetails: list
                     }
 
@@ -361,7 +391,7 @@
             function validateMainPage() {
                 var result = true;
                 if ($('#InvoiceNo').val() == "") {
-                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter Fold Invoice Number.");
+                    $('#InvoiceNo').siblings('span.InvoiceNoVal').text("Please Enter Invoice Number.");
                     result = false;
                 }
                 if (isNaN($('#InvoiceNo').val())) {
@@ -372,27 +402,17 @@
                     $('#InvoiceDate').siblings('span.InvoiceDateVal').text("Please Enter Invoice Date value.");
                     result = false;
                 }
-                //if ($('#DocumentNo').val() == "") {
-                //    $('#DocumentNo').siblings('span.DocumentNoVal').text("Please Enter Dispatch Document Number.");
-                //    result = false;
-                //}
-                //if ($('#DispatchThrough').val() == "") {
-                //    $('#DispatchThrough').siblings('span.DispatchThroughVal').text("Please Enter Dispatch Through details.");
-                //    result = false;
-                //}
-                //if ($('#Destination').val() == "") {
-                //    $('#Destination').siblings('span.DestinationVal').text("Please Enter Destination.");
-                //    result = false;
-                //}
-                //if ($('#BaleNo').val() == "") {
-                //    $('#BaleNo').siblings('span.BaleNoVal').text("Please Enter bale number.");
-                //    result = false;
-                //}
+                var tableRows = $("#purchaseOrderItems tbody tr").length;
+                
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 product for this invoice');
+                    result = false;
+                }
                 return result;
             }
 
             $('#InvoiceNo').change(function () {
-                if ($('#InvoiceNo').val() != "" && !isNaN($('#InvoiceNo'))) {
+                if ($('#InvoiceNo').val() != "" && !isNaN($('#InvoiceNo').val())) {
                     $('#InvoiceNo').siblings('span.InvoiceNoVal').text("");
                 }
             });

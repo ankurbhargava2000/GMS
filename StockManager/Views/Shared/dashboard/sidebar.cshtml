@@ -1,0 +1,110 @@
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar-wrapper">
+    <!-- END SIDEBAR -->
+    <div class="page-sidebar navbar-collapse collapse" style="z-index: 1000">
+        <!-- BEGIN SIDEBAR MENU -->
+        <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <li class="nav-item start">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-home fa-fw"></i>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "Vendors")">
+                <a href="@Url.Action("Index", "Vendors")" class="nav-link nav-toggle">
+                    <i class="fa fa-industry fa-fw"></i>
+                    <span class="title">Vendor</span>
+                </a>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "Products")">
+                <a href="@Url.Action("Index", "Products")" class="nav-link nav-toggle">
+                    <i class="fa fa-cube fa-fw"></i>
+                    <span class="title">Product</span>
+                </a>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "Customers")">
+                <a href="@Url.Action("Index", "Customers")" class="nav-link nav-toggle">
+                    <i class="fa fa-user fa-fw"></i>
+                    <span class="title">Customer</span>
+                </a>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "PurchaseOrders")">
+                <a href="@Url.Action("Index", "PurchaseOrders")" class="nav-link nav-toggle">
+                    <i class="fa fa-shopping-cart fa-fw"></i>
+                    <span class="title">Purchase Orders</span>
+                </a>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "PrinterChalans")">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-list fa-fw"></i>
+                    <span class="title">Printer Challan</span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <span class="title">Example 1</span>
+                        </a>
+                    </li>   
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <span class="title">Example 2</span>
+                        </a>
+                    </li>                    
+                </ul>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "TailorChalan")">
+                <a href="@Url.Action("Index", "TailorChalan")" class="nav-link nav-toggle">
+                    <i class="fa fa-list fa-fw"></i>
+                    <span class="title">Tailor Challan</span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <span class="title">Example 1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <span class="title">Example 2</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "Invoices")">
+                <a href="@Url.Action("Index", "Invoices")" class="nav-link nav-toggle">
+                    <i class="fa fa-list fa-fw"></i>
+                    <span class="title">
+                        Sales Invoice
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "Users")">
+                <a href="@Url.Action("Index", "Users")" class="nav-link nav-toggle">
+                    <i class="fa fa-users fa-fw"></i>
+                    <span class="title">Users</span>
+                </a>
+            </li>
+            <li class="nav-item start @Html.IsSelected(controller: "Reports")">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-line-chart fa-fw"></i>
+                    <span class="title">Reports</span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <span class="title">Example 1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="#" class="nav-link ">
+                            <span class="title">Example 2</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- END SIDEBAR MENU -->
+    </div>
+    <!-- END SIDEBAR -->
+</div>
+<!-- END SIDEBAR -->

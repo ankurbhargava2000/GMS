@@ -1,0 +1,314 @@
+﻿@model StockManager.Models.TailorChalanSend
+
+@{
+    ViewBag.Title = "Create New Tailor Chalan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h4>Tailor Chalan</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
+        @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
+        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
+        <div class="container">
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
+                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger VendorVal" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ChalanNo, "Chalan#", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo", Value = @ViewBag.ChalanNo, required = true } })
+                            @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger ChalanNoVal" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div2" class="col-md-6 col-xs-12">                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ChalanDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control col-md-7", Id = "ChalanDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.bill_number, "Bill Number", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
+                            @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div id="div2" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12 mt">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-xs-12 col-md-8">
+                            <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="div1" class="col-md-12 col-xs-12">
+                    <div class="form-group">
+                        <table class="table table-striped table-advance table-hover" id="tailorChalanItems">
+                            <tr id="productItemRow">
+                                <td>
+                                    <label class="productName">Product Name</label>
+                                    <input type="hidden" class="productId" value="" />
+                                    <input type="hidden" class="rowCount" value="" />
+                                    <input type="hidden" class="matarialDetails" value="" />
+                                </td>
+                                <td>
+                                    <label class="productQuantity">Quantity</label>
+                                </td>
+                                
+                                <td class="itemEditRow"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="div1" class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-xs-12 col-md-8">
+                            <input type="button" id="btnSubmit" class="btn btn-success" value="Save Tailor Chalan" />
+                            @Html.ActionLink("Close", "Index", "tailorChalans", new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="itemModel"
+                 data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                ×
+                            </button>
+                            <h4 class="modal-title">Add Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
+                                        @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                
+                                
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
+                            <button type="button" id="btnHideModal" class="btn btn-danger">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section scripts
+{
+    <!-- DateRanger -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#ChalanDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            });
+            $("#btnShowModal").click(function () {
+                $("#itemModel").modal('show');
+            });
+
+            $("#btnHideModal").click(function () {
+                $("#itemModel").modal('hide');
+            });
+
+            $("#btnHideModal").click(function () {
+
+            });
+
+            
+            $('#addProductItem').click(function () {
+                //validation and add order items
+                var isAllValid = true;
+                var matarialDetail = "";
+                
+
+                if (isAllValid) {
+                    var $newRow = $('#productItemRow').clone().removeAttr('id');
+
+                    $('.productId', $newRow).val($('#product').val());
+                    $('.productName', $newRow).text($('#product').text());
+                    $('.productQuantity', $newRow).text($('#quantity').val());
+                    $('.rowCount', $newRow).val($('#tailorChalanItems tr').length);
+                    //$('.itemEditRow', $newRow).append('<button type="button" class="btn btn-success btn-xs remove" title="View Material Used"><i class="fa fa-edit"></i></button> | <button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
+                    $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
+                    $('#tailorChalanItems').append($newRow);
+                    
+                    $("#itemModel").modal('hide');
+                }
+            });
+
+            //remove button click event
+            $('#tailorChalanItems').on('click', '.remove', function () {
+                $(this).parents('tr').remove();
+            });
+
+            $('#btnSubmit').click(function () {
+                var isAllValid = validateMainPage();
+                if (isAllValid) {
+
+                    //validate order items
+                    var list = [];
+                    var errorItemCount = 0;
+                    $('#tailorChalanItems tbody tr').each(function (index, ele) {
+
+                        if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                            var orderItem = {
+                                ProductId: $('.productId', this).val(),
+                                Quantity: $('.productQuantity', this).text()
+                            }
+                            list.push(orderItem);
+                        }
+                    }
+                    )
+
+
+
+                    var data = {
+                        VendorId: $('#Vendor').val(),
+                        ChalanDate: $('#ChalanDate').val(),
+                        ChalanNo: $('#ChalanNo').val(),
+                        bill_number: $('#BillNo').val(),
+                        Description: $('#Description').val(),
+                        TailorChalanSendDetails: list,
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/tailorChalansend/Create',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data != "0") {
+                                alert('Printer Chalan Saved Successfully.');
+                                list = [];
+                                $('#Vender,#InvoiceDate').val('');
+                                $('#TailorChalanItems tbody tr').each(function (index, ele) {
+                                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                                        $('#tailorChalanItems tbody tr', this).remove();
+                                    }
+                                });
+                                //$(this).val('Save Purchase Order');
+                                window.location.href = '/TailorChalanSend/Details/' + data;
+                            }
+                            else {
+                                //$(this).val('Save Printer Chalan');
+                                alert('Error in saving printer chalan');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+
+            function validateMainPage() {
+                var result = true;
+                if ($('#ChalanNo').val() == "") {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter Chalan Number.");
+                    result = false;
+                }
+                if (isNaN($('#ChalanNo').val())) {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter number in Chalan Number.");
+                    result = false;
+                }
+                if ($('#ChalanDate').val() == "") {
+                    $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
+                    result = false;
+                }
+
+                var tableRows = $("#tailorChalanItems tbody tr").length;
+
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 product for this invoice');
+                    result = false;
+                }
+                return result;
+            }
+
+            $('#ChalanNo').change(function () {
+                if ($('#ChalanNo').val() != "" && !isNaN($('#ChalanNo'))) {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("");
+                }
+            });
+        });
+    </script>
+}
+
+
+

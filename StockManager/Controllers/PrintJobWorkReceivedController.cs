@@ -18,7 +18,11 @@ namespace StockManager.Controllers
         // GET: PrinterChalans
         public ActionResult Index( int? page)
         {
-            var printerChalans = db.PrintJobWorkReceiveds.Include(p => p.Vendor).Include(p => p.PrintJobWorkReceivedDetails).OrderBy(x => x.ChalanDate);
+            var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var printerChalans = db.PrintJobWorkReceiveds
+                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Include(p => p.Vendor).Include(p => p.PrintJobWorkReceivedDetails).OrderBy(x => x.ChalanDate);
             
             int pageSize = 3;
             int pageNumber = (page ?? 1);
@@ -44,7 +48,12 @@ namespace StockManager.Controllers
         public ActionResult Create()
         {
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");            
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
             return View();
         }
 
@@ -56,9 +65,15 @@ namespace StockManager.Controllers
             {
                 try
                 {
+                    var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+                    var tenant_id = Convert.ToInt32(Session["TenantID"]);
+                    var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     printerChalan.Created = dtDate;
                     printerChalan.Updated = dtDate;
+                    printerChalan.created_by = creaded_by;
+                    printerChalan.financial_year = year_id;
+                    printerChalan.tenant_id = tenant_id;
 
                     db.PrintJobWorkReceiveds.Add(printerChalan);
                     db.SaveChanges();
@@ -90,6 +105,11 @@ namespace StockManager.Controllers
             }
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
+            var year_id = Session["FinancialYearID"];
+            var year = db.FinancialYears.Find(year_id);
+
+            ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+            ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
             return View(printerChalan);
         }
 
@@ -121,7 +141,7 @@ namespace StockManager.Controllers
                     transaction.Commit();
                     return Json(Convert.ToString(printerChalan.Id));
                 }
-                catch(Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
