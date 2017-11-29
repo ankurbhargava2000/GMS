@@ -201,6 +201,7 @@
       <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginVM.cs" />
+    <Compile Include="Models\OpeningStockVM.cs" />
     <Compile Include="Models\PrinterChalan.cs">
       <DependentUpon>StockManagerEntities.tt</DependentUpon>
     </Compile>
@@ -686,6 +687,7 @@
     <Content Include="Views\PrintJobWorkReceived\Details.cshtml" />
     <Content Include="Views\PrintJobWorkReceived\Edit.cshtml" />
     <Content Include="Views\PrintJobWorkReceived\Index.cshtml" />
+    <Content Include="Views\Products\UpdateOpeningStock.cshtml" />
     <None Include="Views\Shared\dashboard.cshtml" />
     <None Include="Views\Shared\dashboard\sidebar.cshtml" />
     <None Include="Views\Shared\dashboard\topnav.cshtml" />

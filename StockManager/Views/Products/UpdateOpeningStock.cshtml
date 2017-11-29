@@ -1,0 +1,74 @@
+﻿@model StockManager.Models.OpeningStockVM
+
+@{
+    ViewBag.Title = "UpdateOpeningStock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Update Opening Stock</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-plus"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <h4>Update Opening stock for @Model.FinancialYear.StartDate.ToString("dd-MMM-yyyy") - @Model.FinancialYear.EndDate.ToString("dd-MMM-yyyy") </h4>
+
+        @using (Html.BeginForm())
+        {
+            var i = 0;
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(x => x.FinancialYear.Id)
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>
+                                @Html.Hidden("Transactions[" + @i + "].ProductId", item.Id)
+                                @item.ProductName
+                            </td>
+                            <td>
+                                @{
+                                    var product = Model.Transactions.Where(x => x.ProductId == item.Id).FirstOrDefault();
+
+                                    if (product == null)
+                                    {
+                                        @Html.TextBox("Transactions[" + @i + "].Quantity", 0);
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox("Transactions[" + @i + "].Quantity", product.Quantity);
+                                    }
+                                }
+                            </td>
+                        </tr>
+                                        i++;
+                                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" name="name" value="Save" class="btn btn-block btn-primary" />
+            </div>
+                                    }
+
+    </div>
+</div>
