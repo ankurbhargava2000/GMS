@@ -77,6 +77,7 @@
         <AssociationConnector Association="StockManagerModel.FK_Vendor_Tenant" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Transacti__Vendo__778AC167" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Vendor__VendorTy__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__Transacti__Tenan__6166761E" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

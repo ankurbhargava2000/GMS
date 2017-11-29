@@ -257,6 +257,7 @@
           <Property Name="Type" Type="varchar" MaxLength="50" />
           <Property Name="ReferenceRecordId" Type="int" />
           <Property Name="financial_year" Type="int" />
+          <Property Name="TenantId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -628,6 +629,20 @@
             </Principal>
             <Dependent Role="Transactions">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__Tenan__6166761E">
+          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="TenantId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1078,6 +1093,10 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK__Transacti__Tenan__6166761E" Association="Self.FK__Transacti__Tenan__6166761E">
+            <End Role="Tenant" EntitySet="Tenant" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
           <AssociationSet Name="FK__Transacti__Vendo__778AC167" Association="Self.FK__Transacti__Vendo__778AC167">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="Transactions" EntitySet="Transactions" />
@@ -1493,6 +1512,7 @@
           <NavigationProperty Name="TailorChalanSends" Relationship="Self.FK_TailorChalanSend_Tenant" FromRole="Tenant" ToRole="TailorChalanSend" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Tenant" FromRole="Tenant" ToRole="User" />
           <NavigationProperty Name="Vendors" Relationship="Self.FK_Vendor_Tenant" FromRole="Tenant" ToRole="Vendor" />
+          <NavigationProperty Name="Transactions" Relationship="StockManagerModel.FK__Transacti__Tenan__6166761E" FromRole="Tenant" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -1510,6 +1530,8 @@
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_Transactions_FinancialYear" FromRole="Transactions" ToRole="FinancialYear" />
           <NavigationProperty Name="Product" Relationship="Self.FK__Transacti__Produ__76969D2E" FromRole="Transactions" ToRole="Product" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__Transacti__Vendo__778AC167" FromRole="Transactions" ToRole="Vendor" />
+          <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tenant" Relationship="StockManagerModel.FK__Transacti__Tenan__6166761E" FromRole="Transaction" ToRole="Tenant" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -2440,6 +2462,10 @@
           <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)" />
+          <AssociationSet Name="FK__Transacti__Tenan__6166761E" Association="StockManagerModel.FK__Transacti__Tenan__6166761E">
+            <End Role="Tenant" EntitySet="Tenants" />
+            <End Role="Transaction" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="USP_ProductWiseStock_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2459,6 +2485,20 @@
           <Property Type="Decimal" Name="TotalNetQuantity" Nullable="false" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="TotalShrinkage" Nullable="false" Precision="38" Scale="2" />
         </ComplexType>
+        <Association Name="FK__Transacti__Tenan__6166761E">
+          <End Type="StockManagerModel.Tenant" Role="Tenant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="StockManagerModel.Transaction" Role="Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tenant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transaction">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2725,6 +2765,7 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="StockManagerModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />

@@ -23,9 +23,11 @@ namespace StockManager.Models
         public string Type { get; set; }
         public Nullable<int> ReferenceRecordId { get; set; }
         public Nullable<int> financial_year { get; set; }
+        public int TenantId { get; set; }
     
         public virtual FinancialYear FinancialYear { get; set; }
         public virtual Product Product { get; set; }
         public virtual Vendor Vendor { get; set; }
+        public virtual Tenant Tenant { get; set; }
     }
 }
