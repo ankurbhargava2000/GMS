@@ -62,41 +62,38 @@
                         @Html.DisplayFor(modelItem => item.LaborCost)
                     </td>
                 </tr>
-                if (Model.IsGivenToTailor == false)
-                {
-                    <tr>
-                        <td></td>
-                        <td>
-                            <table class="table">
-                                <tr>
-                                    <th colspan="2"> Material Details</th>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        Product
-                                    </th>
-                                    <th>
-                                        Quantity
-                                    </th>
-                                </tr>
-                                @if (item.TailorMaterialDetails != null)
+                <tr>
+                    <td></td>
+                    <td>
+                        <table class="table">
+                            <tr>
+                                <th colspan="2"> Material Details</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Product
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                            </tr>
+                            @if (item.TailorMaterialDetails != null)
+                            {
+                                foreach (var material in item.TailorMaterialDetails)
                                 {
-                                    foreach (var material in item.TailorMaterialDetails)
-                                    {
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayFor(p => material.Product.ProductName)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayFor(p => material.Quantity)
-                                            </th>
-                                        </tr>
-                                    }
+                                    <tr>
+                                        <th>
+                                           @Html.DisplayFor(p => material.Product.ProductName) 
+                                        </th>
+                                        <th>
+                                           @Html.DisplayFor(p => material.Quantity)
+                                        </th>
+                                    </tr>
                                 }
-                            </table>
-                        </td>
-                    </tr>
-                }
+                            }
+                        </table>
+                    </td>
+                </tr>
             }
         }
     }

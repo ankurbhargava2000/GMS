@@ -241,7 +241,7 @@
                     var $newRow = $('#productItemRow').clone().removeAttr('id');
 
                     $('.productId', $newRow).val($('#product').val());
-                    $('.productName', $newRow).text($('#product option:selected').text());
+                    $('.productName', $newRow).text($('#product').text());
                     $('.productQuantity', $newRow).text($('#quantity').val());
                     $('.productFold', $newRow).text($('#fold').val());
                     $('.expectedFold', $newRow).text($('#expectedFold').val());

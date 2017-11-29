@@ -168,7 +168,7 @@
                                                         <span>Add Material</span>
                                                     </td>
                                                 </tr>
-                                                <tr class="mycontainer" style="display:none" id="mainrow">
+                                                <tr class="mycontainer" style="visibility:hidden" id="mainrow">
                                                     <td class="col-md-6 col-xs-6">
                                                         @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
                                                     </td>
@@ -220,7 +220,7 @@
             });
 
             $("#addNewMaterial").click(function(){
-                var $newRow = $('#mainrow').clone(true, true).removeAttr('id').removeClass('hiddenDiv').css('display', 'inline');
+                var $newRow = $('#mainrow').clone(true, true).removeAttr('id').removeClass('hiddenDiv');
                 $('#materialId', $newRow).val($('#materialId').val());
                 //$('.materialId', $newRow).text($('#materialId').text());
                 $('#materialQuantity', $newRow).val($('#materialQuantity').val());
@@ -244,7 +244,7 @@
                     var $newRow = $('#productItemRow').clone().removeAttr('id');
 
                     $('.productId', $newRow).val($('#product').val());
-                    $('.productName', $newRow).text($('#product option:selected').text());
+                    $('.productName', $newRow).text($('#product').text());
                     $('.productQuantity', $newRow).text($('#quantity').val());
                     $('.laborCost', $newRow).text($('#laborCost').val());
                     $('.matarialDetails', $newRow).val(matarialDetail);
@@ -253,7 +253,6 @@
                     $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                     $('#tailorChalanItems').append($newRow);
                     $('#materialQuantity').val('');
-                    $('#quantity').val('');
                     $('#laborCost').val('');
                     $('#tailorMaterialDetails').html('');
                     $("#itemModel").modal('hide');
@@ -308,8 +307,6 @@
                     ChalanDate: $('#ChalanDate').val(),
                     ChalanNo: $('#ChalanNo').val(),
                     IsGivenToTailor: @Html.Raw(ViewBag.GivenToTailor),
-                    bill_number:$('#BillNo').val(),
-                    Description:$('#Description').val(),
                     TailorChalanDetails: list,
                 }
 
@@ -320,7 +317,7 @@
                     contentType: 'application/json',
                     success: function (data) {
                         if (data != "0") {
-                            alert('Tailor Chalan Saved Successfully.');
+                            alert('Printer Chalan Saved Successfully.');
                             list = [];
                             $('#Vender,#InvoiceDate').val('');
                             $('#TailorChalanItems tbody tr').each(function (index, ele) {
@@ -333,7 +330,7 @@
                         }
                         else {
                             //$(this).val('Save Printer Chalan');
-                            alert('Error in saving Tailor chalan');
+                            alert('Error in saving printer chalan');
                         }
                     },
                     error: function (error) {

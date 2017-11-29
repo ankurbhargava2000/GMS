@@ -207,7 +207,7 @@
                                                         <span>Add Material</span>
                                                     </td>
                                                 </tr>
-                                                <tr class="mycontainer hiddenDiv" style="display:none" id="mainrow">
+                                                <tr class="mycontainer hiddenDiv" id="mainrow">
                                                     <td class="col-md-6 col-xs-6">
                                                         @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
                                                     </td>
@@ -282,7 +282,7 @@
                     if($('#countEdit').val() == '')
                     {
                         var matarialDetail = "";
-                        if('@Model.IsGivenToTailor' == 'False')
+                        if(Model.IsGivenToTailor == false)
                         {
                             $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
                                 matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
@@ -292,12 +292,12 @@
                         var $newRow = $('#productItemRow').clone().removeAttr('id');
 
                         $('.productId', $newRow).val($('#product').val());
-                        $('.productName', $newRow).text($('#product option:selected').text());
+                        $('.productName', $newRow).text($('#product').text());
                         $('.productQuantity', $newRow).text($('#quantity').val());
                         $('.laborCost', $newRow).text($('#laborCost').val());
                         $('.matarialDetails', $newRow).val(matarialDetail);
                         $('.rowCount', $newRow).val($('#tailorChalanItems tr').length);
-                        $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-warning btn-xs editItem" title="View Material Used"><i class="fa fa-pencil"></i></button> | <button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
+                        $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-success btn-xs remove" title="View Material Used"><i class="fa fa-edit"></i></button> | <button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                         //$('.itemEditRow', $newRow).append('<button type="button" class="btn btn-danger btn-xs remove" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                         $('#tailorChalanItems').append($newRow);
                         $('#materialQuantity').val('');
@@ -307,20 +307,18 @@
                     }
                     else
                     {
-                        $('#tailorChalanItems tbody tr').each(function (index, ele) {
+                        $('#printerChalanItems tbody tr').each(function (index, ele) {
                             //update product list
                             if($('.rowCount', this).val() == $('#countEdit').val())
                             {
                                 var matarialDetail = "";
-                                if('@Model.IsGivenToTailor' == 'False')
-                                {
-                                    $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
-                                        matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
-                                    });
-                                }
+
+                                $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                                    matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
+                                });
 
                                 $('.productId', this).val($('#product').val());
-                                $('.productName', this).text($('#product option:selected').text());
+                                $('.productName', this).text($('#product').text());
                                 $('.productQuantity', this).text($('#quantity').val());
                                 $('.laborCost', this).text($('#laborCost').val());
                                 $('.matarialDetails', this).val(matarialDetail);
@@ -391,7 +389,6 @@
                     if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
                         var orderItem = {
                             Id:$('.Id', this).val(),
-                            ChalanId: @Model.Id,
                             ProductId: $('.productId', this).val(),
                             Quantity: $('.productQuantity', this).text(),
                             LaborCost: $('.laborCost', this).text(),
@@ -408,8 +405,6 @@
                     ChalanDate: $('#ChalanDate').val(),
                     ChalanNo: $('#ChalanNo').val(),
                     IsGivenToTailor: (('@Model.IsGivenToTailor' == 'True') ? 1 : 0),
-                    bill_number:$('#BillNo').val(),
-                    Description:$('#Description').val(),
                     TailorChalanDetails: list,
                 }
 
@@ -464,7 +459,7 @@
                 }
             });
         });
-</script>
+    </script>
 }
 
 
