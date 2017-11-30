@@ -15,9 +15,9 @@ namespace StockManager.Models
     public partial class Transaction
     {
         public int Id { get; set; }
-        public int VendorId { get; set; }
+        public Nullable<int> VendorId { get; set; }
         public int ProductId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
+        public int Quantity { get; set; }
         public Nullable<System.DateTime> Created { get; set; }
         public Nullable<System.DateTime> Updated { get; set; }
         public string Type { get; set; }
@@ -27,7 +27,7 @@ namespace StockManager.Models
     
         public virtual FinancialYear FinancialYear { get; set; }
         public virtual Product Product { get; set; }
-        public virtual Vendor Vendor { get; set; }
         public virtual Tenant Tenant { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }
