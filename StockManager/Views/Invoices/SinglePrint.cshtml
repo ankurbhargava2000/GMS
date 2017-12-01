@@ -1,0 +1,125 @@
+﻿@model StockManager.Models.InvoiceMaster
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>    
+    <title>Single Print</title>
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-2 col-xs-4">
+                <div class="form-group">
+                    <h4>Invoice #</h4>
+                    <div>
+                        @Model.invoice_no
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-4">
+                <div class="form-group">
+                    <h4>Vendor</h4>
+                    <div>
+                        @Model.Vendor.VendorName
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-4">
+                <div class="form-group">
+                    <h4>Date</h4>
+                    <div>
+                        @(Model.created_on?.ToString("dd-MMM-yyyy"))
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-8">
+                <h4>Products</h4>
+                <table id="products_table" class="table">
+                    <tr>
+                        <th>Name</th>
+                        <th>Sale rate</th>
+                        <th>Qty</th>
+                        <th>Discount</th>
+                        <th>P.Total</th>
+                    </tr>
+                    @{
+                        if (Model.InvoiceDetails.Count() > 0)
+                        {
+                            foreach (var item in Model.InvoiceDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                                    </td>
+                                    <td style='width: 15%' class='sale'>
+                                        Rs @item.sale_rate
+                                    </td>
+                                    <td style='width: 15%' class='qty'>
+                                        @item.quantity
+                                    </td>
+
+                                    <td style='width: 15%' class='dscnt'>
+                                        Rs @item.discount
+                                    </td>
+                                    <td class='ptotal'>
+                                        Rs @((item.quantity * item.sale_rate) - item.discount)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h4>Total</h4>
+                <table class="table">
+                    <tr>
+                        <td style="width: 70%">
+                            Subtotal
+                        </td>
+                        <td id="sub_total">
+                            Rs @Model.gross_amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Discount
+                        </td>
+                        <td>
+                            Rs @Model.discount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Total
+                        </td>
+                        <td id="total_discount">
+                            Rs @Model.net_amount
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+         setTimeout(function(){
+
+           window.print();
+           window.location.href="@Url.Action("Index")";
+
+         }, 100);
+    </script>
+</body>
+</html>

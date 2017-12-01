@@ -22,7 +22,7 @@ namespace StockManager.Controllers
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
             var tenant_id = Convert.ToInt32(Session["TenantID"]);
             var invoiceMasters = db.InvoiceMasters
-                .Where( x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
                 .Include(i => i.FinancialYear)
                 .Include(i => i.User)
                 .Include(i => i.Vendor)
@@ -56,7 +56,7 @@ namespace StockManager.Controllers
 
             var last = db.InvoiceMasters.OrderByDescending(o => o.invoice_no).FirstOrDefault();
 
-            if ( last == null )
+            if (last == null)
             {
                 ViewBag.invoice_no = 1;
             }
@@ -65,7 +65,7 @@ namespace StockManager.Controllers
                 ViewBag.invoice_no = last.invoice_no + 1;
             }
 
-            
+
 
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
@@ -75,7 +75,7 @@ namespace StockManager.Controllers
 
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(InvoiceMaster invoice)
@@ -83,7 +83,7 @@ namespace StockManager.Controllers
 
             if (ModelState.IsValid)
             {
-                invoice.created_at = DateTime.Now;                                
+                invoice.created_at = DateTime.Now;
                 db.InvoiceMasters.Add(invoice);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -160,7 +160,7 @@ namespace StockManager.Controllers
                         }
                         db.SaveChanges();
                     }
-                   
+
                     if (ditems.Count() > 0)
                     {
                         foreach (var item in ditems)
@@ -174,13 +174,13 @@ namespace StockManager.Controllers
                         }
                         db.SaveChanges();
                     }
-                     
+
                 }
                 catch
                 {
-                    
+
                 }
-                
+
                 return RedirectToAction("Index");
             }
 
@@ -235,6 +235,36 @@ namespace StockManager.Controllers
             for (int i = 0; i < length; i++)
                 s = String.Concat(s, random.Next(10).ToString());
             return s;
+        }
+
+        public ActionResult Print()
+        {
+            var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var invoiceMasters = db.InvoiceMasters
+                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Include(i => i.FinancialYear)
+                .Include(i => i.User)
+                .Include(i => i.Vendor)
+                .Include(i => i.Tenant)
+                .ToList();
+
+            return View(invoiceMasters);
+        }
+
+        public ActionResult SinglePrint(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
+            if (invoiceMaster == null)
+            {
+                return HttpNotFound();
+            }
+            return View(invoiceMaster);
         }
 
         public JsonResult IsIdExists(int invoice_no)

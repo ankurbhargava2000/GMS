@@ -15,6 +15,9 @@
             <a href="@Url.Action("Create")" class="btn btn-circle btn-default">
                 <i class="fa fa-plus"></i> New
             </a>
+            <a href="@Url.Action("Print")" class="btn btn-circle btn-default">
+                <i class="fa fa-print"></i> Print   
+            </a>
             <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
             </a>
         </div>
@@ -66,6 +69,10 @@
                             @Html.ActionLink("Edit", "Edit", new { id = item.invoice_no }, new { @class = "btn btn-warning btn-xs" })
                             |
                             @Html.ActionLink("Delete", "Delete", new { id = item.invoice_no }, new { @class = "btn btn-danger btn-xs" })
+                            |
+                            <a class="btn btn-default btn-xs" href="@Url.Action("SinglePrint", new { id = item.invoice_no }) ">
+                                <i class="fa fa-print"></i> Print
+                            </a>
                         </td>
                     </tr>
                 }

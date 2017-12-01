@@ -688,6 +688,8 @@
     <Content Include="Views\PrintJobWorkReceived\Edit.cshtml" />
     <Content Include="Views\PrintJobWorkReceived\Index.cshtml" />
     <Content Include="Views\Products\UpdateOpeningStock.cshtml" />
+    <Content Include="Views\Invoices\Print.cshtml" />
+    <Content Include="Views\Invoices\SinglePrint.cshtml" />
     <None Include="Views\Shared\dashboard.cshtml" />
     <None Include="Views\Shared\dashboard\sidebar.cshtml" />
     <None Include="Views\Shared\dashboard\topnav.cshtml" />
