@@ -31,6 +31,7 @@ namespace StockManager.Models
         public virtual DbSet<FinancialYear> FinancialYears { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
+        public virtual DbSet<MeasuringUnit> MeasuringUnits { get; set; }
         public virtual DbSet<PrinterChalan> PrinterChalans { get; set; }
         public virtual DbSet<PrinterChalanDetail> PrinterChalanDetails { get; set; }
         public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }

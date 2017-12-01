@@ -481,16 +481,6 @@
     <Content Include="Content\lineicons\fonts\linecons.eot" />
     <Content Include="Content\lineicons\fonts\linecons.ttf" />
     <Content Include="Content\lineicons\fonts\linecons.woff" />
-    <Content Include="Models\StockManager.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockManager.edmx</DependentUpon>
-      <LastGenOutput>StockManager.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\StockManager.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockManager.edmx</DependentUpon>
-      <LastGenOutput>StockManager.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\js\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\js\bootstrap-inputmask\bootstrap-inputmask.min.js" />
     <Content Include="Scripts\js\bootstrap-switch.js" />
@@ -651,8 +641,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>StockManager.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\StockManager.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StockManager.edmx</DependentUpon>
+      <LastGenOutput>StockManager.Context.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\StockManager.edmx.diagram">
       <DependentUpon>StockManager.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\StockManager.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StockManager.edmx</DependentUpon>
+      <LastGenOutput>StockManager.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\StockManager.pubxml" />
     <Content Include="Views\PurchaseOrders\Create.cshtml" />

@@ -20,7 +20,7 @@ namespace StockManager.Controllers
         public ActionResult Index(int? page)
         {
             var tenant_id = Convert.ToInt32(Session["TenantID"]);
-            var products = db.Products.Include(p => p.ProductType)
+            var products = db.Products.Include(p => p.ProductType).Include(p => p.MeasuringUnit)
                 .Where(x => x.tenant_id == tenant_id)
                 .ToList();
             return View(products);
@@ -45,6 +45,7 @@ namespace StockManager.Controllers
         public ActionResult Create()
         {
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1");
+            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ProductTypeId,ProductName,Description,IsActive,tenant_id")] Product product)
+        public ActionResult Create(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +64,7 @@ namespace StockManager.Controllers
             }
 
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1", product.ProductTypeId);
+            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
             return View(product);
         }
 
@@ -79,6 +81,7 @@ namespace StockManager.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1", product.ProductTypeId);
+            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
             return View(product);
         }
 
@@ -87,7 +90,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ProductTypeId,ProductName,Description,IsActive,tenant_id")] Product product)
+        public ActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -96,6 +99,7 @@ namespace StockManager.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1", product.ProductTypeId);
+            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
             return View(product);
         }
 
