@@ -27,7 +27,7 @@ namespace StockManager.Models
     
         public virtual FinancialYear FinancialYear { get; set; }
         public virtual Product Product { get; set; }
-        public virtual Vendor Vendor { get; set; }
         public virtual Tenant Tenant { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }

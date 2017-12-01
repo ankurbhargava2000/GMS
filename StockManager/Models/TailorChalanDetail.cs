@@ -14,7 +14,6 @@ namespace StockManager.Models
     
     public partial class TailorChalanDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TailorChalanDetail()
         {
             this.TailorMaterialDetails = new HashSet<TailorMaterialDetail>();
@@ -30,7 +29,6 @@ namespace StockManager.Models
         public virtual Product Product { get; set; }
         public virtual TailorChalan TailorChalan { get; set; }
         public virtual TailorChalan TailorChalan1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorMaterialDetail> TailorMaterialDetails { get; set; }
     }
 }
