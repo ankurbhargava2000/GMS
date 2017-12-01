@@ -30,10 +30,13 @@ namespace StockManager.Models
         public Nullable<int> ProductTypeId { get; set; }
         public string ProductName { get; set; }
         public string Description { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public bool IsActive { get; set; }
         public Nullable<int> tenant_id { get; set; }
+        public Nullable<int> Unit { get; set; }
+        public Nullable<decimal> SellingPrice { get; set; }
     
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual MeasuringUnit MeasuringUnit { get; set; }
         public virtual ICollection<PrinterChalanDetail> PrinterChalanDetails { get; set; }
         public virtual ICollection<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
         public virtual ProductType ProductType { get; set; }
