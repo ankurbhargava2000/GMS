@@ -34,6 +34,7 @@ namespace StockManager.Models
         public bool IsActive { get; set; }
         public Nullable<int> tenant_id { get; set; }
         public Nullable<int> Unit { get; set; }
+        public Nullable<decimal> SellingPrice { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }

@@ -135,6 +135,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="tenant_id" Type="int" />
           <Property Name="Unit" Type="int" />
+          <Property Name="SellingPrice" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -1396,6 +1397,7 @@
           <NavigationProperty Name="TailorMaterialDetails" Relationship="Self.FK__TailorMat__Produ__73BA3083" FromRole="Product" ToRole="TailorMaterialDetails" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Produ__76969D2E" FromRole="Product" ToRole="Transactions" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_Product_Tenant" FromRole="Product" ToRole="Tenant" />
+          <Property Name="SellingPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -2698,6 +2700,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="StockManagerModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />

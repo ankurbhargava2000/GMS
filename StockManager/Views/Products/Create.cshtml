@@ -13,7 +13,7 @@
         </div>
         <div class="actions">
             <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
-                <i class="fa fa-plus"></i> Back
+                <i class="fa fa-arrow-left"></i> Back
             </a>
             <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
             </a>
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.IsActive, "Active", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.IsActive, "Active", htmlAttributes: new { @class = "control-label col-md-2"})
                     <div class="col-md-10">
                         <div class="checkbox">
                             @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "align-middle" } })
