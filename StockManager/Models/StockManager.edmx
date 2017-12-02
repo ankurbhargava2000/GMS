@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -257,6 +257,8 @@
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="Country" Type="varchar" MaxLength="50" />
           <Property Name="CurrentFinYear" Type="int" />
+          <Property Name="PanNo" Type="varchar" MaxLength="50" />
+          <Property Name="GSTNo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -285,6 +287,15 @@
           <Property Name="Phone" Type="varchar" MaxLength="50" />
           <Property Name="TenantId" Type="int" Nullable="false" />
           <Property Name="password_reset_token" Type="varchar(max)" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -686,6 +697,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__User__RoleId__2645B050">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Vendor__VendorTy__797309D9">
           <End Role="VendorType" Type="Self.VendorType" Multiplicity="0..1" />
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
@@ -1010,6 +1035,7 @@
           <EntitySet Name="Tenant" EntityType="Self.Tenant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorType" EntityType="Self.VendorType" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__InvoiceDe__invoi__60A75C0F" Association="Self.FK__InvoiceDe__invoi__60A75C0F">
@@ -1132,6 +1158,10 @@
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK__User__RoleId__2645B050" Association="Self.FK__User__RoleId__2645B050">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK__Vendor__VendorTy__797309D9" Association="Self.FK__Vendor__VendorTy__797309D9">
             <End Role="VendorType" EntitySet="VendorType" />
             <End Role="Vendor" EntitySet="Vendor" />
@@ -1221,7 +1251,8 @@
             <End Role="Vendor" EntitySet="Vendor" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1386,6 +1417,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="tenant_id" Type="Int32" />
           <Property Name="Unit" Type="Int32" />
+          <Property Name="SellingPrice" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__produ__619B8048" FromRole="Product" ToRole="InvoiceDetails" />
           <NavigationProperty Name="MeasuringUnit" Relationship="Self.FK__Product__Unit__22751F6C" FromRole="Product" ToRole="MeasuringUnits" />
           <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Produ__68487DD7" FromRole="Product" ToRole="PrinterChalanDetails" />
@@ -1397,7 +1429,6 @@
           <NavigationProperty Name="TailorMaterialDetails" Relationship="Self.FK__TailorMat__Produ__73BA3083" FromRole="Product" ToRole="TailorMaterialDetails" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Produ__76969D2E" FromRole="Product" ToRole="Transactions" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_Product_Tenant" FromRole="Product" ToRole="Tenant" />
-          <Property Name="SellingPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -1548,6 +1579,8 @@
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CurrentFinYear" Type="Int32" />
+          <Property Name="PanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GSTNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Tenant" FromRole="Tenant" ToRole="Customer" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_Tenant_FinancialYear" FromRole="Tenant" ToRole="FinancialYear" />
           <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__tenan__656C112C" FromRole="Tenant" ToRole="InvoiceMaster" />
@@ -1592,6 +1625,7 @@
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TenantId" Type="Int32" Nullable="false" />
           <Property Name="password_reset_token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__creat__628FA481" FromRole="User" ToRole="InvoiceMaster" />
           <NavigationProperty Name="PrinterChalans" Relationship="Self.FK_PrinterChalan_User" FromRole="User" ToRole="PrinterChalan" />
           <NavigationProperty Name="PrintJobWorkReceiveds" Relationship="Self.FK_PrintJobWorkReceived_User" FromRole="User" ToRole="PrintJobWorkReceived" />
@@ -1599,6 +1633,16 @@
           <NavigationProperty Name="TailorChalans" Relationship="Self.FK_TailorChalan_User" FromRole="User" ToRole="TailorChalan" />
           <NavigationProperty Name="TailorChalanSends" Relationship="Self.FK_TailorChalanSend_User" FromRole="User" ToRole="TailorChalanSend" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_User_Tenant" FromRole="User" ToRole="Tenant" />
+          <NavigationProperty Name="UserRole" Relationship="Self.FK__User__RoleId__2645B050" FromRole="User" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleId__2645B050" FromRole="UserRole" ToRole="User" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -2296,6 +2340,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__User__RoleId__2645B050">
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Vendor__VendorTy__797309D9">
           <End Role="VendorType" Type="Self.VendorType" Multiplicity="0..1" />
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
@@ -2330,6 +2388,7 @@
           <EntitySet Name="Tenants" EntityType="Self.Tenant" />
           <EntitySet Name="Transactions" EntityType="Self.Transaction" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="VendorTypes" EntityType="Self.VendorType" />
           <AssociationSet Name="FK_Customer_Tenant" Association="Self.FK_Customer_Tenant">
@@ -2536,12 +2595,16 @@
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK__User__RoleId__2645B050" Association="Self.FK__User__RoleId__2645B050">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK__Vendor__VendorTy__797309D9" Association="Self.FK__Vendor__VendorTy__797309D9">
             <End Role="VendorType" EntitySet="VendorTypes" />
             <End Role="Vendor" EntitySet="Vendors" />
           </AssociationSet>
           <FunctionImport Name="USP_ProductWiseStock" ReturnType="Collection(StockManagerModel.USP_ProductWiseStock_Result)">
-          <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)" />
         </EntityContainer>
@@ -2700,7 +2763,6 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="StockManagerModel.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
@@ -2708,6 +2770,7 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2838,6 +2901,8 @@
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="CurrentFinYear" ColumnName="CurrentFinYear" />
+                <ScalarProperty Name="PanNo" ColumnName="PanNo" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2868,6 +2933,16 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="TenantId" ColumnName="TenantId" />
                 <ScalarProperty Name="password_reset_token" ColumnName="password_reset_token" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="StockManagerModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

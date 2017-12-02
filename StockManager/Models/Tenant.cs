@@ -39,6 +39,8 @@ namespace StockManager.Models
         public string State { get; set; }
         public string Country { get; set; }
         public Nullable<int> CurrentFinYear { get; set; }
+        public string PanNo { get; set; }
+        public string GSTNo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customer> Customers { get; set; }

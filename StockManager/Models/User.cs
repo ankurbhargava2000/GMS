@@ -33,6 +33,7 @@ namespace StockManager.Models
         public string Phone { get; set; }
         public int TenantId { get; set; }
         public string password_reset_token { get; set; }
+        public int RoleId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
@@ -47,5 +48,6 @@ namespace StockManager.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanSend> TailorChalanSends { get; set; }
         public virtual Tenant Tenant { get; set; }
+        public virtual UserRole UserRole { get; set; }
     }
 }
