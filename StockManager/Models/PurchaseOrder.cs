@@ -33,6 +33,10 @@ namespace StockManager.Models
         public Nullable<int> created_by { get; set; }
         public Nullable<int> financial_year { get; set; }
         public Nullable<int> tenant_id { get; set; }
+        public Nullable<decimal> GrossAmount { get; set; }
+        public Nullable<decimal> Discount { get; set; }
+        public Nullable<decimal> Tax { get; set; }
+        public Nullable<decimal> NetAmount { get; set; }
     
         public virtual FinancialYear FinancialYear { get; set; }
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }

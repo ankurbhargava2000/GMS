@@ -58,6 +58,14 @@
           <Property Name="discount" Type="float" />
           <Property Name="created_at" Type="datetime" />
         </EntityType>
+        <EntityType Name="MeasuringUnits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="PrinterChalan">
           <Key>
             <PropertyRef Name="Id" />
@@ -124,8 +132,10 @@
           <Property Name="ProductTypeId" Type="int" />
           <Property Name="ProductName" Type="varchar" MaxLength="100" />
           <Property Name="Description" Type="varchar" MaxLength="200" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="tenant_id" Type="int" />
+          <Property Name="Unit" Type="int" />
+          <Property Name="SellingPrice" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -166,6 +176,10 @@
           <Property Name="created_by" Type="int" />
           <Property Name="financial_year" Type="int" />
           <Property Name="tenant_id" Type="int" />
+          <Property Name="GrossAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Tax" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="NetAmount" Type="numeric" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="TailorChalan">
           <Key>
@@ -249,7 +263,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="VendorId" Type="int" Nullable="false" />
+          <Property Name="VendorId" Type="int" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Created" Type="datetime" />
@@ -464,6 +478,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Product__Unit__04E4BC85">
+          <End Role="MeasuringUnits" Type="Self.MeasuringUnits" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasuringUnits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PurchaseD__Produ__5165187F">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PurchaseDetails" Type="Self.PurchaseDetails" Multiplicity="*" />
@@ -647,7 +673,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Transacti__Vendo__778AC167">
-          <End Role="Vendor" Type="Self.Vendor" Multiplicity="1">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
@@ -967,6 +993,7 @@
           <EntitySet Name="FinancialYear" EntityType="Self.FinancialYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceMaster" EntityType="Self.InvoiceMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeasuringUnits" EntityType="Self.MeasuringUnits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrinterChalan" EntityType="Self.PrinterChalan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrinterChalanDetails" EntityType="Self.PrinterChalanDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PrintJobWorkReceived" EntityType="Self.PrintJobWorkReceived" Schema="dbo" store:Type="Tables" />
@@ -1035,6 +1062,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__Product__Product__4F7CD00D" Association="Self.FK__Product__Product__4F7CD00D">
             <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Unit__04E4BC85" Association="Self.FK__Product__Unit__04E4BC85">
+            <End Role="MeasuringUnits" EntitySet="MeasuringUnits" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK__PurchaseD__Produ__5165187F" Association="Self.FK__PurchaseD__Produ__5165187F">
@@ -1264,6 +1295,15 @@
           <NavigationProperty Name="Vendor" Relationship="Self.FK__InvoiceMa__custo__412EB0B6" FromRole="InvoiceMaster" ToRole="Vendor" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK__InvoiceMa__tenan__4316F928" FromRole="InvoiceMaster" ToRole="Tenant" />
         </EntityType>
+        <EntityType Name="MeasuringUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Unit__04E4BC85" FromRole="MeasuringUnits" ToRole="Product" />
+        </EntityType>
         <EntityType Name="PrinterChalan">
           <Key>
             <PropertyRef Name="Id" />
@@ -1344,9 +1384,12 @@
           <Property Name="ProductTypeId" Type="Int32" />
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="tenant_id" Type="Int32" />
+          <Property Name="Unit" Type="Int32" />
+          <Property Name="SellingPrice" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__produ__619B8048" FromRole="Product" ToRole="InvoiceDetails" />
+          <NavigationProperty Name="MeasuringUnit" Relationship="Self.FK__Product__Unit__04E4BC85" FromRole="Product" ToRole="MeasuringUnits" />
           <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Produ__48CFD27E" FromRole="Product" ToRole="PrinterChalanDetails" />
           <NavigationProperty Name="PrintJobWorkReceivedDetails" Relationship="Self.FK__PrintJobW__Produ__4E88ABD4" FromRole="Product" ToRole="PrintJobWorkReceivedDetails" />
           <NavigationProperty Name="ProductType" Relationship="Self.FK__Product__Product__4F7CD00D" FromRole="Product" ToRole="ProductType" />
@@ -1399,6 +1442,10 @@
           <Property Name="created_by" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
           <Property Name="tenant_id" Type="Int32" />
+          <Property Name="GrossAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Tax" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NetAmount" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_PurchaseOrders_FinancialYear" FromRole="PurchaseOrders" ToRole="FinancialYear" />
           <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__Purch__52593CB8" FromRole="PurchaseOrders" ToRole="PurchaseDetails" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__PurchaseO__Vendo__534D60F1" FromRole="PurchaseOrders" ToRole="Vendor" />
@@ -1520,7 +1567,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <Property Name="VendorId" Type="Int32" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Created" Type="DateTime" Precision="3" />
@@ -1777,6 +1824,18 @@
             </Principal>
             <Dependent Role="InvoiceMaster">
               <PropertyRef Name="tenant_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Unit__04E4BC85">
+          <End Role="MeasuringUnits" Type="Self.MeasuringUnit" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasuringUnits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Unit" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2225,7 +2284,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Transacti__Vendo__778AC167">
-          <End Role="Vendor" Type="Self.Vendor" Multiplicity="1">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
@@ -2255,6 +2314,7 @@
           <EntitySet Name="FinancialYears" EntityType="Self.FinancialYear" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetail" />
           <EntitySet Name="InvoiceMasters" EntityType="Self.InvoiceMaster" />
+          <EntitySet Name="MeasuringUnits" EntityType="Self.MeasuringUnit" />
           <EntitySet Name="PrinterChalans" EntityType="Self.PrinterChalan" />
           <EntitySet Name="PrinterChalanDetails" EntityType="Self.PrinterChalanDetail" />
           <EntitySet Name="PrintJobWorkReceiveds" EntityType="Self.PrintJobWorkReceived" />
@@ -2328,6 +2388,10 @@
           <AssociationSet Name="FK__InvoiceMa__tenan__4316F928" Association="Self.FK__InvoiceMa__tenan__4316F928">
             <End Role="Tenant" EntitySet="Tenants" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Unit__04E4BC85" Association="Self.FK__Product__Unit__04E4BC85">
+            <End Role="MeasuringUnits" EntitySet="MeasuringUnits" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK__PrinterCh__Chala__47DBAE45" Association="Self.FK__PrinterCh__Chala__47DBAE45">
             <End Role="PrinterChalan" EntitySet="PrinterChalans" />
@@ -2563,6 +2627,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MeasuringUnits">
+            <EntityTypeMapping TypeName="StockManagerModel.MeasuringUnit">
+              <MappingFragment StoreEntitySet="MeasuringUnits">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PrinterChalans">
             <EntityTypeMapping TypeName="StockManagerModel.PrinterChalan">
               <MappingFragment StoreEntitySet="PrinterChalan">
@@ -2634,6 +2707,8 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2677,6 +2752,10 @@
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
                 <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="GrossAmount" ColumnName="GrossAmount" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -201,6 +201,9 @@
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginVM.cs" />
+    <Compile Include="Models\MeasuringUnit.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OpeningStockVM.cs" />
     <Compile Include="Models\PrinterChalan.cs">
       <DependentUpon>StockManager.tt</DependentUpon>

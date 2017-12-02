@@ -15,7 +15,7 @@ namespace StockManager.Models
     public partial class Transaction
     {
         public int Id { get; set; }
-        public int VendorId { get; set; }
+        public Nullable<int> VendorId { get; set; }
         public int ProductId { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<System.DateTime> Created { get; set; }

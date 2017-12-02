@@ -5131,7 +5131,7 @@ Form Layouts
 /* Checkboxes */
 .checkbox,
 .form-horizontal .checkbox {
-  padding: 0; }
+  padding:7px; margin-left:10px;; }
   .checkbox > label,
   .form-horizontal .checkbox > label {
     padding-left: 0; }

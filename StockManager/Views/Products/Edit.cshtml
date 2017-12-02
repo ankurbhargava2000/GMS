@@ -68,7 +68,7 @@
                     @Html.LabelFor(model => model.IsActive, "Is Active", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <div class="checkbox">
-                            @Html.EditorFor(model => model.IsActive)
+                            @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "align-middle" } })
                             @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
                         </div>
                     </div>
