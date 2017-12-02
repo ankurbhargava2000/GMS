@@ -14,6 +14,7 @@ namespace StockManager.Models
     
     public partial class PrinterChalan
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PrinterChalan()
         {
             this.PrinterChalanDetails = new HashSet<PrinterChalanDetail>();
@@ -34,6 +35,7 @@ namespace StockManager.Models
         public Nullable<int> tenant_id { get; set; }
     
         public virtual FinancialYear FinancialYear { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrinterChalanDetail> PrinterChalanDetails { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual Tenant Tenant { get; set; }

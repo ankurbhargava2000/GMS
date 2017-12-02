@@ -17,7 +17,7 @@ namespace StockManager.Models
         public int Id { get; set; }
         public Nullable<int> VendorId { get; set; }
         public int ProductId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
+        public int Quantity { get; set; }
         public Nullable<System.DateTime> Created { get; set; }
         public Nullable<System.DateTime> Updated { get; set; }
         public string Type { get; set; }
