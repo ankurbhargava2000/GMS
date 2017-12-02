@@ -14,6 +14,12 @@ namespace StockManager
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+name: "NoAccess",
+url: "NoAccess",
+defaults: new { controller = "Users", action = "NoAccess" }
+);
+
+            routes.MapRoute(
             name: "Login",
             url: "login",
             defaults: new { controller = "Users", action = "Login" }

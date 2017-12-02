@@ -21,14 +21,14 @@ namespace StockManager.Controllers
     {
        private StockManagerEntities db = new StockManagerEntities();
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         public ActionResult Index(int? page)
         {
             var users = db.Users.Include(u => u.Tenant).ToList();
             return View(users);
         }
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -43,17 +43,17 @@ namespace StockManager.Controllers
             return View(user);
         }
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         public ActionResult Create()
         {
-            ViewBag.TenantId = new SelectList(db.Tenants, "Id", "Name");
+            ViewBag.RoleId = new SelectList(db.UserRoles, "Id", "RoleName");
             return View();
         }
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,UserName,Password,Email,Mobile,Phone,TenantId")] User user)
+        public ActionResult Create([Bind(Include = "UserId,UserName,Password,Email,Mobile,Phone,TenantId,RoleId")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -62,12 +62,11 @@ namespace StockManager.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.TenantId = new SelectList(db.Tenants, "Id", "Name", user.TenantId);
+            ViewBag.RoleId = new SelectList(db.UserRoles, "Id", "RoleName");
             return View(user);
         }
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,27 +78,30 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TenantId = new SelectList(db.Tenants, "Id", "Name", user.TenantId);
+            ViewBag.RoleId = new SelectList(db.UserRoles, "Id", "RoleName");
             return View(user);
         }
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,UserName,Password,Email,Mobile,Phone,TenantId")] User user)
+        public ActionResult Edit([Bind(Include = "UserId,UserName,Password,Email,Mobile,Phone,TenantId,RoleId")] User user)
         {
             if (ModelState.IsValid)
             {
-
                 db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                if (db.SaveChanges() > 0) 
+                {
+                    var role = db.UserRoles.Find(user.RoleId);
+                    Session["RoleName"] = role.RoleName;
+                }
                 return RedirectToAction("Index");
             }
-            ViewBag.TenantId = new SelectList(db.Tenants, "Id", "Name", user.TenantId);
+            ViewBag.RoleId = new SelectList(db.UserRoles, "Id", "RoleName");
             return View(user);
         }
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -114,7 +116,7 @@ namespace StockManager.Controllers
             return View(user);
         }
 
-        [CheckAuth]
+        [CheckAuth(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -152,6 +154,7 @@ namespace StockManager.Controllers
                         Session["UserID"] = user.UserId;
                         Session["TenantID"] = user.TenantId;
                         Session["FinancialYearID"] = user.Tenant.CurrentFinYear;
+                        Session["RoleName"] = user.UserRole.RoleName;
 
                         return RedirectToLocal(login.return_url);
 
@@ -215,6 +218,7 @@ namespace StockManager.Controllers
                 throw;
             }
         }
+
         private ActionResult RedirectToLocal(string returnURL = "")
         {
             try
@@ -232,10 +236,12 @@ namespace StockManager.Controllers
                 throw;
             }
         }
+
         public ActionResult ForgotPassword()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(string email)
@@ -326,17 +332,19 @@ namespace StockManager.Controllers
             }
         }
 
+        [CheckAuth(Roles = "Administrator")]
         public JsonResult IsUserExists(string UserName)
         {
             return Json(!db.Users.Any(x => x.UserName == UserName), JsonRequestBehavior.AllowGet);
         }
 
+        [CheckAuth(Roles = "Administrator")]
         public JsonResult IsEmailExists(string Email)
         {
             return Json(!db.Users.Any(x => x.Email == Email), JsonRequestBehavior.AllowGet);
         }
 
-        public static string ResolveServerUrl(string serverUrl, bool forceHttps)
+        private static string ResolveServerUrl(string serverUrl, bool forceHttps)
         {
             if (serverUrl.IndexOf("://") > -1)
                 return serverUrl;
@@ -346,6 +354,11 @@ namespace StockManager.Controllers
             newUrl = (forceHttps ? "https" : originalUri.Scheme) +
                 "://" + originalUri.Authority + newUrl;
             return newUrl;
+        }
+
+        public ActionResult NoAccess()
+        {
+            return View();
         }
 
     }

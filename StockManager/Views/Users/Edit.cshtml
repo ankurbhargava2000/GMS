@@ -9,7 +9,7 @@
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
             <i class="icon-speech font-red-sunglo"></i>
-            <span class="caption-subject bold uppercase">Invoices</span>
+            <span class="caption-subject bold uppercase">Edit User</span>
         </div>
         <div class="actions">
             <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
@@ -54,6 +54,14 @@
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RoleId, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.RoleId, ViewBag.RoleId as List<SelectListItem>, null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
