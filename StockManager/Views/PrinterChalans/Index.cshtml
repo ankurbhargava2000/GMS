@@ -1,52 +1,65 @@
-﻿@model IEnumerable<StockManager.Models.PrinterChalan>
+﻿@* IEnumerable<StockManager.Models.PrinterChalan>*@
+@model PagedList.IPagedList<StockManager.Models.PrinterChalan>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Printer Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Printer Chalan</h2>
-    <table class="table-responsive">
-        <tr>
-            <td class="col-md-12 col-xs-12">
-                @Html.ActionLink("Create new chalan", "Create", null, new { @class = "btn btn-success" })
-            </td>
-        </tr>
-    </table>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Printer Challan</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Create")" class="btn btn-circle btn-default">
+                <i class="fa fa-plus"></i> New
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
 
-<table class="jTable table-bordered table table-hover">
-    <tr>
-        <th>
-            Chalan Number
-        </th>
-        <th>
-            Vendor Name
-        </th>
-        <th>
-            Chalan Date
-        </th>
-        
+        <table class="jTable table table-striped table-advance table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Chalan Number
+                    </th>
+                    <th>
+                        Vendor Name
+                    </th>
+                    <th>
+                        Chalan Date
+                    </th>
 
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.ActionLink(Convert.ToString(item.chalan_number), "Details", new { id = item.Id })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vendor.VendorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChalanDate)
-            </td>
-            
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
-                |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this printer chalan?');", @class = "btn btn-danger btn-xs" })
-            </td>
-        </tr>
-    }
+                    <th></th>
+                </tr>
+                </thead>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(Convert.ToString(item.chalan_number), "Details", new { id = item.Id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChalanDate)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                            |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this printer chalan?');", @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+                }
 </table>
+
+    </div>
+</div>

@@ -16,16 +16,19 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
 
         // GET: PrinterChalans
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
             var tenant_id = Convert.ToInt32(Session["TenantID"]);
             var printerChalans = db.PrinterChalans
                 .Include(p => p.Vendor)
                 .Include(p => p.PrinterChalanDetails)
-                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
-                .ToList();
-            return View(printerChalans);
+                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id).OrderBy(x => x.ChalanDate);
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(printerChalans.ToPagedList(pageNumber, pageSize));
+            //return View(printerChalans);
         }
 
         // GET: PrinterChalans/Details/5
