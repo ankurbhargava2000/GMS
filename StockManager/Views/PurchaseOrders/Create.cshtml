@@ -18,17 +18,13 @@
         </div>
     </div>
     <div class="portlet-body">
-
         @using (Html.BeginForm())
         {
             <div class="container-fluid">
-
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
                 @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
                 @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
-
-
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -135,7 +131,7 @@
                                 </td>
                                 <td class="itemEditRow">
                                     <label>&nbsp;</label>
-                                    <button class="btn btn-block btn-success" id="addProductItem">Add</button>
+                                    <button class="btn btn-block btn-success" type="button" id="addProductItem">Add</button>
                                 </td>
                             </tr>
 
@@ -151,6 +147,7 @@
                                     <td>
                                         <label class="productName">Product Name</label>
                                         <input type="hidden" class="productId" value="" />
+                                        <input type="hidden" class="subTotal" value="" />
                                     </td>
                                     <td>
                                         <label class="productQuantity">Quantity</label>
@@ -191,7 +188,7 @@
                                     <td>
                                         Total
                                     </td>
-                                    <td id="total_discount">
+                                    <td id="total_Amount">
                                         0
                                     </td>
                                 </tr>
@@ -284,12 +281,6 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#btnShowModal").click(function () {
-                $("#itemModel").modal('show');
-                $('#quantity').siblings('span.quantityVal').text("");
-                $('#fold').siblings('span.foldVal').text("");
-                $('#rate').siblings('span.rateVal').text("");
-            });
 
             $('#InvoiceDate').daterangepicker({
                 locale: {
@@ -301,14 +292,6 @@
                 "maxDate": "@ViewBag.EndYear"
             });
 
-            $("#btnHideModal").click(function () {
-                $("#itemModel").modal('hide');
-            });
-
-            $("#btnHideModal").click(function () {
-
-            });
-
             $('#addProductItem').click(function () {
                 //validation and add order items
                 var isAllValid = validateModel();
@@ -317,7 +300,7 @@
                     var $newRow = $('#productItemRow').clone().removeAttr('id');
 
                     $('.productId', $newRow).val($('#product').val());
-                    $('.productName', $newRow).text($('#product').text());
+                    $('.productName', $newRow).text($('#product option:selected').text());
                     $('.productQuantity', $newRow).text($('#quantity').val());
                     $('.productFold', $newRow).text($('#fold').val());
                     $('.productRate', $newRow).text($('#rate').val());
@@ -327,7 +310,10 @@
                     $('#quantity').val('');
                     $('#fold').val('');
                     $('#rate').val('');
-                    $("#itemModel").modal('hide');
+                    $('#quantity').siblings('span.quantityVal').text("");
+                    $('#fold').siblings('span.foldVal').text("");
+                    $('#rate').siblings('span.rateVal').text("");
+                    CalculateTotal();
                 }
             });
 
@@ -480,6 +466,44 @@
                     $('#InvoiceDate').siblings('span.InvoiceDateVal').text("");
                 }
             });
+
+            $('#discount').change(function () {
+                if (isNaN($('#discount').val())) {
+                    alert("Please enter numeric in Discount.")
+                    $('#discount').val("0");
+                    return;
+                }
+                if (parseInt($('#discount').val()) > parseInt($("#sub_total").text())) {
+                    alert("Discount can not be greater then total amount.")
+                    $('#discount').val("0");
+                    return;
+                }
+                if (parseInt($('#discount').val()) < 0) {
+                    alert("Discount can not be less then 0.")
+                    $('#discount').val("0");
+                    return;
+                }
+                CalculateTotal();
+            });
+
+            function CalculateTotal() {
+                var subtotal = 0;
+                var discount = $('#discount').val() == "" ? 0 : $('#discount').val();
+                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                        var qty = $('.productQuantity', this).text()
+                        var rate = $('.productRate', this).text()
+                        var total = (qty * rate);
+                        subtotal += total;
+                    }
+                });
+
+                $("#sub_total").html(subtotal);
+                $("#total_Amount").html(subtotal - discount);
+
+                $("input#gross").val(subtotal);
+                $("input#total").val(subtotal - discount);
+            };
             //$('#DocumentNo').change(function () {
             //    if ($('#DocumentNo').val() != "") {
             //        $('#DocumentNo').siblings('span.DocumentNoVal').text("");

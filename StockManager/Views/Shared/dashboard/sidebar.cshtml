@@ -41,13 +41,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
-                            <span class="title">Example 1</span>
+                        <a href="@Url.Action("Index", "PrinterChalans")" class="nav-link ">
+                            <span class="title">Printer Chalans</span>
                         </a>
                     </li>   
                     <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
-                            <span class="title">Example 2</span>
+                        <a href="@Url.Action("Index", "PrintJobWorkReceived")" class="nav-link ">
+                            <span class="title">Print Job Work Received</span>
                         </a>
                     </li>                    
                 </ul>
@@ -57,7 +57,7 @@
                     <i class="fa fa-list fa-fw"></i>
                     <span class="title">Tailor Challan</span>
                 </a>
-                <ul class="sub-menu">
+                @*<ul class="sub-menu">
                     <li class="nav-item  ">
                         <a href="#" class="nav-link ">
                             <span class="title">Example 1</span>
@@ -68,7 +68,7 @@
                             <span class="title">Example 2</span>
                         </a>
                     </li>
-                </ul>
+                </ul>*@
             </li>
             <li class="nav-item start @Html.IsSelected(controller: "Invoices")">
                 <a href="@Url.Action("Index", "Invoices")" class="nav-link nav-toggle">
