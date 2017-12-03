@@ -90,7 +90,7 @@ namespace StockManager.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
-                if (db.SaveChanges() > 0) 
+                if (db.SaveChanges() > 0 && Convert.ToInt32(Session["UserID"]) == user.UserId)
                 {
                     var role = db.UserRoles.Find(user.RoleId);
                     Session["RoleName"] = role.RoleName;
