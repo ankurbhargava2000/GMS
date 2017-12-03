@@ -19,7 +19,7 @@ namespace StockManager.Controllers
 {
     public class UsersController : Controller
     {
-       private StockManagerEntities db = new StockManagerEntities();
+        private StockManagerEntities db = new StockManagerEntities();
 
         [CheckAuth(Roles = "Administrator")]
         public ActionResult Index(int? page)
@@ -135,7 +135,7 @@ namespace StockManager.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginVM login)
-        {            
+        {
             try
             {
                 if (ModelState.IsValid)
@@ -173,11 +173,11 @@ namespace StockManager.Controllers
             {
 
             }
-            
+
             return View(login);
 
         }
-        
+
         private void SignInRemember(string userName, bool isPersistent = false)
         {
             // Clear any lingering authencation data
@@ -193,7 +193,7 @@ namespace StockManager.Controllers
             if (Request.IsAuthenticated)
                 Logout();
         }
-        
+
         public ActionResult Logout()
         {
             try
@@ -359,6 +359,69 @@ namespace StockManager.Controllers
         public ActionResult NoAccess()
         {
             return View();
+        }
+
+        [CheckAuth]
+        public ActionResult profile()
+        {
+            var user_id = Session["UserID"] as int?;
+
+            var user = db.Users.Find(user_id);
+            
+            return View(user);
+
+        }
+
+        [HttpPost]
+        [CheckAuth]
+        [ValidateAntiForgeryToken]
+        public ActionResult profile(string btnUpdateProfile, string btnUpdateEmail, string btnUpdatePassword, User user)
+        {
+
+            var user_id = Session["UserID"] as int?;
+
+            var db_user = db.Users.Find(user_id);
+            
+            if ( db_user.Email != user.Email )
+            {
+                if (db.Users.Where(x => x.Email == user.Email).FirstOrDefault() == null)
+                {
+                    db_user.Email = user.Email;
+                }
+                else
+                {
+                    ModelState.AddModelError("User.Email", "This email address is already associated with a different account.");        
+                }
+            }
+
+            if (db_user.UserName!= user.UserName)
+            {
+                if (db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault() == null)
+                {
+                    db_user.UserName = user.UserName;
+                }
+                else
+                {
+                    ModelState.AddModelError("User.UserName", "This username is already associated with a different account.");
+                }
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                db_user.Mobile = user.Mobile;
+                db_user.Phone = user.Phone;
+                db.Entry(db_user).State = EntityState.Modified;
+                db.SaveChanges();
+
+                TempData["Success"] = "Profile updated.";
+
+                return RedirectToAction("profile");
+
+            }
+
+            return View(user);
+            
         }
 
     }

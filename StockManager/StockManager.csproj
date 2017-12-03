@@ -720,6 +720,7 @@
     <Content Include="Views\TailorChalanSend\Details.cshtml" />
     <Content Include="Views\TailorChalanSend\Edit.cshtml" />
     <Content Include="Views\TailorChalanSend\Index.cshtml" />
+    <Content Include="Views\Users\profile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
