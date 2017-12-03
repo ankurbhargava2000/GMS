@@ -1,0 +1,103 @@
+﻿@model StockManager.Models.Company
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Company Details</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+
+        <dl class="dl-horizontal">
+            <dt>
+                Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                Address
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                City
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+            <dt>
+                State
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.State)
+            </dd>
+            <dt>
+                Country
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+            <dt>
+                Phone Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+
+            <dt>
+                Mobile Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Mobile)
+            </dd>
+
+            <dt>
+                Pan Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PanNo)
+            </dd>
+
+            <dt>
+                GST Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GSTNo)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CurrentFinYear)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CurrentFinYear)
+            </dd>
+
+            
+        </dl>
+    </div>
+</div>

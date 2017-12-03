@@ -170,6 +170,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\PrintJobWorkReceivedController.cs" />
     <Compile Include="Controllers\PrinterChalansController.cs" />
@@ -187,6 +188,9 @@
     <Compile Include="Helpers\GMailer.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Models\CheckAuth.cs" />
+    <Compile Include="Models\Company.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Customer.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -266,6 +270,9 @@
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserCompany.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserExtend.cs" />
@@ -695,6 +702,11 @@
     <Content Include="Views\Products\UpdateOpeningStock.cshtml" />
     <Content Include="Views\Invoices\Print.cshtml" />
     <Content Include="Views\Invoices\SinglePrint.cshtml" />
+    <Content Include="Views\Company\Create.cshtml" />
+    <Content Include="Views\Company\Delete.cshtml" />
+    <Content Include="Views\Company\Details.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
     <None Include="Views\Shared\dashboard.cshtml" />
     <None Include="Views\Shared\dashboard\sidebar.cshtml" />
     <None Include="Views\Shared\dashboard\topnav.cshtml" />
@@ -704,6 +716,10 @@
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Users\NoAccess.cshtml" />
+    <Content Include="Views\TailorChalanSend\Create.cshtml" />
+    <Content Include="Views\TailorChalanSend\Details.cshtml" />
+    <Content Include="Views\TailorChalanSend\Edit.cshtml" />
+    <Content Include="Views\TailorChalanSend\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

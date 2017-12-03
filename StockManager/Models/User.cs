@@ -20,9 +20,10 @@ namespace StockManager.Models
             this.InvoiceMasters = new HashSet<InvoiceMaster>();
             this.PrinterChalans = new HashSet<PrinterChalan>();
             this.PrintJobWorkReceiveds = new HashSet<PrintJobWorkReceived>();
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.TailorChalans = new HashSet<TailorChalan>();
             this.TailorChalanSends = new HashSet<TailorChalanSend>();
-            this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.UserCompanies = new HashSet<UserCompany>();
         }
     
         public int UserId { get; set; }
@@ -42,12 +43,14 @@ namespace StockManager.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalan> TailorChalans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanSend> TailorChalanSends { get; set; }
         public virtual Tenant Tenant { get; set; }
         public virtual UserRole UserRole { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual ICollection<UserCompany> UserCompanies { get; set; }
     }
 }

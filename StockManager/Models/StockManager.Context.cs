@@ -27,6 +27,7 @@ namespace StockManager.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<FinancialYear> FinancialYears { get; set; }
         public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
@@ -39,6 +40,7 @@ namespace StockManager.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
+        public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<TailorChalan> TailorChalans { get; set; }
         public virtual DbSet<TailorChalanDetail> TailorChalanDetails { get; set; }
         public virtual DbSet<TailorChalanSend> TailorChalanSends { get; set; }
@@ -47,10 +49,10 @@ namespace StockManager.Models
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserCompany> UserCompanies { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
-        public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
     
         public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> userId)
         {

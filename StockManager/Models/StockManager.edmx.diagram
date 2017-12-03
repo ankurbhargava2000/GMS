@@ -4,34 +4,41 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="76aa986a16c54b84b62f0176d2b6ba41" Name="Diagram1" ZoomLevel="91">
-        <EntityTypeShape EntityType="StockManagerModel.Customer" Width="1.5" PointX="5.25" PointY="58" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.FinancialYear" Width="1.5" PointX="0.75" PointY="27" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.InvoiceDetail" Width="1.5" PointX="13.5" PointY="50.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.InvoiceMaster" Width="1.5" PointX="5.25" PointY="42.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.MeasuringUnit" Width="1.5" PointX="6" PointY="55.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.PrinterChalan" Width="1.5" PointX="8.25" PointY="42.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.PrinterChalanDetail" Width="1.5" PointX="13.5" PointY="46.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceived" Width="1.5" PointX="5.25" PointY="37.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceivedDetail" Width="1.5" PointX="10.5" PointY="51.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.Product" Width="1.5" PointX="8.25" PointY="57.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.ProductType" Width="1.5" PointX="6" PointY="67.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.PurchaseDetail" Width="1.5" PointX="13.5" PointY="54.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.TailorChalan" Width="1.5" PointX="8.25" PointY="36.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.TailorChalanDetail" Width="1.5" PointX="10.5" PointY="47.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSend" Width="1.5" PointX="11.25" PointY="42.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSendDetail" Width="1.5" PointX="16.5" PointY="51" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.TailorMaterialDetail" Width="1.5" PointX="15.75" PointY="54.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.Tenant" Width="1.5" PointX="3" PointY="56.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.Transaction" Width="1.5" PointX="13.5" PointY="41.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.User" Width="1.5" PointX="5.25" PointY="62.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.UserRole" Width="1.5" PointX="3" PointY="63.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.Vendor" Width="1.5" PointX="11.25" PointY="57.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockManagerModel.VendorType" Width="1.5" PointX="9" PointY="63.625" IsExpanded="true" />
+      <Diagram DiagramId="d45a1e90162341e9bb0af1cb01e6b9bc" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="StockManagerModel.Company" Width="1.5" PointX="5.25" PointY="47.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Customer" Width="1.5" PointX="5.25" PointY="65.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.FinancialYear" Width="1.5" PointX="0.75" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.InvoiceDetail" Width="1.5" PointX="13.5" PointY="57.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.InvoiceMaster" Width="1.5" PointX="8.25" PointY="47.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.MeasuringUnit" Width="1.5" PointX="6" PointY="75.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrinterChalan" Width="1.5" PointX="5.25" PointY="42.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrinterChalanDetail" Width="1.5" PointX="10.5" PointY="57.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceived" Width="1.5" PointX="5.25" PointY="52.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PrintJobWorkReceivedDetail" Width="1.5" PointX="10.5" PointY="61.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Product" Width="1.5" PointX="8.25" PointY="64.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.ProductType" Width="1.5" PointX="6" PointY="78.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PurchaseDetail" Width="1.5" PointX="10.5" PointY="53.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.PurchaseOrder" Width="1.5" PointX="8.25" PointY="41" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalan" Width="1.5" PointX="8.25" PointY="52.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanDetail" Width="1.5" PointX="13.5" PointY="61.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSend" Width="1.5" PointX="11.25" PointY="47.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorChalanSendDetail" Width="1.5" PointX="16.5" PointY="57.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.TailorMaterialDetail" Width="1.5" PointX="15.75" PointY="64.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Tenant" Width="1.5" PointX="3" PointY="64.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Transaction" Width="1.5" PointX="13.5" PointY="52.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.User" Width="1.5" PointX="5.25" PointY="59.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.UserCompany" Width="1.5" PointX="7.5" PointY="58" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.UserRole" Width="1.5" PointX="3" PointY="61.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.Vendor" Width="1.5" PointX="5.25" PointY="69.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockManagerModel.VendorType" Width="1.5" PointX="3" PointY="71" IsExpanded="true" />
+        <AssociationConnector Association="StockManagerModel.FK_Company_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_Company_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_UserCompany_Company" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK_Customer_Tenant" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__InvoiceMa__finan__6477ECF3" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK_PrinterChalan_FinancialYear" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK_PrintJobWorkReceived_FinancialYear" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_FinancialYear" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK_TailorChalan_FinancialYear" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK_TailorChalanSend_FinancialYear" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK_Tenant_FinancialYear" ManuallyRouted="false" />
@@ -59,6 +66,10 @@
         <AssociationConnector Association="StockManagerModel.FK__TailorMat__Produ__73BA3083" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Transacti__Produ__76969D2E" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK_Product_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PurchaseD__Purch__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK__PurchaseO__Vendo__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_Tenant" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_User" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__70DDC3D8" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__TailorCha__Chala__71D1E811" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__TailorCha__Vendo__6FE99F9F" ManuallyRouted="false" />
@@ -75,14 +86,9 @@
         <AssociationConnector Association="StockManagerModel.FK_Vendor_Tenant" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Transacti__Vendo__778AC167" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__User__RoleId__2645B050" ManuallyRouted="false" />
+        <AssociationConnector Association="StockManagerModel.FK_UserCompany_User" ManuallyRouted="false" />
         <AssociationConnector Association="StockManagerModel.FK__Vendor__VendorTy__797309D9" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="StockManagerModel.PurchaseOrder" Width="1.5" PointX="16.5" PointY="44.125" />
-        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_FinancialYear" />
-        <AssociationConnector Association="StockManagerModel.FK__PurchaseD__Purch__31B762FC" />
-        <AssociationConnector Association="StockManagerModel.FK__PurchaseO__Vendo__32AB8735" />
-        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_Tenant" />
-        <AssociationConnector Association="StockManagerModel.FK_PurchaseOrders_User" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

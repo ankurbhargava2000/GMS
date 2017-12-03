@@ -1,0 +1,76 @@
+﻿@model IEnumerable<StockManager.Models.Company>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Companies</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Create")" class="btn btn-circle btn-default">
+                <i class="fa fa-plus"></i> New
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+
+        <table class="jTable table-bordered table-hover table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Phone Number
+                    </th>
+                    <th>
+                        Mobile
+                    </th>
+                    
+                    <th>
+                        Pan Number
+                    </th>
+                    <th>
+                        GST Number
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(Convert.ToString(item.Name), "Details", new { id = item.Id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mobile)
+                        </td>
+                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PanNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GSTNo)
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this Customer?');", @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
