@@ -51,7 +51,7 @@ namespace StockManager.Controllers
         // GET: InvoiceMasters/Create
         public ActionResult Create()
         {
-            ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
             ViewBag.product_id = db.Products.ToList();
 
             var last = db.InvoiceMasters.OrderByDescending(o => o.invoice_no).FirstOrDefault();
@@ -89,7 +89,7 @@ namespace StockManager.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
             ViewBag.product_id = db.Products.ToList();
 
             return View();
@@ -112,7 +112,7 @@ namespace StockManager.Controllers
             }
 
             ViewBag.invoice_no = invoiceMaster.invoice_no;
-            ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
             ViewBag.product_id = db.Products.ToList();
 
             var year_id = Session["FinancialYearID"];
@@ -185,7 +185,7 @@ namespace StockManager.Controllers
             }
 
             ViewBag.invoice_no = invoiceMaster.invoice_no;
-            ViewBag.customer_id = new SelectList(db.Vendors, "Id", "VendorName");
+            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
             ViewBag.product_id = db.Products.ToList();
 
             return View(invoiceMaster);

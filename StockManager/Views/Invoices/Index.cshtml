@@ -30,7 +30,7 @@
                         Invoice #
                     </th>
                     <th>
-                        Vendor
+                        Customer
                     </th>
                     <th>
                         Gross
@@ -54,7 +54,7 @@
                             @Html.ActionLink(item.invoice_no.ToString(), "Details", new { id = item.invoice_no })
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+                            @Html.DisplayFor(modelItem => item.Customer.CustomerName)
                         </td>
                         <td>
                             Rs @Html.DisplayFor(modelItem => item.gross_amount)
