@@ -19,9 +19,9 @@ namespace StockManager.Controllers
         // GET: Products
         public ActionResult Index(int? page)
         {
-            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             var products = db.Products.Include(p => p.ProductType).Include(p => p.MeasuringUnit)
-                .Where(x => x.tenant_id == tenant_id)
+                .Where(x => x.CompanyId == CompanyId)
                 .ToList();
             return View(products);
         }
@@ -159,7 +159,7 @@ namespace StockManager.Controllers
             {
                 try
                 {
-                    var tenant_id = Convert.ToInt32(Session["TenantID"]);
+                    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
                     var year_id = Convert.ToInt32(Session["FinancialYearID"]);
 
                     var t = db.Transactions
@@ -181,7 +181,7 @@ namespace StockManager.Controllers
                                 ProductId = item.ProductId,
                                 Type = "opening stock",
                                 financial_year = year_id,
-                                TenantId = tenant_id,
+                                CompanyId = CompanyId,
                                 Created = DateTime.Now,
                                 Updated = DateTime.Now,
                                 Quantity = item.Quantity

@@ -19,11 +19,11 @@ namespace StockManager.Controllers
         public ActionResult Index(int? page)
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             var printerChalans = db.PrinterChalans
                 .Include(p => p.Vendor)
                 .Include(p => p.PrinterChalanDetails)
-                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id).OrderBy(x => x.ChalanDate);
+                .Where(x => x.financial_year == year_id && x.CompanyId == CompanyId).OrderBy(x => x.ChalanDate);
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
@@ -80,14 +80,14 @@ namespace StockManager.Controllers
                 try
                 {
                     var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-                    var tenant_id = Convert.ToInt32(Session["TenantID"]);
+                    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
                     var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     printerChalan.Created = dtDate;
                     printerChalan.Updated = dtDate;
                     printerChalan.created_by = creaded_by;
                     printerChalan.financial_year = year_id;
-                    printerChalan.tenant_id = tenant_id;
+                    printerChalan.CompanyId = CompanyId;
 
                     db.PrinterChalans.Add(printerChalan);
                     db.SaveChanges();

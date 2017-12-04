@@ -20,13 +20,13 @@ namespace StockManager.Controllers
         public ActionResult Index()
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             var invoiceMasters = db.InvoiceMasters
-                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Where(x => x.financial_year == year_id && x.CompanyId == CompanyId)
                 .Include(i => i.FinancialYear)
                 .Include(i => i.User)
-                .Include(i => i.Vendor)
-                .Include(i => i.Tenant)
+                .Include(i => i.Customer)
+                .Include(i => i.Company)
                 .ToList();
 
             return View(invoiceMasters);
@@ -240,13 +240,13 @@ namespace StockManager.Controllers
         public ActionResult Print()
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             var invoiceMasters = db.InvoiceMasters
-                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Where(x => x.financial_year == year_id && x.CompanyId == CompanyId)
                 .Include(i => i.FinancialYear)
                 .Include(i => i.User)
-                .Include(i => i.Vendor)
-                .Include(i => i.Tenant)
+                .Include(i => i.Customer)
+                .Include(i => i.Company)
                 .ToList();
 
             return View(invoiceMasters);

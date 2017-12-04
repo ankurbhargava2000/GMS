@@ -16,7 +16,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
         @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
-        @Html.HiddenFor(x => x.tenant_id, new { Value = Session["TenantID"] })
+        @Html.HiddenFor(x => x.CompanyId, new { Value = Session["CompanyId"] })
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
