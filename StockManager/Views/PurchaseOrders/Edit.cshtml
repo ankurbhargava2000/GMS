@@ -464,18 +464,24 @@
                 {
                     if(confirm('Are you sure you wish to delete this product.'))
                     {
+                        var data = { id: $('.Id', $(this).parents('tr')).val() }; 
                         $.ajax({
-                            type: 'Get',
-                            url: '/PurchaseOrders/DeleteProduct/' + $('.Id', $(this).parents('tr')).val(),
+                            type: 'Post',
+                            url: '/PurchaseOrders/DeleteProduct/',
+                            data: JSON.stringify(data),
                             contentType: 'application/json',
                             success: function (data) {
-                                if (data == "product deleted Successfully.") {
-                                    $(this).parents('tr').remove();
-                                    CalculateTotal();
+                                if (data != "0") {  
+                                    $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                                        if ($('.productId', this).val() == data) {
+                                            $('.productId', this).parents('tr').remove();
+                                        }
+                                    });                                    
                                 }
                                 else {
                                     alert('Error in deleting product.');
                                 }
+                                CalculateTotal();
                             },
                             error: function (error) {
                                 console.log(error);
@@ -518,6 +524,12 @@
                     $('#rate').siblings('span.rateVal').text("Please Enter number in Rate value.");
                     result = false;
                 }
+                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                    if ($('.productId', this).val() == $('#product').val()) {
+                        $('#product').siblings('span.productIdVal').text("Product is already added.");
+                        result = false;
+                    }
+                });
                 return result;
             }
 
@@ -535,6 +547,17 @@
                 if ($('#rate').val() != "" && !isNaN($('#rate').val())) {
                     $('#rate').siblings('span.rateVal').text("");
                 }
+            });
+            $("#product").change(function () {
+                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                    if ($('.productId', this).val() == $('#product').val()) {
+                        $('#product').siblings('span.productIdVal').text("Product is already added.");                        
+                    }
+                    else
+                    {
+                        $('#product').siblings('span.productIdVal').text("");
+                    }
+                });
             });
 
             function validateMainPage() {

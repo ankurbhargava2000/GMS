@@ -418,6 +418,12 @@
                     $('#rate').siblings('span.rateVal').text("Please Enter number in Rate value.");
                     result = false;
                 }
+                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                    if ($('.productId', this).val() == $('#product').val()) {
+                        $('#product').siblings('span.productIdVal').text("Product is already added.");
+                        result = false;
+                    }
+                });
                 return result;
             }
 
@@ -435,6 +441,18 @@
                 if ($('#rate').val() != "" && !isNaN($('#rate').val())) {
                     $('#rate').siblings('span.rateVal').text("");
                 }
+            });
+
+            $("#product").change(function () {
+                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                    if ($('.productId', this).val() == $('#product').val()) {
+                        $('#product').siblings('span.productIdVal').text("Product is already added.");                        
+                    }
+                    else
+                    {
+                        $('#product').siblings('span.productIdVal').text("");
+                    }
+                });
             });
 
             function validateMainPage() {

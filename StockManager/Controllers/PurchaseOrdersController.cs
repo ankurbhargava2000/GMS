@@ -152,9 +152,7 @@ namespace StockManager.Controllers
                 }
             }
             return Json("0");
-        }
-
-        // GET: PurchaseOrders/Delete/5
+        }       
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -188,7 +186,7 @@ namespace StockManager.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        
         public JsonResult DeleteProduct(int? id)
         {
             if (id == null)
@@ -202,13 +200,13 @@ namespace StockManager.Controllers
                     PurchaseDetail purchaseDetail = (PurchaseDetail)db.PurchaseDetails.Where(x => x.Id == id).FirstOrDefault();
                     db.PurchaseDetails.Remove(purchaseDetail);
                     db.SaveChanges();
-                    return Json("product deleted Successfully.");
+                    return Json(Convert.ToString(id));
                 }
             }
             catch
             {
             }
-            return Json("Error in deleting product.");
+            return Json("0");
         }
 
         protected override void Dispose(bool disposing)

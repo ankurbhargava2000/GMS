@@ -20,114 +20,139 @@
         </div>
     </div>
     <div class="portlet-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <h4>Invoice #</h4>
+                        <div>
+                            @Model.InvoiceNumber
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Vendor</h4>
+                        <div>
+                            @Model.Vendor.VendorName
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Date</h4>
+                        <div>
+                            @(Model.InvoiceDate.ToString("dd-MMM-yyyy"))
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Dispatch Doc#</h4>
+                        <div>
+                            @Model.dispatch_document_number
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Dispatch Through</h4>
+                        <div>
+                            @Model.dispatched_through
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Destination</h4>
+                        <div>
+                            @Model.destination
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Bale Nos</h4>
+                        <div>
+                            @Model.bale_numbers
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Description</h4>
+                        <div>
+                            @Model.Description
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>Products</h4>
+                    <table id="products_table" class="table">
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Qty</th>
+                            <th>Rate</th>
+                            <th>Fold</th>
+                        </tr>
+                        @{
+                            if (Model != null && Model.PurchaseDetails != null)
+                            {
+                                foreach (var item in Model.PurchaseDetails)
+                                {
+                        <tr>
+                            <td>
+                                <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                            </td>
 
-        <dl class="dl-horizontal">
-            <dt>
-                Vendor Name
-            </dt>
+                            <td style='width: 15%' class='qty'>
+                                @item.Quantity
+                            </td>
 
-            <dd>
-                @Html.DisplayFor(model => model.Vendor.VendorName)
-            </dd>
-            <dt>
-                Invoice Number
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.InvoiceNumber)
-            </dd>
-
-            <dt>
-                Invoice Date
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.InvoiceDate)
-            </dd>
-
-            <dt>
-                Dispatch Document Number
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.dispatch_document_number)
-            </dd>
-
-            <dt>
-                Dispatch Through
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.dispatched_through)
-            </dd>
-
-            <dt>
-                Destination
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.destination)
-            </dd>
-
-            <dt>
-                Bale Nos
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.bale_numbers)
-            </dd>
-
-            <dt>
-                Description
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-
-
-        </dl>
+                            <td style='width: 15%' class='rate'>
+                                @item.Rate
+                            </td>
+                            <td class='rate'>
+                                @item.Fold
+                            </td>
+                        </tr>
+                                }
+                            }
+                        }
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <h4>Total</h4>
+                    <table class="table">
+                        <tr>
+                            <td style="width: 70%">
+                                Subtotal
+                            </td>
+                            <td id="sub_total">
+                                Rs @Model.GrossAmount
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Discount
+                            </td>
+                            <td>
+                                Rs @Model.Discount
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Total
+                            </td>
+                            <td id="total_discount">
+                                Rs @Model.NetAmount
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <p>
-        Purchase Details
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                Product Name
-            </th>
-            <th>
-                Quantity
-            </th>
-            <th>
-                Rate
-            </th>
-            <th>
-                Fold
-            </th>
-        </tr>
-        @{
-            if (Model != null && Model.PurchaseDetails != null)
-            {
-                foreach (var item in Model.PurchaseDetails)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Product.ProductName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Quantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Rate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Fold)
-                        </td>
-                    </tr>
-                }
-            }
-        }
-    </table>
-
 </div>
