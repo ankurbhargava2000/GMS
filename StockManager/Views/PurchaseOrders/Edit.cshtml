@@ -371,7 +371,7 @@
                                 $('.productName', this).text($('#product').find("option:selected").text());
                                 $('.productQuantity', this).text($('#quantity').val());
                                 $('.productFold', this).text($('#fold').val());
-                                $('.productRate', this).text($('#rate').val());                               
+                                $('.productRate', this).text($('#rate').val());
                                 $('#addProductItem').text("Add Product");
                             }
                         });
@@ -381,6 +381,10 @@
                     $('#rate').val('');
                     $('#IdEdit').val('');
                     $('#countEdit').val('');
+                    $('#product').siblings('span.productIdVal').text("");
+                    $('#quantity').siblings('span.quantityVal').text("");
+                    $('#fold').siblings('span.foldVal').text("");
+                    $('#rate').siblings('span.rateVal').text("");
                     CalculateTotal();
                 }
             });
@@ -464,19 +468,19 @@
                 {
                     if(confirm('Are you sure you wish to delete this product.'))
                     {
-                        var data = { id: $('.Id', $(this).parents('tr')).val() }; 
+                        var data = { id: $('.Id', $(this).parents('tr')).val() };
                         $.ajax({
                             type: 'Post',
                             url: '/PurchaseOrders/DeleteProduct/',
                             data: JSON.stringify(data),
                             contentType: 'application/json',
                             success: function (data) {
-                                if (data != "0") {  
+                                if (data != "0") {
                                     $('#purchaseOrderItems tbody tr').each(function (index, ele) {
                                         if ($('.productId', this).val() == data) {
                                             $('.productId', this).parents('tr').remove();
                                         }
-                                    });                                    
+                                    });
                                 }
                                 else {
                                     alert('Error in deleting product.');
@@ -525,7 +529,7 @@
                     result = false;
                 }
                 $('#purchaseOrderItems tbody tr').each(function (index, ele) {
-                    if ($('.productId', this).val() == $('#product').val()) {
+                    if ($('#countEdit').val() == '' && $('.productId', this).val() == $('#product').val()) {
                         $('#product').siblings('span.productIdVal').text("Product is already added.");
                         result = false;
                     }
@@ -550,8 +554,8 @@
             });
             $("#product").change(function () {
                 $('#purchaseOrderItems tbody tr').each(function (index, ele) {
-                    if ($('.productId', this).val() == $('#product').val()) {
-                        $('#product').siblings('span.productIdVal').text("Product is already added.");                        
+                    if ($('#countEdit').val() == '' && $('.productId', this).val() == $('#product').val()) {
+                        $('#product').siblings('span.productIdVal').text("Product is already added.");
                     }
                     else
                     {
@@ -630,7 +634,7 @@
 
                 $("input#gross").val(subtotal);
                 $("input#total").val(subtotal - discount);
-            };            
+            };
         });
     </script>
 }
