@@ -22,6 +22,7 @@ namespace StockManager.Models
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.TailorChalans = new HashSet<TailorChalan>();
             this.TailorChalanSends = new HashSet<TailorChalanSend>();
+            this.UserCompanies = new HashSet<UserCompany>();
         }
     
         public int UserId { get; set; }
@@ -32,6 +33,7 @@ namespace StockManager.Models
         public string Phone { get; set; }
         public int TenantId { get; set; }
         public string password_reset_token { get; set; }
+        public int RoleId { get; set; }
     
         public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
         public virtual ICollection<PrinterChalan> PrinterChalans { get; set; }
@@ -40,5 +42,8 @@ namespace StockManager.Models
         public virtual ICollection<TailorChalan> TailorChalans { get; set; }
         public virtual ICollection<TailorChalanSend> TailorChalanSends { get; set; }
         public virtual Tenant Tenant { get; set; }
+        public virtual UserRole UserRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserCompany> UserCompanies { get; set; }
     }
 }

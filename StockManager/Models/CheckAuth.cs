@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace StockManager.Models
 {
     public class CheckAuth : AuthorizeAttribute
-    {
+    {   
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             if (HttpContext.Current.Session["UserID"] == null || !HttpContext.Current.Request.IsAuthenticated)
@@ -25,9 +25,15 @@ namespace StockManager.Models
             }
             else
             {
+                if ( !String.IsNullOrEmpty(Roles) )
+                {
+                    var roleName = HttpContext.Current.Session["RoleName"];
 
-                //Code HERE for page level authorization
-
+                    if (!Roles.Equals(roleName))
+                    {
+                        filterContext.Result = new RedirectResult("NoAccess");
+                    }
+                }
             }
         }
     }

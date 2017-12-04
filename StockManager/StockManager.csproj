@@ -170,6 +170,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\PrintJobWorkReceivedController.cs" />
     <Compile Include="Controllers\PrinterChalansController.cs" />
@@ -187,6 +188,9 @@
     <Compile Include="Helpers\GMailer.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Models\CheckAuth.cs" />
+    <Compile Include="Models\Company.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Customer.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -268,7 +272,13 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserCompany.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserExtend.cs" />
+    <Compile Include="Models\UserRole.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USP_ProductWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -484,6 +494,16 @@
     <Content Include="Content\lineicons\fonts\linecons.eot" />
     <Content Include="Content\lineicons\fonts\linecons.ttf" />
     <Content Include="Content\lineicons\fonts\linecons.woff" />
+    <Content Include="Models\StockManager.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StockManager.edmx</DependentUpon>
+      <LastGenOutput>StockManager.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\StockManager.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StockManager.edmx</DependentUpon>
+      <LastGenOutput>StockManager.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\js\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\js\bootstrap-inputmask\bootstrap-inputmask.min.js" />
     <Content Include="Scripts\js\bootstrap-switch.js" />
@@ -589,7 +609,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Downloads\" />
-    <Folder Include="Views\Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -644,18 +663,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>StockManager.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\StockManager.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockManager.edmx</DependentUpon>
-      <LastGenOutput>StockManager.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\StockManager.edmx.diagram">
       <DependentUpon>StockManager.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\StockManager.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockManager.edmx</DependentUpon>
-      <LastGenOutput>StockManager.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\StockManager.pubxml" />
     <Content Include="Views\PurchaseOrders\Create.cshtml" />
@@ -693,14 +702,25 @@
     <Content Include="Views\Products\UpdateOpeningStock.cshtml" />
     <Content Include="Views\Invoices\Print.cshtml" />
     <Content Include="Views\Invoices\SinglePrint.cshtml" />
-    <Content Include="Views\Shared\dashboard.cshtml" />
-    <Content Include="Views\Shared\dashboard\sidebar.cshtml" />
-    <Content Include="Views\Shared\dashboard\topnav.cshtml" />
+    <Content Include="Views\Company\Create.cshtml" />
+    <Content Include="Views\Company\Delete.cshtml" />
+    <Content Include="Views\Company\Details.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <None Include="Views\Shared\dashboard.cshtml" />
+    <None Include="Views\Shared\dashboard\sidebar.cshtml" />
+    <None Include="Views\Shared\dashboard\topnav.cshtml" />
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\Delete.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Users\NoAccess.cshtml" />
+    <Content Include="Views\TailorChalanSend\Create.cshtml" />
+    <Content Include="Views\TailorChalanSend\Details.cshtml" />
+    <Content Include="Views\TailorChalanSend\Edit.cshtml" />
+    <Content Include="Views\TailorChalanSend\Index.cshtml" />
+    <Content Include="Views\Users\profile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

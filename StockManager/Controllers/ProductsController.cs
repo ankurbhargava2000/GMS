@@ -183,7 +183,8 @@ namespace StockManager.Controllers
                                 financial_year = year_id,
                                 TenantId = tenant_id,
                                 Created = DateTime.Now,
-                                Updated = DateTime.Now
+                                Updated = DateTime.Now,
+                                Quantity = item.Quantity
                             });
                         }
                         else

@@ -44,12 +44,12 @@
                         <a href="@Url.Action("Index", "PrinterChalans")" class="nav-link ">
                             <span class="title">Printer Chalans</span>
                         </a>
-                    </li>   
+                    </li>
                     <li class="nav-item  ">
                         <a href="@Url.Action("Index", "PrintJobWorkReceived")" class="nav-link ">
                             <span class="title">Print Job Work Received</span>
                         </a>
-                    </li>                    
+                    </li>
                 </ul>
             </li>
             <li class="nav-item start @Html.IsSelected(controller: "TailorChalan")">
@@ -58,17 +58,17 @@
                     <span class="title">Tailor Challan</span>
                 </a>
                 @*<ul class="sub-menu">
-                    <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
-                            <span class="title">Example 1</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="#" class="nav-link ">
-                            <span class="title">Example 2</span>
-                        </a>
-                    </li>
-                </ul>*@
+                        <li class="nav-item  ">
+                            <a href="#" class="nav-link ">
+                                <span class="title">Example 1</span>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a href="#" class="nav-link ">
+                                <span class="title">Example 2</span>
+                            </a>
+                        </li>
+                    </ul>*@
             </li>
             <li class="nav-item start @Html.IsSelected(controller: "Invoices")">
                 <a href="@Url.Action("Index", "Invoices")" class="nav-link nav-toggle">
@@ -78,12 +78,32 @@
                     </span>
                 </a>
             </li>
-            <li class="nav-item start @Html.IsSelected(controller: "Users")">
-                <a href="@Url.Action("Index", "Users")" class="nav-link nav-toggle">
-                    <i class="fa fa-users fa-fw"></i>
-                    <span class="title">Users</span>
-                </a>
-            </li>
+            @{
+                if (Session["RoleName"] != null && Session["RoleName"].ToString().Equals("Administrator"))
+                {
+                    <li class="nav-item start ">
+                        <a href="javascript:;" class="nav-link nav-toggle">
+                            <i class="fa fa-cog fa-fw"></i>
+                            <span class="title">Administration</span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="nav-item start @Html.IsSelected(controller: "Company")">
+                                <a href="@Url.Action("Index", "Company")" class="nav-link nav-toggle">
+                                    <i class="fa fa-cog fa-fw"></i>
+                                    <span class="title">Companies</span>
+                                </a>
+                            </li>
+                            <li class="nav-item start @Html.IsSelected(controller: "Users")">
+                                <a href="@Url.Action("Index", "Users")" class="nav-link nav-toggle">
+                                    <i class="fa fa-users fa-fw"></i>
+                                    <span class="title">Users</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            }
+            
             <li class="nav-item start @Html.IsSelected(controller: "Reports")">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fa fa-line-chart fa-fw"></i>
