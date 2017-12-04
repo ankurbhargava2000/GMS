@@ -154,7 +154,6 @@ namespace StockManager.Controllers
                         Session["FinancialYearID"] = user.Tenant.CurrentFinYear;
 
                         return RedirectToLocal(login.return_url);
-
                     }
                     else
                     {
@@ -162,17 +161,14 @@ namespace StockManager.Controllers
                         ViewBag.ErrorMsg = "Username/Password combination not found";
                         return View(login);
                     }
-
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
-
-            }
-            
+                ViewBag.ErrorMsg = ex.Message;
+            }            
             return View(login);
-
         }
         
         private void SignInRemember(string userName, bool isPersistent = false)

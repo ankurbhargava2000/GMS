@@ -207,7 +207,7 @@
                                         Subtotal
                                     </td>
                                     <td id="sub_total">
-                                        0
+                                        @Model.GrossAmount
                                     </td>
                                 </tr>
                                 <tr>
@@ -224,20 +224,20 @@
                                         Total
                                     </td>
                                     <td id="total_Amount">
-                                        0
+                                        @Model.NetAmount
                                     </td>
                                 </tr>
                             </table>
                             <div>
                                 <div>
-                                    <button id="btnSubmit" class="btn btn-block btn-success">
+                                    <button id="btnSubmit" type="button" class="btn btn-block btn-success">
                                         Save Purchase Order
                                     </button>
                                     @*@Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })*@
                                 </div>
                                 <div>
-                                    <input type="hidden" name="gross_amount" id="gross" value="0">
-                                    <input type="hidden" name="net_amount" id="total" value="0">
+                                    <input type="hidden" name="gross_amount" id="gross" value="@Model.GrossAmount">
+                                    <input type="hidden" name="net_amount" id="total" value="@Model.NetAmount">
                                 </div>
                             </div>
                         </div>
@@ -317,14 +317,14 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#btnShowModal").click(function () {
-                $('#quantity').val('');
-                $('#fold').val('');
-                $('#rate').val('');
-                $('#IdEdit').val('');
-                $('#countEdit').val('');
-                $("#itemModel").modal('show');
-            });
+            //$("#btnShowModal").click(function () {
+            //    $('#quantity').val('');
+            //    $('#fold').val('');
+            //    $('#rate').val('');
+            //    $('#IdEdit').val('');
+            //    $('#countEdit').val('');
+            //});
+
             $('#InvoiceDate').daterangepicker({
                 locale: {
                     format: 'DD-MMM-YYYY'
@@ -334,19 +334,15 @@
                 "minDate": "@ViewBag.StartYear",
                 "maxDate": "@ViewBag.EndYear"
             });
-            $("#btnHideModal").click(function () {
-                $("#itemModel").modal('hide');
-                $('#quantity').val('');
-                $('#fold').val('');
-                $('#rate').val('');
-                $('#IdEdit').val('');
-                $('#countEdit').val('');
+            //$("#btnHideModal").click(function () {
+            //    $("#itemModel").modal('hide');
+            //    $('#quantity').val('');
+            //    $('#fold').val('');
+            //    $('#rate').val('');
+            //    $('#IdEdit').val('');
+            //    $('#countEdit').val('');
 
-            });
-
-            $("#btnHideModal").click(function () {
-
-            });
+            //});
 
             $('#addProductItem').click(function () {
                 //validation and add order items
@@ -356,7 +352,6 @@
                     {
                         //add new row of items
                         var $newRow = $('#productItemRow').clone().removeAttr('id');
-
                         $('.productId', $newRow).val($('#product').val());
                         $('.productName', $newRow).text($('#product').find("option:selected").text());
                         $('.productQuantity', $newRow).text($('#quantity').val());
@@ -365,13 +360,6 @@
                         $('.rowCount', $newRow).val($('#purchaseOrderItems tr').length + 1);
                         $('.itemEditRow', $newRow).append('<button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button> <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>');
                         $('#purchaseOrderItems').append($newRow);
-                        $('#quantity').val('');
-                        $('#fold').val('');
-                        $('#rate').val('');
-                        $('#IdEdit').val('');
-                        $('#countEdit').val('');
-                        $("#itemModel").modal('hide');
-                        CalculateTotal();
                     }
                     else
                     {
@@ -383,19 +371,17 @@
                                 $('.productName', this).text($('#product').find("option:selected").text());
                                 $('.productQuantity', this).text($('#quantity').val());
                                 $('.productFold', this).text($('#fold').val());
-                                $('.productRate', this).text($('#rate').val());
-                                //empty model popup
-                                $('#quantity').val('');
-                                $('#fold').val('');
-                                $('#rate').val('');
-                                $('#IdEdit').val('');
-                                $('#countEdit').val('');
-                                $("#itemModel").modal('hide');
+                                $('.productRate', this).text($('#rate').val());                               
                                 $('#addProductItem').text("Add Product");
-                                CalculateTotal();
                             }
                         });
                     }
+                    $('#quantity').val('');
+                    $('#fold').val('');
+                    $('#rate').val('');
+                    $('#IdEdit').val('');
+                    $('#countEdit').val('');
+                    CalculateTotal();
                 }
             });
 
@@ -409,7 +395,7 @@
                 $('#IdEdit').val($('.Id', $(this).parents('tr')).val());
                 $('#countEdit').val($('.rowCount', $(this).parents('tr')).val());
                 $('#addProductItem').text("Update product");
-                $("#itemModel").modal('show');
+                //$("#itemModel").modal('show');
             });
 
             $('#btnSubmit').click(function () {
@@ -444,10 +430,11 @@
                         tenant_id: @Model.tenant_id,
                         financial_year: @Model.financial_year,
                         created_by: @Model.created_by,
+                        GrossAmount: $('#gross').val(),
+                        NetAmount: $('#total').val(),
+                        Discount: $('#discount').val(),
                         PurchaseDetails: list
                     }
-
-                    //$(this).val('Please wait...');
 
                     $.ajax({
                         type: 'POST',
@@ -484,6 +471,7 @@
                             success: function (data) {
                                 if (data == "product deleted Successfully.") {
                                     $(this).parents('tr').remove();
+                                    CalculateTotal();
                                 }
                                 else {
                                     alert('Error in deleting product.');
@@ -498,6 +486,7 @@
                 else
                 {
                     $(this).parents('tr').remove();
+                    CalculateTotal();
                 }
 
             });
@@ -618,27 +607,7 @@
 
                 $("input#gross").val(subtotal);
                 $("input#total").val(subtotal - discount);
-            };
-            //$('#DocumentNo').change(function () {
-            //    if ($('#DocumentNo').val() != "") {
-            //        $('#DocumentNo').siblings('span.DocumentNoVal').text("");
-            //    }
-            //});
-            //$('#DispatchThrough').change(function () {
-            //    if ($('#DispatchThrough').val() != "") {
-            //        $('#DispatchThrough').siblings('span.DispatchThroughVal').text("");
-            //    }
-            //});
-            //$('#Destination').change(function () {
-            //    if ($('#Destination').val() != "") {
-            //        $('#Destination').siblings('span.DestinationVal').text("");
-            //    }
-            //});
-            //$('#BaleNo').change(function () {
-            //    if ($('#BaleNo').val() != "") {
-            //        $('#BaleNo').siblings('span.BaleNoVal').text("");
-            //    }
-            //});
+            };            
         });
     </script>
 }

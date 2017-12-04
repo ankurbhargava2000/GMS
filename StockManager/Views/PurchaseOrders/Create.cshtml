@@ -195,7 +195,7 @@
                             </table>
                             <div>
                                 <div>
-                                    <button id="btnSubmit" class="btn btn-block btn-success">
+                                    <button id="btnSubmit" type="button"  class="btn btn-block btn-success">
                                         Save Purchase Order
                                     </button>
                                     @*@Html.ActionLink("Close", "Index", "PurchaseOrders", new { @class = "btn btn-danger" })*@
@@ -320,6 +320,7 @@
             //remove button click event
             $('#purchaseOrderItems').on('click', '.remove', function () {
                 $(this).parents('tr').remove();
+                CalculateTotal();
             });
 
             $('#btnSubmit').click(function () {
@@ -351,6 +352,9 @@
                         destination: $('#Destination').val(),
                         bale_numbers: $('#BaleNo').val(),
                         Description: $('#Description').val(),
+                        GrossAmount: $('#gross').val(),
+                        NetAmount: $('#total').val(),
+                        Discount: $('#discount').val(),
                         PurchaseDetails: list
                     }
 
