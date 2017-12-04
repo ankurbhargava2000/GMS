@@ -19,11 +19,11 @@ namespace StockManager.Controllers
         public ActionResult Index()
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             var purchaseOrders = db.PurchaseOrders
                 .Include(p => p.Vendor)
                 .Include(p => p.PurchaseDetails)
-                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Where(x => x.financial_year == year_id && x.CompanyId == CompanyId)
                 .ToList();
             return View(purchaseOrders);
 
@@ -48,7 +48,7 @@ namespace StockManager.Controllers
         public ActionResult Create()
         {
             var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails);
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.tenant_id == Convert.ToInt32(Session["TenantID"])), "Id", "VendorName");
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == Convert.ToInt16(Session["CompanyID"])), "Id", "VendorName");
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
@@ -66,14 +66,14 @@ namespace StockManager.Controllers
                 try
                 {
                     var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-                    var tenant_id = Convert.ToInt32(Session["TenantID"]);
+                    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
                     var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     purchaseOrder.Created = dtDate;
                     purchaseOrder.Updated = dtDate;
                     purchaseOrder.created_by = creaded_by;
                     purchaseOrder.financial_year = year_id;
-                    purchaseOrder.tenant_id = tenant_id;
+                    purchaseOrder.CompanyId = CompanyId;
 
                     db.PurchaseOrders.Add(purchaseOrder);
                     db.SaveChanges();
@@ -84,7 +84,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.tenant_id == Convert.ToInt32(Session["TenantID"])), "Id", "VendorName", purchaseOrder.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == Convert.ToInt32(Session["CompanyID"])), "Id", "VendorName", purchaseOrder.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }
@@ -102,7 +102,7 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.tenant_id == Convert.ToInt32(Session["TenantID"])), "Id", "VendorName", purchaseOrder.VendorId);
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == Convert.ToInt32(Session["CompanyID"])), "Id", "VendorName", purchaseOrder.VendorId);
             ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
@@ -143,7 +143,7 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.tenant_id == Convert.ToInt32(Session["TenantID"])), "Id", "VendorName", purchaseOrder.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == Convert.ToInt32(Session["CompanyID"])), "Id", "VendorName", purchaseOrder.VendorId);
                     ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
                 }
             }

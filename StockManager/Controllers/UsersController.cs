@@ -153,9 +153,13 @@ namespace StockManager.Controllers
 
                         Session["UserID"] = user.UserId;
                         Session["TenantID"] = user.TenantId;
-                        Session["FinancialYearID"] = user.Tenant.CurrentFinYear;
+                        //Session["FinancialYearID"] = user.Tenant.CurrentFinYear;
                         Session["RoleName"] = user.UserRole.RoleName;
-
+                        if (user.UserCompanies != null)
+                        {
+                            Session["CompanyID"] = user.UserCompanies.FirstOrDefault().CompanyId;
+                            Session["FinancialYearID"] = user.UserCompanies.FirstOrDefault().Company.CurrentFinYear;
+                        }
                         return RedirectToLocal(login.return_url);
                     }
                     else

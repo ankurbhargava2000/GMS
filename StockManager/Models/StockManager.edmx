@@ -36,7 +36,7 @@
           <Property Name="pan_number" Type="varchar" MaxLength="30" />
           <Property Name="gst_number" Type="varchar" MaxLength="30" />
           <Property Name="mobile" Type="varchar" MaxLength="15" />
-          <Property Name="tenant_id" Type="int" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FinancialYear">
           <Key>
@@ -65,15 +65,15 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="invoice_no" Type="int" Nullable="false" />
-          <Property Name="customer_id" Type="int" />
           <Property Name="gross_amount" Type="float" Nullable="false" />
           <Property Name="net_amount" Type="float" Nullable="false" />
           <Property Name="created_on" Type="date" />
           <Property Name="created_by" Type="int" />
           <Property Name="financial_year" Type="int" />
-          <Property Name="tenant_id" Type="int" />
           <Property Name="discount" Type="float" />
           <Property Name="created_at" Type="datetime" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MeasuringUnits">
           <Key>
@@ -99,7 +99,7 @@
           <Property Name="bale_numbers" Type="varchar" MaxLength="150" />
           <Property Name="created_by" Type="int" />
           <Property Name="financial_year" Type="int" />
-          <Property Name="tenant_id" Type="int" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PrinterChalanDetails">
           <Key>
@@ -128,7 +128,7 @@
           <Property Name="chalan_number" Type="int" Nullable="false" />
           <Property Name="created_by" Type="int" />
           <Property Name="financial_year" Type="int" />
-          <Property Name="tenant_id" Type="int" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PrintJobWorkReceivedDetails">
           <Key>
@@ -150,9 +150,9 @@
           <Property Name="ProductName" Type="varchar" MaxLength="100" />
           <Property Name="Description" Type="varchar" MaxLength="200" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="tenant_id" Type="int" />
           <Property Name="Unit" Type="int" />
           <Property Name="SellingPrice" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -192,11 +192,11 @@
           <Property Name="bale_numbers" Type="varchar" MaxLength="150" />
           <Property Name="created_by" Type="int" />
           <Property Name="financial_year" Type="int" />
-          <Property Name="tenant_id" Type="int" />
           <Property Name="GrossAmount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Discount" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Tax" Type="numeric" Precision="18" Scale="2" />
           <Property Name="NetAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TailorChalan">
           <Key>
@@ -212,7 +212,7 @@
           <Property Name="bill_number" Type="varchar" MaxLength="50" />
           <Property Name="created_by" Type="int" />
           <Property Name="financial_year" Type="int" />
-          <Property Name="tenant_id" Type="int" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TailorChalanDetails">
           <Key>
@@ -239,7 +239,7 @@
           <Property Name="bill_number" Type="varchar" MaxLength="50" />
           <Property Name="created_by" Type="int" />
           <Property Name="financial_year" Type="int" />
-          <Property Name="tenant_id" Type="int" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TailorChalanSendDetails">
           <Key>
@@ -290,7 +290,7 @@
           <Property Name="Type" Type="varchar" MaxLength="50" />
           <Property Name="ReferenceRecordId" Type="int" />
           <Property Name="financial_year" Type="int" />
-          <Property Name="TenantId" Type="int" Nullable="false" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -337,7 +337,7 @@
           <Property Name="pan_number" Type="varchar" MaxLength="30" />
           <Property Name="gst_number" Type="varchar" MaxLength="30" />
           <Property Name="mobile" Type="varchar" MaxLength="15" />
-          <Property Name="tenant_id" Type="int" />
+          <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="VendorType">
           <Key>
@@ -348,6 +348,20 @@
           <Property Name="Description" Type="varchar" MaxLength="200" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <Association Name="FK__Customer__Compan__3587F3E0">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__InvoiceDe__invoi__60A75C0F">
           <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -374,6 +388,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__InvoiceMa__Compa__3493CFA7">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InvoiceMaster">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__InvoiceMa__creat__628FA481">
           <End Role="User" Type="Self.User" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -388,13 +416,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__custo__6383C8BA">
-          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__InvoiceMa__custo__3A4CA8FD">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Vendor">
+            <Principal Role="Customer">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="InvoiceMaster">
@@ -416,20 +442,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__tenan__656C112C">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceMaster">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__PrinterCh__Chala__6754599E">
           <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="1" />
           <End Role="PrinterChalanDetails" Type="Self.PrinterChalanDetails" Multiplicity="*" />
@@ -439,6 +451,20 @@
             </Principal>
             <Dependent Role="PrinterChalanDetails">
               <PropertyRef Name="ChalanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrinterCh__Compa__339FAB6E">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrinterChalan">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -478,6 +504,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PrintJobW__Compa__32AB8735">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrintJobWorkReceived">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PrintJobW__Produ__6B24EA82">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PrintJobWorkReceivedDetails" Type="Self.PrintJobWorkReceivedDetails" Multiplicity="*" />
@@ -499,6 +539,20 @@
             </Principal>
             <Dependent Role="PrintJobWorkReceived">
               <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Company__367C1819">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -547,6 +601,20 @@
             </Principal>
             <Dependent Role="PurchaseDetails">
               <PropertyRef Name="PurchaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Compa__31B762FC">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -607,6 +675,34 @@
             </Principal>
             <Dependent Role="TailorChalanDetails">
               <PropertyRef Name="ChalanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TailorCha__Compa__2FCF1A8A">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TailorChalanSend">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TailorCha__Compa__30C33EC3">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TailorChalan">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -682,6 +778,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Transacti__Compa__2EDAF651">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Transacti__Produ__76969D2E">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
@@ -691,20 +801,6 @@
             </Principal>
             <Dependent Role="Transactions">
               <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Transacti__Tenan__1F98B2C1">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="TenantId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -733,6 +829,18 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vendor__CompanyI__37703C52">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendor">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -772,18 +880,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Customer_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PrinterChalan_FinancialYear">
           <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -795,20 +891,6 @@
             </Principal>
             <Dependent Role="PrinterChalan">
               <PropertyRef Name="financial_year" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PrinterChalan_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrinterChalan">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -840,20 +922,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PrintJobWorkReceived_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrintJobWorkReceived">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PrintJobWorkReceived_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -868,20 +936,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Product_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PurchaseOrders_FinancialYear">
           <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -893,20 +947,6 @@
             </Principal>
             <Dependent Role="PurchaseOrders">
               <PropertyRef Name="financial_year" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrders_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrders">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -938,20 +978,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TailorChalan_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TailorChalan">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TailorChalan_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -977,20 +1003,6 @@
             </Principal>
             <Dependent Role="TailorChalanSend">
               <PropertyRef Name="financial_year" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TailorChalanSend_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TailorChalanSend">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1074,18 +1086,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Vendor_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1" />
-          <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vendor">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="USP_ProductWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserId" Type="int" Mode="In" />
         </Function>
@@ -1117,6 +1117,10 @@
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorType" EntityType="Self.VendorType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Customer__Compan__3587F3E0" Association="Self.FK__Customer__Compan__3587F3E0">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="FK__InvoiceDe__invoi__60A75C0F" Association="Self.FK__InvoiceDe__invoi__60A75C0F">
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
@@ -1125,25 +1129,29 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK__InvoiceMa__Compa__3493CFA7" Association="Self.FK__InvoiceMa__Compa__3493CFA7">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
+          </AssociationSet>
           <AssociationSet Name="FK__InvoiceMa__creat__628FA481" Association="Self.FK__InvoiceMa__creat__628FA481">
             <End Role="User" EntitySet="User" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__custo__6383C8BA" Association="Self.FK__InvoiceMa__custo__6383C8BA">
-            <End Role="Vendor" EntitySet="Vendor" />
+          <AssociationSet Name="FK__InvoiceMa__custo__3A4CA8FD" Association="Self.FK__InvoiceMa__custo__3A4CA8FD">
+            <End Role="Customer" EntitySet="Customer" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
           </AssociationSet>
           <AssociationSet Name="FK__InvoiceMa__finan__6477ECF3" Association="Self.FK__InvoiceMa__finan__6477ECF3">
             <End Role="FinancialYear" EntitySet="FinancialYear" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__tenan__656C112C" Association="Self.FK__InvoiceMa__tenan__656C112C">
-            <End Role="Tenant" EntitySet="Tenant" />
-            <End Role="InvoiceMaster" EntitySet="InvoiceMaster" />
-          </AssociationSet>
           <AssociationSet Name="FK__PrinterCh__Chala__6754599E" Association="Self.FK__PrinterCh__Chala__6754599E">
             <End Role="PrinterChalan" EntitySet="PrinterChalan" />
             <End Role="PrinterChalanDetails" EntitySet="PrinterChalanDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrinterCh__Compa__339FAB6E" Association="Self.FK__PrinterCh__Compa__339FAB6E">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="PrinterChalan" EntitySet="PrinterChalan" />
           </AssociationSet>
           <AssociationSet Name="FK__PrinterCh__Produ__68487DD7" Association="Self.FK__PrinterCh__Produ__68487DD7">
             <End Role="Product" EntitySet="Product" />
@@ -1157,6 +1165,10 @@
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
             <End Role="PrintJobWorkReceivedDetails" EntitySet="PrintJobWorkReceivedDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK__PrintJobW__Compa__32AB8735" Association="Self.FK__PrintJobW__Compa__32AB8735">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
+          </AssociationSet>
           <AssociationSet Name="FK__PrintJobW__Produ__6B24EA82" Association="Self.FK__PrintJobW__Produ__6B24EA82">
             <End Role="Product" EntitySet="Product" />
             <End Role="PrintJobWorkReceivedDetails" EntitySet="PrintJobWorkReceivedDetails" />
@@ -1164,6 +1176,10 @@
           <AssociationSet Name="FK__PrintJobW__Vendo__693CA210" Association="Self.FK__PrintJobW__Vendo__693CA210">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Company__367C1819" Association="Self.FK__Product__Company__367C1819">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK__Product__Product__6C190EBB" Association="Self.FK__Product__Product__6C190EBB">
             <End Role="ProductType" EntitySet="ProductType" />
@@ -1180,6 +1196,10 @@
           <AssociationSet Name="FK__PurchaseD__Purch__6E01572D" Association="Self.FK__PurchaseD__Purch__6E01572D">
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
             <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Compa__31B762FC" Association="Self.FK__PurchaseO__Compa__31B762FC">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
           <AssociationSet Name="FK__PurchaseO__Vendo__6EF57B66" Association="Self.FK__PurchaseO__Vendo__6EF57B66">
             <End Role="Vendor" EntitySet="Vendor" />
@@ -1200,6 +1220,14 @@
           <AssociationSet Name="FK__TailorCha__Chala__71D1E811" Association="Self.FK__TailorCha__Chala__71D1E811">
             <End Role="TailorChalan" EntitySet="TailorChalan" />
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TailorCha__Compa__2FCF1A8A" Association="Self.FK__TailorCha__Compa__2FCF1A8A">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="TailorChalanSend" EntitySet="TailorChalanSend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TailorCha__Compa__30C33EC3" Association="Self.FK__TailorCha__Compa__30C33EC3">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="TailorChalan" EntitySet="TailorChalan" />
           </AssociationSet>
           <AssociationSet Name="FK__TailorCha__Produ__18EBB532" Association="Self.FK__TailorCha__Produ__18EBB532">
             <End Role="Product" EntitySet="Product" />
@@ -1225,12 +1253,12 @@
             <End Role="TailorChalanDetails" EntitySet="TailorChalanDetails" />
             <End Role="TailorMaterialDetails" EntitySet="TailorMaterialDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Produ__76969D2E" Association="Self.FK__Transacti__Produ__76969D2E">
-            <End Role="Product" EntitySet="Product" />
+          <AssociationSet Name="FK__Transacti__Compa__2EDAF651" Association="Self.FK__Transacti__Compa__2EDAF651">
+            <End Role="Company" EntitySet="Company" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Tenan__1F98B2C1" Association="Self.FK__Transacti__Tenan__1F98B2C1">
-            <End Role="Tenant" EntitySet="Tenant" />
+          <AssociationSet Name="FK__Transacti__Produ__76969D2E" Association="Self.FK__Transacti__Produ__76969D2E">
+            <End Role="Product" EntitySet="Product" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
           <AssociationSet Name="FK__Transacti__Vendo__778AC167" Association="Self.FK__Transacti__Vendo__778AC167">
@@ -1240,6 +1268,10 @@
           <AssociationSet Name="FK__User__RoleId__2645B050" Association="Self.FK__User__RoleId__2645B050">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vendor__CompanyI__37703C52" Association="Self.FK__Vendor__CompanyI__37703C52">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Vendor" EntitySet="Vendor" />
           </AssociationSet>
           <AssociationSet Name="FK__Vendor__VendorTy__797309D9" Association="Self.FK__Vendor__VendorTy__797309D9">
             <End Role="VendorType" EntitySet="VendorType" />
@@ -1253,16 +1285,8 @@
             <End Role="Tenant" EntitySet="Tenant" />
             <End Role="Company" EntitySet="Company" />
           </AssociationSet>
-          <AssociationSet Name="FK_Customer_Tenant" Association="Self.FK_Customer_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
-            <End Role="Customer" EntitySet="Customer" />
-          </AssociationSet>
           <AssociationSet Name="FK_PrinterChalan_FinancialYear" Association="Self.FK_PrinterChalan_FinancialYear">
             <End Role="FinancialYear" EntitySet="FinancialYear" />
-            <End Role="PrinterChalan" EntitySet="PrinterChalan" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PrinterChalan_Tenant" Association="Self.FK_PrinterChalan_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
             <End Role="PrinterChalan" EntitySet="PrinterChalan" />
           </AssociationSet>
           <AssociationSet Name="FK_PrinterChalan_User" Association="Self.FK_PrinterChalan_User">
@@ -1273,24 +1297,12 @@
             <End Role="FinancialYear" EntitySet="FinancialYear" />
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
           </AssociationSet>
-          <AssociationSet Name="FK_PrintJobWorkReceived_Tenant" Association="Self.FK_PrintJobWorkReceived_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
-            <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
-          </AssociationSet>
           <AssociationSet Name="FK_PrintJobWorkReceived_User" Association="Self.FK_PrintJobWorkReceived_User">
             <End Role="User" EntitySet="User" />
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceived" />
           </AssociationSet>
-          <AssociationSet Name="FK_Product_Tenant" Association="Self.FK_Product_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrders_FinancialYear" Association="Self.FK_PurchaseOrders_FinancialYear">
             <End Role="FinancialYear" EntitySet="FinancialYear" />
-            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrders_Tenant" Association="Self.FK_PurchaseOrders_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrders_User" Association="Self.FK_PurchaseOrders_User">
@@ -1301,20 +1313,12 @@
             <End Role="FinancialYear" EntitySet="FinancialYear" />
             <End Role="TailorChalan" EntitySet="TailorChalan" />
           </AssociationSet>
-          <AssociationSet Name="FK_TailorChalan_Tenant" Association="Self.FK_TailorChalan_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
-            <End Role="TailorChalan" EntitySet="TailorChalan" />
-          </AssociationSet>
           <AssociationSet Name="FK_TailorChalan_User" Association="Self.FK_TailorChalan_User">
             <End Role="User" EntitySet="User" />
             <End Role="TailorChalan" EntitySet="TailorChalan" />
           </AssociationSet>
           <AssociationSet Name="FK_TailorChalanSend_FinancialYear" Association="Self.FK_TailorChalanSend_FinancialYear">
             <End Role="FinancialYear" EntitySet="FinancialYear" />
-            <End Role="TailorChalanSend" EntitySet="TailorChalanSend" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TailorChalanSend_Tenant" Association="Self.FK_TailorChalanSend_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
             <End Role="TailorChalanSend" EntitySet="TailorChalanSend" />
           </AssociationSet>
           <AssociationSet Name="FK_TailorChalanSend_User" Association="Self.FK_TailorChalanSend_User">
@@ -1341,10 +1345,6 @@
             <End Role="User" EntitySet="User" />
             <End Role="UserCompany" EntitySet="UserCompany" />
           </AssociationSet>
-          <AssociationSet Name="FK_Vendor_Tenant" Association="Self.FK_Vendor_Tenant">
-            <End Role="Tenant" EntitySet="Tenant" />
-            <End Role="Vendor" EntitySet="Vendor" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -1367,6 +1367,16 @@
           <Property Name="PanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="GSTNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Compan__3587F3E0" FromRole="Company" ToRole="Customer" />
+          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__Compa__3493CFA7" FromRole="Company" ToRole="InvoiceMaster" />
+          <NavigationProperty Name="PrinterChalans" Relationship="Self.FK__PrinterCh__Compa__339FAB6E" FromRole="Company" ToRole="PrinterChalan" />
+          <NavigationProperty Name="PrintJobWorkReceiveds" Relationship="Self.FK__PrintJobW__Compa__32AB8735" FromRole="Company" ToRole="PrintJobWorkReceived" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__Company__367C1819" FromRole="Company" ToRole="Product" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Compa__31B762FC" FromRole="Company" ToRole="PurchaseOrders" />
+          <NavigationProperty Name="TailorChalanSends" Relationship="Self.FK__TailorCha__Compa__2FCF1A8A" FromRole="Company" ToRole="TailorChalanSend" />
+          <NavigationProperty Name="TailorChalans" Relationship="Self.FK__TailorCha__Compa__30C33EC3" FromRole="Company" ToRole="TailorChalan" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Compa__2EDAF651" FromRole="Company" ToRole="Transactions" />
+          <NavigationProperty Name="Vendors" Relationship="Self.FK__Vendor__CompanyI__37703C52" FromRole="Company" ToRole="Vendor" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_Company_FinancialYear" FromRole="Company" ToRole="FinancialYear" />
           <NavigationProperty Name="Tenant" Relationship="Self.FK_Company_Tenant" FromRole="Company" ToRole="Tenant" />
           <NavigationProperty Name="UserCompanies" Relationship="Self.FK_UserCompany_Company" FromRole="Company" ToRole="UserCompany" />
@@ -1385,8 +1395,9 @@
           <Property Name="pan_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="gst_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="tenant_id" Type="Int32" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_Customer_Tenant" FromRole="Customer" ToRole="Tenant" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Customer__Compan__3587F3E0" FromRole="Customer" ToRole="Company" />
+          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__custo__3A4CA8FD" FromRole="Customer" ToRole="InvoiceMaster" />
         </EntityType>
         <EntityType Name="FinancialYear">
           <Key>
@@ -1426,20 +1437,20 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="invoice_no" Type="Int32" Nullable="false" />
-          <Property Name="customer_id" Type="Int32" />
           <Property Name="gross_amount" Type="Double" Nullable="false" />
           <Property Name="net_amount" Type="Double" Nullable="false" />
           <Property Name="created_on" Type="DateTime" Precision="0" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
-          <Property Name="tenant_id" Type="Int32" />
           <Property Name="discount" Type="Double" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__InvoiceMa__Compa__3493CFA7" FromRole="InvoiceMaster" ToRole="Company" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__InvoiceMa__custo__3A4CA8FD" FromRole="InvoiceMaster" ToRole="Customer" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK__InvoiceMa__finan__6477ECF3" FromRole="InvoiceMaster" ToRole="FinancialYear" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__invoi__60A75C0F" FromRole="InvoiceMaster" ToRole="InvoiceDetails" />
           <NavigationProperty Name="User" Relationship="Self.FK__InvoiceMa__creat__628FA481" FromRole="InvoiceMaster" ToRole="User" />
-          <NavigationProperty Name="Vendor" Relationship="Self.FK__InvoiceMa__custo__6383C8BA" FromRole="InvoiceMaster" ToRole="Vendor" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK__InvoiceMa__tenan__656C112C" FromRole="InvoiceMaster" ToRole="Tenant" />
         </EntityType>
         <EntityType Name="MeasuringUnit">
           <Key>
@@ -1466,11 +1477,11 @@
           <Property Name="bale_numbers" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
-          <Property Name="tenant_id" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__PrinterCh__Compa__339FAB6E" FromRole="PrinterChalan" ToRole="Company" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_PrinterChalan_FinancialYear" FromRole="PrinterChalan" ToRole="FinancialYear" />
           <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Chala__6754599E" FromRole="PrinterChalan" ToRole="PrinterChalanDetails" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__PrinterCh__Vendo__66603565" FromRole="PrinterChalan" ToRole="Vendor" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_PrinterChalan_Tenant" FromRole="PrinterChalan" ToRole="Tenant" />
           <NavigationProperty Name="User" Relationship="Self.FK_PrinterChalan_User" FromRole="PrinterChalan" ToRole="User" />
         </EntityType>
         <EntityType Name="PrinterChalanDetail">
@@ -1502,11 +1513,11 @@
           <Property Name="chalan_number" Type="Int32" Nullable="false" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
-          <Property Name="tenant_id" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__PrintJobW__Compa__32AB8735" FromRole="PrintJobWorkReceived" ToRole="Company" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_PrintJobWorkReceived_FinancialYear" FromRole="PrintJobWorkReceived" ToRole="FinancialYear" />
           <NavigationProperty Name="PrintJobWorkReceivedDetails" Relationship="Self.FK__PrintJobW__Chala__6A30C649" FromRole="PrintJobWorkReceived" ToRole="PrintJobWorkReceivedDetails" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__PrintJobW__Vendo__693CA210" FromRole="PrintJobWorkReceived" ToRole="Vendor" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_PrintJobWorkReceived_Tenant" FromRole="PrintJobWorkReceived" ToRole="Tenant" />
           <NavigationProperty Name="User" Relationship="Self.FK_PrintJobWorkReceived_User" FromRole="PrintJobWorkReceived" ToRole="User" />
         </EntityType>
         <EntityType Name="PrintJobWorkReceivedDetail">
@@ -1531,9 +1542,10 @@
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="tenant_id" Type="Int32" />
           <Property Name="Unit" Type="Int32" />
           <Property Name="SellingPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Product__Company__367C1819" FromRole="Product" ToRole="Company" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK__InvoiceDe__produ__619B8048" FromRole="Product" ToRole="InvoiceDetails" />
           <NavigationProperty Name="MeasuringUnit" Relationship="Self.FK__Product__Unit__22751F6C" FromRole="Product" ToRole="MeasuringUnits" />
           <NavigationProperty Name="PrinterChalanDetails" Relationship="Self.FK__PrinterCh__Produ__68487DD7" FromRole="Product" ToRole="PrinterChalanDetails" />
@@ -1544,7 +1556,6 @@
           <NavigationProperty Name="TailorChalanDetails" Relationship="Self.FK__TailorCha__Produ__72C60C4A" FromRole="Product" ToRole="TailorChalanDetails" />
           <NavigationProperty Name="TailorMaterialDetails" Relationship="Self.FK__TailorMat__Produ__73BA3083" FromRole="Product" ToRole="TailorMaterialDetails" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Produ__76969D2E" FromRole="Product" ToRole="Transactions" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_Product_Tenant" FromRole="Product" ToRole="Tenant" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -1587,15 +1598,15 @@
           <Property Name="bale_numbers" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
-          <Property Name="tenant_id" Type="Int32" />
           <Property Name="GrossAmount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Tax" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="NetAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__PurchaseO__Compa__31B762FC" FromRole="PurchaseOrders" ToRole="Company" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_PurchaseOrders_FinancialYear" FromRole="PurchaseOrders" ToRole="FinancialYear" />
           <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__Purch__6E01572D" FromRole="PurchaseOrders" ToRole="PurchaseDetails" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__PurchaseO__Vendo__6EF57B66" FromRole="PurchaseOrders" ToRole="Vendor" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_PurchaseOrders_Tenant" FromRole="PurchaseOrders" ToRole="Tenant" />
           <NavigationProperty Name="User" Relationship="Self.FK_PurchaseOrders_User" FromRole="PurchaseOrders" ToRole="User" />
         </EntityType>
         <EntityType Name="TailorChalan">
@@ -1612,12 +1623,12 @@
           <Property Name="bill_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
-          <Property Name="tenant_id" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__TailorCha__Compa__30C33EC3" FromRole="TailorChalan" ToRole="Company" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_TailorChalan_FinancialYear" FromRole="TailorChalan" ToRole="FinancialYear" />
           <NavigationProperty Name="TailorChalanDetails" Relationship="Self.FK__TailorCha__Chala__70DDC3D8" FromRole="TailorChalan" ToRole="TailorChalanDetails" />
           <NavigationProperty Name="TailorChalanDetails1" Relationship="Self.FK__TailorCha__Chala__71D1E811" FromRole="TailorChalan" ToRole="TailorChalanDetails" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__TailorCha__Vendo__6FE99F9F" FromRole="TailorChalan" ToRole="Vendor" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_TailorChalan_Tenant" FromRole="TailorChalan" ToRole="Tenant" />
           <NavigationProperty Name="User" Relationship="Self.FK_TailorChalan_User" FromRole="TailorChalan" ToRole="User" />
         </EntityType>
         <EntityType Name="TailorChalanDetail">
@@ -1649,12 +1660,12 @@
           <Property Name="bill_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="created_by" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
-          <Property Name="tenant_id" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__TailorCha__Compa__2FCF1A8A" FromRole="TailorChalanSend" ToRole="Company" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_TailorChalanSend_FinancialYear" FromRole="TailorChalanSend" ToRole="FinancialYear" />
           <NavigationProperty Name="TailorChalanSendDetails" Relationship="Self.FK__TailorCha__Chala__17036CC0" FromRole="TailorChalanSend" ToRole="TailorChalanSendDetails" />
           <NavigationProperty Name="TailorChalanSendDetails1" Relationship="Self.FK__TailorCha__Chala__17F790F9" FromRole="TailorChalanSend" ToRole="TailorChalanSendDetails" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__TailorCha__Vendo__114A936A" FromRole="TailorChalanSend" ToRole="Vendor" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_TailorChalanSend_Tenant" FromRole="TailorChalanSend" ToRole="Tenant" />
           <NavigationProperty Name="User" Relationship="Self.FK_TailorChalanSend_User" FromRole="TailorChalanSend" ToRole="User" />
         </EntityType>
         <EntityType Name="TailorChalanSendDetail">
@@ -1698,18 +1709,8 @@
           <Property Name="PanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="GSTNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Companies" Relationship="Self.FK_Company_Tenant" FromRole="Tenant" ToRole="Company" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Tenant" FromRole="Tenant" ToRole="Customer" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_Tenant_FinancialYear" FromRole="Tenant" ToRole="FinancialYear" />
-          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__tenan__656C112C" FromRole="Tenant" ToRole="InvoiceMaster" />
-          <NavigationProperty Name="PrinterChalans" Relationship="Self.FK_PrinterChalan_Tenant" FromRole="Tenant" ToRole="PrinterChalan" />
-          <NavigationProperty Name="PrintJobWorkReceiveds" Relationship="Self.FK_PrintJobWorkReceived_Tenant" FromRole="Tenant" ToRole="PrintJobWorkReceived" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Tenant" FromRole="Tenant" ToRole="Product" />
-          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrders_Tenant" FromRole="Tenant" ToRole="PurchaseOrders" />
-          <NavigationProperty Name="TailorChalans" Relationship="Self.FK_TailorChalan_Tenant" FromRole="Tenant" ToRole="TailorChalan" />
-          <NavigationProperty Name="TailorChalanSends" Relationship="Self.FK_TailorChalanSend_Tenant" FromRole="Tenant" ToRole="TailorChalanSend" />
-          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Tenan__1F98B2C1" FromRole="Tenant" ToRole="Transactions" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_Tenant" FromRole="Tenant" ToRole="User" />
-          <NavigationProperty Name="Vendors" Relationship="Self.FK_Vendor_Tenant" FromRole="Tenant" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -1724,10 +1725,10 @@
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ReferenceRecordId" Type="Int32" />
           <Property Name="financial_year" Type="Int32" />
-          <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Transacti__Compa__2EDAF651" FromRole="Transactions" ToRole="Company" />
           <NavigationProperty Name="FinancialYear" Relationship="Self.FK_Transactions_FinancialYear" FromRole="Transactions" ToRole="FinancialYear" />
           <NavigationProperty Name="Product" Relationship="Self.FK__Transacti__Produ__76969D2E" FromRole="Transactions" ToRole="Product" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK__Transacti__Tenan__1F98B2C1" FromRole="Transactions" ToRole="Tenant" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK__Transacti__Vendo__778AC167" FromRole="Transactions" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="User">
@@ -1787,14 +1788,13 @@
           <Property Name="pan_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="gst_number" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="tenant_id" Type="Int32" />
-          <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__custo__6383C8BA" FromRole="Vendor" ToRole="InvoiceMaster" />
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Vendor__CompanyI__37703C52" FromRole="Vendor" ToRole="Company" />
           <NavigationProperty Name="PrinterChalans" Relationship="Self.FK__PrinterCh__Vendo__66603565" FromRole="Vendor" ToRole="PrinterChalan" />
           <NavigationProperty Name="PrintJobWorkReceiveds" Relationship="Self.FK__PrintJobW__Vendo__693CA210" FromRole="Vendor" ToRole="PrintJobWorkReceived" />
           <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Vendo__6EF57B66" FromRole="Vendor" ToRole="PurchaseOrders" />
           <NavigationProperty Name="TailorChalans" Relationship="Self.FK__TailorCha__Vendo__6FE99F9F" FromRole="Vendor" ToRole="TailorChalan" />
           <NavigationProperty Name="TailorChalanSends" Relationship="Self.FK__TailorCha__Vendo__114A936A" FromRole="Vendor" ToRole="TailorChalanSend" />
-          <NavigationProperty Name="Tenant" Relationship="Self.FK_Vendor_Tenant" FromRole="Vendor" ToRole="Tenant" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Vendo__778AC167" FromRole="Vendor" ToRole="Transactions" />
           <NavigationProperty Name="VendorType" Relationship="Self.FK__Vendor__VendorTy__797309D9" FromRole="Vendor" ToRole="VendorType" />
         </EntityType>
@@ -1808,6 +1808,144 @@
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Vendors" Relationship="Self.FK__Vendor__VendorTy__797309D9" FromRole="VendorType" ToRole="Vendor" />
         </EntityType>
+        <Association Name="FK__Customer__Compan__3587F3E0">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvoiceMa__Compa__3493CFA7">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InvoiceMaster">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrinterCh__Compa__339FAB6E">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrinterChalan">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrintJobW__Compa__32AB8735">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PrintJobWorkReceived">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Company__367C1819">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Compa__31B762FC">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TailorCha__Compa__2FCF1A8A">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TailorChalanSend">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TailorCha__Compa__30C33EC3">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TailorChalan">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__Compa__2EDAF651">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vendor__CompanyI__37703C52">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendor">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Company_FinancialYear">
           <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
@@ -1846,15 +1984,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Customer_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+        <Association Name="FK__InvoiceMa__custo__3A4CA8FD">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tenant">
+            <Principal Role="Customer">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="tenant_id" />
+            <Dependent Role="InvoiceMaster">
+              <PropertyRef Name="customer_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2008,34 +2146,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceMa__custo__6383C8BA">
-          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vendor">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceMaster">
-              <PropertyRef Name="customer_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__InvoiceMa__tenan__656C112C">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="InvoiceMaster" Type="Self.InvoiceMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InvoiceMaster">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Product__Unit__22751F6C">
           <End Role="MeasuringUnits" Type="Self.MeasuringUnit" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -2069,20 +2179,6 @@
             </Principal>
             <Dependent Role="PrinterChalan">
               <PropertyRef Name="VendorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PrinterChalan_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrinterChalan">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2133,20 +2229,6 @@
             </Principal>
             <Dependent Role="PrintJobWorkReceived">
               <PropertyRef Name="VendorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PrintJobWorkReceived_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PrintJobWorkReceived">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2248,20 +2330,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Product_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__PurchaseD__Purch__6E01572D">
           <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="1" />
           <End Role="PurchaseDetails" Type="Self.PurchaseDetail" Multiplicity="*" />
@@ -2283,20 +2351,6 @@
             </Principal>
             <Dependent Role="PurchaseOrders">
               <PropertyRef Name="VendorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrders_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseOrders">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2347,20 +2401,6 @@
             </Principal>
             <Dependent Role="TailorChalan">
               <PropertyRef Name="VendorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TailorChalan_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TailorChalan">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2426,20 +2466,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TailorChalanSend_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TailorChalanSend">
-              <PropertyRef Name="tenant_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TailorChalanSend_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -2454,20 +2480,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Tenan__1F98B2C1">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="TenantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_User_Tenant">
           <End Role="Tenant" Type="Self.Tenant" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -2477,18 +2489,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="TenantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vendor_Tenant">
-          <End Role="Tenant" Type="Self.Tenant" Multiplicity="0..1" />
-          <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tenant">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vendor">
-              <PropertyRef Name="tenant_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2573,6 +2573,46 @@
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="VendorTypes" EntityType="Self.VendorType" />
+          <AssociationSet Name="FK__Customer__Compan__3587F3E0" Association="Self.FK__Customer__Compan__3587F3E0">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvoiceMa__Compa__3493CFA7" Association="Self.FK__InvoiceMa__Compa__3493CFA7">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrinterCh__Compa__339FAB6E" Association="Self.FK__PrinterCh__Compa__339FAB6E">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="PrinterChalan" EntitySet="PrinterChalans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrintJobW__Compa__32AB8735" Association="Self.FK__PrintJobW__Compa__32AB8735">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceiveds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Company__367C1819" Association="Self.FK__Product__Company__367C1819">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Compa__31B762FC" Association="Self.FK__PurchaseO__Compa__31B762FC">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TailorCha__Compa__2FCF1A8A" Association="Self.FK__TailorCha__Compa__2FCF1A8A">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="TailorChalanSend" EntitySet="TailorChalanSends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TailorCha__Compa__30C33EC3" Association="Self.FK__TailorCha__Compa__30C33EC3">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="TailorChalan" EntitySet="TailorChalans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__Compa__2EDAF651" Association="Self.FK__Transacti__Compa__2EDAF651">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vendor__CompanyI__37703C52" Association="Self.FK__Vendor__CompanyI__37703C52">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Vendor" EntitySet="Vendors" />
+          </AssociationSet>
           <AssociationSet Name="FK_Company_FinancialYear" Association="Self.FK_Company_FinancialYear">
             <End Role="FinancialYear" EntitySet="FinancialYears" />
             <End Role="Company" EntitySet="Companies" />
@@ -2585,9 +2625,9 @@
             <End Role="Company" EntitySet="Companies" />
             <End Role="UserCompany" EntitySet="UserCompanies" />
           </AssociationSet>
-          <AssociationSet Name="FK_Customer_Tenant" Association="Self.FK_Customer_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
+          <AssociationSet Name="FK__InvoiceMa__custo__3A4CA8FD" Association="Self.FK__InvoiceMa__custo__3A4CA8FD">
             <End Role="Customer" EntitySet="Customers" />
+            <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
           </AssociationSet>
           <AssociationSet Name="FK__InvoiceMa__finan__6477ECF3" Association="Self.FK__InvoiceMa__finan__6477ECF3">
             <End Role="FinancialYear" EntitySet="FinancialYears" />
@@ -2633,14 +2673,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__custo__6383C8BA" Association="Self.FK__InvoiceMa__custo__6383C8BA">
-            <End Role="Vendor" EntitySet="Vendors" />
-            <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
-          </AssociationSet>
-          <AssociationSet Name="FK__InvoiceMa__tenan__656C112C" Association="Self.FK__InvoiceMa__tenan__656C112C">
-            <End Role="Tenant" EntitySet="Tenants" />
-            <End Role="InvoiceMaster" EntitySet="InvoiceMasters" />
-          </AssociationSet>
           <AssociationSet Name="FK__Product__Unit__22751F6C" Association="Self.FK__Product__Unit__22751F6C">
             <End Role="MeasuringUnits" EntitySet="MeasuringUnits" />
             <End Role="Product" EntitySet="Products" />
@@ -2651,10 +2683,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__PrinterCh__Vendo__66603565" Association="Self.FK__PrinterCh__Vendo__66603565">
             <End Role="Vendor" EntitySet="Vendors" />
-            <End Role="PrinterChalan" EntitySet="PrinterChalans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PrinterChalan_Tenant" Association="Self.FK_PrinterChalan_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
             <End Role="PrinterChalan" EntitySet="PrinterChalans" />
           </AssociationSet>
           <AssociationSet Name="FK_PrinterChalan_User" Association="Self.FK_PrinterChalan_User">
@@ -2671,10 +2699,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__PrintJobW__Vendo__693CA210" Association="Self.FK__PrintJobW__Vendo__693CA210">
             <End Role="Vendor" EntitySet="Vendors" />
-            <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceiveds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PrintJobWorkReceived_Tenant" Association="Self.FK_PrintJobWorkReceived_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
             <End Role="PrintJobWorkReceived" EntitySet="PrintJobWorkReceiveds" />
           </AssociationSet>
           <AssociationSet Name="FK_PrintJobWorkReceived_User" Association="Self.FK_PrintJobWorkReceived_User">
@@ -2709,20 +2733,12 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK_Product_Tenant" Association="Self.FK_Product_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
           <AssociationSet Name="FK__PurchaseD__Purch__6E01572D" Association="Self.FK__PurchaseD__Purch__6E01572D">
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
             <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
           </AssociationSet>
           <AssociationSet Name="FK__PurchaseO__Vendo__6EF57B66" Association="Self.FK__PurchaseO__Vendo__6EF57B66">
             <End Role="Vendor" EntitySet="Vendors" />
-            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrders_Tenant" Association="Self.FK_PurchaseOrders_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
             <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrders_User" Association="Self.FK_PurchaseOrders_User">
@@ -2739,10 +2755,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__TailorCha__Vendo__6FE99F9F" Association="Self.FK__TailorCha__Vendo__6FE99F9F">
             <End Role="Vendor" EntitySet="Vendors" />
-            <End Role="TailorChalan" EntitySet="TailorChalans" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TailorChalan_Tenant" Association="Self.FK_TailorChalan_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
             <End Role="TailorChalan" EntitySet="TailorChalans" />
           </AssociationSet>
           <AssociationSet Name="FK_TailorChalan_User" Association="Self.FK_TailorChalan_User">
@@ -2765,25 +2777,13 @@
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="TailorChalanSend" EntitySet="TailorChalanSends" />
           </AssociationSet>
-          <AssociationSet Name="FK_TailorChalanSend_Tenant" Association="Self.FK_TailorChalanSend_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
-            <End Role="TailorChalanSend" EntitySet="TailorChalanSends" />
-          </AssociationSet>
           <AssociationSet Name="FK_TailorChalanSend_User" Association="Self.FK_TailorChalanSend_User">
             <End Role="User" EntitySet="Users" />
             <End Role="TailorChalanSend" EntitySet="TailorChalanSends" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Tenan__1F98B2C1" Association="Self.FK__Transacti__Tenan__1F98B2C1">
-            <End Role="Tenant" EntitySet="Tenants" />
-            <End Role="Transactions" EntitySet="Transactions" />
-          </AssociationSet>
           <AssociationSet Name="FK_User_Tenant" Association="Self.FK_User_Tenant">
             <End Role="Tenant" EntitySet="Tenants" />
             <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vendor_Tenant" Association="Self.FK_Vendor_Tenant">
-            <End Role="Tenant" EntitySet="Tenants" />
-            <End Role="Vendor" EntitySet="Vendors" />
           </AssociationSet>
           <AssociationSet Name="FK__Transacti__Vendo__778AC167" Association="Self.FK__Transacti__Vendo__778AC167">
             <End Role="Vendor" EntitySet="Vendors" />
@@ -2861,7 +2861,7 @@
                 <ScalarProperty Name="pan_number" ColumnName="pan_number" />
                 <ScalarProperty Name="gst_number" ColumnName="gst_number" />
                 <ScalarProperty Name="mobile" ColumnName="mobile" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2893,15 +2893,15 @@
               <MappingFragment StoreEntitySet="InvoiceMaster">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="invoice_no" ColumnName="invoice_no" />
-                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
                 <ScalarProperty Name="gross_amount" ColumnName="gross_amount" />
                 <ScalarProperty Name="net_amount" ColumnName="net_amount" />
                 <ScalarProperty Name="created_on" ColumnName="created_on" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
                 <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2929,7 +2929,7 @@
                 <ScalarProperty Name="bale_numbers" ColumnName="bale_numbers" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2960,7 +2960,7 @@
                 <ScalarProperty Name="chalan_number" ColumnName="chalan_number" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2984,9 +2984,9 @@
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3029,11 +3029,11 @@
                 <ScalarProperty Name="bale_numbers" ColumnName="bale_numbers" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
                 <ScalarProperty Name="GrossAmount" ColumnName="GrossAmount" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="Tax" ColumnName="Tax" />
                 <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3050,7 +3050,7 @@
                 <ScalarProperty Name="bill_number" ColumnName="bill_number" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3079,7 +3079,7 @@
                 <ScalarProperty Name="bill_number" ColumnName="bill_number" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3134,7 +3134,7 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ReferenceRecordId" ColumnName="ReferenceRecordId" />
                 <ScalarProperty Name="financial_year" ColumnName="financial_year" />
-                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3185,7 +3185,7 @@
                 <ScalarProperty Name="pan_number" ColumnName="pan_number" />
                 <ScalarProperty Name="gst_number" ColumnName="gst_number" />
                 <ScalarProperty Name="mobile" ColumnName="mobile" />
-                <ScalarProperty Name="tenant_id" ColumnName="tenant_id" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -19,9 +19,9 @@ namespace StockManager.Controllers
         // GET: Vendors
         public ActionResult Index()
         {
-            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             var vendors = db.Vendors.Include(v => v.VendorType)
-                .Where(x => x.tenant_id == tenant_id)
+                .Where(x => x.CompanyId == CompanyId)
                 .ToList();
             return View(vendors);
         }
@@ -53,7 +53,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number,tenant_id")] Vendor vendor)
+        public ActionResult Create([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number,CompanyId")] Vendor vendor)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace StockManager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number,tenant_id")] Vendor vendor)
+        public ActionResult Edit([Bind(Include = "Id,VendorTypeId,VendorName,PhoneNumber,Address,Description,IsActive,mobile,email,pan_number,gst_number,CompanyId")] Vendor vendor)
         {
             if (ModelState.IsValid)
             {

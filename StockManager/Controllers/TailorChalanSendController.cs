@@ -19,9 +19,9 @@ namespace StockManager.Controllers
         public ActionResult Index(int? page)
         {
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-            var tenant_id = Convert.ToInt32(Session["TenantID"]);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             var tailorChalans = db.TailorChalanSends
-                .Where(x => x.financial_year == year_id && x.tenant_id == tenant_id)
+                .Where(x => x.financial_year == year_id && x.CompanyId == CompanyId)
                 .Include(p => p.Vendor)                
                 .Include(p => p.TailorChalanSendDetails).OrderBy(x => x.ChalanDate);
             
@@ -79,14 +79,14 @@ namespace StockManager.Controllers
                 try
                 {
                     var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-                    var tenant_id = Convert.ToInt32(Session["TenantID"]);
+                    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
                     var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     tailorChalan.Created = dtDate;
                     tailorChalan.Updated = dtDate;
                     tailorChalan.created_by = creaded_by;
                     tailorChalan.financial_year = year_id;
-                    tailorChalan.tenant_id = tenant_id;
+                    tailorChalan.CompanyId = CompanyId;
 
                     db.TailorChalanSends.Add(tailorChalan);
                     db.SaveChanges();

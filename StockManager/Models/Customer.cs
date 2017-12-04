@@ -14,6 +14,12 @@ namespace StockManager.Models
     
     public partial class Customer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Customer()
+        {
+            this.InvoiceMasters = new HashSet<InvoiceMaster>();
+        }
+    
         public int Id { get; set; }
         public string CustomerName { get; set; }
         public string PhoneNumber { get; set; }
@@ -24,8 +30,10 @@ namespace StockManager.Models
         public string pan_number { get; set; }
         public string gst_number { get; set; }
         public string mobile { get; set; }
-        public Nullable<int> tenant_id { get; set; }
+        public int CompanyId { get; set; }
     
-        public virtual Tenant Tenant { get; set; }
+        public virtual Company Company { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
     }
 }

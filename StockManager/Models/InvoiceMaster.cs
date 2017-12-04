@@ -14,6 +14,7 @@ namespace StockManager.Models
     
     public partial class InvoiceMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public InvoiceMaster()
         {
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
@@ -21,20 +22,21 @@ namespace StockManager.Models
     
         public int Id { get; set; }
         public int invoice_no { get; set; }
-        public Nullable<int> customer_id { get; set; }
         public double gross_amount { get; set; }
         public double net_amount { get; set; }
         public Nullable<System.DateTime> created_on { get; set; }
         public Nullable<int> created_by { get; set; }
         public Nullable<int> financial_year { get; set; }
-        public Nullable<int> tenant_id { get; set; }
         public Nullable<double> discount { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
+        public int CompanyId { get; set; }
+        public int customer_id { get; set; }
     
+        public virtual Company Company { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual FinancialYear FinancialYear { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual User User { get; set; }
-        public virtual Vendor Vendor { get; set; }
-        public virtual Tenant Tenant { get; set; }
     }
 }
