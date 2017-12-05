@@ -1,73 +1,126 @@
 ﻿@model StockManager.Models.PrintJobWorkReceived
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    <h4>Printer Chalan # @Model.chalan_number</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Vendor Name
-        </dt>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Challan Detail</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.Vendor.VendorName)
-        </dd>
-        <dt>
-            Chalan Date
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ChalanDate)
-        </dd>       
-        <dt>
-            Description
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        
-    </dl>
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <h4>Challan #</h4>
+                        <div>
+                            @Model.chalan_number
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Vendor</h4>
+                        <div>
+                            @Model.Vendor.VendorName
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Date</h4>
+                        <div>
+                            @(Model.ChalanDate.ToString("dd-MMM-yyyy"))
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-8">
+                    <h4>Products</h4>
+                    <table id="products_table" class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Charges</th>
+                            <th>Qty</th>
+                            <th>Discount</th>
+                            <th>P.Total</th>
+                        </tr>
+                        @{
+                            if (Model.PrintJobWorkReceivedDetails.Count() > 0)
+                            {
+                                foreach (var item in Model.PrintJobWorkReceivedDetails)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                                        </td>
+                                        <td style='width: 15%' class='sale'>
+                                            Rs @item.Charges
+                                        </td>
+                                        <td style='width: 15%' class='qty'>
+                                            @item.Quantity
+                                        </td>
+
+                                        <td style='width: 15%' class='dscnt'>
+                                            Rs @item.Fold
+                                        </td>
+                                        <td class='ptotal'>
+                                            Rs @((item.Quantity * item.Charges))
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <h4>Total</h4>
+                    <table class="table">
+                        <tr>
+                            <td style="width: 70%">
+                                Subtotal
+                            </td>
+                            <td id="sub_total">
+                                Rs @Model.GrossCharges
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Tax
+                            </td>
+                            <td>
+                                Rs @Model.Tax
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Total
+                            </td>
+                            <td id="total_discount">
+                                Rs @Model.NetCharges
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
-<p>
-    Printer Chalan Details
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Product Name
-        </th>
-        <th>
-            Quantity
-        </th>
-        <th>
-            Fold
-        </th>
-        
-    </tr>
-    @{
-        if (Model != null && Model.PrintJobWorkReceivedDetails != null)
-        {
-            foreach (var item in Model.PrintJobWorkReceivedDetails)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Product.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fold)
-                    </td>
-                    
-                </tr>
-            }
-        }
-    }
-</table>
-<p>
-    @Html.ActionLink("Close", "Index", "PrintJobWorkReceived", new { @class = "btn btn-danger" })
-</p>
