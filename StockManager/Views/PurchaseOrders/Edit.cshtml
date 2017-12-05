@@ -3,7 +3,10 @@
     ViewBag.Title = "Edit Purchase Order";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
 <div class="portlet light">
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
@@ -43,17 +46,11 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Invoice Date</label>
-                            <div class="col-md-12">
-                                <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                    @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @id = "InvoiceDate" } })
-                                    <span class="add-on"><i class="icon-remove"></i></span>
-                                    <span class="add-on"><i class="icon-th"></i></span>
-                                    @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger InvoiceDateVal" })
-                                </div>
-                                <input type="hidden" id="dtp_input1" value="" /><br />
-                            </div>
+                            <label>Purchase Date</label>
+                            @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", Id = "InvoiceDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
                         </div>
+
                     </div>
                 </div>
                 <div class="row">
@@ -512,10 +509,11 @@
                     $('#quantity').siblings('span.quantityVal').text("Please Enter number in quantity.");
                     result = false;
                 }
+                /*
                 if ($('#fold').val() == "") {
                     $('#fold').siblings('span.foldVal').text("Please Enter Fold value.");
                     result = false;
-                }
+                }*/
                 if (isNaN($('#fold').val())) {
                     $('#fold').siblings('span.foldVal').text("Please Enter number in Fold.");
                     result = false;
