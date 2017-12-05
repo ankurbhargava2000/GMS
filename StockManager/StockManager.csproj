@@ -707,9 +707,9 @@
     <Content Include="Views\Company\Details.cshtml" />
     <Content Include="Views\Company\Edit.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
-    <None Include="Views\Shared\dashboard.cshtml" />
-    <None Include="Views\Shared\dashboard\sidebar.cshtml" />
-    <None Include="Views\Shared\dashboard\topnav.cshtml" />
+    <Content Include="Views\Shared\dashboard.cshtml" />
+    <Content Include="Views\Shared\dashboard\sidebar.cshtml" />
+    <Content Include="Views\Shared\dashboard\topnav.cshtml" />
     <Content Include="Views\Customers\Create.cshtml" />
     <Content Include="Views\Customers\Delete.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
