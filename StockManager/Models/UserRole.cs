@@ -14,6 +14,7 @@ namespace StockManager.Models
     
     public partial class UserRole
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserRole()
         {
             this.Users = new HashSet<User>();
@@ -23,6 +24,7 @@ namespace StockManager.Models
         public string RoleName { get; set; }
         public string Description { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }
 }

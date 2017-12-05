@@ -14,6 +14,7 @@ namespace StockManager.Models
     
     public partial class Customer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
             this.InvoiceMasters = new HashSet<InvoiceMaster>();
@@ -32,6 +33,7 @@ namespace StockManager.Models
         public int CompanyId { get; set; }
     
         public virtual Company Company { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceMaster> InvoiceMasters { get; set; }
     }
 }

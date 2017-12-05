@@ -14,6 +14,7 @@ namespace StockManager.Models
     
     public partial class PrintJobWorkReceived
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PrintJobWorkReceived()
         {
             this.PrintJobWorkReceivedDetails = new HashSet<PrintJobWorkReceivedDetail>();
@@ -29,9 +30,13 @@ namespace StockManager.Models
         public Nullable<int> created_by { get; set; }
         public Nullable<int> financial_year { get; set; }
         public int CompanyId { get; set; }
+        public Nullable<decimal> GrossCharges { get; set; }
+        public Nullable<decimal> Tax { get; set; }
+        public Nullable<decimal> NetCharges { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual FinancialYear FinancialYear { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual User User { get; set; }

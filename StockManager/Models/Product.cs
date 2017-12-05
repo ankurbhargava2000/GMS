@@ -14,14 +14,15 @@ namespace StockManager.Models
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
             this.PrinterChalanDetails = new HashSet<PrinterChalanDetail>();
             this.PrintJobWorkReceivedDetails = new HashSet<PrintJobWorkReceivedDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
-            this.TailorChalanDetails = new HashSet<TailorChalanDetail>();
             this.TailorChalanSendDetails = new HashSet<TailorChalanSendDetail>();
+            this.TailorChalanDetails = new HashSet<TailorChalanDetail>();
             this.TailorMaterialDetails = new HashSet<TailorMaterialDetail>();
             this.Transactions = new HashSet<Transaction>();
         }
@@ -36,15 +37,23 @@ namespace StockManager.Models
         public int CompanyId { get; set; }
     
         public virtual Company Company { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual MeasuringUnit MeasuringUnit { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrinterChalanDetail> PrinterChalanDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
         public virtual ProductType ProductType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
-        public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorMaterialDetail> TailorMaterialDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }
