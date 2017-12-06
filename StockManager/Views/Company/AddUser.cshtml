@@ -1,0 +1,75 @@
+﻿@model List<StockManager.Models.AddUser>
+
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Add Users To Company</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-plus"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+
+
+        @{
+            var company = ViewBag.Company as StockManager.Models.Company;
+            <h3>@company.Name</h3>
+        }
+        
+        <hr />
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken();
+
+            var i = 0;
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Add</th>
+                        <th>Username</th>
+                        <th>Is Default ?</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(x => x[i].AddToCompany, new { @checked = item.AddToCompany })
+                            </td>
+                            <td>
+                                @Html.HiddenFor(x => x[i].UserId)
+                                @Html.LabelFor(x => x[i].UserName, item.UserName)
+                            </td>
+                            <td>
+                                @Html.RadioButton("defaultFor", item.UserId, item.IsDefault, new { @class = "radioBtn" })
+                            </td>
+                        </tr>
+
+                        i++;
+                    }
+                </tbody>
+            </table>
+
+            <input type="submit" name="Submit" value="Submit" class="btn btn-default" />
+
+        }
+
+    </div>
+</div>

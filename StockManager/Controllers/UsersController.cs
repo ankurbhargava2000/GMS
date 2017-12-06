@@ -155,7 +155,7 @@ namespace StockManager.Controllers
                         Session["TenantID"] = user.TenantId;
                         //Session["FinancialYearID"] = user.Tenant.CurrentFinYear;
                         Session["RoleName"] = user.UserRole.RoleName;
-                        if (user.UserCompanies != null)
+                        if (user.UserCompanies.Count() > 0)
                         {
                             Session["CompanyID"] = user.UserCompanies.FirstOrDefault().CompanyId;
                             Session["FinancialYearID"] = user.UserCompanies.FirstOrDefault().Company.CurrentFinYear;

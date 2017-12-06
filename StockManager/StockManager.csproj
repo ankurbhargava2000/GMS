@@ -191,6 +191,7 @@
     <Compile Include="Models\Company.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompanyVM.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -721,6 +722,8 @@
     <Content Include="Views\TailorChalanSend\Edit.cshtml" />
     <Content Include="Views\TailorChalanSend\Index.cshtml" />
     <Content Include="Views\Users\profile.cshtml" />
+    <Content Include="Views\Company\AddUser.cshtml" />
+    <Content Include="Views\Shared\_AddUser.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

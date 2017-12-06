@@ -32,7 +32,7 @@
                     <th>
                         Mobile
                     </th>
-                    
+
                     <th>
                         Pan Number
                     </th>
@@ -56,7 +56,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Mobile)
                         </td>
-                        
+
                         <td>
                             @Html.DisplayFor(modelItem => item.PanNo)
                         </td>
@@ -65,6 +65,7 @@
                         </td>
 
                         <td>
+                            @Html.ActionLink("Add User", "AddUser", new { id = item.Id }, new { @class = "btn btn-primary btn-xs" }) |
                             @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are you sure you wish to delete this Customer?');", @class = "btn btn-danger btn-xs" })
                         </td>

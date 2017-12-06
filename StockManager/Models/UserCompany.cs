@@ -17,6 +17,7 @@ namespace StockManager.Models
         public int Id { get; set; }
         public Nullable<int> CompanyId { get; set; }
         public Nullable<int> UserId { get; set; }
+        public Nullable<bool> is_default { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual User User { get; set; }

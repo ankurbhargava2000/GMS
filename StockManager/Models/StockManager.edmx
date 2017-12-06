@@ -313,6 +313,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyId" Type="int" />
           <Property Name="UserId" Type="int" />
+          <Property Name="is_default" Type="bit" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -1729,6 +1730,7 @@
           <Property Name="UserId" Type="Int32" />
           <NavigationProperty Name="Company" Relationship="Self.FK_UserCompany_Company" FromRole="UserCompany" ToRole="Company" />
           <NavigationProperty Name="User" Relationship="Self.FK_UserCompany_User" FromRole="UserCompany" ToRole="User" />
+          <Property Name="is_default" Type="Boolean" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -3127,6 +3129,7 @@
           <EntitySetMapping Name="UserCompanies">
             <EntityTypeMapping TypeName="StockManagerModel.UserCompany">
               <MappingFragment StoreEntitySet="UserCompany">
+                <ScalarProperty Name="is_default" ColumnName="is_default" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

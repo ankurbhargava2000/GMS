@@ -127,6 +127,108 @@ namespace StockManager.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddUser(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+
+            var company_id = id;
+
+            var company = db.Companies.Find(company_id);
+            
+            if (company == null)
+                return HttpNotFound("Company Not Found");
+
+            var company_user = db.UserCompanies
+                .Where(x => x.CompanyId == company_id)
+                .ToList();
+
+            var default_user = company_user.Where(x => x.is_default == true).FirstOrDefault();
+
+            var users = db.Users.ToList();
+            var addUser = new List<AddUser>();
+
+            foreach (var item in users)
+            {
+                var nu = new AddUser()
+                {
+                    UserId = item.UserId,
+                    UserName = item.UserName,
+                    IsDefault = false,
+                    AddToCompany = false
+                };
+
+                if (default_user != null && default_user.UserId == item.UserId)
+                {
+                    nu.IsDefault = true;
+                }
+
+                if (company_user.Any(x => x.UserId == item.UserId))
+                {
+                    nu.AddToCompany = true;
+                }
+
+                addUser.Add(nu);
+
+            }
+
+            ViewBag.Company = company;
+
+            return View(addUser);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddUser(List<AddUser> users, int? defaultFor, int id)
+        {
+            try
+            {
+                var user_companies = db.UserCompanies.Where(x => x.CompanyId == id).ToList();
+
+                var addToCompany = users
+                    .Where(x => x.AddToCompany == true && !user_companies.Any(c => c.UserId == x.UserId))
+                    .ToList();
+
+                user_companies
+                    .Where(x => users.Any(r => r.UserId == x.UserId && r.AddToCompany == false))
+                    .ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
+
+                addToCompany.ForEach(x => db.UserCompanies.Add(new UserCompany { CompanyId = id, UserId = x.UserId }));
+                
+                db.SaveChanges();
+
+                user_companies = db.UserCompanies.Where(x => x.CompanyId == id)
+                    .ToList();
+
+                foreach (var item in user_companies)
+                {
+                    if (item.UserId == defaultFor)
+                    {
+                        item.is_default = true;
+                    }
+                    else
+                    {
+                        item.is_default = false;
+                    }
+
+                    db.Entry(item).State = EntityState.Modified;
+
+                }
+                
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+
+            }
+            catch ( Exception e)
+            {
+                
+            }
+
+            return RedirectToAction("AddUser", new { id = id });
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
