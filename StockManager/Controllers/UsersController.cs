@@ -155,10 +155,16 @@ namespace StockManager.Controllers
                         Session["TenantID"] = user.TenantId;
                         //Session["FinancialYearID"] = user.Tenant.CurrentFinYear;
                         Session["RoleName"] = user.UserRole.RoleName;
-                        if (user.UserCompanies.Count() > 0)
+                        if (user.UserCompanies.Count() == 0)
+                        {
+                            ViewBag.ErrorMsg = "You are not associated to any company. Please contact your administrator";
+                            return View(login);
+                        }
+                        else
                         {
                             Session["CompanyID"] = user.UserCompanies.FirstOrDefault().CompanyId;
                             Session["FinancialYearID"] = user.UserCompanies.FirstOrDefault().Company.CurrentFinYear;
+                            
                         }
                         return RedirectToLocal(login.return_url);
                     }
