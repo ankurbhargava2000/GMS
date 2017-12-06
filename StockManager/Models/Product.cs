@@ -19,12 +19,12 @@ namespace StockManager.Models
         {
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
             this.PrinterChalanDetails = new HashSet<PrinterChalanDetail>();
-            this.PrintJobWorkReceivedDetails = new HashSet<PrintJobWorkReceivedDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
             this.TailorChalanSendDetails = new HashSet<TailorChalanSendDetail>();
             this.TailorChalanDetails = new HashSet<TailorChalanDetail>();
             this.TailorMaterialDetails = new HashSet<TailorMaterialDetail>();
             this.Transactions = new HashSet<Transaction>();
+            this.PrintJobWorkReceivedDetails = new HashSet<PrintJobWorkReceivedDetail>();
         }
     
         public int Id { get; set; }
@@ -42,8 +42,6 @@ namespace StockManager.Models
         public virtual MeasuringUnit MeasuringUnit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrinterChalanDetail> PrinterChalanDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
         public virtual ProductType ProductType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
@@ -55,5 +53,7 @@ namespace StockManager.Models
         public virtual ICollection<TailorMaterialDetail> TailorMaterialDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
     }
 }

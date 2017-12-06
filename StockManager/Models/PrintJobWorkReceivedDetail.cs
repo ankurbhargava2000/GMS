@@ -20,7 +20,6 @@ namespace StockManager.Models
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<int> Fold { get; set; }
         public string Description { get; set; }
-        public Nullable<decimal> Charges { get; set; }
     
         public virtual PrintJobWorkReceived PrintJobWorkReceived { get; set; }
         public virtual Product Product { get; set; }
