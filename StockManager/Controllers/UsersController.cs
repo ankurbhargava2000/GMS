@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -11,9 +10,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Security;
 using System.Security.Principal;
-using PagedList;
-using System.Net.Mail;
 using StockManager.Helpers;
+using StockManager.Models.LogedUser;
 
 namespace StockManager.Controllers
 {
@@ -151,6 +149,8 @@ namespace StockManager.Controllers
                     {
                         SignInRemember(login.username, login.remember_me);
 
+                        LogedUser.user = user;
+
                         Session["UserID"] = user.UserId;
                         Session["TenantID"] = user.TenantId;
                         //Session["FinancialYearID"] = user.Tenant.CurrentFinYear;
@@ -211,6 +211,8 @@ namespace StockManager.Controllers
                 // Second we clear the principal to ensure the user does not retain any authentication
                 //required NameSpace: using System.Security.Principal;
                 HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+
+                LogedUser.user = null;
 
                 Session.Clear();
                 System.Web.HttpContext.Current.Session.RemoveAll();
