@@ -143,8 +143,6 @@ namespace StockManager.Controllers
                 .Where(x => x.CompanyId == company_id)
                 .ToList();
 
-            var default_user = company_user.Where(x => x.is_default == true).FirstOrDefault();
-
             var users = db.Users.ToList();
             var addUser = new List<AddUser>();
 
@@ -158,11 +156,11 @@ namespace StockManager.Controllers
                     AddToCompany = false
                 };
 
-                if (default_user != null && default_user.UserId == item.UserId)
+                if ( company_user.Any(x => x.is_default == true && x.UserId == item.UserId) )
                 {
                     nu.IsDefault = true;
                 }
-
+                
                 if (company_user.Any(x => x.UserId == item.UserId))
                 {
                     nu.AddToCompany = true;
@@ -179,40 +177,60 @@ namespace StockManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUser(List<AddUser> users, int? defaultFor, int id)
+        public ActionResult AddUser(List<AddUser> users, int id)
         {
             try
             {
-                var user_companies = db.UserCompanies.Where(x => x.CompanyId == id).ToList();
+                // Get all companies
+                var companies = db.UserCompanies.ToList();
 
+                // Get all UserCompanies by company_id
+                var user_companies = companies.Where(x => x.CompanyId == id).ToList();
+
+                // Seperate users to add to the company
                 var addToCompany = users
                     .Where(x => x.AddToCompany == true && !user_companies.Any(c => c.UserId == x.UserId))
                     .ToList();
-
+                addToCompany.ForEach(x => db.UserCompanies.Add(new UserCompany { CompanyId = id, UserId = x.UserId, is_default = x.IsDefault }));
+                
+                // Delete unselected users from this company
                 user_companies
                     .Where(x => users.Any(r => r.UserId == x.UserId && r.AddToCompany == false))
                     .ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
-
-                addToCompany.ForEach(x => db.UserCompanies.Add(new UserCompany { CompanyId = id, UserId = x.UserId }));
                 
+                // Save changes
                 db.SaveChanges();
-
-                user_companies = db.UserCompanies.Where(x => x.CompanyId == id)
-                    .ToList();
-
-                foreach (var item in user_companies)
+                  
+                foreach (var item in users)
                 {
-                    if (item.UserId == defaultFor)
+                    var uc = companies
+                        .Where(x => x.UserId == item.UserId && x.CompanyId == id)
+                        .FirstOrDefault();
+
+                    if (uc == null) continue;
+
+                    if ( item.IsDefault )
                     {
-                        item.is_default = true;
+                        uc.is_default = true;
+                        db.Entry(uc).State = EntityState.Modified;
+
+                        var ouc = companies
+                        .Where(x => x.UserId == item.UserId && x.CompanyId != id)
+                        .ToList();
+
+                        foreach (var item2 in ouc)
+                        {
+                            item2.is_default = false;
+                            db.Entry(item2).State = EntityState.Modified;
+                        }
+
                     }
                     else
-                    {
-                        item.is_default = false;
+                    {                        
+                        uc.is_default = false;
+                        db.Entry(uc).State = EntityState.Modified;
                     }
-
-                    db.Entry(item).State = EntityState.Modified;
-
+                                        
                 }
                 
                 db.SaveChanges();
