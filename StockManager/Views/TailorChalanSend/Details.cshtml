@@ -1,80 +1,98 @@
 ﻿@model StockManager.Models.TailorChalanSend
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Tailor Challan Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    <h4>Printer Chalan# @Model.Id</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Vendor Name
-        </dt>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Tailor Chalans</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Challan #</h4>
+                        <div>
+                            @Model.ChalanNo
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Vendor</h4>
+                        <div>
+                            @Model.Vendor.VendorName
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Date</h4>
+                        <div>
+                            @(Model.ChalanDate.ToString("dd-MMM-yyyy"))
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <h4>Bill Number#</h4>
+                        <div>
+                            @Model.bill_number
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <h4>Description</h4>
+                        <div>
+                            @Model.Description
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Products</h4>
+                    <table id="products_table" class="table">
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Qty</th>
+                            
+                        </tr>
+                        @{
+                            if (Model != null && Model.TailorChalanSendDetails != null)
+                            {
+                                foreach (var item in Model.TailorChalanSendDetails)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                                        </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.Vendor.VendorName)
-        </dd>
-        <dt>
-            Chalan Number
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ChalanNo)
-        </dd>
-        <dt>
-            Chalan Date
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ChalanDate)
-        </dd>
-        <dt>
-            Bill Number
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.bill_number)
-        </dd>
-        <dt>
-            Description
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
+                                        <td style='width: 15%' class='qty'>
+                                            @item.Quantity
+                                        </td>
+                                        
+                                    </tr>
+                                }
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    Chalan Details
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Product Name
-        </th>
-        <th>
-            Quantity
-        </th>
-        
-    </tr>
-    @{
-        if (Model != null && Model.TailorChalanSendDetails != null)
-        {
-            foreach (var item in Model.TailorChalanSendDetails)
-            {
-
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Product.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    
-                </tr>
-                
-            }
-        }
-    }
-</table>
-<p>
-    @Html.ActionLink("Close", "Index", "PrinterChalans", new { @class = "btn btn-danger" })
-</p>

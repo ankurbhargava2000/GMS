@@ -52,23 +52,23 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item start @Html.IsSelected(controller: "TailorChalan")">
-                <a href="@Url.Action("Index", "TailorChalan")" class="nav-link nav-toggle">
+            <li class="nav-item start @Html.IsSelected(controller: "TailorChalanSend")">
+                <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="fa fa-list fa-fw"></i>
                     <span class="title">Tailor Challan</span>
                 </a>
-                @*<ul class="sub-menu">
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <span class="title">Example 1</span>
-                            </a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="#" class="nav-link ">
-                                <span class="title">Example 2</span>
-                            </a>
-                        </li>
-                    </ul>*@
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "TailorChalanSend")" class="nav-link ">
+                            <span class="title">Tailor Chalans</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "TailorChalan")" class="nav-link ">
+                            <span class="title">Tailor Job Work Received</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item start @Html.IsSelected(controller: "Invoices")">
                 <a href="@Url.Action("Index", "Invoices")" class="nav-link nav-toggle">
