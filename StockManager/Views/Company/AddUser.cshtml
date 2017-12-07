@@ -56,7 +56,6 @@
                             <td>
                                 @Html.HiddenFor(x => x[i].UserId)
                                 @Html.LabelFor(x => x[i].UserName, item.UserName)
-                                @item.UserId
                             </td>
                             <td>
                                 @Html.CheckBoxFor(x => x[i].IsDefault, new { @checked = item.IsDefault })
