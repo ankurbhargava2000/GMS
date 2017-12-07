@@ -181,58 +181,56 @@ namespace StockManager.Controllers
         {
             try
             {
-                // Get all companies
-                var companies = db.UserCompanies.ToList();
 
-                // Get all UserCompanies by company_id
-                var user_companies = companies.Where(x => x.CompanyId == id).ToList();
+                var userCompanies = db.UserCompanies.ToList();
+                var companyById = userCompanies.Where(x => x.CompanyId == id).ToList();
 
-                // Seperate users to add to the company
+                // Delete userCompany entries
+                companyById
+                .Where(x => users.Any(r => r.UserId == x.UserId && r.AddToCompany == false))
+                .ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
+
+                // Add new userCompany entries
                 var addToCompany = users
-                    .Where(x => x.AddToCompany == true && !user_companies.Any(c => c.UserId == x.UserId))
+                    .Where(x => x.AddToCompany == true && !companyById.Any(c => c.UserId == x.UserId))
                     .ToList();
                 addToCompany.ForEach(x => db.UserCompanies.Add(new UserCompany { CompanyId = id, UserId = x.UserId, is_default = x.IsDefault }));
-                
-                // Delete unselected users from this company
-                user_companies
-                    .Where(x => users.Any(r => r.UserId == x.UserId && r.AddToCompany == false))
-                    .ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
-                
-                // Save changes
+
                 db.SaveChanges();
-                  
+
                 foreach (var item in users)
                 {
-                    var uc = companies
+                    // Get all companies
+                    var uc = db.UserCompanies
                         .Where(x => x.UserId == item.UserId && x.CompanyId == id)
                         .FirstOrDefault();
 
                     if (uc == null) continue;
 
-                    if ( item.IsDefault )
+                    if (item.IsDefault)
                     {
                         uc.is_default = true;
                         db.Entry(uc).State = EntityState.Modified;
-
-                        var ouc = companies
+                        
+                        var ouc = db.UserCompanies
                         .Where(x => x.UserId == item.UserId && x.CompanyId != id)
                         .ToList();
 
                         foreach (var item2 in ouc)
                         {
                             item2.is_default = false;
-                            db.Entry(item2).State = EntityState.Modified;
+                            db.Entry(item2).State = EntityState.Modified;                            
                         }
 
                     }
                     else
-                    {                        
+                    {
                         uc.is_default = false;
                         db.Entry(uc).State = EntityState.Modified;
                     }
-                                        
+
                 }
-                
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
