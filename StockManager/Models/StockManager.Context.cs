@@ -35,8 +35,6 @@ namespace StockManager.Models
         public virtual DbSet<MeasuringUnit> MeasuringUnits { get; set; }
         public virtual DbSet<PrinterChalan> PrinterChalans { get; set; }
         public virtual DbSet<PrinterChalanDetail> PrinterChalanDetails { get; set; }
-        public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
-        public virtual DbSet<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
@@ -53,6 +51,8 @@ namespace StockManager.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
+        public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
+        public virtual DbSet<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
     
         public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> companyId, Nullable<int> yearId)
         {

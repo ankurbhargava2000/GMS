@@ -285,6 +285,9 @@
     <Compile Include="Models\USP_ProductWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\USP_StockLedger_Result.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USP_VendorWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
