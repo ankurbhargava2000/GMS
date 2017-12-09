@@ -4,7 +4,10 @@
     ViewBag.Title = "Update Tailor Chalan";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
 <div class="portlet light">
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
@@ -23,92 +26,58 @@
 
         @using (Html.BeginForm())
         {
-            <div class="form-horizontal">
-                
+            <div class="container-fluid">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="container-fluid">
-                    <div class="row">
-                        <div id="div1" class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                @Html.Label("Vendor", "VendorId", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
-                                    @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div id="div2" class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ChalanNo, "Chalan#", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
-                                    @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
+                @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
+                @Html.HiddenFor(x => x.CompanyId, new { Value = Session["CompanyId"] })
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Chalan #</label>
+                            @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", @id = "ChalanNo" } })
+                            @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger ChalanNoVal" })
                         </div>
                     </div>
-                    <div class="row">
-                        <div id="div2" class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                @Html.Label("Chalan Date", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    <div class="controls input-append date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input1">
-                                        @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", @id = "ChalanDate" } })
-                                        <span class="add-on"><i class="icon-remove"></i></span>
-                                        <span class="add-on"><i class="icon-th"></i></span>
-                                    </div>
-                                    <input type="hidden" id="dtp_input1" value="" /><br />
-                                    @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Vendor</label>
+                            @Html.DropDownList("VendorId", null, htmlAttributes: new { @class = "form-control col-md-7", @id = "Vendor" })
+                            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger VendorVal" })
                         </div>
                     </div>
-                    <div class="row">
-                        <div id="div1" class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.bill_number, "Bill Number", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
-                                    @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div id="div2" class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-8">
-                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
-                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Chalan Date</label>
+                            @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", Id = "ChalanDate", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger ChalanDateVal" })
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Bill Number</label>
+                            @Html.EditorFor(model => model.bill_number, new { htmlAttributes = new { @class = "form-control", @id = "BillNo" } })
+                            @Html.ValidationMessageFor(model => model.bill_number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Description</label>
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "Description" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-                    <div class="row">
-                        <div id="div1" class="col-md-6 col-xs-12 mt">
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                </div>
-                                <div class="col-xs-12 col-md-8">
-                                    <input id="btnShowModal" type="button" value="Add Product" class="btn btn-success" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-<<<<<<< HEAD
-                    <div class="row">
-                        <div id="div1" class="col-md-12 col-xs-12">
-                            <div class="form-group">
-                                <table class="table table-striped table-advance table-hover" id="tailorChalanItems">
-                                    <tr id="productItemRow">
-=======
             <div class="row">
-                <div id="div1" class="col-md-12 col-xs-12">
+                <div class="col-md-10 col-xs-12">
                     <div class="form-group">
                         <table class="table table-striped table-advance table-hover" id="tailorChalanItems">
                             <tr id="productItemRow">
+
                                 <td>
                                     <label class="productName">Product Name</label>
                                     <input type="hidden" class="productId" value="" />
@@ -131,177 +100,126 @@
                                 {
                                     count++;
                                     var matarialDetail = "";
-                                    
+
+                                    foreach (var matarial in item.TailorMaterialDetails)
                                     {
-                                        foreach (var matarial in item.TailorMaterialDetails)
-                                        {
-                                            matarialDetail += (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") + matarial.ProductId + "\",\"Quantity\":\"" + matarial.Quantity + "\"}";
-                                        }
+                                        matarialDetail += (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") + matarial.ProductId + "\",\"Quantity\":\"" + matarial.Quantity + "\",\"Id\":\"" + matarial.Id + "\",\"TailorChalanDetailsId\":\"" + matarial.TailorChalanDetailsId + "\"}     ";
                                     }
+
                                     <tr>
->>>>>>> f4769aafca9c4225597b59afff8c89af995c146c
                                         <td>
-                                            <label class="productName">Product Name</label>
-                                            <input type="hidden" class="productId" value="" />
-                                            <input type="hidden" class="matarialList" value="" />
-                                            <input type="hidden" class="rowCount" value="" />
-                                            <input type="hidden" class="matarialDetails" value="" />
+                                            <label class="productName">@item.Product.ProductName</label>
+                                            <input type="hidden" class="productId" value="@item.ProductId" />
+                                            <input type="hidden" class="rowCount" value="@count" />
+                                            <input type="hidden" class="matarialDetails" value="@matarialDetail" />
+                                            <input type="hidden" class="Id" value="@item.Id" />
                                         </td>
                                         <td>
-                                            <label class="productQuantity">Quantity</label>
+                                            <label class="productQuantity">@item.Quantity</label>
                                         </td>
                                         <td>
-                                            <label class="laborCost">Labor Cost</label>
+                                            <label class="laborCost">@item.LaborCost</label>
                                         </td>
-                                        <td class="itemEditRow"></td>
+                                        <td class="itemEditRow">
+                                            <button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button>
+                                            <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>
+                                        </td>
                                     </tr>
-                                    @if (Model != null && Model.TailorChalanDetails != null)
-                                    {
-                                        var count = 0;
-                                        foreach (var item in Model.TailorChalanDetails)
-                                        {
-                                            count++;
-                                            var matarialDetail = "";
-                                            if (Model.IsGivenToTailor == false)
-                                            {
-                                                foreach (var matarial in item.TailorMaterialDetails)
-                                                {
-                                                    matarialDetail += (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") + matarial.ProductId + "\",\"Quantity\":\"" + matarial.Quantity + "\"}";
-                                                }
-                                            }
-                                            <tr>
-                                                <td>
-                                                    <label class="productName">@item.Product.ProductName</label>
-                                                    <input type="hidden" class="productId" value="@item.ProductId" />
-                                                    <input type="hidden" class="rowCount" value="@count" />
-                                                    <input type="hidden" class="matarialDetails" value="@matarialDetail" />
-                                                    <input type="hidden" class="Id" value="@item.Id" />
-                                                </td>
-                                                <td>
-                                                    <label class="productQuantity">@item.Quantity</label>
-                                                </td>
-                                                <td>
-                                                    <label class="laborCost">@item.LaborCost</label>
-                                                </td>
-                                                <td class="itemEditRow">
-                                                    <button type="button" class="btn btn-warning btn-xs editItem" title="Edit"><i class="fa fa-pencil"></i></button>
-                                                    <button type="button" class="btn btn-danger btn-xs remove" title="Delete"><i class="fa fa-trash-o"></i></button>
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                </table>
-                            </div>
-                        </div>
+                                }
+                            }
+                        </table>
                     </div>
-
-                    <div class="row">
-                        <div id="div1" class="col-md-6 col-xs-12">
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                </div>
-                                <div class="col-xs-12 col-md-8">
-                                    <input type="button" id="btnSubmit" class="btn btn-success" value="Save Tailor Chalan" />
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-2 col-xs-12">
+                    <div class="form-group">
+                        <button id="btnShowModal" type="button" class="btn btn-block btn-success">
+                            Add Product
+                        </button>
                     </div>
+                </div>
+            </div>
 
-                    <div class="modal fade" tabindex="-1" id="itemModel"
-                         data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">
-                                        ×
-                                    </button>
-                                    <h4 class="modal-title">Add Product</h4>
-                                </div>
-<<<<<<< HEAD
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            @Html.Label("Product", htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div class="col-md-10">
-                                                @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
-                                                @Html.ValidationMessage("ProductId", "", new { @class = "text-danger" })
-                                                <input type="hidden" class="IdEdit" id="IdEdit" />
-                                                <input type="hidden" class="countEdit" id="countEdit" />
-=======
-                                
-                                {
-                                    <div class="form-group">
-                                        <div class="details form-horizontal">
-                                            <h2>
-                                                &nbsp; Tailor Material Details
-                                            </h2>
-                                            <table class="table table-responsive">
-                                                <tr>
-                                                    <td>Product</td>
-                                                    <td>Quantity</td>
-                                                    <td>
-                                                        @*<input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success ">*@
-                                                        <i id="addNewMaterial" class="fa fa-plus-circle"></i>
-                                                        <span>Add Material</span>
-                                                    </td>
-                                                </tr>
-                                                <tr class="mycontainer hiddenDiv" id="mainrow">
-                                                    <td class="col-md-6 col-xs-6">
-                                                        @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
-                                                    </td>
-                                                    <td class="col-md-3 col-xs-3">
-                                                        <input type="text" id="materialQuantity" class="materialQuantity" value="0" />
-                                                    </td>
-                                                    <td class="col-md-3 col-xs-3">
-                                                        <input type="button" id="addMaterial" value="add Material" class="btn-xs btn-success" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <div id="orderItems">
-                                                <table class="table table-responsive" id="tailorMaterialDetails"></table>
->>>>>>> f4769aafca9c4225597b59afff8c89af995c146c
+            <div class="row">
+                <div>
+                    <button id="btnSubmit" type="button" class="btn btn-block btn-success">
+                        Save Challan
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" id="itemModel"
+                 data-keyboard="false" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                ×
+                            </button>
+                            <h4 class="modal-title">Add Product</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="portlet-body">
+                                <form>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2">
+                                                    <label>Product</label>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "form-control", @id = "product" })
+                                                    @Html.ValidationMessage("ProductId", "", new { @class = "text-danger productIdVal" })
+                                                    <input type="hidden" class="IdEdit" id="IdEdit" />
+                                                    <input type="hidden" class="countEdit" id="countEdit" />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            @Html.Label("Quantity", htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div class="col-md-10">
-                                                @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
-                                                @Html.ValidationMessage("Quantity", "", new { @class = "text-danger" })
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="col-md-2">
+                                                        <label>Quantity</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", @id = "quantity" } })
+                                                        @Html.ValidationMessage("Quantity", "", new { @class = "text-danger quantityVal" })
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            @Html.Label("LaborCost", htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div class="col-md-10">
-                                                @Html.Editor("LaborCost", new { htmlAttributes = new { @class = "form-control", @id = "laborCost" } })
-                                                @Html.ValidationMessage("LaborCost", "", new { @class = "text-danger" })
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="col-md-2">
+                                                        <label>Labor Cost</label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @Html.Editor("LaborCost", new { htmlAttributes = new { @class = "form-control", @id = "laborCost" } })
+                                                        @Html.ValidationMessage("LaborCost", "", new { @class = "text-danger laborCostVal" })
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        @if (Model.IsGivenToTailor == false)
-                                        {
+                                        <div class="row">
                                             <div class="form-group">
                                                 <div class="details form-horizontal">
-                                                    <h2>
-                                                        &nbsp; Tailor Material Details
-                                                    </h2>
+                                                    <h4 class="modal-title">
+                                                        Tailor Material Details
+                                                    </h4>
                                                     <table class="table table-responsive">
-                                                        <tr>
-                                                            <td>Product</td>
-                                                            <td>Quantity</td>
-                                                            <td>
-                                                                @*<input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success ">*@
-                                                                <i id="addNewMaterial" class="fa fa-plus-circle"></i>
-                                                                <span>Add Material</span>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="mycontainer hiddenDiv" id="mainrow">
-                                                            <td class="col-md-6 col-xs-6">
+                                                        <tr class="mycontainer" id="mainrow">
+                                                            <td class="col-md-3 col-xs-12">
                                                                 @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
+                                                                @Html.ValidationMessage("materialId", "", new { @class = "text-danger materialIdVal" })
+                                                                <input type="hidden" class="Id" value="" />
+                                                                <input type="hidden" class="TailorChalanDetailsId" value="" />
                                                             </td>
-                                                            <td class="col-md-3 col-xs-3">
+                                                            <td class="col-md-3 col-xs-12">
                                                                 <input type="text" id="materialQuantity" class="materialQuantity" value="0" />
+                                                                @Html.ValidationMessage("materialQuantity", "", new { @class = "text-danger materialQuantityVal" })
                                                             </td>
-                                                            <td class="col-md-3 col-xs-3">
-                                                                <input type="button" id="addMaterial" value="add Material" class="btn-xs btn-success" />
+                                                            <td class="col-md-4 col-xs-12">
+                                                                <input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success" />
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -310,35 +228,48 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
-                                    <button type="button" id="btnHideModal" class="btn btn-danger">
-                                        Close
-                                    </button>
-                                </div>
+                                        </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="addProductItem" type="button" class="btn btn-success">Add Product</button>
+                                <button type="button" id="btnHideModal" class="btn btn-danger">
+                                    Close
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         }
-
     </div>
 </div>
-
 @section scripts
 {
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#ChalanDate').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            });
+
             $("#btnShowModal").click(function () {
                 $('#quantity').val('');
                 $('#laborCost').val('');
                 $('#IdEdit').val('');
                 $('#countEdit').val('');
                 $('#tailorMaterialDetails').html('');
+                $('#product').siblings('span.productIdVal').text("");
+                $('#laborCost').siblings('span.laborCostVal').text("");
+                $('#materialId').siblings('span.materialIdVal').text("");
+                $('#materialQuantity').siblings('span.materialQuantityVal').text("");
                 $("#itemModel").modal('show');
             });
 
@@ -348,34 +279,37 @@
                 $('#IdEdit').val('');
                 $('#countEdit').val('');
                 $('#tailorMaterialDetails').html('');
+                $('#product').siblings('span.productIdVal').text("");
+                $('#laborCost').siblings('span.laborCostVal').text("");
+                $('#materialId').siblings('span.materialIdVal').text("");
+                $('#materialQuantity').siblings('span.materialQuantityVal').text("");
                 $("#itemModel").modal('hide');
             });
 
             $("#addNewMaterial").click(function(){
-                var $newRow = $('#mainrow').clone(true, true).removeAttr('id').removeClass('hiddenDiv');
-                $('#materialId', $newRow).val($('#materialId').val());
-                //$('.materialId', $newRow).text($('#materialId').text());
-                $('#materialQuantity', $newRow).val($('#materialQuantity').val());
-                $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
-                //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
-                $('#tailorMaterialDetails').append($newRow);
+                var isAllValid = validatePopup();
+                if (isAllValid) {
+                    var $newRow = $('#mainrow').clone(true, true).removeAttr('id').removeClass('hiddenDiv');
+                    $('#materialId', $newRow).val($('#materialId').val());
+                    //$('.materialId', $newRow).text($('#materialId').text());
+                    $('#materialQuantity', $newRow).val($('#materialQuantity').val());
+                    $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
+                    //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
+                    $('#tailorMaterialDetails').append($newRow);
+                }
             });
 
             $('#addProductItem').click(function () {
                 //validation and add order items
-                var isAllValid = true;
+                var isAllValid = validateModel();
+                $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                    matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\",\"Id\":\"" +  $('.Id', this).val() + "\",\"TailorChalanDetailsId\":\"" +  $('.TailorChalanDetailsId', this).val() + "\"}";
+                });
 
                 if (isAllValid) {
                     if($('#countEdit').val() == '')
                     {
                         var matarialDetail = "";
-                        if(Model.IsGivenToTailor == false)
-                        {
-                            $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
-                                matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
-                            });
-                        }
-
                         var $newRow = $('#productItemRow').clone().removeAttr('id');
 
                         $('.productId', $newRow).val($('#product').val());
@@ -398,12 +332,6 @@
                             //update product list
                             if($('.rowCount', this).val() == $('#countEdit').val())
                             {
-                                var matarialDetail = "";
-
-                                $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
-                                    matarialDetail +=  (matarialDetail == "" ? "{\"ProductId\":\"" : ",{\"ProductId\":\"") +  $('.materialId', this).val() + "\",\"Quantity\":\"" +  $('.materialQuantity', this).val() + "\"}";
-                                });
-
                                 $('.productId', this).val($('#product').val());
                                 $('.productName', this).text($('#product').text());
                                 $('.productQuantity', this).text($('#quantity').val());
@@ -444,6 +372,8 @@
                         var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
                         $('#materialId', $newRow).val(matObj[i].ProductId);
                         $('#materialQuantity', $newRow).val(matObj[i].Quantity);
+                        $('#Id', $newRow).val(matObj[i].Id);
+                        $('#TailorChalanDetailsId', $newRow).val(matObj[i].TailorChalanDetailsId);
                         $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
                         $('#tailorMaterialDetails').append($newRow);
                     }
@@ -458,6 +388,8 @@
                 for(var i = 0; i < matObj.length; i++)
                 {
                     var objMat = {
+                        Id:(matObj[i].Id == ""? "0" : matObj[i].Id),
+                        TailorChalanDetailsId:(matObj[i].TailorChalanDetailsId == "" ? "0" : matObj[i].TailorChalanDetailsId),
                         ProductId: matObj[i].ProductId,
                         Quantity: matObj[i].Quantity
                     }
@@ -467,55 +399,56 @@
             }
 
             $('#btnSubmit').click(function () {
-                var isAllValid = true;
-
+                var isAllValid = validateMainPage();
                 //validate order items
                 var list = [];
                 var errorItemCount = 0;
-                $('#tailorChalanItems tbody tr').each(function (index, ele) {
-                    if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
-                        var orderItem = {
-                            Id:$('.Id', this).val(),
-                            ProductId: $('.productId', this).val(),
-                            Quantity: $('.productQuantity', this).text(),
-                            LaborCost: $('.laborCost', this).text(),
-                            TailorMaterialDetails: getmatatialobj($('.matarialDetails', this).val())
+                if (isAllValid) {
+                    $('#tailorChalanItems tbody tr').each(function (index, ele) {
+                        if ($('.productId', this).val() != null && $('.productId', this).val() != "0" && $('.productId', this).val() != "") {
+                            var orderItem = {
+                                Id:$('.Id', this).val(),
+                                ChalanId: @Model.Id,
+                                ProductId: $('.productId', this).val(),
+                                Quantity: $('.productQuantity', this).text(),
+                                LaborCost: $('.laborCost', this).text(),
+                                TailorMaterialDetails: getmatatialobj($('.matarialDetails', this).val())
+                            }
+                            list.push(orderItem);
                         }
-                        list.push(orderItem);
                     }
-                }
-                );
+                    );
 
-                var data = {
-                    Id:@Model.Id,
-                    VendorId: $('#Vendor').val(),
-                    ChalanDate: $('#ChalanDate').val(),
-                    ChalanNo: $('#ChalanNo').val(),
-                    CompanyId: @Model.CompanyId,
-                    financial_year: @Model.financial_year,
-                    created_by: @Model.created_by,
-                    TailorChalanDetails: list,
-                }
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/tailorChalan/Edit',
-                    data: JSON.stringify(data),
-                    contentType: 'application/json',
-                    success: function (data) {
-                        if (data != "0") {
-                            alert('Printer Chalan Updated Successfully.');
-                            window.location.href = '/TailorChalan/Details/' + data;
-                        }
-                        else {
-                            //$(this).val('Save Printer Chalan');
-                            alert('Error in saving printer chalan');
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error);
+                    var data = {
+                        Id:@Model.Id,
+                        VendorId: $('#Vendor').val(),
+                        ChalanDate: $('#ChalanDate').val(),
+                        ChalanNo: $('#ChalanNo').val(),
+                        bill_number: $('#BillNo').val(),
+                        Description: $('#Description').val(),
+                        TailorChalanDetails: list,
                     }
-                });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/tailorChalan/Edit',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data != "0") {
+                                alert('Tailor Chalan Updated Successfully.');
+                                window.location.href = '/TailorChalan/Details/' + data;
+                            }
+                            else {
+                                //$(this).val('Save Printer Chalan');
+                                alert('Error in saving tailor chalan');
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
             });
 
             //remove button click event
@@ -545,6 +478,132 @@
                 else
                 {
                     $(this).parents('tr').remove();
+                }
+            });
+
+            // validation scripts
+            function validatePopup() {
+                var result = true;
+                if ($('#materialQuantity').val() == "") {
+                    $('#materialQuantity').siblings('span.materialQuantityVal').text("Please Enter Quantity.");
+                    result = false;
+                }
+                if (isNaN($('#materialQuantity').val())) {
+                    $('#materialQuantity').siblings('span.materialQuantityVal').text("Please Enter number in quantity.");
+                    result = false;
+                }
+
+                $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                    if ($('.materialId', this).val() == $('#materialId').val()) {
+                        $('#materialId').siblings('span.materialIdVal').text("Product is already added.");
+                        result = false;
+                    }
+                });
+                return result;
+            }
+            $('#materialQuantity').change(function () {
+                if ($('#materialQuantity').val() != "" && !isNaN($('#materialQuantity').val())) {
+                    $('#materialQuantity').siblings('span.materialQuantityVal').text("");
+                }
+            });
+
+            $("#materialId").change(function () {
+                $('#tailorMaterialDetails tbody tr').each(function (index, ele) {
+                    if ($('.materialId', this).val() == $('#materialId').val()) {
+                        $('#materialId').siblings('span.materialIdVal').text("Product is already added.");
+                    }
+                    else {
+                        $('#materialId').siblings('span.materialIdVal').text("");
+                    }
+                });
+            });
+
+            function validateModel() {
+                var result = true;
+                if ($('#quantity').val() == "") {
+                    $('#quantity').siblings('span.quantityVal').text("Please Enter Quantity.");
+                    result = false;
+                }
+                if (isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.quantityVal').text("Please Enter number in quantity.");
+                    result = false;
+                }
+                if ($('#laborCost').val() == "") {
+                    $('#laborCost').siblings('span.laborCostVal').text("Please Enter Labor Cost.");
+                    result = false;
+                }
+                if (isNaN($('#laborCost').val())) {
+                    $('#laborCost').siblings('span.laborCostVal').text("Please Enter number in Labor Cost.");
+                    result = false;
+                }
+                $('#tailorChalanItems tbody tr').each(function (index, ele) {
+                    if ($('.productId', this).val() == $('#product').val()) {
+                        $('#product').siblings('span.productIdVal').text("Product is already added.");
+                        result = false;
+                    }
+                });
+                return result;
+            }
+
+            $('#quantity').change(function () {
+                if ($('#quantity').val() != "" && !isNaN($('#quantity').val())) {
+                    $('#quantity').siblings('span.quantityVal').text("");
+                }
+            });
+            $('#fold').change(function () {
+                if ($('#fold').val() != "" && !isNaN($('#fold').val())) {
+                    $('#fold').siblings('span.foldVal').text("");
+                }
+            });
+            $('#rate').change(function () {
+                if ($('#rate').val() != "" && !isNaN($('#rate').val())) {
+                    $('#rate').siblings('span.rateVal').text("");
+                }
+            });
+            $('#laborCost').change(function () {
+                if ($('#laborCost').val() != "" && !isNaN($('#laborCost').val())) {
+                    $('#laborCost').siblings('span.laborCostVal').text("");
+                }
+            });
+
+            $("#product").change(function () {
+                $('#purchaseOrderItems tbody tr').each(function (index, ele) {
+                    if ($('.productId', this).val() == $('#product').val()) {
+                        $('#product').siblings('span.productIdVal').text("Product is already added.");
+                    }
+                    else {
+                        $('#product').siblings('span.productIdVal').text("");
+                    }
+                });
+            });
+
+            function validateMainPage() {
+                var result = true;
+                if ($('#ChalanNo').val() == "") {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("Please Enter Chalan Number.");
+                    result = false;
+                }
+                if ($('#ChalanDate').val() == "") {
+                    $('#ChalanDate').siblings('span.ChalanDateVal').text("Please Enter Chalan Date value.");
+                    result = false;
+                }
+                var tableRows = $("#tailorChalanItems tbody tr").length;
+
+                if (tableRows <= 1) {
+                    alert('Please enter at least 1 item for this invoice.');
+                    result = false;
+                }
+                return result;
+            }
+
+            $('#ChalanNo').change(function () {
+                if ($('#ChalanNo').val() != "" && !isNaN($('#ChalanNo').val())) {
+                    $('#ChalanNo').siblings('span.ChalanNoVal').text("");
+                }
+            });
+            $('#ChalanDate').change(function () {
+                if ($('#ChalanDate').val() != "") {
+                    $('#ChalanDate').siblings('span.ChalanDateVal').text("");
                 }
             });
         });

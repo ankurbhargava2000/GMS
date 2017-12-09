@@ -45,7 +45,7 @@ namespace StockManager.Controllers
         public ActionResult Create()
         {
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1");
-            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
+            ViewBag.Unit = new SelectList(db.MeasuringUnits, "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace StockManager.Controllers
             }
 
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1", product.ProductTypeId);
-            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
+            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name", product.Unit);
             return View(product);
         }
 
@@ -81,7 +81,7 @@ namespace StockManager.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1", product.ProductTypeId);
-            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
+            ViewBag.Unit = new SelectList(db.MeasuringUnits, "Id", "Name", product.Unit);
             return View(product);
         }
 
@@ -99,7 +99,7 @@ namespace StockManager.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1", product.ProductTypeId);
-            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name");
+            ViewBag.Unit = new SelectList(db.MeasuringUnits, "Id", "Name",product.Unit);
             return View(product);
         }
 

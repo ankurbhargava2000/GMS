@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using System.Data.Entity.Validation;
 
 namespace StockManager.Controllers
 {
@@ -44,13 +45,10 @@ namespace StockManager.Controllers
         // GET: TailorChalan/Create
         public ActionResult Create(int? id)
         {
-            if (id == 1)
-                ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
-            else
-                ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true), "Id", "ProductName");
-
-            ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName");
-            ViewBag.GivenToTailor = id;
+            
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
+            
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 3), "Id", "VendorName");            
             return View();
         }
 
@@ -62,9 +60,15 @@ namespace StockManager.Controllers
             {
                 try
                 {
+                    var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+                    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+                    var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     tailorChalan.Created = dtDate;
                     tailorChalan.Updated = dtDate;
+                    tailorChalan.created_by = creaded_by;
+                    tailorChalan.financial_year = year_id;
+                    tailorChalan.CompanyId = CompanyId;
 
                     db.TailorChalans.Add(tailorChalan);
                     db.SaveChanges();
@@ -72,11 +76,17 @@ namespace StockManager.Controllers
                     transaction.Commit();
                     return Json(Convert.ToString(scope_id));
                 }
-                catch
+                catch (DbEntityValidationException e)
                 {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {                       
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                        }
+                    }
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 2 && x.IsActive == true), "Id", "ProductName");
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 3), "Id", "VendorName", tailorChalan.VendorId);
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");
@@ -93,10 +103,9 @@ namespace StockManager.Controllers
             if (tailorChalan == null)
             {
                 return HttpNotFound();
-            }
-            
-            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true), "Id", "ProductName");
-
+            }            
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 3), "Id", "VendorName");
             return View(tailorChalan);
         }
 
@@ -108,17 +117,14 @@ namespace StockManager.Controllers
             {
                 try
                 {
-                    foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
-                    {
-                        db.TailorMaterialDetails.RemoveRange(db.TailorMaterialDetails.Where(x => x.TailorChalanDetailsId == objTailorDetails.Id));
-                        db.SaveChanges();
-                        foreach (var objTailorMaterial in objTailorDetails.TailorMaterialDetails)
-                        {
-                            objTailorMaterial.TailorChalanDetailsId = objTailorDetails.Id;
-                            db.Entry(objTailorMaterial).State = EntityState.Added;
-                            db.SaveChanges();
-                        }
-                    }
+                    var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+                    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+                    var creaded_by = Convert.ToInt32(Session["UserID"]); 
+                    DateTime dtDate = DateTime.Now;
+                    tailorChalan.Updated = dtDate;
+                    tailorChalan.created_by = creaded_by;
+                    tailorChalan.financial_year = year_id;
+                    tailorChalan.CompanyId = CompanyId;
 
                     foreach (var objTailorDetails in tailorChalan.TailorChalanDetails)
                     {
@@ -126,24 +132,12 @@ namespace StockManager.Controllers
                         {
                             db.Entry(objTailorDetails).State = EntityState.Added;
                             db.SaveChanges();
-                        }
-                        else
-                        {
-                            db.Entry(objTailorDetails).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
+                        }                        
                     }
 
                     while (tailorChalan.TailorChalanDetails.Where(x => x.Id == 0).Count() > 0)
-                        tailorChalan.TailorChalanDetails.Remove(tailorChalan.TailorChalanDetails.Where(x => x.Id == 0).ToList()[0]);
-
-                    foreach (var x in tailorChalan.TailorChalanDetails)
-                    {
-                        x.TailorMaterialDetails = null;
-                    }
-
-                    DateTime dtDate = DateTime.Now;
-                    tailorChalan.Updated = dtDate;
+                        tailorChalan.TailorChalanDetails.Remove(tailorChalan.TailorChalanDetails.Where(x => x.Id == 0).ToList()[0]);                    
+                   
                     db.Entry(tailorChalan).State = EntityState.Modified;
                     db.SaveChanges();
 
@@ -153,9 +147,9 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors, "Id", "VendorName", tailorChalan.VendorId);
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 3), "Id", "VendorName", tailorChalan.VendorId);
 
-                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 2 && x.IsActive == true), "Id", "ProductName");
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");

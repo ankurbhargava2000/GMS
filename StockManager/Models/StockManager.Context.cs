@@ -35,6 +35,8 @@ namespace StockManager.Models
         public virtual DbSet<MeasuringUnit> MeasuringUnits { get; set; }
         public virtual DbSet<PrinterChalan> PrinterChalans { get; set; }
         public virtual DbSet<PrinterChalanDetail> PrinterChalanDetails { get; set; }
+        public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
+        public virtual DbSet<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
@@ -51,8 +53,6 @@ namespace StockManager.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
-        public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
-        public virtual DbSet<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
     
         public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> companyId, Nullable<int> yearId)
         {
@@ -65,11 +65,6 @@ namespace StockManager.Models
                 new ObjectParameter("YearId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_ProductWiseStock_Result>("USP_ProductWiseStock", companyIdParameter, yearIdParameter);
-        }
-    
-        public virtual ObjectResult<USP_VendorWiseStock_Result> USP_VendorWiseStock()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_VendorWiseStock_Result>("USP_VendorWiseStock");
         }
     
         public virtual ObjectResult<USP_StockLedger_Result> USP_StockLedger(Nullable<int> productId, Nullable<int> companyId, Nullable<int> yearId)
@@ -87,6 +82,11 @@ namespace StockManager.Models
                 new ObjectParameter("YearId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_StockLedger_Result>("USP_StockLedger", productIdParameter, companyIdParameter, yearIdParameter);
+        }
+    
+        public virtual ObjectResult<USP_VendorWiseStock_Result> USP_VendorWiseStock()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_VendorWiseStock_Result>("USP_VendorWiseStock");
         }
     }
 }

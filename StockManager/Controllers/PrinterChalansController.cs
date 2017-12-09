@@ -49,7 +49,7 @@ namespace StockManager.Controllers
         // GET: PrinterChalans/Create
         public ActionResult Create()
         {
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
@@ -99,7 +99,7 @@ namespace StockManager.Controllers
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");
@@ -117,7 +117,7 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName", printerChalan.VendorId);
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName", printerChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
@@ -159,7 +159,7 @@ namespace StockManager.Controllers
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
                 }
             }
             return Json("0");
