@@ -30,6 +30,9 @@
                     Product Name
                 </th>
                 <th>
+                    Unit
+                </th>
+                <th>
                     Description
                 </th>
                 <th>
@@ -49,6 +52,9 @@
                     {
                                 @Html.ActionLink(Convert.ToString(item.ProductName), "Details", new { id = item.Id })
                             }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MeasuringUnit)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)

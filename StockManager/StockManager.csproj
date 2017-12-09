@@ -283,6 +283,9 @@
     <Compile Include="Models\USP_ProductWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\USP_StockLedger_Result.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USP_VendorWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -724,6 +727,7 @@
     <Content Include="Views\Users\profile.cshtml" />
     <Content Include="Views\Company\AddUser.cshtml" />
     <Content Include="Views\Shared\_AddUser.cshtml" />
+    <Content Include="Views\Report\StockLedger.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

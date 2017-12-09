@@ -1,84 +1,109 @@
 ﻿@model  List<StockManager.Models.USP_ProductWiseStock_Result>
 
 @{
-    ViewBag.Title = "Product Wise Stock";
+    ViewBag.Title = "Stock Summary Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<table class="table">
-    <tr class="row">
-        <td class="col-md-10">
-            <h2>Product Wise Stock Report</h2>
-        </td>
-        <td class="col-md-2" style="vertical-align:middle">
-            <a href="~/Report/PrintProduct">
-                <i class="fa fa-print siz" style="font-size:30px;" aria-hidden="true"></i>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Stock Summary</span>
+        </div>
+        <div class="actions">            
+            <a href="@Url.Action("Print")" class="btn btn-circle btn-default">
+                <i class="fa fa-print"></i> Print
             </a>
-        </td>
-    </tr>
-</table>
-<table class="table">
-    <tr>
-        <th>
-            Product Name
-        </th>
-        <th>
-            Opening Stock
-        </th>
-        <th>
-            Total Purchase
-        </th>
-        <th>
-            Send to Printer
-        </th>
-        <th>
-            Received from Printer
-        </th>
-        <th>
-            Shrinkage
-        </th>
-        <th>
-            Total Sales
-        </th>
-        <th>
-            Stock In Hand
-        </th>
-    </tr>
-    @{
-        if (Model != null && Model != null)
-        {
-            foreach (var item in Model)
-            {
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="jTable table table-striped table-bordered table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OpeningStock)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalPurchase)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalProductGivenForPrinting)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalReceived)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Shrinkage)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalSales)
-                    </td>
-                    <td>
-                        @Html.Raw((item.OpeningStock + item.TotalPurchase+ item.TotalReceived)-(item.TotalSales+ item.TotalProductGivenForPrinting))
-                       
-                    </td>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Unit
+                    </th>
+                    <th>
+                        Opening Stock
+                    </th>
+                    <th>
+                        Total Purchase
+                    </th>
+                    <th>
+                        Issued to Printer
+                    </th>
+                    <th>
+                        Shrinkage
+                    </th>
+                    <th>
+                        Received from Printer
+                    </th>
+                    <th>
+                        Issued to Fabricator
+                    </th>
+                    <th>
+                        Received from Fabricator
+                    </th>
+                    <th>
+                        Total Sales
+                    </th>
+                    <th>
+                        Stock In Hand
+                    </th>
                 </tr>
-            }
-        }
-    }
+            </thead>
+                @{
+                    if (Model != null && Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink(item.ProductName.ToString(), "StockLedger", new { productId = item.Id })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Unit)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OpeningStock)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalPurchase)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalProductGivenForPrinting)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Shrinkage)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalReceived)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalTailorSend)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalTailorReceived)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalSales)
+                                </td>
+                                <td>
+                                    @Html.Raw((item.OpeningStock + item.TotalPurchase + item.TotalReceived + item.TotalTailorReceived) - (item.TotalSales + item.TotalProductGivenForPrinting + item.Shrinkage + item.TotalTailorSend))
+
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
 </table>
+
+    </div>
 
 
 

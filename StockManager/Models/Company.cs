@@ -20,6 +20,7 @@ namespace StockManager.Models
             this.Customers = new HashSet<Customer>();
             this.InvoiceMasters = new HashSet<InvoiceMaster>();
             this.PrinterChalans = new HashSet<PrinterChalan>();
+            this.PrintJobWorkReceiveds = new HashSet<PrintJobWorkReceived>();
             this.Products = new HashSet<Product>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.TailorChalanSends = new HashSet<TailorChalanSend>();
@@ -27,7 +28,6 @@ namespace StockManager.Models
             this.Transactions = new HashSet<Transaction>();
             this.Vendors = new HashSet<Vendor>();
             this.UserCompanies = new HashSet<UserCompany>();
-            this.PrintJobWorkReceiveds = new HashSet<PrintJobWorkReceived>();
         }
     
         public int Id { get; set; }
@@ -50,6 +50,8 @@ namespace StockManager.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrinterChalan> PrinterChalans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
@@ -65,7 +67,5 @@ namespace StockManager.Models
         public virtual Tenant Tenant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserCompany> UserCompanies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
     }
 }
