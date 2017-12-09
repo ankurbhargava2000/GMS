@@ -4,8 +4,8 @@
     <div class="page-sidebar navbar-collapse collapse" style="z-index: 1000">
         <!-- BEGIN SIDEBAR MENU -->
         <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-            <li class="nav-item start">
-                <a href="javascript:;" class="nav-link nav-toggle">
+            <li class="nav-item start @Html.IsSelected(controller: "Dashboard")">
+                <a href="@Url.Action("Index", "dashboard")" class="nav-link nav-toggle">
                     <i class="fa fa-home fa-fw"></i>
                     <span class="title">Dashboard</span>
                 </a>

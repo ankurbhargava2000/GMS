@@ -1,0 +1,25 @@
+﻿@model StockManager.Models.DashboardVM
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">
+    Dashboard
+    <small>dashboard &amp; statistics</small>
+</h3>
+
+
+
+<div class="row">
+    @Html.Partial("_Expenses", Model)
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        @Html.Partial("_Overview", Model)
+    </div>
+    <div class="col-md-6 col-sm-6">
+        @Html.Partial("_SalesChart")
+    </div>
+</div>

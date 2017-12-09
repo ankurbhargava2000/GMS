@@ -163,8 +163,7 @@ namespace StockManager.Controllers
                         else
                         {
                             Session["CompanyID"] = user.UserCompanies.FirstOrDefault().CompanyId;
-                            Session["FinancialYearID"] = user.UserCompanies.FirstOrDefault().Company.CurrentFinYear;
-                            
+                            Session["FinancialYearID"] = user.UserCompanies.FirstOrDefault().Company.CurrentFinYear;                            
                         }
                         return RedirectToLocal(login.return_url);
                     }
