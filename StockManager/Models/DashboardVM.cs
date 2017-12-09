@@ -14,6 +14,9 @@ namespace StockManager.Models
         public List<TopModel> topCustomers { get; set; }
         public List<TopModel> topVendors { get; set; }
         public List<PurchaseOrder> latestPurchase { get; set; }
+        public ChartModel SalesAmount { get; set; }
+        public ChartModel SalesCount { get; set; }
+
     }
 
     public class TopModel
@@ -21,6 +24,15 @@ namespace StockManager.Models
         public string Name { get; set; }
         public double Amount { get; set; }
         public int Count { get; set; }
+    }
+
+    public class ChartModel
+    {
+        public DateTime? Label { get; set; }
+        public string Data { get; set; }
+        public string LabelJson { get; set; }
+        public string PointJson { get; set; }
+
     }
     
 }
