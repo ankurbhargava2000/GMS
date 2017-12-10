@@ -510,6 +510,10 @@
       <DependentUpon>StockManager.edmx</DependentUpon>
       <LastGenOutput>StockManager.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\js\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\js\bootstrap-inputmask\bootstrap-inputmask.min.js" />
     <Content Include="Scripts\js\bootstrap-switch.js" />
@@ -620,7 +624,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\js\.DS_Store" />
     <Content Include="Scripts\js\bootstrap-inputmask\.DS_Store" />
     <Content Include="Scripts\js\chart-master\.DS_Store" />
@@ -672,6 +678,7 @@
     <Content Include="Models\StockManager.edmx.diagram">
       <DependentUpon>StockManager.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\StockManager.pubxml" />
     <Content Include="Views\PurchaseOrders\Create.cshtml" />
     <Content Include="Views\PurchaseOrders\Edit.cshtml" />
