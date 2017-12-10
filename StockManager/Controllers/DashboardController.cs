@@ -1,6 +1,8 @@
-﻿using StockManager.Models;
+﻿using Newtonsoft.Json;
+using StockManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -23,8 +25,116 @@ namespace StockManager.Controllers
             var companyID = Convert.ToInt32(Session["CompanyID"]);
             var yearID = Convert.ToInt32(Session["FinancialYearID"]);
 
-            // Top 10 Selling Products for current FiscalYear and Company
-            vm.topProducts = db.InvoiceDetails
+            vm.topProducts = GetTopProducts(yearID, companyID);
+            vm.topCustomers = GetTopCustomers(yearID, companyID);
+            vm.topVendors = GetTopVendors(yearID, companyID);
+            vm.latestPurchase = GetLatestPurchaseOrders(yearID, companyID);
+            vm.SalesAmount = GetSalesAmount(yearID, companyID);
+            vm.SalesCount = GetSalesCount(yearID, companyID);
+
+            return View(vm);
+
+        }
+        private ChartModel GetSalesCount(int? yearID, int? companyID)
+        {
+            var FiscalYear = db.FinancialYears.Find(yearID);
+
+            var data = db.InvoiceMasters
+                 .Where(x => x.financial_year == yearID)
+                .Where(x => x.CompanyId == companyID)
+                .GroupBy(d => d.created_on)
+                .Select(m => new ChartModel()
+                {
+                    Label = m.FirstOrDefault().created_on,
+                    Data = m.Count().ToString()
+                })
+                .ToList();
+
+            var start = new DateTime(FiscalYear.StartDate.Ticks);
+            var end = new DateTime(FiscalYear.EndDate.Ticks);
+
+            var diff = Enumerable.Range(0, 13).Select(a => start.AddMonths(a))
+                       .TakeWhile(a => a <= end)
+                       .Select(a => a);
+
+            List<string> labels = new List<string>();
+            List<string> points = new List<string>();
+
+            foreach (var item in diff)
+            {
+                var t = data.Where(x => x.Label.Value.Month == item.Month).FirstOrDefault();
+
+                if (t != null)
+                {
+                    labels.Add(t.Label.Value.ToString("MMM"));
+                    points.Add(t.Data);
+                }
+                else
+                {
+                    labels.Add(item.ToString("MMM"));
+                    points.Add("0");
+                }
+
+            }
+
+            return new ChartModel()
+            {
+                LabelJson = JsonConvert.SerializeObject(labels),
+                PointJson = JsonConvert.SerializeObject(points)
+            };
+        }
+        private ChartModel GetSalesAmount(int? yearID, int? companyID)
+        {
+
+            var FiscalYear = db.FinancialYears.Find(yearID);
+
+            var data = db.InvoiceMasters
+                 .Where(x => x.financial_year == yearID)
+                .Where(x => x.CompanyId == companyID)
+                .GroupBy(d => d.created_on)
+                .Select(m => new ChartModel()
+                {
+                    Label = m.FirstOrDefault().created_on,
+                    Data = m.Sum(x => x.net_amount).ToString()
+                })
+                .ToList();
+
+            var start = new DateTime(FiscalYear.StartDate.Ticks);
+            var end = new DateTime(FiscalYear.EndDate.Ticks);
+
+            var diff = Enumerable.Range(0, 13).Select(a => start.AddMonths(a))
+                       .TakeWhile(a => a <= end)
+                       .Select(a => a);
+
+            List<string> labels = new List<string>();
+            List<string> points = new List<string>();
+
+            foreach (var item in diff)
+            {
+                var t = data.Where(x => x.Label.Value.Month == item.Month).FirstOrDefault();
+
+                if (t != null)
+                {
+                    labels.Add(t.Label.Value.ToString("MMM"));
+                    points.Add(t.Data);
+                }
+                else
+                {
+                    labels.Add(item.ToString("MMM"));
+                    points.Add("0");
+                }
+
+            }
+
+            return new ChartModel()
+            {
+                LabelJson = JsonConvert.SerializeObject(labels),
+                PointJson = JsonConvert.SerializeObject(points)
+            };
+        }
+        private List<TopModel> GetTopProducts(int? yearID, int? companyID, int count = 10)
+        {
+            return db.InvoiceDetails
                 .Where(x => x.InvoiceMaster.financial_year == yearID)
                 .Where(x => x.InvoiceMaster.CompanyId == companyID)
                 .GroupBy(d => d.product_id)
@@ -35,11 +145,12 @@ namespace StockManager.Controllers
                     Count = tp.Count()
                 })
                 .OrderByDescending(x => x.Amount)
-                .Take(10)
+                .Take(count)
                 .ToList();
-
-            // Top 10 Customers for current FiscalYear and Company
-            vm.topCustomers = db.InvoiceMasters
+        }
+        private List<TopModel> GetTopCustomers(int? yearID, int? companyID, int count = 10)
+        {
+            return db.InvoiceMasters
                 .Where(x => x.financial_year == yearID)
                 .Where(x => x.CompanyId == companyID)
                 .GroupBy(d => d.customer_id)
@@ -52,9 +163,10 @@ namespace StockManager.Controllers
                 .OrderByDescending(x => x.Amount)
                 .Take(10)
                 .ToList();
-
-            // Top 10 Vendors for current FiscalYear and Company
-            vm.topVendors = db.PurchaseOrders
+        }
+        private List<TopModel> GetTopVendors(int? yearID, int? companyID, int count = 10)
+        {
+            return db.PurchaseOrders
                 .Where(x => x.financial_year == yearID)
                 .Where(x => x.CompanyId == companyID)
                 .GroupBy(d => d.VendorId)
@@ -65,19 +177,43 @@ namespace StockManager.Controllers
                     Count = tp.Count()
                 })
                 .OrderByDescending(x => x.Amount)
-                .Take(10)
+                .Take(count)
                 .ToList();
-
-            // Latest Purchase for current FiscalYear and Company
-            vm.latestPurchase = db.PurchaseOrders
+        }
+        private List<PurchaseOrder> GetLatestPurchaseOrders(int? yearID, int? companyID, int count = 10)
+        {
+            return db.PurchaseOrders
                 .Where(x => x.financial_year == yearID)
                 .Where(x => x.CompanyId == companyID)
                 .OrderByDescending(x => x.Id)
-                .Take(10)
+                .Take(count)
                 .ToList();
-
-            return View(vm);
-
         }
+        public static IEnumerable<Tuple<string, int>> MonthsBetween( DateTime startDate, DateTime endDate)
+        {
+            DateTime iterator;
+            DateTime limit;
+
+            if (endDate > startDate)
+            {
+                iterator = new DateTime(startDate.Year, startDate.Month, 1);
+                limit = endDate;
+            }
+            else
+            {
+                iterator = new DateTime(endDate.Year, endDate.Month, 1);
+                limit = startDate;
+            }
+
+            var dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
+            while (iterator <= limit)
+            {
+                yield return Tuple.Create(
+                    dateTimeFormat.GetMonthName(iterator.Month),
+                    iterator.Year);
+                iterator = iterator.AddMonths(1);
+            }
+        }
+
     }
 }
