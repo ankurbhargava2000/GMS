@@ -733,6 +733,7 @@
     <Content Include="Views\Dashboard\_SalesChart.cshtml" />
     <Content Include="Views\Dashboard\_CustomerSupport.cshtml" />
     <Content Include="Views\Dashboard\_Feeds.cshtml" />
+    <Content Include="Views\Report\StockLedger.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
