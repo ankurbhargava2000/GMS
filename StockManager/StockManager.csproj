@@ -728,7 +728,7 @@
     <Content Include="Views\Users\profile.cshtml" />
     <Content Include="Views\Company\AddUser.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Dashboard\_Expenses.cshtml" />
+    <Content Include="Views\Dashboard\_Header.cshtml" />
     <Content Include="Views\Dashboard\_Overview.cshtml" />
     <Content Include="Views\Dashboard\_SalesChart.cshtml" />
     <Content Include="Views\Dashboard\_CustomerSupport.cshtml" />
