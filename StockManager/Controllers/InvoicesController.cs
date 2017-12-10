@@ -4,10 +4,9 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using StockManager.Models;
-using PagedList;
+using Rotativa;
 
 namespace StockManager.Controllers
 {
@@ -251,7 +250,7 @@ namespace StockManager.Controllers
 
             return View(invoiceMasters);
         }
-
+        [ActionName("print-single")]
         public ActionResult SinglePrint(int? id)
         {
             if (id == null)
@@ -264,7 +263,9 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            return View(invoiceMaster);
+
+            return new ViewAsPdf("SinglePrint", invoiceMaster);
+
         }
 
         public JsonResult IsIdExists(int invoice_no)

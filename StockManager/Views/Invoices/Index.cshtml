@@ -70,7 +70,7 @@
                             |
                             @Html.ActionLink("Delete", "Delete", new { id = item.invoice_no }, new { @class = "btn btn-danger btn-xs" })
                             |
-                            <a class="btn btn-default btn-xs" href="@Url.Action("SinglePrint", new { id = item.invoice_no }) ">
+                            <a target="_blank" class="btn btn-default btn-xs" href="@Url.Action("print-single", new { id = item.invoice_no }) ">
                                 <i class="fa fa-print"></i> Print
                             </a>
                         </td>
