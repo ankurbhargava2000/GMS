@@ -54,7 +54,7 @@ namespace StockManager.Models
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
     
-        public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> companyId, Nullable<int> yearId)
+        public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> companyId, Nullable<int> yearId, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var companyIdParameter = companyId.HasValue ?
                 new ObjectParameter("CompanyId", companyId) :
@@ -64,7 +64,15 @@ namespace StockManager.Models
                 new ObjectParameter("YearId", yearId) :
                 new ObjectParameter("YearId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_ProductWiseStock_Result>("USP_ProductWiseStock", companyIdParameter, yearIdParameter);
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_ProductWiseStock_Result>("USP_ProductWiseStock", companyIdParameter, yearIdParameter, startDateParameter, endDateParameter);
         }
     
         public virtual ObjectResult<USP_StockLedger_Result> USP_StockLedger(Nullable<int> productId, Nullable<int> companyId, Nullable<int> yearId)
@@ -84,9 +92,25 @@ namespace StockManager.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_StockLedger_Result>("USP_StockLedger", productIdParameter, companyIdParameter, yearIdParameter);
         }
     
-        public virtual ObjectResult<USP_VendorWiseStock_Result> USP_VendorWiseStock()
+        public virtual ObjectResult<USP_VendorWiseStock_Result> USP_VendorWiseStock(Nullable<int> vendorId, Nullable<int> companyId, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_VendorWiseStock_Result>("USP_VendorWiseStock");
+            var vendorIdParameter = vendorId.HasValue ?
+                new ObjectParameter("VendorId", vendorId) :
+                new ObjectParameter("VendorId", typeof(int));
+    
+            var companyIdParameter = companyId.HasValue ?
+                new ObjectParameter("CompanyId", companyId) :
+                new ObjectParameter("CompanyId", typeof(int));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_VendorWiseStock_Result>("USP_VendorWiseStock", vendorIdParameter, companyIdParameter, startDateParameter, endDateParameter);
         }
     }
 }

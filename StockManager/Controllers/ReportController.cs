@@ -17,7 +17,10 @@ namespace StockManager.Controllers
         private StockManagerEntities db = new StockManagerEntities();
         public ActionResult VendorWiseStock()
         {
-            var result = db.USP_VendorWiseStock().ToList();
+            var company = Convert.ToInt32(Session["CompanyID"]);
+            var fYear = Convert.ToInt32(Session["FinancialYearID"]);
+            FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
+            var result = db.USP_VendorWiseStock(company,company, f.StartDate, f.EndDate).ToList();
             return View(result);
         }
 
@@ -25,7 +28,8 @@ namespace StockManager.Controllers
         {
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
-            var result = db.USP_ProductWiseStock(company,fYear).ToList();
+            FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
+            var result = db.USP_ProductWiseStock(company,fYear, f.StartDate, f.EndDate).ToList();
             return View(result);
         }
 
@@ -116,7 +120,8 @@ namespace StockManager.Controllers
             //Add Title to the PDF file at the top
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
-            List<USP_ProductWiseStock_Result> product = db.USP_ProductWiseStock(company,fYear).ToList<USP_ProductWiseStock_Result>();
+            FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
+            List<USP_ProductWiseStock_Result> product = db.USP_ProductWiseStock(company,fYear,f.StartDate,f.EndDate).ToList<USP_ProductWiseStock_Result>();
             tableLayout.AddCell(new PdfPCell(new Phrase("Product Wise Stock Report", new Font(Font.HELVETICA, 8, 1, new iTextSharp.text.Color(0, 0, 0)))) { Colspan = 12, Border = 0, PaddingBottom = 5, HorizontalAlignment = Element.ALIGN_CENTER });
 
             ////Add header
@@ -142,7 +147,10 @@ namespace StockManager.Controllers
             tableLayout.WidthPercentage = 100;       //Set the PDF File witdh percentage
             tableLayout.HeaderRows = 1;
             //Add Title to the PDF file at the top
-            List<USP_VendorWiseStock_Result> product = db.USP_VendorWiseStock().ToList<USP_VendorWiseStock_Result>();
+            var company = Convert.ToInt32(Session["CompanyID"]);
+            var fYear = Convert.ToInt32(Session["FinancialYearID"]);
+            FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
+            List<USP_VendorWiseStock_Result> product = db.USP_VendorWiseStock(17, company,f.StartDate,f.EndDate).ToList<USP_VendorWiseStock_Result>();
             tableLayout.AddCell(new PdfPCell(new Phrase("Vendor Wise Stock Report", new Font(Font.HELVETICA, 8, 1, new iTextSharp.text.Color(0, 0, 0)))) { Colspan = 12, Border = 0, PaddingBottom = 5, HorizontalAlignment = Element.ALIGN_CENTER });
 
             ////Add header
@@ -154,11 +162,11 @@ namespace StockManager.Controllers
             ////Add body
             foreach (var emp in product)
             {
-                AddCellToBody(tableLayout, emp.VendorName);
-                AddCellToBody(tableLayout, Convert.ToString(emp.GivenForPrinting));
-                AddCellToBody(tableLayout, Convert.ToString(emp.ReceivedAfterPrinting));
-                AddCellToBody(tableLayout, Convert.ToString(emp.TotalNetQuantity));
-                AddCellToBody(tableLayout, Convert.ToString(emp.TotalShrinkage));
+                //AddCellToBody(tableLayout, emp.VendorName);
+                //AddCellToBody(tableLayout, Convert.ToString(emp.GivenForPrinting));
+                //AddCellToBody(tableLayout, Convert.ToString(emp.ReceivedAfterPrinting));
+                //AddCellToBody(tableLayout, Convert.ToString(emp.TotalNetQuantity));
+                //AddCellToBody(tableLayout, Convert.ToString(emp.TotalShrinkage));
             }
             return tableLayout;
         }

@@ -19,20 +19,18 @@
 <table class="table">
     <tr>
         <th>
-            Vendor Name
+            Product Name
         </th>
         <th>
-            Given For Printing
+            Unit
         </th>
         <th>
-            Received After Printing
+            Issued
         </th>
         <th>
-            Total Quantity Left
+            Received
         </th>
-        <th>
-            Total Shrinkage
-        </th>
+        
     </tr>
     @{
         if (Model != null && Model != null)
@@ -41,21 +39,18 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.VendorName)
+                        @Html.DisplayFor(modelItem => item.ProductName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.GivenForPrinting)
+                        @Html.DisplayFor(modelItem => item.UnitName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ReceivedAfterPrinting)
+                        @Html.DisplayFor(modelItem => item.IssuedQty)
                     </td>
                     <td>
-                        @Convert.ToString((Convert.ToDecimal(item.GivenForPrinting) - Convert.ToDecimal(item.ReceivedAfterPrinting)))
-
+                        @Html.DisplayFor(modelItem => item.ReceivedQty)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalShrinkage)
-                    </td>
+                    
                 </tr>
             }
         }

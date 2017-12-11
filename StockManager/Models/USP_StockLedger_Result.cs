@@ -13,15 +13,16 @@ namespace StockManager.Models
     
     public partial class USP_StockLedger_Result
     {
+        public Nullable<int> SequenceNo { get; set; }
         public Nullable<int> ProductId { get; set; }
         public string ProductName { get; set; }
         public string UnitName { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
         public string Particular { get; set; }
-        public string Doc_Type { get; set; }
-        public Nullable<int> Doc_No { get; set; }
-        public int Doc_ID { get; set; }
-        public Nullable<decimal> In_QTY { get; set; }
-        public decimal Out_QTY { get; set; }
+        public string DocType { get; set; }
+        public string DocNo { get; set; }
+        public Nullable<int> DocId { get; set; }
+        public Nullable<decimal> IssuedQty { get; set; }
+        public Nullable<decimal> ReceivedQty { get; set; }
     }
 }
