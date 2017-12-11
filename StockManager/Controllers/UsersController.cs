@@ -21,7 +21,8 @@ namespace StockManager.Controllers
         [CheckAuth(Roles = "Administrator")]
         public ActionResult Index(int? page)
         {
-            var users = db.Users.Include(u => u.Tenant).ToList();
+            var TenantId = Convert.ToInt32(Session["TenantID"]);
+            var users = db.Users.Include(u => u.Tenant).Where(x => x.TenantId == TenantId).ToList();
             return View(users);
         }
 

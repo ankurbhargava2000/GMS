@@ -47,8 +47,9 @@ namespace StockManager.Controllers
         // GET: PrinterChalans/Create
         public ActionResult Create()
         {
-            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName");
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2 && x.CompanyId == companyId), "Id", "VendorName");
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
@@ -61,19 +62,19 @@ namespace StockManager.Controllers
         [HttpPost]
         public JsonResult Create(PrintJobWorkReceived printerChalan)
         {
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-                    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+                    var year_id = Convert.ToInt32(Session["FinancialYearID"]);                    
                     var creaded_by = Convert.ToInt32(Session["UserID"]);
                     DateTime dtDate = DateTime.Now;
                     printerChalan.Created = dtDate;
                     printerChalan.Updated = dtDate;
                     printerChalan.created_by = creaded_by;
                     printerChalan.financial_year = year_id;
-                    printerChalan.CompanyId = CompanyId;
+                    printerChalan.CompanyId = companyId;
 
                     db.PrintJobWorkReceiveds.Add(printerChalan);
                     db.SaveChanges();
@@ -84,8 +85,8 @@ namespace StockManager.Controllers
                 catch
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2 && x.CompanyId == companyId), "Id", "VendorName", printerChalan.VendorId);
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
                 }
             }
             return Json("0");
@@ -103,8 +104,9 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName", printerChalan.VendorId);
-            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName", printerChalan.VendorId);
+            ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2 && x.CompanyId == companyId), "Id", "VendorName", printerChalan.VendorId);
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
@@ -117,6 +119,7 @@ namespace StockManager.Controllers
         [HttpPost]
         public JsonResult Edit(PrintJobWorkReceived printerChalan)
         {
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
@@ -144,8 +147,8 @@ namespace StockManager.Controllers
                 catch(Exception ex)
                 {
                     transaction.Rollback();
-                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2), "Id", "VendorName", printerChalan.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true), "Id", "ProductName");
+                    ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2 && x.CompanyId == companyId), "Id", "VendorName", printerChalan.VendorId);
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
                 }
             }
             return Json("0");
