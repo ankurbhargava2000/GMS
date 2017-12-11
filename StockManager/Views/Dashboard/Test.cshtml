@@ -1,0 +1,249 @@
+﻿@model StockManager.Models.InvoiceMaster
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Create New Invoice</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Index")" class="btn btn-circle btn-default">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container-fluid">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(x => x.created_by, new { Value = Session["UserID"] })
+                @Html.HiddenFor(x => x.financial_year, new { Value = Session["FinancialYearID"] })
+                @Html.HiddenFor(x => x.CompanyId, new { Value = Session["CompanyId"] })
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Invoice #</label>
+                            @Html.EditorFor(model => model.invoice_no, new { htmlAttributes = new { @class = "form-control", Value = @ViewBag.invoice_no, required = true } })
+                            @Html.ValidationMessageFor(model => model.invoice_no, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Customer</label>
+                            @Html.DropDownList("customer_id", null, htmlAttributes: new { @class = "form-control selectpicker", data_live_search = "on" })
+                            @Html.ValidationMessageFor(model => model.customer_id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Date</label>
+                            @Html.EditorFor(model => model.created_on, new { htmlAttributes = new { @class = "form-control", Id = "date_range", required = "true" } })
+                            @Html.ValidationMessageFor(model => model.created_on, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label>Product</label>
+                                    <select class="form-control selectpicker" id="product_selector" data-live-search="on">
+                                        @{
+                                            foreach (var item in ViewBag.product_id)
+                                            {
+                                                <option data-sale-rate="0" value="@item.Id">@item.ProductName</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                                <td style="width: 10%">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-block btn-success" id="addProduct">Add</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h4>Products</h4>
+                        <table id="products_table" class="table">
+                            <tr>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Labor cost</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+                                            }
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/Scripts/js/jquery-1.8.3.min.js"></script>
+    <script src="~/Scripts/js/jquery.validate.min.js"></script>
+    <script src="~/Scripts/js/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- DateRanger -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#formBtn').on('click', function () {
+
+                var tableRows = $("#products_table tr.itemrow").length;
+
+                if (tableRows == 0) {
+                    alert('Please select at least 1 product for this invoice');
+                    return false;
+                }
+
+            });
+
+            $('#date_range').daterangepicker({
+                locale: {
+                    format: 'DD-MMM-YYYY'
+                },
+                "singleDatePicker": true,
+                "startDate": "@(DateTime.Now.ToString("dd-MMM-yyyy"))",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            });
+
+            $('.selectpicker').selectpicker();
+            $("#products_table").on('mouseup keyup', 'input', function () { CalculateTotal(); });
+            $("#discount").keyup(function () { CalculateTotal(); });
+
+            $(".delete").on('click', function () {
+                $(this).parent().parent().remove();
+                event.preventDefault();
+                CalculateTotal();
+            });
+
+            $("#addProduct").on('click', function () {
+
+                event.preventDefault();
+
+                var i = $('.itemrow').length;
+
+                var option = $("#product_selector option:selected");
+
+                if (($('#item_' + option.val()).length)) {
+
+                    $($('#item_' + option.val()).children('.qty').children('input')).val(function (i, oldval) {
+                        return ++oldval;
+                    });
+                    CalculateTotal();
+                    return;
+                }
+
+                var row = "<tr id='item_" + option.val() + "' class='itemrow'>";
+
+                // Name
+                row += "<td>"
+                row += "<input type='hidden' name='InvoiceDetails[" + i + "].product_id' value='" + option.val() + "' />";
+                row += "<input type='hidden' name='InvoiceDetails[" + i + "].created_at' value='@DateTime.Now' />";
+                row += "<div style='margin-top: 5px;'>" + option.text() + "</div>";
+                row += "</td>"
+
+                // Sale rate
+                row += "<td style='width: 15%' class='sale'>"
+                row += "<input type='text' name='InvoiceDetails[" + i + "].sale_rate' class='itemInput form-control' value='" + 0 + "' />";
+                row += "</td>"
+
+                // Quantity
+                row += "<td style='width: 15%' class='qty'>"
+                row += "<input type='number' name='InvoiceDetails[" + i + "].quantity' class='itemInput form-control' value='" + 1 + "' />";
+                row += "</td>"
+
+                // Delete Btn
+                row += "<td>";
+                row += "<a style='margin-top: 5px;' href='#' class='addSub btn btn-xs btn-success'>+</a>"
+                row += "<a style='margin-top: 5px;' href='#' class='delete btn btn-xs btn-danger'>X</a>"
+                row += "</td>";
+
+                row += "</tr>"
+
+                $("#products_table").append(row);
+                CalculateTotal();
+            });
+
+            $("body").on("click", ".addSub", function () {
+                
+                var parentRowId = $(this).parent().parent().attr('id');
+
+                var crow = "<tr>";
+
+                crow += "<td>";
+
+                crow += "</td>";
+
+            });
+
+        });
+
+        function GetMaterials()
+        {
+            var html = "";
+            html += "<select class='form-control' name='ProductMaterial[].P'>";
+            html += "<option value='asdf'>ASDF</option>";
+            html += "</select>";
+        }
+
+        function CalculateTotal() {
+
+            var subtotal = 0;
+            var total_discount = $("#discount").val();
+
+            $('.itemrow').each(function () {
+
+                var qty = $(this).children('.qty').children('input').val();
+                var discount = $(this).children('.dscnt').children('input').val();
+                var sale_price = $(this).children('.sale').children('input').val();
+
+                var ptotal = (qty * sale_price) - discount;
+
+                $(this).children('.ptotal').text("Rs " + ptotal);
+
+                subtotal += ptotal;
+
+            });
+
+            $("#sub_total").html("Rs " + subtotal);
+            $("#total_discount").html("Rs " + (subtotal - total_discount));
+
+            $("input#gross").val(subtotal);
+            $("input#total").val(subtotal - total_discount);
+
+        };
+
+    </script>
+}

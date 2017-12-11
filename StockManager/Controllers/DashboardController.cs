@@ -39,98 +39,121 @@ namespace StockManager.Controllers
         {
             var FiscalYear = db.FinancialYears.Find(yearID);
 
-            var data = db.InvoiceMasters
-                 .Where(x => x.financial_year == yearID)
-                .Where(x => x.CompanyId == companyID)
-                .GroupBy(d => d.created_on)
-                .Select(m => new ChartModel()
-                {
-                    Label = m.FirstOrDefault().created_on,
-                    Data = m.Count().ToString()
-                })
-                .ToList();
-
-            var start = new DateTime(FiscalYear.StartDate.Ticks);
-            var end = new DateTime(FiscalYear.EndDate.Ticks);
-
-            var diff = Enumerable.Range(0, 13).Select(a => start.AddMonths(a))
-                       .TakeWhile(a => a <= end)
-                       .Select(a => a);
-
-            List<string> labels = new List<string>();
-            List<string> points = new List<string>();
-
-            foreach (var item in diff)
+            if (FiscalYear != null)
             {
-                var t = data.Where(x => x.Label.Value.Month == item.Month).FirstOrDefault();
+                var data = db.InvoiceMasters
+                     .Where(x => x.financial_year == yearID)
+                    .Where(x => x.CompanyId == companyID)
+                    .GroupBy(d => d.created_on)
+                    .Select(m => new ChartModel()
+                    {
+                        Label = m.FirstOrDefault().created_on,
+                        Data = m.Count().ToString()
+                    })
+                    .ToList();
 
-                if (t != null)
+                var start = new DateTime(FiscalYear.StartDate.Ticks);
+                var end = new DateTime(FiscalYear.EndDate.Ticks);
+
+                var diff = Enumerable.Range(0, 13).Select(a => start.AddMonths(a))
+                           .TakeWhile(a => a <= end)
+                           .Select(a => a);
+
+                List<string> labels = new List<string>();
+                List<string> points = new List<string>();
+
+                foreach (var item in diff)
                 {
-                    labels.Add(t.Label.Value.ToString("MMM"));
-                    points.Add(t.Data);
+                    var t = data.Where(x => x.Label.Value.Month == item.Month).FirstOrDefault();
+
+                    if (t != null)
+                    {
+                        labels.Add(t.Label.Value.ToString("MMM"));
+                        points.Add(t.Data);
+                    }
+                    else
+                    {
+                        labels.Add(item.ToString("MMM"));
+                        points.Add("0");
+                    }
+
                 }
-                else
+
+                return new ChartModel()
                 {
-                    labels.Add(item.ToString("MMM"));
-                    points.Add("0");
-                }
+                    LabelJson = JsonConvert.SerializeObject(labels),
+                    PointJson = JsonConvert.SerializeObject(points)
+                };
 
             }
 
             return new ChartModel()
             {
-                LabelJson = JsonConvert.SerializeObject(labels),
-                PointJson = JsonConvert.SerializeObject(points)
+                LabelJson = "",
+                PointJson = ""
             };
+
         }
         private ChartModel GetSalesAmount(int? yearID, int? companyID)
         {
 
             var FiscalYear = db.FinancialYears.Find(yearID);
 
-            var data = db.InvoiceMasters
-                 .Where(x => x.financial_year == yearID)
-                .Where(x => x.CompanyId == companyID)
-                .GroupBy(d => d.created_on)
-                .Select(m => new ChartModel()
-                {
-                    Label = m.FirstOrDefault().created_on,
-                    Data = m.Sum(x => x.net_amount).ToString()
-                })
-                .ToList();
-
-            var start = new DateTime(FiscalYear.StartDate.Ticks);
-            var end = new DateTime(FiscalYear.EndDate.Ticks);
-
-            var diff = Enumerable.Range(0, 13).Select(a => start.AddMonths(a))
-                       .TakeWhile(a => a <= end)
-                       .Select(a => a);
-
-            List<string> labels = new List<string>();
-            List<string> points = new List<string>();
-
-            foreach (var item in diff)
+            if (FiscalYear != null)
             {
-                var t = data.Where(x => x.Label.Value.Month == item.Month).FirstOrDefault();
 
-                if (t != null)
+                var data = db.InvoiceMasters
+                     .Where(x => x.financial_year == yearID)
+                    .Where(x => x.CompanyId == companyID)
+                    .GroupBy(d => d.created_on)
+                    .Select(m => new ChartModel()
+                    {
+                        Label = m.FirstOrDefault().created_on,
+                        Data = m.Sum(x => x.net_amount).ToString()
+                    })
+                    .ToList();
+
+                var start = new DateTime(FiscalYear.StartDate.Ticks);
+                var end = new DateTime(FiscalYear.EndDate.Ticks);
+
+                var diff = Enumerable.Range(0, 13).Select(a => start.AddMonths(a))
+                           .TakeWhile(a => a <= end)
+                           .Select(a => a);
+
+                List<string> labels = new List<string>();
+                List<string> points = new List<string>();
+
+                foreach (var item in diff)
                 {
-                    labels.Add(t.Label.Value.ToString("MMM"));
-                    points.Add(t.Data);
+                    var t = data.Where(x => x.Label.Value.Month == item.Month).FirstOrDefault();
+
+                    if (t != null)
+                    {
+                        labels.Add(t.Label.Value.ToString("MMM"));
+                        points.Add(t.Data);
+                    }
+                    else
+                    {
+                        labels.Add(item.ToString("MMM"));
+                        points.Add("0");
+                    }
+
                 }
-                else
+
+                return new ChartModel()
                 {
-                    labels.Add(item.ToString("MMM"));
-                    points.Add("0");
-                }
+                    LabelJson = JsonConvert.SerializeObject(labels),
+                    PointJson = JsonConvert.SerializeObject(points)
+                };
 
             }
 
             return new ChartModel()
             {
-                LabelJson = JsonConvert.SerializeObject(labels),
-                PointJson = JsonConvert.SerializeObject(points)
+                LabelJson = "",
+                PointJson = ""
             };
+
         }
         private List<TopModel> GetTopProducts(int? yearID, int? companyID, int count = 10)
         {
@@ -189,31 +212,32 @@ namespace StockManager.Controllers
                 .Take(count)
                 .ToList();
         }
-        public static IEnumerable<Tuple<string, int>> MonthsBetween( DateTime startDate, DateTime endDate)
-        {
-            DateTime iterator;
-            DateTime limit;
 
-            if (endDate > startDate)
-            {
-                iterator = new DateTime(startDate.Year, startDate.Month, 1);
-                limit = endDate;
-            }
-            else
-            {
-                iterator = new DateTime(endDate.Year, endDate.Month, 1);
-                limit = startDate;
-            }
+        //[CheckAuth]
+        //public ActionResult Test()
+        //{
+        //    ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
+        //    ViewBag.product_id = db.Products.ToList();
 
-            var dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
-            while (iterator <= limit)
-            {
-                yield return Tuple.Create(
-                    dateTimeFormat.GetMonthName(iterator.Month),
-                    iterator.Year);
-                iterator = iterator.AddMonths(1);
-            }
-        }
+        //    var last = db.InvoiceMasters.OrderByDescending(o => o.invoice_no).FirstOrDefault();
+
+        //    if (last == null)
+        //    {
+        //        ViewBag.invoice_no = 1;
+        //    }
+        //    else
+        //    {
+        //        ViewBag.invoice_no = last.invoice_no + 1;
+        //    }
+
+        //    var year_id = Session["FinancialYearID"];
+        //    var year = db.FinancialYears.Find(year_id);
+
+        //    ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
+        //    ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
+
+        //    return View();
+        //}
 
     }
 }
