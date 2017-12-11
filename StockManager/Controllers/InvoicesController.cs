@@ -50,8 +50,9 @@ namespace StockManager.Controllers
         // GET: InvoiceMasters/Create
         public ActionResult Create()
         {
-            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
-            ViewBag.product_id = db.Products.ToList();
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            ViewBag.customer_id = new SelectList(db.Customers.Where(x => x.CompanyId == CompanyId), "Id", "CustomerName");
+            ViewBag.product_id = db.Products.Where(x => x.CompanyId == CompanyId).ToList();
 
             var last = db.InvoiceMasters.OrderByDescending(o => o.invoice_no).FirstOrDefault();
 
@@ -87,9 +88,9 @@ namespace StockManager.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
-            ViewBag.product_id = db.Products.ToList();
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            ViewBag.customer_id = new SelectList(db.Customers.Where(x => x.CompanyId == CompanyId), "Id", "CustomerName");
+            ViewBag.product_id = db.Products.Where(x => x.CompanyId == CompanyId).ToList();
 
             return View();
 
@@ -109,10 +110,10 @@ namespace StockManager.Controllers
             {
                 return HttpNotFound();
             }
-
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             ViewBag.invoice_no = invoiceMaster.invoice_no;
-            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
-            ViewBag.product_id = db.Products.ToList();
+            ViewBag.customer_id = new SelectList(db.Customers.Where(x => x.CompanyId == CompanyId), "Id", "CustomerName");
+            ViewBag.product_id = db.Products.Where(x => x.CompanyId == CompanyId).ToList();
 
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
@@ -182,10 +183,10 @@ namespace StockManager.Controllers
 
                 return RedirectToAction("Index");
             }
-
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             ViewBag.invoice_no = invoiceMaster.invoice_no;
-            ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
-            ViewBag.product_id = db.Products.ToList();
+            ViewBag.customer_id = new SelectList(db.Customers.Where(x => x.CompanyId == CompanyId), "Id", "CustomerName");
+            ViewBag.product_id = db.Products.Where(x => x.CompanyId == CompanyId).ToList();
 
             return View(invoiceMaster);
 

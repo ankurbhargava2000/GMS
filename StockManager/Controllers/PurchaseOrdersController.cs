@@ -50,7 +50,7 @@ namespace StockManager.Controllers
             var purchaseOrders = db.PurchaseOrders.Include(p => p.Vendor).Include(p => p.PurchaseDetails);
             int companyId = Convert.ToInt32(Session["CompanyID"]);
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == companyId), "Id", "VendorName");
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
@@ -87,7 +87,7 @@ namespace StockManager.Controllers
                     transaction.Rollback();
                     int companyId = Convert.ToInt32(Session["CompanyID"]);
                     ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == companyId), "Id", "VendorName", purchaseOrder.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
                 }
             }
             return Json("0");
@@ -106,7 +106,7 @@ namespace StockManager.Controllers
             }
             int companyId = Convert.ToInt32(Session["CompanyID"]);
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == companyId), "Id", "VendorName", purchaseOrder.VendorId);
-            ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+            ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
@@ -148,7 +148,7 @@ namespace StockManager.Controllers
                     transaction.Rollback();
                     int companyId = Convert.ToInt32(Session["CompanyID"]);
                     ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == companyId), "Id", "VendorName", purchaseOrder.VendorId);
-                    ViewBag.ProductId = new SelectList(db.Products, "Id", "ProductName");
+                    ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
                 }
             }
             return Json("0");

@@ -134,9 +134,9 @@ namespace StockManager.Controllers
         public ActionResult UpdateOpeningStock()
         {
             var model = new OpeningStockVM();
-
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
             model.Products = db.Products
-                                .Where(x => x.IsActive == true)
+                                .Where(x => x.IsActive == true && x.CompanyId == companyId)
                                 .ToList();
 
             var year_id = Convert.ToInt32(Session["FinancialYearID"]);
