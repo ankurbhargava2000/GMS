@@ -20,7 +20,7 @@ namespace StockManager.Controllers
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
-            var result = db.USP_VendorWiseStock(company,company, f.StartDate, f.EndDate).ToList();
+            var result = db.USP_VendorWiseStock(17,company, f.StartDate, f.EndDate).ToList();
             return View(result);
         }
 
