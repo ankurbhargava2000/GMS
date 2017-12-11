@@ -222,6 +222,7 @@
     <Compile Include="Models\PrinterChalanDetail.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PrinterModel.cs" />
     <Compile Include="Models\PrintJobWorkReceived.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -714,8 +715,6 @@
     <Content Include="Views\PrintJobWorkReceived\Edit.cshtml" />
     <Content Include="Views\PrintJobWorkReceived\Index.cshtml" />
     <Content Include="Views\Products\UpdateOpeningStock.cshtml" />
-    <Content Include="Views\Invoices\Print.cshtml" />
-    <Content Include="Views\Invoices\SinglePrint.cshtml" />
     <Content Include="Views\Company\Create.cshtml" />
     <Content Include="Views\Company\Delete.cshtml" />
     <Content Include="Views\Company\Details.cshtml" />
@@ -744,6 +743,7 @@
     <Content Include="Views\Report\StockLedger.cshtml" />
     <Content Include="Views\Shared\_ChalanTop.cshtml" />
     <Content Include="Views\Dashboard\Test.cshtml" />
+    <Content Include="Views\Shared\SinglePrint.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

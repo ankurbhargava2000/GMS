@@ -236,20 +236,21 @@ namespace StockManager.Controllers
             return s;
         }
 
-        public ActionResult Print()
-        {
-            var year_id = Convert.ToInt32(Session["FinancialYearID"]);
-            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
-            var invoiceMasters = db.InvoiceMasters
-                .Where(x => x.financial_year == year_id && x.CompanyId == CompanyId)
-                .Include(i => i.FinancialYear)
-                .Include(i => i.User)
-                .Include(i => i.Customer)
-                .Include(i => i.Company)
-                .ToList();
+        //public ActionResult Print()
+        //{
+        //    var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+        //    var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+        //    var invoiceMasters = db.InvoiceMasters
+        //        .Where(x => x.financial_year == year_id && x.CompanyId == CompanyId)
+        //        .Include(i => i.FinancialYear)
+        //        .Include(i => i.User)
+        //        .Include(i => i.Customer)
+        //        .Include(i => i.Company)
+        //        .ToList();
 
-            return View(invoiceMasters);
-        }
+        //    return View(invoiceMasters);
+        //}
+
         [ActionName("print-single")]
         public ActionResult SinglePrint(int? id)
         {
@@ -257,14 +258,42 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+                        
             InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
-            if (invoiceMaster == null)
+
+            if (invoiceMaster != null)
             {
-                return HttpNotFound();
+
+                string footer = String.Format("--footer-center \"E & O.E. - Subject to Jaipur Jurisdiction only - For {0}\"", invoiceMaster.Company.Name);
+
+                PrinterModel pm = new PrinterModel()
+                {
+                    No = invoiceMaster.invoice_no,
+                    Company = invoiceMaster.Company,
+                    CreatedOn = (invoiceMaster.created_on.HasValue) ? invoiceMaster.created_on.Value : DateTime.Now,
+                    Customer = invoiceMaster.Customer.CustomerName,
+                    ShowTotal = true,
+                    Discount = (invoiceMaster.discount.HasValue) ? invoiceMaster.discount.Value : 0,
+                    Gross = invoiceMaster.gross_amount,
+                    NetTotal = invoiceMaster.net_amount,
+                    Items = invoiceMaster.InvoiceDetails.Select(x => new PrinterItem()
+                    {
+                        Particular = x.Product.ProductName,
+                        Pcs = x.quantity,
+                        Rate = x.sale_rate
+                    })
+                    .ToList()
+                };
+
+                return new ViewAsPdf("SinglePrint", pm)
+                {
+                    PageSize = Rotativa.Options.Size.A4,
+                    CustomSwitches = footer
+                };
+
             }
 
-            return new ViewAsPdf("SinglePrint", invoiceMaster);
+            return HttpNotFound();
 
         }
 

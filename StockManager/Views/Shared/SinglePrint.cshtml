@@ -1,4 +1,4 @@
-﻿@model StockManager.Models.InvoiceMaster
+﻿@model StockManager.Models.PrinterModel
 
 @{
     Layout = null;
@@ -25,19 +25,19 @@
 
     <div class="container-fluid">
         <div style="margin-bottom: 10px;">
-            @Html.Partial("_ChalanTop")
+            @Html.Partial("_ChalanTop", Model.Company)
         </div>
         <div class="row" style="margin: 15px 0; font-size: 1.3em">
             <div class="pull-left">
-                No: <strong>@Model.invoice_no</strong>
+                No: <strong>@Model.No</strong>
             </div>
             <div class="pull-right">
-                Date: <strong>@(Model.created_on?.ToString("dd MMMM, yyyy"))</strong>
+                Date: <strong>@(Model.CreatedOn.ToString("dd MMMM, yyyy"))</strong>
             </div>
         </div>
         <div class="row" style="margin: 15px 0; font-size: 1.3em">
             <div>
-                M/s <strong>@Model.Customer.CustomerName</strong>
+                M/s <strong>@Model.Customer</strong>
             </div>
         </div>
         <div class="row" style="margin: 15px 0;">
@@ -52,60 +52,51 @@
                 </thead>
                 <tbody>
                     @{
-                        if (Model.InvoiceDetails.Count() > 0)
+                        if (Model.Items.Count > 0)
                         {
                             var i = 1;
-                            foreach (var item in Model.InvoiceDetails)
+                            foreach (var item in Model.Items)
                             {
                                 <tr>
                                     <td>
                                         @i
                                     </td>
                                     <td>
-                                        @item.Product.ProductName
+                                        @item.Particular
                                     </td>
                                     <td style='width: 15%' class='sale'>
-                                        @item.quantity
+                                        @item.Pcs
                                     </td>
                                     <td style='width: 15%' class='qty'>
-                                        Rs @item.sale_rate
+                                        Rs @item.Rate
                                     </td>
                                 </tr>
                                 i++;
                             }
                         }
                     }
-                    <tr id="total_row">
-                        <td></td>
-                        <td style="text-align: right;">Gross</td>
-                        <td style="text-align: right;">Rs</td>
-                        <td>@Model.gross_amount</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td style="text-align: right;">Discount</td>
-                        <td style="text-align: right;">Rs</td>
-                        <td>@Model.discount</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td style="text-align: right;">Net Total</td>
-                        <td style="text-align: right;">Rs</td>
-                        <td>@Model.net_amount</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <div class="pull-left">
-                                <div>E. & O.E.</div>
-                                <div>Subject to Jaipur Jurisdiction only</div>
-                            </div>
-                            <div class="pull-right">
-                                <div style="margin-top: 20px;">
-                                    For <strong style="font-family: 'Times New Roman'">Durga</strong>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+
+                    @if (Model.ShowTotal)
+                    {
+                        <tr id="total_row">
+                            <td></td>
+                            <td style="text-align: right;">Gross</td>
+                            <td style="text-align: right;">Rs</td>
+                            <td>@Model.Gross</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right;">Discount</td>
+                            <td style="text-align: right;">Rs</td>
+                            <td>@Model.Discount</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: right;">Net Total</td>
+                            <td style="text-align: right;">Rs</td>
+                            <td>@Model.NetTotal</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

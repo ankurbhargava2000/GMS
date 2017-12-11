@@ -200,6 +200,46 @@ namespace StockManager.Controllers
             return Json("Error in deleting product.");
         }
 
+        [ActionName("print-single")]
+        public ActionResult SinglePrint(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
+            
+            if (printerChalan != null)
+            {
+                string footer = String.Format("--footer-center \"E & O.E. - Subject to Jaipur Jurisdiction only - For {0}\"", printerChalan.Company.Name);
+
+                PrinterModel pm = new PrinterModel()
+                {
+                    No = printerChalan.Id,
+                    Company = printerChalan.Company,
+                    CreatedOn = (printerChalan.Created.HasValue) ? printerChalan.Created.Value : DateTime.Now,
+                    Customer = printerChalan.Vendor.VendorName,
+                    ShowTotal = false,
+                    Items = printerChalan.PrinterChalanDetails.Select(x => new PrinterItem()
+                    {
+                        Particular = x.Description,
+                    })
+                    .ToList()
+                };
+
+                return new Rotativa.ViewAsPdf("SinglePrint", pm)
+                {
+                    PageSize = Rotativa.Options.Size.A4,
+                    CustomSwitches = footer
+                };
+            }
+
+            return HttpNotFound();            
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
