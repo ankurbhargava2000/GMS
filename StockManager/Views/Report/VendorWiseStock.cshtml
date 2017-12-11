@@ -1,66 +1,71 @@
 ﻿@model  List<StockManager.Models.USP_VendorWiseStock_Result>
 
 @{
-    ViewBag.Title = "Vendor Wise Stock";
+    ViewBag.Title = "Vendor Wise Stock Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<table class="table">
-    <tr class="row">
-        <td class="col-md-10">
-            <h2>Vendor Wise Stock Report</h2>
-        </td>
-        <td class="col-md-2" style="vertical-align:middle">
-            <a href="~/Report/PrintVendor">
-                <i class="fa fa-print" style="font-size:30px;" aria-hidden="true"></i>
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Vendor Stock Summary</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Print")" class="btn btn-circle btn-default">
+                <i class="fa fa-print"></i> Print
             </a>
-        </td>
-    </tr>
-</table>
-<table class="table">
-    <tr>
-        <th>
-            Vendor Name
-        </th>
-        <th>
-            Given For Printing
-        </th>
-        <th>
-            Received After Printing
-        </th>
-        <th>
-            Total Quantity Left
-        </th>
-        <th>
-            Total Shrinkage
-        </th>
-    </tr>
-    @{
-        if (Model != null && Model != null)
-        {
-            foreach (var item in Model)
-            {
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="jTable table table-striped table-bordered table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VendorName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GivenForPrinting)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReceivedAfterPrinting)
-                    </td>
-                    <td>
-                        @Convert.ToString((Convert.ToDecimal(item.GivenForPrinting) - Convert.ToDecimal(item.ReceivedAfterPrinting)))
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Unit
+                    </th>
+                    <th>
+                        Issued
+                    </th>
+                    <th>
+                        Received
+                    </th>
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalShrinkage)
-                    </td>
                 </tr>
+            </thead>
+            @{
+                if (Model != null && Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UnitName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IssuedQty)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReceivedQty)
+                            </td>
+
+                        </tr>
+                    }
+                }
             }
-        }
-    }
-</table>
+        </table>
+    </div>
+</div>
+
+
+
 
 
 

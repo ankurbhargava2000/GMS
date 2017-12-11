@@ -13,11 +13,10 @@ namespace StockManager.Models
     
     public partial class USP_VendorWiseStock_Result
     {
-        public int Id { get; set; }
-        public string VendorName { get; set; }
-        public Nullable<decimal> GivenForPrinting { get; set; }
-        public Nullable<decimal> ReceivedAfterPrinting { get; set; }
-        public decimal TotalNetQuantity { get; set; }
-        public decimal TotalShrinkage { get; set; }
+        public Nullable<int> ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string UnitName { get; set; }
+        public Nullable<decimal> IssuedQty { get; set; }
+        public Nullable<decimal> ReceivedQty { get; set; }
     }
 }

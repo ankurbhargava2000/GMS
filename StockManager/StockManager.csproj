@@ -672,6 +672,7 @@
     <Content Include="assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.woff" />
     <Content Include="assets\global\plugins\datatables\images\Sorting icons.psd" />
+    <Content Include="App_Browsers\qt.browser" />
     <EntityDeploy Include="Models\StockManager.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>StockManager.Designer.cs</LastGenOutput>
@@ -679,7 +680,6 @@
     <Content Include="Models\StockManager.edmx.diagram">
       <DependentUpon>StockManager.edmx</DependentUpon>
     </Content>
-    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\StockManager.pubxml" />
     <Content Include="Views\PurchaseOrders\Create.cshtml" />
     <Content Include="Views\PurchaseOrders\Edit.cshtml" />

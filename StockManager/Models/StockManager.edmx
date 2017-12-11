@@ -1094,13 +1094,20 @@
         <Function Name="USP_ProductWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CompanyId" Type="int" Mode="In" />
           <Parameter Name="YearId" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
         <Function Name="USP_StockLedger" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductId" Type="int" Mode="In" />
           <Parameter Name="CompanyId" Type="int" Mode="In" />
           <Parameter Name="YearId" Type="int" Mode="In" />
         </Function>
-        <Function Name="USP_VendorWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="USP_VendorWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VendorId" Type="int" Mode="In" />
+          <Parameter Name="CompanyId" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
+        </Function>
         <EntityContainer Name="StockManagerModelStoreContainer">
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -2820,13 +2827,20 @@
           <FunctionImport Name="USP_ProductWiseStock" ReturnType="Collection(StockManagerModel.USP_ProductWiseStock_Result)">
             <Parameter Name="CompanyId" Mode="In" Type="Int32" />
             <Parameter Name="YearId" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="USP_StockLedger" ReturnType="Collection(StockManagerModel.USP_StockLedger_Result)">
             <Parameter Name="ProductId" Mode="In" Type="Int32" />
             <Parameter Name="CompanyId" Mode="In" Type="Int32" />
             <Parameter Name="YearId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)" />
+          <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)">
+            <Parameter Name="VendorId" Mode="In" Type="Int32" />
+            <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="USP_ProductWiseStock_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -2842,24 +2856,24 @@
           <Property Type="Decimal" Name="TotalTailorReceived" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
         <ComplexType Name="USP_StockLedger_Result">
+          <Property Type="Int32" Name="SequenceNo" Nullable="true" />
           <Property Type="Int32" Name="ProductId" Nullable="true" />
           <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="Date" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Particular" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="Doc_Type" Nullable="false" MaxLength="24" />
-          <Property Type="Int32" Name="Doc_No" Nullable="true" />
-          <Property Type="Int32" Name="Doc_ID" Nullable="false" />
-          <Property Type="Decimal" Name="In_QTY" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Out_QTY" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="TransactionDate" Nullable="true" />
+          <Property Type="String" Name="Particular" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DocType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DocNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DocId" Nullable="true" />
+          <Property Type="Decimal" Name="IssuedQty" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ReceivedQty" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="USP_VendorWiseStock_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="VendorName" Nullable="true" MaxLength="200" />
-          <Property Type="Decimal" Name="GivenForPrinting" Nullable="true" Precision="38" Scale="2" />
-          <Property Type="Decimal" Name="ReceivedAfterPrinting" Nullable="true" Precision="38" Scale="2" />
-          <Property Type="Decimal" Name="TotalNetQuantity" Nullable="false" Precision="38" Scale="2" />
-          <Property Type="Decimal" Name="TotalShrinkage" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Int32" Name="ProductId" Nullable="true" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="IssuedQty" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ReceivedQty" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3261,28 +3275,28 @@
           <FunctionImportMapping FunctionImportName="USP_StockLedger" FunctionName="StockManagerModel.Store.USP_StockLedger">
             <ResultMapping>
               <ComplexTypeMapping TypeName="StockManagerModel.USP_StockLedger_Result">
+                <ScalarProperty Name="SequenceNo" ColumnName="SequenceNo" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="UnitName" ColumnName="UnitName" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="Particular" ColumnName="Particular" />
-                <ScalarProperty Name="Doc_Type" ColumnName="Doc Type" />
-                <ScalarProperty Name="Doc_No" ColumnName="Doc No" />
-                <ScalarProperty Name="Doc_ID" ColumnName="Doc ID" />
-                <ScalarProperty Name="In_QTY" ColumnName="In QTY" />
-                <ScalarProperty Name="Out_QTY" ColumnName="Out QTY" />
+                <ScalarProperty Name="DocType" ColumnName="DocType" />
+                <ScalarProperty Name="DocNo" ColumnName="DocNo" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="IssuedQty" ColumnName="IssuedQty" />
+                <ScalarProperty Name="ReceivedQty" ColumnName="ReceivedQty" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="USP_VendorWiseStock" FunctionName="StockManagerModel.Store.USP_VendorWiseStock">
             <ResultMapping>
               <ComplexTypeMapping TypeName="StockManagerModel.USP_VendorWiseStock_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="GivenForPrinting" ColumnName="GivenForPrinting" />
-                <ScalarProperty Name="ReceivedAfterPrinting" ColumnName="ReceivedAfterPrinting" />
-                <ScalarProperty Name="TotalNetQuantity" ColumnName="TotalNetQuantity" />
-                <ScalarProperty Name="TotalShrinkage" ColumnName="TotalShrinkage" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="IssuedQty" ColumnName="IssuedQty" />
+                <ScalarProperty Name="ReceivedQty" ColumnName="ReceivedQty" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
