@@ -27,13 +27,4 @@ namespace StockManager.Models
 
     }
 
-    namespace LogedUser
-    {
-        public static class LogedUser
-        {
-            public static User user { get; set; }
-        }
-
-    }
-
 }
