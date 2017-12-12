@@ -36,7 +36,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(id);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            PurchaseOrder purchaseOrder = db.PurchaseOrders.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             if (purchaseOrder == null)
             {
                 return HttpNotFound();
@@ -99,12 +100,13 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(id);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            PurchaseOrder purchaseOrder = db.PurchaseOrders.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             if (purchaseOrder == null)
             {
                 return HttpNotFound();
             }
-            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 1 && x.CompanyId == companyId), "Id", "VendorName", purchaseOrder.VendorId);
             ViewBag.ProductId = new SelectList(db.Products.Where(x => x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName");
             var year_id = Session["FinancialYearID"];
@@ -159,7 +161,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(id);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            PurchaseOrder purchaseOrder = db.PurchaseOrders.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             if (purchaseOrder == null)
             {
                 return HttpNotFound();

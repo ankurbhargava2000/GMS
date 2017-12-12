@@ -33,7 +33,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company vendor = db.Companies.Find(id);
+            var TenantId = Convert.ToInt32(Session["TenantID"]);
+            Company vendor = db.Companies.Where(x => x.Id == id && x.TenantId == TenantId).FirstOrDefault();
             if (vendor == null)
             {
                 return HttpNotFound();
@@ -73,7 +74,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company vendor = db.Companies.Find(id);
+            var TenantId = Convert.ToInt32(Session["TenantID"]);
+            Company vendor = db.Companies.Where(x => x.Id == id && x.TenantId == TenantId).FirstOrDefault();
             if (vendor == null)
             {
                 return HttpNotFound();
@@ -106,7 +108,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company vendor = db.Companies.Find(id);
+            var TenantId = Convert.ToInt32(Session["TenantID"]);
+            Company vendor = db.Companies.Where(x => x.Id == id && x.TenantId == TenantId).FirstOrDefault();
             if (vendor == null)
             {
                 return HttpNotFound();
@@ -121,7 +124,8 @@ namespace StockManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Company vendor = db.Companies.Find(id);
+            var TenantId = Convert.ToInt32(Session["TenantID"]);
+            Company vendor = db.Companies.Where(x => x.Id == id && x.TenantId == TenantId).FirstOrDefault();
             db.Companies.Remove(vendor);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -133,8 +137,8 @@ namespace StockManager.Controllers
                 return RedirectToAction("Index");
 
             var company_id = id;
-
-            var company = db.Companies.Find(company_id);
+            var TenantId = Convert.ToInt32(Session["TenantID"]);
+            var company = db.Companies.Where(x => x.Id == company_id && x.TenantId == TenantId).FirstOrDefault();
             
             if (company == null)
                 return HttpNotFound("Company Not Found");

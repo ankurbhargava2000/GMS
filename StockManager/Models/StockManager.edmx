@@ -2865,8 +2865,8 @@
           <Property Type="String" Name="DocType" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="DocNo" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="DocId" Nullable="true" />
-          <Property Type="Decimal" Name="IssuedQty" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="ReceivedQty" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="InQTY" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="OutQTY" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="USP_VendorWiseStock_Result">
           <Property Type="Int32" Name="ProductId" Nullable="true" />
@@ -3284,8 +3284,8 @@
                 <ScalarProperty Name="DocType" ColumnName="DocType" />
                 <ScalarProperty Name="DocNo" ColumnName="DocNo" />
                 <ScalarProperty Name="DocId" ColumnName="DocId" />
-                <ScalarProperty Name="IssuedQty" ColumnName="IssuedQty" />
-                <ScalarProperty Name="ReceivedQty" ColumnName="ReceivedQty" />
+                <ScalarProperty Name="InQTY" ColumnName="InQTY" />
+                <ScalarProperty Name="OutQTY" ColumnName="OutQTY" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

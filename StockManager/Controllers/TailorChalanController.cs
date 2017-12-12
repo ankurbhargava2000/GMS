@@ -34,7 +34,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TailorChalan tailorChalan = db.TailorChalans.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            TailorChalan tailorChalan = db.TailorChalans.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
             if (tailorChalan == null)
             {
                 return HttpNotFound();
@@ -101,7 +102,7 @@ namespace StockManager.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var companyId = Convert.ToInt32(Session["CompanyID"]);
-            TailorChalan tailorChalan = db.TailorChalans.Find(id);
+            TailorChalan tailorChalan = db.TailorChalans.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             if (tailorChalan == null)
             {
                 return HttpNotFound();
@@ -165,7 +166,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TailorChalan tailorChalan = db.TailorChalans.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            TailorChalan tailorChalan = db.TailorChalans.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
             db.TailorChalans.Remove(tailorChalan);
             db.SaveChanges();
             return RedirectToAction("Index");

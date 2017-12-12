@@ -33,7 +33,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vendor vendor = db.Vendors.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            Vendor vendor = db.Vendors.Where(x => x.CompanyId == CompanyId && x.Id==id).FirstOrDefault();
             if (vendor == null)
             {
                 return HttpNotFound();
@@ -73,7 +74,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vendor vendor = db.Vendors.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            Vendor vendor = db.Vendors.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
             if (vendor == null)
             {
                 return HttpNotFound();
@@ -106,7 +108,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vendor vendor = db.Vendors.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            Vendor vendor = db.Vendors.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
             if (vendor == null)
             {
                 return HttpNotFound();
@@ -121,7 +124,12 @@ namespace StockManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Vendor vendor = db.Vendors.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            Vendor vendor = db.Vendors.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
+            if (vendor == null)
+            {
+                return HttpNotFound();
+            }
             db.Vendors.Remove(vendor);
             db.SaveChanges();
             return RedirectToAction("Index");

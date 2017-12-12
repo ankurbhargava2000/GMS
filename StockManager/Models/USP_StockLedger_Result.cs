@@ -22,7 +22,7 @@ namespace StockManager.Models
         public string DocType { get; set; }
         public string DocNo { get; set; }
         public Nullable<int> DocId { get; set; }
-        public Nullable<decimal> IssuedQty { get; set; }
-        public Nullable<decimal> ReceivedQty { get; set; }
+        public Nullable<decimal> InQTY { get; set; }
+        public Nullable<decimal> OutQTY { get; set; }
     }
 }

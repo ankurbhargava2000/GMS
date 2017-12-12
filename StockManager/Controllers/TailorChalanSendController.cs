@@ -37,7 +37,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TailorChalanSend tailorChalan = db.TailorChalanSends.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            TailorChalanSend tailorChalan = db.TailorChalanSends.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
             if (tailorChalan == null)
             {
                 return HttpNotFound();
@@ -113,12 +114,13 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TailorChalanSend tailorChalan = db.TailorChalanSends.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            TailorChalanSend tailorChalan = db.TailorChalanSends.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
             if (tailorChalan == null)
             {
                 return HttpNotFound();
             }
-            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            
             ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true && x.CompanyId == CompanyId), "Id", "ProductName", tailorChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 3 && x.CompanyId == CompanyId), "Id", "VendorName", tailorChalan.VendorId);
             var year_id = Session["FinancialYearID"];
@@ -177,7 +179,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TailorChalanSend tailorChalan = db.TailorChalanSends.Find(id);
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
+            TailorChalanSend tailorChalan = db.TailorChalanSends.Where(x => x.CompanyId == CompanyId && x.Id == id).FirstOrDefault();
             db.TailorChalanSends.Remove(tailorChalan);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -189,11 +192,12 @@ namespace StockManager.Controllers
             {
                 return Json("Error in deleting product.");
             }
+            var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             try
             {
                 if (id != null && id != 0)
                 {
-                    TailorChalanSendDetail tailorChalanDetail = (TailorChalanSendDetail)db.TailorChalanSendDetails.Where(x => x.Id == id).FirstOrDefault();
+                    TailorChalanSendDetail tailorChalanDetail = (TailorChalanSendDetail)db.TailorChalanSendDetails.Where(x => x.Id == id ).FirstOrDefault();
                     db.TailorChalanSendDetails.Remove(tailorChalanDetail);
                     db.SaveChanges();
                     return Json("product deleted Successfully.");

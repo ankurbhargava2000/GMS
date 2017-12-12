@@ -38,8 +38,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
+            var companyId = Convert.ToInt32(Session["CompanyID"]);
+            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.CompanyId == companyId && x.invoice_no == id).FirstOrDefault();
             if (invoiceMaster == null)
             {
                 return HttpNotFound();
@@ -103,8 +103,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
+            var companyId = Convert.ToInt32(Session["CompanyID"]);
+            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.CompanyId == companyId && x.invoice_no == id).FirstOrDefault();
 
             if (invoiceMaster == null)
             {
@@ -199,8 +199,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
+            var companyId = Convert.ToInt32(Session["CompanyID"]);
+            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.CompanyId == companyId && x.invoice_no == id).FirstOrDefault();
 
             if (invoiceMaster == null)
             {
@@ -214,7 +214,8 @@ namespace StockManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
+            var companyId = Convert.ToInt32(Session["CompanyID"]);
+            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.CompanyId == companyId && x.invoice_no == id).FirstOrDefault();
             db.InvoiceMasters.Remove(invoiceMaster);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -259,8 +260,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-                        
-            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.invoice_no == id).FirstOrDefault();
+            var companyId = Convert.ToInt32(Session["CompanyID"]);
+            InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.CompanyId == companyId && x.invoice_no == id).FirstOrDefault();
 
             if (invoiceMaster != null)
             {

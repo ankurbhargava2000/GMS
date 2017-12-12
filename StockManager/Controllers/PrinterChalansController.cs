@@ -38,7 +38,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            PrinterChalan printerChalan = db.PrinterChalans.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             if (printerChalan == null)
             {
                 return HttpNotFound();
@@ -114,12 +115,13 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            PrinterChalan printerChalan = db.PrinterChalans.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             if (printerChalan == null)
             {
                 return HttpNotFound();
             }
-            var companyId = Convert.ToInt32(Session["CompanyID"]);
+            
             ViewBag.ProductId = new SelectList(db.Products.Where(x => x.ProductTypeId == 1 && x.IsActive == true && x.CompanyId == companyId), "Id", "ProductName", printerChalan.VendorId);
             ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2 && x.CompanyId == companyId), "Id", "VendorName", printerChalan.VendorId);
             var year_id = Session["FinancialYearID"];
@@ -176,7 +178,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            PrinterChalan printerChalan = db.PrinterChalans.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             db.PrinterChalans.Remove(printerChalan);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -212,8 +215,8 @@ namespace StockManager.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            PrinterChalan printerChalan = db.PrinterChalans.Find(id);
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
+            PrinterChalan printerChalan = db.PrinterChalans.Where(x => x.CompanyId == companyId && x.Id == id).FirstOrDefault();
             
             if (printerChalan != null)
             {
