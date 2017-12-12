@@ -47,10 +47,7 @@ namespace StockManager.Controllers
             catch(Exception e)
             {
                 return HttpNotFound(e.InnerException.Message);
-            }
-
-            return HttpNotFound();
-
+            }            
         }
 
         private ChartModel GetSalesCount(int? yearID, int? companyID)
