@@ -146,7 +146,7 @@ namespace StockManager.Controllers
                     transaction.Commit();
                     return Json(Convert.ToString(printerChalan.Id));
                 }
-                catch(Exception ex)
+                catch
                 {
                     transaction.Rollback();
                     ViewBag.VendorId = new SelectList(db.Vendors.Where(x => x.VendorTypeId == 2 && x.CompanyId == companyId), "Id", "VendorName", printerChalan.VendorId);

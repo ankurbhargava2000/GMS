@@ -742,7 +742,6 @@
     <Content Include="Views\Dashboard\_Feeds.cshtml" />
     <Content Include="Views\Report\StockLedger.cshtml" />
     <Content Include="Views\Shared\_ChalanTop.cshtml" />
-    <Content Include="Views\Dashboard\Test.cshtml" />
     <Content Include="Views\Shared\SinglePrint.cshtml" />
   </ItemGroup>
   <PropertyGroup>

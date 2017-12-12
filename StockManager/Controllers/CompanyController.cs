@@ -240,7 +240,7 @@ namespace StockManager.Controllers
                 return RedirectToAction("Index");
 
             }
-            catch ( Exception e)
+            catch
             {
                 
             }
