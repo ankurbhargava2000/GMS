@@ -15,32 +15,41 @@ namespace StockManager.Controllers
 
         [CheckAuth]
         public ActionResult Index()
-        {
-            var companyID = Convert.ToInt32(Session["CompanyID"]);
-            var yearID = Convert.ToInt32(Session["FinancialYearID"]);
+        {            
+            try
+            {
+                var vm = new DashboardVM();
 
-            var vm = new DashboardVM();
+                var companyID = Convert.ToInt32(Session["CompanyID"]);
+                var yearID = Convert.ToInt32(Session["FinancialYearID"]);
+                
+                vm.totalPurchases = db.PurchaseOrders
+                    .Where(x => x.CompanyId == companyID)
+                    .Where(x => x.financial_year == yearID)
+                    .ToList().Sum(x => x.NetAmount);
 
-            vm.totalPurchases = db.PurchaseOrders
-                .Where(x => x.CompanyId == companyID)
-                .Where(x => x.financial_year == yearID)
-                .ToList().Sum(x => x.NetAmount);
+                vm.totalSales = db.InvoiceMasters
+                    .Where(x => x.CompanyId == companyID)
+                    .Where(x => x.financial_year == yearID)
+                    .ToList().Sum(x => x.net_amount);
 
-            vm.totalSales = db.InvoiceMasters
-                .Where(x => x.CompanyId == companyID)
-                .Where(x => x.financial_year == yearID)
-                .ToList().Sum(x => x.net_amount);
+                vm.totalExpenses = 0;
 
-            vm.totalExpenses = 0;
+                vm.topProducts = GetTopProducts(yearID, companyID);
+                vm.topCustomers = GetTopCustomers(yearID, companyID);
+                vm.topVendors = GetTopVendors(yearID, companyID);
+                vm.latestPurchase = GetLatestPurchaseOrders(yearID, companyID);
+                vm.SalesAmount = GetSalesAmount(yearID, companyID);
+                vm.SalesCount = GetSalesCount(yearID, companyID);
 
-            vm.topProducts = GetTopProducts(yearID, companyID);
-            vm.topCustomers = GetTopCustomers(yearID, companyID);
-            vm.topVendors = GetTopVendors(yearID, companyID);
-            vm.latestPurchase = GetLatestPurchaseOrders(yearID, companyID);
-            vm.SalesAmount = GetSalesAmount(yearID, companyID);
-            vm.SalesCount = GetSalesCount(yearID, companyID);
+                return View(vm);
+            }
+            catch(Exception e)
+            {
+                return HttpNotFound(e.InnerException.Message);
+            }
 
-            return View(vm);
+            return HttpNotFound();
 
         }
 
