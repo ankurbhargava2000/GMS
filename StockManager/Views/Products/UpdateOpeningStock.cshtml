@@ -27,7 +27,7 @@
             var i = 0;
 
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
             @Html.HiddenFor(x => x.FinancialYear.Id)
 
@@ -52,11 +52,11 @@
 
                                     if (product == null)
                                     {
-                                        @Html.TextBox("Transactions[" + @i + "].Quantity", 0);
+                                        @Html.TextBox("Transactions[" + @i + "].Quantity", 0, new { @type = "number" });
                                     }
                                     else
                                     {
-                                        @Html.TextBox("Transactions[" + @i + "].Quantity", product.Quantity);
+                                        @Html.TextBox("Transactions[" + @i + "].Quantity", product.Quantity, new { @type = "number" });
                                     }
                                 }
                             </td>

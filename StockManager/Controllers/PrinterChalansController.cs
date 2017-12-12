@@ -231,7 +231,8 @@ namespace StockManager.Controllers
                     ShowTotal = false,
                     Items = printerChalan.PrinterChalanDetails.Select(x => new PrinterItem()
                     {
-                        Particular = x.Description,
+                        Particular = x.Product.ProductName + " (" + x.ExpectedFold + ") ",
+                        Pcs = Convert.ToInt32(x.Quantity),
                     })
                     .ToList()
                 };
