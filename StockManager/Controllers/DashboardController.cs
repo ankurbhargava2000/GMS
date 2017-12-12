@@ -16,14 +16,22 @@ namespace StockManager.Controllers
         [CheckAuth]
         public ActionResult Index()
         {
-            var vm = new DashboardVM();
-
-            vm.totalPurchases = db.PurchaseOrders.ToList().Sum(x => x.NetAmount);
-            vm.totalSales = db.InvoiceMasters.ToList().Sum(x => x.net_amount);
-            vm.totalExpenses = 0;
-
             var companyID = Convert.ToInt32(Session["CompanyID"]);
             var yearID = Convert.ToInt32(Session["FinancialYearID"]);
+
+            var vm = new DashboardVM();
+
+            vm.totalPurchases = db.PurchaseOrders
+                .Where(x => x.CompanyId == companyID)
+                .Where(x => x.financial_year == yearID)
+                .ToList().Sum(x => x.NetAmount);
+
+            vm.totalSales = db.InvoiceMasters
+                .Where(x => x.CompanyId == companyID)
+                .Where(x => x.financial_year == yearID)
+                .ToList().Sum(x => x.net_amount);
+
+            vm.totalExpenses = 0;
 
             vm.topProducts = GetTopProducts(yearID, companyID);
             vm.topCustomers = GetTopCustomers(yearID, companyID);
@@ -35,6 +43,7 @@ namespace StockManager.Controllers
             return View(vm);
 
         }
+
         private ChartModel GetSalesCount(int? yearID, int? companyID)
         {
             var FiscalYear = db.FinancialYears.Find(yearID);
@@ -212,32 +221,6 @@ namespace StockManager.Controllers
                 .Take(count)
                 .ToList();
         }
-
-        //[CheckAuth]
-        //public ActionResult Test()
-        //{
-        //    ViewBag.customer_id = new SelectList(db.Customers, "Id", "CustomerName");
-        //    ViewBag.product_id = db.Products.ToList();
-
-        //    var last = db.InvoiceMasters.OrderByDescending(o => o.invoice_no).FirstOrDefault();
-
-        //    if (last == null)
-        //    {
-        //        ViewBag.invoice_no = 1;
-        //    }
-        //    else
-        //    {
-        //        ViewBag.invoice_no = last.invoice_no + 1;
-        //    }
-
-        //    var year_id = Session["FinancialYearID"];
-        //    var year = db.FinancialYears.Find(year_id);
-
-        //    ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
-        //    ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
-
-        //    return View();
-        //}
 
     }
 }
