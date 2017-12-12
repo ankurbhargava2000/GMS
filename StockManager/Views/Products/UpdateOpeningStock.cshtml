@@ -52,11 +52,11 @@
 
                                     if (product == null)
                                     {
-                                        @Html.TextBox("Transactions[" + @i + "].Quantity", 0, new { @type = "number" });
+                                        @Html.TextBox("Transactions[" + @i + "].Quantity", 0, new { @type = "number", required = true });
                                     }
                                     else
                                     {
-                                        @Html.TextBox("Transactions[" + @i + "].Quantity", product.Quantity, new { @type = "number" });
+                                        @Html.TextBox("Transactions[" + @i + "].Quantity", product.Quantity, new { @type = "number", required = true });
                                     }
                                 }
                             </td>
