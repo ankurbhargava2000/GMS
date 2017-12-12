@@ -211,11 +211,11 @@ namespace StockManager.Controllers
             }
 
             var model = new OpeningStockVM();
-
+            int companyId = Convert.ToInt32(Session["CompanyID"]);
             model.Products = db.Products
-                                .Where(x => x.IsActive == true)
+                                .Where(x => x.IsActive == true && x.CompanyId == companyId)
                                 .ToList();
-
+            
             var yid = Convert.ToInt32(Session["FinancialYearID"]);
             model.FinancialYear = db.FinancialYears
                 .Where(x => x.Id == yid)
