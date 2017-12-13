@@ -55,7 +55,7 @@
                             @Html.DisplayFor(modelItem => item.Vendor.VendorName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.InvoiceDate)
+                            @(item.InvoiceDate.ToString("dd-MMM-yyyy"))
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)

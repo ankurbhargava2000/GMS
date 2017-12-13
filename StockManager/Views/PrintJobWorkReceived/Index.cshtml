@@ -49,7 +49,7 @@
                             @Html.DisplayFor(modelItem => item.Vendor.VendorName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ChalanDate)
+                            @(item.ChalanDate.ToString("dd-MMM-yyyy"))                            
                         </td>
 
                         <td>

@@ -38,6 +38,12 @@
                 <th>
                     Product Type
                 </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Active
+                </th>
                 <th>Actions</th>
             </tr>
                 </thead>
@@ -61,6 +67,12 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ProductType.ProductType1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SellingPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsActive)
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })

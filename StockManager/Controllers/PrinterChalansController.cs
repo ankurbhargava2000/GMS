@@ -59,7 +59,7 @@ namespace StockManager.Controllers
             ViewBag.StartYear = year.StartDate.ToString("dd-MMM-yyyy");
             ViewBag.EndYear = year.EndDate.ToString("dd-MMM-yyyy");
 
-            var last = db.PrinterChalans.OrderByDescending(o => o.chalan_number).FirstOrDefault();
+            var last = db.PrinterChalans.Where(x => x.CompanyId == companyId).OrderByDescending(o => o.chalan_number).FirstOrDefault();
 
             if (last == null)
             {

@@ -52,7 +52,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TransactionDate)
+                                @(item.TransactionDate?.ToString("dd-MMM-yyyy"))
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Particular)
