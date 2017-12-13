@@ -90,6 +90,7 @@
                         <table id="products_table" class="table">
                             <tr>
                                 <th>Name</th>
+                                <th>Available</th>
                                 <th>Sale rate</th>
                                 <th>Qty</th>
                                 <th>Discount</th>
@@ -207,33 +208,39 @@
                     return;
                 }
 
+                var qty = GetAvailable(option.val());
                 var row = "<tr id='item_" + option.val() + "' class='itemrow'>";
 
                 // Name
-                row += "<td>"
+                row += "<td>";
                 row += "<input type='hidden' name='InvoiceDetails[" + i + "].product_id' value='" + option.val() + "' />";
                 row += "<input type='hidden' name='InvoiceDetails[" + i + "].created_at' value='@DateTime.Now' />";
                 row += "<div style='margin-top: 5px;'>" + option.text() + "</div>";
-                row += "</td>"
+                row += "</td>";
+                
+                // Available
+                row += "<td class='qtyCol'>";
+                row += qty;
+                row += "</td>";
 
                 // Sale rate
-                row += "<td style='width: 15%' class='sale'>"
+                row += "<td style='width: 15%' class='sale'>";
                 row += "<input type='text' name='InvoiceDetails[" + i + "].sale_rate' class='itemInput form-control' value='" + 0 + "' />";
-                row += "</td>"
+                row += "</td>";
 
                 // Quantity
-                row += "<td style='width: 15%' class='qty'>"
+                row += "<td style='width: 15%' class='qty'>";
                 row += "<input type='number' name='InvoiceDetails[" + i + "].quantity' class='itemInput form-control' value='" + 1 + "' />";
-                row += "</td>"
+                row += "</td>";
 
                 // Discount
-                row += "<td style='width: 15%' class='dscnt'>"
+                row += "<td style='width: 15%' class='dscnt'>";
                 row += "<input type='text' name='InvoiceDetails[" + i + "].discount' class='itemInput form-control' value='" + 0 + "' />";
-                row += "</td>"
+                row += "</td>";
 
                 // Product total
-                row += "<td class='ptotal'>"
-                row += "</td>"
+                row += "<td class='ptotal'>";
+                row += "</td>";
 
                 // Delete Btn
                 row += "<td>";
@@ -274,6 +281,18 @@
             $("input#total").val(subtotal - total_discount);
 
         };
+
+        function GetAvailable(pid)
+        {            
+            $.post("@Url.Action("AvailableQuantity")", { id: pid }, function (response) {
+                fillValue(response);
+            });
+        }
+
+        function fillValue(data)
+        {
+            $('.itemrow').last().children('.qtyCol').text(data);   
+        }
 
     </script>
 }

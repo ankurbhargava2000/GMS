@@ -93,6 +93,7 @@
                         <table id="products_table" class="table">
                             <tr>
                                 <th>Name</th>
+                                <th>Available</th>
                                 <th>Sale rate</th>
                                 <th>Qty</th>
                                 <th>Discount</th>
@@ -113,6 +114,9 @@
                                                 <input type='hidden' name='InvoiceDetails[@i].product_id' value='@item.product_id' />
                                                 <input type='hidden' name='InvoiceDetails[@i].created_at' value='@DateTime.Now' />
                                                 <div style='margin-top: 5px;'>@item.Product.ProductName</div>
+                                            </td>
+                                            <td style='width: 15%' class='sale'>
+                                                @TempData["P_" + item.Product.Id]
                                             </td>
                                             <td style='width: 15%' class='sale'>
                                                 <input type='text' name='InvoiceDetails[@i].sale_rate' class='itemInput form-control' value='@item.sale_rate' />
@@ -257,6 +261,7 @@
                     return;
                 }
 
+                var qty = GetAvailable(option.val());
                 var row = "<tr id='item_" + option.val() + "' class='itemrow newItem'>";
 
                 // Name
@@ -265,6 +270,11 @@
                 row += "<input type='hidden' name='nInvoiceDetails[" + i + "].created_at' value='@DateTime.Now' />";
                 row += "<div style='margin-top: 5px;'>" + option.text() + "</div>";
                 row += "</td>"
+
+                // Available
+                row += "<td class='qtyCol'>";
+                row += qty;
+                row += "</td>";
 
                 // Sale rate
                 row += "<td style='width: 15%' class='sale'>"
@@ -323,7 +333,19 @@
             $("input#gross").val(subtotal);
             $("input#total").val(subtotal - total_discount);
 
-        };
+        }
+        
+        function GetAvailable(pid)
+        {            
+            $.post("@Url.Action("AvailableQuantity")", { id: pid }, function (response) {
+            fillValue(response);
+        });
+        }
+
+        function fillValue(data)
+        {
+            $('.itemrow').last().children('.qtyCol').text(data);   
+        }
 
     </script>
 }

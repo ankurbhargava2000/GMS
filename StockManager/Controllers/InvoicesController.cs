@@ -106,15 +106,21 @@ namespace StockManager.Controllers
             var companyId = Convert.ToInt32(Session["CompanyID"]);
             InvoiceMaster invoiceMaster = db.InvoiceMasters.Where(x => x.CompanyId == companyId && x.invoice_no == id).FirstOrDefault();
 
+            foreach (var item in invoiceMaster.InvoiceDetails)
+            {
+                TempData["P_"+item.Product.Id] = AvailableQuantity(item.Product.Id);
+            }
+
             if (invoiceMaster == null)
             {
                 return HttpNotFound();
             }
+
             var CompanyId = Convert.ToInt32(Session["CompanyID"]);
             ViewBag.invoice_no = invoiceMaster.invoice_no;
             ViewBag.customer_id = new SelectList(db.Customers.Where(x => x.CompanyId == CompanyId), "Id", "CustomerName");
             ViewBag.product_id = db.Products.Where(x => x.CompanyId == CompanyId).ToList();
-
+            
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 
@@ -304,6 +310,10 @@ namespace StockManager.Controllers
             return Json(!db.InvoiceMasters.Any(x => x.invoice_no == invoice_no), JsonRequestBehavior.AllowGet);
         }
 
+        public int AvailableQuantity(int id)
+        {
+            return 1;
+        }
 
     }
 }
