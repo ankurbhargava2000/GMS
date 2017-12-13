@@ -312,7 +312,8 @@ namespace StockManager.Controllers
 
         public int AvailableQuantity(int id)
         {
-            return 1;
+            var companyId = Convert.ToInt32(Session["CompanyID"]);
+            return db.USP_getStockAvailableQTY(id, companyId).FirstOrDefault().Quantity;
         }
 
     }
