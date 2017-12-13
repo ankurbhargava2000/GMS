@@ -35,6 +35,8 @@ namespace StockManager.Models
         public virtual DbSet<MeasuringUnit> MeasuringUnits { get; set; }
         public virtual DbSet<PrinterChalan> PrinterChalans { get; set; }
         public virtual DbSet<PrinterChalanDetail> PrinterChalanDetails { get; set; }
+        public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
+        public virtual DbSet<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<PurchaseDetail> PurchaseDetails { get; set; }
@@ -51,8 +53,19 @@ namespace StockManager.Models
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
-        public virtual DbSet<PrintJobWorkReceived> PrintJobWorkReceiveds { get; set; }
-        public virtual DbSet<PrintJobWorkReceivedDetail> PrintJobWorkReceivedDetails { get; set; }
+    
+        public virtual ObjectResult<USP_getStockAvailableQTY_Result> USP_getStockAvailableQTY(Nullable<int> productId, Nullable<int> companyId)
+        {
+            var productIdParameter = productId.HasValue ?
+                new ObjectParameter("ProductId", productId) :
+                new ObjectParameter("ProductId", typeof(int));
+    
+            var companyIdParameter = companyId.HasValue ?
+                new ObjectParameter("CompanyId", companyId) :
+                new ObjectParameter("CompanyId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_getStockAvailableQTY_Result>("USP_getStockAvailableQTY", productIdParameter, companyIdParameter);
+        }
     
         public virtual ObjectResult<USP_ProductWiseStock_Result> USP_ProductWiseStock(Nullable<int> companyId, Nullable<int> yearId, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
@@ -111,19 +124,6 @@ namespace StockManager.Models
                 new ObjectParameter("EndDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_VendorWiseStock_Result>("USP_VendorWiseStock", vendorIdParameter, companyIdParameter, startDateParameter, endDateParameter);
-        }
-    
-        public virtual int USP_getStockAvailableQTY(Nullable<int> productId, Nullable<int> companyId, ObjectParameter quantity)
-        {
-            var productIdParameter = productId.HasValue ?
-                new ObjectParameter("ProductId", productId) :
-                new ObjectParameter("ProductId", typeof(int));
-    
-            var companyIdParameter = companyId.HasValue ?
-                new ObjectParameter("CompanyId", companyId) :
-                new ObjectParameter("CompanyId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USP_getStockAvailableQTY", productIdParameter, companyIdParameter, quantity);
         }
     }
 }

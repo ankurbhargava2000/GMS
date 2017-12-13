@@ -10,19 +10,10 @@
 namespace StockManager.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PrintJobWorkReceivedDetail
+    public partial class USP_getStockAvailableQTY_Result
     {
         public int Id { get; set; }
-        public int ChalanId { get; set; }
-        public int ProductId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<int> Fold { get; set; }
-        public string Description { get; set; }
-        public Nullable<decimal> Charges { get; set; }
-    
-        public virtual PrintJobWorkReceived PrintJobWorkReceived { get; set; }
-        public virtual Product Product { get; set; }
+        public int Quantity { get; set; }
     }
 }
