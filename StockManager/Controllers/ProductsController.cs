@@ -65,7 +65,8 @@ namespace StockManager.Controllers
             }
 
             ViewBag.ProductTypeId = new SelectList(db.ProductTypes, "Id", "ProductType1", product.ProductTypeId);
-            ViewBag.MeasuringUnitId = new SelectList(db.MeasuringUnits, "Id", "Name", product.Unit);
+            ViewBag.Unit = new SelectList(db.MeasuringUnits, "Id", "Name", product.Unit);
+
             return View(product);
         }
 

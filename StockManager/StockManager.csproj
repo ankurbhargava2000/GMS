@@ -232,6 +232,7 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductExtend.cs" />
     <Compile Include="Models\ProductType.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
