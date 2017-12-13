@@ -140,7 +140,9 @@ namespace StockManager.Controllers
                 {
                     string password = Hash(login.password.Trim());
 
-                    User user = db.Users.Where(x => x.UserName == login.username.Trim()).FirstOrDefault();
+                    User user = db.Users
+                        .Where(x => x.UserName == login.username.Trim())
+                        .FirstOrDefault();
 
                     if (user == null)
                         return HttpNotFound();
@@ -161,8 +163,14 @@ namespace StockManager.Controllers
                         }
                         else
                         {
-                            Session["CompanyID"] = user.UserCompanies.FirstOrDefault().CompanyId;
-                            Session["FinancialYearID"] = user.UserCompanies.FirstOrDefault().Company.CurrentFinYear;                            
+                            var company = user.UserCompanies.FirstOrDefault();
+
+                            Session["CompanyID"] = company.CompanyId;
+                            Session["FinancialYearID"] = company.Company.CurrentFinYear;
+                            Session["YearStartDate"] = company.Company.FinancialYear.StartDate.ToString("MM/dd/yyyy");
+                            Session["YearEndDate"] = company.Company.FinancialYear.EndDate.ToString("MM/dd/yyyy");
+                            Session["CompanyName"] = company.Company.Name;
+                            
                         }
                         return RedirectToLocal(login.return_url);
                     }
