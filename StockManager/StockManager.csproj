@@ -201,6 +201,7 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerExtend.cs" />
     <Compile Include="Models\DashboardVM.cs" />
     <Compile Include="Models\FinancialYear.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
@@ -304,6 +305,7 @@
     <Compile Include="Models\Vendor.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VendorExtend.cs" />
     <Compile Include="Models\VendorType.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
