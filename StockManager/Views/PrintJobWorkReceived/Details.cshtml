@@ -56,10 +56,10 @@
                     <table id="products_table" class="table">
                         <tr>
                             <th>Name</th>
-                            <th>Charges</th>
+                            <th>Rate</th>
                             <th>Qty</th>
-                            <th>Discount</th>
-                            <th>P.Total</th>
+                            <th>Fold</th>
+                            <th>Amount</th>
                         </tr>
                         @{
                             if (Model.PrintJobWorkReceivedDetails.Count() > 0)
@@ -78,7 +78,7 @@
                                         </td>
 
                                         <td style='width: 15%' class='dscnt'>
-                                            Rs @item.Fold
+                                            @item.Fold
                                         </td>
                                         <td class='ptotal'>
                                             Rs @((item.Quantity * item.Charges))
