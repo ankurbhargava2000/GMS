@@ -32,6 +32,24 @@
         .crimsonred {
             color: rgb(243, 83, 105) !important;
         }
+
+        #companyDetails {
+            display: none;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+        }
+        /*
+        .page-top {
+            position: relative;
+            z-index: -1;
+        }
+
+        @@media all and (max-width: 522px) {
+            #companyDetails {
+                display: none;
+            }
+        }*/
     </style>
     @Styles.Render("~/Content/DateCSS")
     @RenderSection("css", false)
@@ -81,6 +99,14 @@
     <script>
         $(document).ready(function () {
             $('.jTable').DataTable();
+            jQuery.fn.center = function () {
+                this.css("position", "absolute");
+                this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                                                            $(window).scrollTop()) + "px");
+                this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                                                            $(window).scrollLeft()) + "px");
+                return this;
+            }
         });
     </script>
     @Scripts.Render("~/bundles/DatePicker")
@@ -117,6 +143,7 @@
             maxView: 1,
             forceParse: 0
         });
+
     </script>
 </body>
 </html>

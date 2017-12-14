@@ -4,6 +4,11 @@
     ViewBag.Title = "Vendor Wise Stock Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+}
+
 <div class="portlet light">
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
@@ -19,6 +24,44 @@
         </div>
     </div>
     <div class="portlet-body">
+
+        @using (Html.BeginForm("VendorWiseStock", "Report", FormMethod.Get))
+        {
+
+            if ( ViewBag.ErrMsg != null )
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.ErrMsg
+                </div>
+            }
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Vendors</label>
+                            @Html.DropDownList("vendor_id", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Interval</label>
+                            @Html.TextBox("dates", null, new { Id = "date_range", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-sm" style="margin-top: 25px;">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
         <table class="jTable table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -64,8 +107,37 @@
     </div>
 </div>
 
+@section scripts{
 
+    <!-- Include Required Prerequisites -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
+    <script>
+        $(document).ready(function () {
 
+            //$('#date_range').daterangepicker({
+            //    "startDate": "12/08/2017",
+            //    "endDate": "12/14/2017",
+            //    "minDate": "1/11/1",
+            //    "maxDate": "1/10/2"
+            //}, function (start, end, label) {
+            //    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+            //});
 
+            $('#date_range').daterangepicker({
+                "startDate": "@ViewBag.StartYear",
+                "endDate": "@ViewBag.EndYear",
+                "minDate": "@ViewBag.StartYear",
+                "maxDate": "@ViewBag.EndYear"
+            }, function (start, end, label) {
+                console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+            });
+
+        });
+    </script>
+
+}

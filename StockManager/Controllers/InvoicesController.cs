@@ -64,9 +64,7 @@ namespace StockManager.Controllers
             {
                 ViewBag.invoice_no = last.invoice_no + 1;
             }
-
-
-
+            
             var year_id = Session["FinancialYearID"];
             var year = db.FinancialYears.Find(year_id);
 

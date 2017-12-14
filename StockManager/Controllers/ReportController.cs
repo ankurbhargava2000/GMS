@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Newtonsoft.Json;
 using StockManager.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace StockManager.Controllers
 {
@@ -15,13 +17,42 @@ namespace StockManager.Controllers
     public class ReportController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
-        public ActionResult VendorWiseStock()
+        public ActionResult VendorWiseStock(string dates, int vendor_id = 17)
         {
+
+            DateTime start_date;
+            DateTime end_date;
+
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
+
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
-            var result = db.USP_VendorWiseStock(17,company, f.StartDate, f.EndDate).ToList();
-            return View(result);
+
+            ViewBag.vendor_id = new SelectList(db.Vendors.Where(x => x.CompanyId == company), "Id", "VendorName");
+            ViewBag.StartYear = f.StartDate;
+            ViewBag.EndYear = f.EndDate;
+
+            try
+            {
+                if (!String.IsNullOrEmpty(dates))
+                {
+                    string[] parts = dates.Split('-');
+                    if (parts.Length == 2)
+                    {
+                        start_date = Convert.ToDateTime(parts[0]);
+                        end_date = Convert.ToDateTime(parts[1]);
+                        
+                        var result = db.USP_VendorWiseStock(vendor_id, company, start_date, end_date).ToList();
+                        return View(result);
+                    }
+                }
+                
+            }
+            catch (Exception e) { ViewBag.ErrMsg = e.Message; }
+            
+            var result2 = db.USP_VendorWiseStock(vendor_id, company, f.StartDate, f.EndDate).ToList();
+            return View(result2);
+
         }
 
         public ActionResult ProductWiseStock()
@@ -29,7 +60,7 @@ namespace StockManager.Controllers
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
-            var result = db.USP_ProductWiseStock(company,fYear, f.StartDate, f.EndDate).ToList();
+            var result = db.USP_ProductWiseStock(company, fYear, f.StartDate, f.EndDate).ToList();
             return View(result);
         }
 
@@ -38,7 +69,7 @@ namespace StockManager.Controllers
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
 
-            var result = db.USP_StockLedger(productId,company, fYear).ToList();
+            var result = db.USP_StockLedger(productId, company, fYear).ToList();
             ViewBag.Product = db.Products.Where(x => x.Id == productId).FirstOrDefault().ProductName;
             return View(result);
         }
@@ -121,7 +152,7 @@ namespace StockManager.Controllers
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
-            List<USP_ProductWiseStock_Result> product = db.USP_ProductWiseStock(company,fYear,f.StartDate,f.EndDate).ToList<USP_ProductWiseStock_Result>();
+            List<USP_ProductWiseStock_Result> product = db.USP_ProductWiseStock(company, fYear, f.StartDate, f.EndDate).ToList<USP_ProductWiseStock_Result>();
             tableLayout.AddCell(new PdfPCell(new Phrase("Product Wise Stock Report", new Font(Font.HELVETICA, 8, 1, new iTextSharp.text.Color(0, 0, 0)))) { Colspan = 12, Border = 0, PaddingBottom = 5, HorizontalAlignment = Element.ALIGN_CENTER });
 
             ////Add header
@@ -150,7 +181,7 @@ namespace StockManager.Controllers
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
-            List<USP_VendorWiseStock_Result> product = db.USP_VendorWiseStock(17, company,f.StartDate,f.EndDate).ToList<USP_VendorWiseStock_Result>();
+            List<USP_VendorWiseStock_Result> product = db.USP_VendorWiseStock(17, company, f.StartDate, f.EndDate).ToList<USP_VendorWiseStock_Result>();
             tableLayout.AddCell(new PdfPCell(new Phrase("Vendor Wise Stock Report", new Font(Font.HELVETICA, 8, 1, new iTextSharp.text.Color(0, 0, 0)))) { Colspan = 12, Border = 0, PaddingBottom = 5, HorizontalAlignment = Element.ALIGN_CENTER });
 
             ////Add header
