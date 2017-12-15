@@ -68,13 +68,13 @@
                     <th>
                         Product Name
                     </th>
-                    <th>
+                    <th style="width: 10%;">
                         Unit
                     </th>
-                    <th>
+                    <th style="width: 10%;">
                         Issued
                     </th>
-                    <th>
+                    <th style="width: 10%;">
                         Received
                     </th>
 
@@ -98,7 +98,6 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.ReceivedQty)
                             </td>
-
                         </tr>
                     }
                 }
@@ -110,24 +109,15 @@
 @section scripts{
 
     <!-- Include Required Prerequisites -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
     <!-- Include Date Range Picker -->
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
     <script>
+
         $(document).ready(function () {
-
-            //$('#date_range').daterangepicker({
-            //    "startDate": "12/08/2017",
-            //    "endDate": "12/14/2017",
-            //    "minDate": "1/11/1",
-            //    "maxDate": "1/10/2"
-            //}, function (start, end, label) {
-            //    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-            //});
-
+                    
             $('#date_range').daterangepicker({
                 "startDate": "@ViewBag.StartYear",
                 "endDate": "@ViewBag.EndYear",

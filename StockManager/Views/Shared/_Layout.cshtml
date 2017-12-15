@@ -97,20 +97,14 @@
     <!-- END DATATABLES -->
     <script>
         $(document).ready(function () {
-            $('.jTable').DataTable();
-            jQuery.fn.center = function () {
-                this.css("position", "absolute");
-                this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                                                            $(window).scrollTop()) + "px");
-                this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                                                            $(window).scrollLeft()) + "px");
-                return this;
-            }
+            $('.jTable').DataTable({
+                "scrollX": false
+            });
         });
     </script>
-    @Scripts.Render("~/bundles/DatePicker")
-    @RenderSection("scripts", required: false)
-    <script type="text/javascript">
+    @*
+        @Scripts.Render("~/bundles/DatePicker")
+        <script type="text/javascript">
         $('.form_datetime').datetimepicker({
             //language:  'fr',
             weekStart: 1,
@@ -142,7 +136,8 @@
             maxView: 1,
             forceParse: 0
         });
-
-    </script>
+        </script>
+    *@
+    @RenderSection("scripts", required: false)
 </body>
 </html>
