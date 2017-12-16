@@ -17,7 +17,7 @@ namespace StockManager.Controllers
     public class ReportController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
-        public ActionResult VendorWiseStock(string dates, int vendor_id = 17)
+        public ActionResult VendorWiseStock(string dates, int vendor_id=0)
         {
 
             DateTime start_date;
@@ -26,6 +26,7 @@ namespace StockManager.Controllers
             var company = Convert.ToInt32(Session["CompanyID"]);
             var fYear = Convert.ToInt32(Session["FinancialYearID"]);
 
+             
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
 
             ViewBag.vendor_id = new SelectList(db.Vendors.Where(x => x.CompanyId == company), "Id", "VendorName");
@@ -55,6 +56,35 @@ namespace StockManager.Controllers
 
         }
 
+        public ActionResult VendorStockLedger(string dates,int productId,int vendorId)
+        {
+            DateTime start_date;
+            DateTime end_date;
+            var company = Convert.ToInt32(Session["CompanyID"]);
+            var fYear = Convert.ToInt32(Session["FinancialYearID"]);
+            FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
+            try
+            {
+                if (!String.IsNullOrEmpty(dates))
+                {
+                    string[] parts = dates.Split('-');
+                    if (parts.Length == 2)
+                    {
+                        start_date = Convert.ToDateTime(parts[0]);
+                        end_date = Convert.ToDateTime(parts[1]);
+
+                        var result = db.USP_VendorStockLedger(productId, company, vendorId, fYear, f.StartDate, f.EndDate).ToList();
+                        ViewBag.Product = db.Products.Where(x => x.Id == productId && x.CompanyId==company).FirstOrDefault().ProductName;
+                        ViewBag.VendorName = db.Vendors.Where(x => x.Id == vendorId && x.CompanyId == company).FirstOrDefault().VendorName;
+                        return View(result);
+                    }
+                }
+
+            }
+            catch (Exception e) { ViewBag.ErrMsg = e.Message; }
+            return View();
+
+        }
         public ActionResult ProductWiseStock()
         {
             var company = Convert.ToInt32(Session["CompanyID"]);

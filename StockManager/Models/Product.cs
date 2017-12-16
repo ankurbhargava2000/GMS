@@ -21,8 +21,8 @@ namespace StockManager.Models
             this.PrinterChalanDetails = new HashSet<PrinterChalanDetail>();
             this.PrintJobWorkReceivedDetails = new HashSet<PrintJobWorkReceivedDetail>();
             this.PurchaseDetails = new HashSet<PurchaseDetail>();
-            this.TailorChalanDetails = new HashSet<TailorChalanDetail>();
             this.TailorChalanSendDetails = new HashSet<TailorChalanSendDetail>();
+            this.TailorChalanDetails = new HashSet<TailorChalanDetail>();
             this.TailorMaterialDetails = new HashSet<TailorMaterialDetail>();
             this.Transactions = new HashSet<Transaction>();
         }
@@ -48,9 +48,9 @@ namespace StockManager.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorChalanSendDetail> TailorChalanSendDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TailorChalanDetail> TailorChalanDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TailorMaterialDetail> TailorMaterialDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

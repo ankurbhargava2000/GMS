@@ -448,7 +448,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PrinterCh__Chala__6754599E">
-          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="1" />
+          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PrinterChalanDetails" Type="Self.PrinterChalanDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PrinterChalan">
@@ -498,7 +500,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PrintJobW__Chala__6A30C649">
-          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="1" />
+          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PrintJobWorkReceivedDetails" Type="Self.PrintJobWorkReceivedDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PrintJobWorkReceived">
@@ -598,7 +602,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PurchaseD__Purch__6E01572D">
-          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PurchaseDetails" Type="Self.PurchaseDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PurchaseOrders">
@@ -636,7 +642,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TailorCha__Chala__17036CC0">
-          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="1" />
+          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TailorChalanSendDetails" Type="Self.TailorChalanSendDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TailorChalanSend">
@@ -660,7 +668,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TailorCha__Chala__70DDC3D8">
-          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1" />
+          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TailorChalan">
@@ -772,7 +782,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TailorMat__Tailo__74AE54BC">
-          <End Role="TailorChalanDetails" Type="Self.TailorChalanDetails" Multiplicity="1" />
+          <End Role="TailorChalanDetails" Type="Self.TailorChalanDetails" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TailorMaterialDetails" Type="Self.TailorMaterialDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TailorChalanDetails">
@@ -1105,6 +1117,14 @@
           <Parameter Name="ProductId" Type="int" Mode="In" />
           <Parameter Name="CompanyId" Type="int" Mode="In" />
           <Parameter Name="YearId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="USP_VendorStockLedger" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductId" Type="int" Mode="In" />
+          <Parameter Name="CompanyId" Type="int" Mode="In" />
+          <Parameter Name="VendorId" Type="int" Mode="In" />
+          <Parameter Name="YearId" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
         <Function Name="USP_VendorWiseStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VendorId" Type="int" Mode="In" />
@@ -2186,7 +2206,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PrinterCh__Chala__6754599E">
-          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="1" />
+          <End Role="PrinterChalan" Type="Self.PrinterChalan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PrinterChalanDetails" Type="Self.PrinterChalanDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PrinterChalan">
@@ -2236,7 +2258,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PrintJobW__Chala__6A30C649">
-          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="1" />
+          <End Role="PrintJobWorkReceived" Type="Self.PrintJobWorkReceived" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PrintJobWorkReceivedDetails" Type="Self.PrintJobWorkReceivedDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PrintJobWorkReceived">
@@ -2358,7 +2382,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PurchaseD__Purch__6E01572D">
-          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrder" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PurchaseDetails" Type="Self.PurchaseDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PurchaseOrders">
@@ -2396,7 +2422,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TailorCha__Chala__70DDC3D8">
-          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1" />
+          <End Role="TailorChalan" Type="Self.TailorChalan" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TailorChalanDetails" Type="Self.TailorChalanDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TailorChalan">
@@ -2446,7 +2474,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TailorMat__Tailo__74AE54BC">
-          <End Role="TailorChalanDetails" Type="Self.TailorChalanDetail" Multiplicity="1" />
+          <End Role="TailorChalanDetails" Type="Self.TailorChalanDetail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TailorMaterialDetails" Type="Self.TailorMaterialDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TailorChalanDetails">
@@ -2458,7 +2488,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TailorCha__Chala__17036CC0">
-          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="1" />
+          <End Role="TailorChalanSend" Type="Self.TailorChalanSend" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TailorChalanSendDetails" Type="Self.TailorChalanSendDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TailorChalanSend">
@@ -2843,6 +2875,14 @@
             <Parameter Name="CompanyId" Mode="In" Type="Int32" />
             <Parameter Name="YearId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="USP_VendorStockLedger" ReturnType="Collection(StockManagerModel.USP_VendorStockLedger_Result)">
+            <Parameter Name="ProductId" Mode="In" Type="Int32" />
+            <Parameter Name="CompanyId" Mode="In" Type="Int32" />
+            <Parameter Name="VendorId" Mode="In" Type="Int32" />
+            <Parameter Name="YearId" Mode="In" Type="Int32" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="USP_VendorWiseStock" ReturnType="Collection(StockManagerModel.USP_VendorWiseStock_Result)">
             <Parameter Name="VendorId" Mode="In" Type="Int32" />
             <Parameter Name="CompanyId" Mode="In" Type="Int32" />
@@ -2874,6 +2914,18 @@
           <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="TransactionDate" Nullable="true" />
           <Property Type="String" Name="Particular" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DocType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DocNo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DocId" Nullable="true" />
+          <Property Type="Decimal" Name="InQTY" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="OutQTY" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="USP_VendorStockLedger_Result">
+          <Property Type="Int32" Name="SequenceNo" Nullable="true" />
+          <Property Type="Int32" Name="ProductId" Nullable="true" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="TransactionDate" Nullable="true" />
           <Property Type="String" Name="DocType" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="DocNo" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="DocId" Nullable="true" />
@@ -3301,6 +3353,22 @@
                 <ScalarProperty Name="UnitName" ColumnName="UnitName" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="Particular" ColumnName="Particular" />
+                <ScalarProperty Name="DocType" ColumnName="DocType" />
+                <ScalarProperty Name="DocNo" ColumnName="DocNo" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="InQTY" ColumnName="InQTY" />
+                <ScalarProperty Name="OutQTY" ColumnName="OutQTY" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_VendorStockLedger" FunctionName="StockManagerModel.Store.USP_VendorStockLedger">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StockManagerModel.USP_VendorStockLedger_Result">
+                <ScalarProperty Name="SequenceNo" ColumnName="SequenceNo" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="DocType" ColumnName="DocType" />
                 <ScalarProperty Name="DocNo" ColumnName="DocNo" />
                 <ScalarProperty Name="DocId" ColumnName="DocId" />

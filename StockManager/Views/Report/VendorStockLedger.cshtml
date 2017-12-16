@@ -1,0 +1,78 @@
+﻿@model  List<StockManager.Models.USP_VendorStockLedger_Result>
+
+@{
+    ViewBag.Title = "Vendor Stock Ledger";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Stock Ledger - @ViewBag.VendorName For @ViewBag.Product</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Print")" class="btn btn-circle btn-default">
+                <i class="fa fa-print"></i> Print
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <table class="jTable table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    
+                    <th>
+                        Doc Type
+                    </th>
+                    <th>
+                        Doc No
+                    </th>
+                    <th>
+                        Inward Qty
+                    </th>
+                    <th>
+                        Outward Qty
+                    </th>                    
+                    <th>
+                        Closing Qty
+                    </th>
+                </tr>
+            </thead>
+            @{
+                if (Model != null && Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(item.TransactionDate?.ToString("dd-MMM-yyyy"))
+                            </td>
+                           
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DocType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DocNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InQTY)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OutQTY)
+                            </td>
+                            <td>
+                                
+                            </td>
+                            
+                        </tr>
+                    }
+                }
+            }
+        </table>
+
+    </div>

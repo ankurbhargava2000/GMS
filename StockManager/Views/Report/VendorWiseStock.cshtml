@@ -40,7 +40,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Vendors</label>
-                            @Html.DropDownList("vendor_id", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("vendor_id", null, htmlAttributes: new {Id="vendor", @class = "form-control" })
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -87,7 +87,8 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ProductName)
+                                @Html.ActionLink(item.ProductName.ToString(), "VendorStockLedger",new { productId = item.ProductId }, new { id = "reportLink"})
+                                
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.UnitName)
@@ -115,16 +116,26 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
     <script>
-
+        $(function() {
+            $('#reportLink').click(function () {
+                var dates = $('#date_range').val(); // get the textbox value
+                var vendor = $('#vendor').val();
+                var url = $(this).attr('href') + '&dates=' + dates + '&vendorid=' + vendor;
+                console.log('URL is::' + url);
+                location.href = url; // redirect
+                return false; // cancel default redirect
+            });
+        });
         $(document).ready(function () {
-                    
+
             $('#date_range').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
                 "startDate": "@ViewBag.StartYear",
                 "endDate": "@ViewBag.EndYear",
                 "minDate": "@ViewBag.StartYear",
                 "maxDate": "@ViewBag.EndYear"
-            }, function (start, end, label) {
-                console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
             });
 
         });

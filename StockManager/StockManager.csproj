@@ -299,6 +299,9 @@
     <Compile Include="Models\USP_StockLedger_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\USP_VendorStockLedger_Result.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USP_VendorWiseStock_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
@@ -751,6 +754,9 @@
     <Content Include="Views\Report\StockLedger.cshtml" />
     <Content Include="Views\Shared\_ChalanTop.cshtml" />
     <Content Include="Views\Shared\SinglePrint.cshtml" />
+    <Content Include="Views\Report\VendorStockLedger.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

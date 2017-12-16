@@ -105,6 +105,35 @@ namespace StockManager.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_StockLedger_Result>("USP_StockLedger", productIdParameter, companyIdParameter, yearIdParameter);
         }
     
+        public virtual ObjectResult<USP_VendorStockLedger_Result> USP_VendorStockLedger(Nullable<int> productId, Nullable<int> companyId, Nullable<int> vendorId, Nullable<int> yearId, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
+        {
+            var productIdParameter = productId.HasValue ?
+                new ObjectParameter("ProductId", productId) :
+                new ObjectParameter("ProductId", typeof(int));
+    
+            var companyIdParameter = companyId.HasValue ?
+                new ObjectParameter("CompanyId", companyId) :
+                new ObjectParameter("CompanyId", typeof(int));
+    
+            var vendorIdParameter = vendorId.HasValue ?
+                new ObjectParameter("VendorId", vendorId) :
+                new ObjectParameter("VendorId", typeof(int));
+    
+            var yearIdParameter = yearId.HasValue ?
+                new ObjectParameter("YearId", yearId) :
+                new ObjectParameter("YearId", typeof(int));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTime));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_VendorStockLedger_Result>("USP_VendorStockLedger", productIdParameter, companyIdParameter, vendorIdParameter, yearIdParameter, startDateParameter, endDateParameter);
+        }
+    
         public virtual ObjectResult<USP_VendorWiseStock_Result> USP_VendorWiseStock(Nullable<int> vendorId, Nullable<int> companyId, Nullable<System.DateTime> startDate, Nullable<System.DateTime> endDate)
         {
             var vendorIdParameter = vendorId.HasValue ?
