@@ -30,8 +30,8 @@ namespace StockManager.Controllers
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
 
             ViewBag.vendor_id = new SelectList(db.Vendors.Where(x => x.CompanyId == company), "Id", "VendorName");
-            ViewBag.StartYear = f.StartDate;
-            ViewBag.EndYear = f.EndDate;
+            ViewBag.StartYear = f.StartDate.ToString("dd/MM/yyyy");
+            ViewBag.EndYear = f.EndDate.ToString("dd/MM/yyyy");
 
             try
             {
