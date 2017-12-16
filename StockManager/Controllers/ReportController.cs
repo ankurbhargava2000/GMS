@@ -1,6 +1,7 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Newtonsoft.Json;
+using StockManager.Helpers;
 using StockManager.Models;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,10 @@ namespace StockManager.Controllers
             FinancialYear f = db.FinancialYears.Where(x => x.Id == fYear).FirstOrDefault();
 
             ViewBag.vendor_id = new SelectList(db.Vendors.Where(x => x.CompanyId == company), "Id", "VendorName");
-            ViewBag.StartYear = f.StartDate.ToString("dd/MM/yyyy");
-            ViewBag.EndYear = f.EndDate.ToString("dd/MM/yyyy");
+            ViewBag.StartYear = DateHelper.ConvertDate(f.StartDate);
+            ViewBag.EndYear = DateHelper.ConvertDate(f.EndDate);
+            ViewBag.MinYear = DateHelper.ConvertDate(f.StartDate);
+            ViewBag.MaxYear = DateHelper.ConvertDate(f.EndDate);
 
             try
             {
@@ -42,7 +45,8 @@ namespace StockManager.Controllers
                     {
                         start_date = Convert.ToDateTime(parts[0]);
                         end_date = Convert.ToDateTime(parts[1]);
-                        
+                        ViewBag.StartYear = start_date;
+                        ViewBag.EndYear = end_date;
                         var result = db.USP_VendorWiseStock(vendor_id, company, start_date, end_date).ToList();
                         return View(result);
                     }
@@ -55,7 +59,7 @@ namespace StockManager.Controllers
             return View(result2);
 
         }
-
+        
         public ActionResult VendorStockLedger(string dates,int productId,int vendorId)
         {
             DateTime start_date;
@@ -73,7 +77,7 @@ namespace StockManager.Controllers
                         start_date = Convert.ToDateTime(parts[0]);
                         end_date = Convert.ToDateTime(parts[1]);
 
-                        var result = db.USP_VendorStockLedger(productId, company, vendorId, fYear, f.StartDate, f.EndDate).ToList();
+                        var result = db.USP_VendorStockLedger(productId, company, vendorId, fYear, start_date, end_date).ToList();
                         ViewBag.Product = db.Products.Where(x => x.Id == productId && x.CompanyId==company).FirstOrDefault().ProductName;
                         ViewBag.VendorName = db.Vendors.Where(x => x.Id == vendorId && x.CompanyId == company).FirstOrDefault().VendorName;
                         return View(result);

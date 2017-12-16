@@ -191,6 +191,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\GMailer.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Models\CheckAuth.cs" />
@@ -754,9 +755,7 @@
     <Content Include="Views\Report\StockLedger.cshtml" />
     <Content Include="Views\Shared\_ChalanTop.cshtml" />
     <Content Include="Views\Shared\SinglePrint.cshtml" />
-    <Content Include="Views\Report\VendorStockLedger.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Views\Report\VendorStockLedger.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -87,7 +87,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.ActionLink(item.ProductName.ToString(), "VendorStockLedger",new { productId = item.ProductId }, new { id = "reportLink"})
+                                @Html.ActionLink(item.ProductName.ToString(), "VendorStockLedger",new { productId = item.ProductId }, new { @class = "reportLink"})
                                 
                             </td>
                             <td>
@@ -117,7 +117,7 @@
 
     <script>
         $(function() {
-            $('#reportLink').click(function () {
+            $(".reportLink").click(function () {
                 var dates = $('#date_range').val(); // get the textbox value
                 var vendor = $('#vendor').val();
                 var url = $(this).attr('href') + '&dates=' + dates + '&vendorid=' + vendor;
@@ -127,45 +127,11 @@
             });
         });
         $(document).ready(function () {
-            $('#date_range').daterangepicker({
-                "locale": {
-                    "format": "DD/MM/YYYY",
-                    "separator": " - ",
-                    "applyLabel": "Apply",
-                    "cancelLabel": "Cancel",
-                    "fromLabel": "From",
-                    "toLabel": "To",
-                    "customRangeLabel": "Custom",
-                    "weekLabel": "W",
-                    "daysOfWeek": [
-                        "Su",
-                        "Mo",
-                        "Tu",
-                        "We",
-                        "Th",
-                        "Fr",
-                        "Sa"
-                    ],
-                    "monthNames": [
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December"
-                    ],
-                    "firstDay": 1
-                },
+            $('#date_range').daterangepicker({                
                 "startDate": "@ViewBag.StartYear",
                 "endDate": "@ViewBag.EndYear",
-                "minDate": "@ViewBag.StartYear",
-                "maxDate": "@ViewBag.EndYear"
+                "minDate": "@ViewBag.MinYear",
+                "maxDate": "@ViewBag.MaxYear"
             }, function (start, end, label) {
                 console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
             });
