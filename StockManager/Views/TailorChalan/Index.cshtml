@@ -41,7 +41,7 @@
             {
                     <tr>
                         <td>
-                            @Html.ActionLink(Convert.ToString(item.Id), "Details", new { id = item.Id })
+                            @Html.ActionLink(Convert.ToString(item.ChalanNo), "Details", new { id = item.Id })
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Vendor.VendorName)

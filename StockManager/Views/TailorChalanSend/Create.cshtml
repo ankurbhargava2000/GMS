@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label>Invoice #</label>
+                            <label>Chalan #</label>
                             @Html.EditorFor(model => model.ChalanNo, new { htmlAttributes = new { @class = "form-control", Value = @ViewBag.ChalanNo, required = true, @id = "ChalanNo" } })
                             @Html.ValidationMessageFor(model => model.ChalanNo, "", new { @class = "text-danger ChalanNoVal" })
                         </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Purchase Date</label>
+                            <label>Chalan Date</label>
                             @Html.EditorFor(model => model.ChalanDate, new { htmlAttributes = new { @class = "form-control", Id = "ChalanDate", required = "true" } })
                             @Html.ValidationMessageFor(model => model.ChalanDate, "", new { @class = "text-danger" })
                         </div>

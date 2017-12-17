@@ -133,7 +133,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group">
+                                                <div class="form-group margin-top-10">
                                                     <div class="col-md-2">
                                                         <label>Quantity</label>
                                                     </div>
@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group">
+                                                <div class="form-group margin-top-10">
                                                     <div class="col-md-2">
                                                         <label>Labor Cost</label>
                                                     </div>
@@ -158,7 +158,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group">
+                                            <div class="form-group margin-top-20">
                                                 <div class="details form-horizontal">
                                                     <h4 class="modal-title">
                                                         Tailor Material Details
@@ -166,16 +166,38 @@
                                                     <table class="table table-responsive">
                                                         <tr class="mycontainer" id="mainrow">
                                                             <td class="col-md-3 col-xs-12">
-                                                                @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
+                                                                Product
+                                                            </td>
+                                                            <td class="col-md-3 col-xs-12">
+                                                                Quantity
+                                                            </td>
+                                                            <td class="col-md-4 col-xs-12"></td>
+                                                        </tr>
+                                                        <tr class="mycontainer" id="mainrow">
+                                                            <td class="col-md-3 col-xs-12">
+                                                                @Html.DropDownList("MaterialId", null, htmlAttributes: new { @class = "materialId", id = "materialId" })
                                                                 @Html.ValidationMessage("materialId", "", new { @class = "text-danger materialIdVal" })
                                                             </td>
                                                             <td class="col-md-3 col-xs-12">
-                                                                <input type="text" id="materialQuantity" class="materialQuantity" value="0" />  
+                                                                <input type="text" id="materialQuantity" class="materialQuantity" value="0" />
                                                                 @Html.ValidationMessage("materialQuantity", "", new { @class = "text-danger materialQuantityVal" })
                                                             </td>
                                                             <td class="col-md-4 col-xs-12">
                                                                 <input type="button" id="addNewMaterial" value="add Material" class="btn-xs btn-success" />
                                                             </td>
+                                                        </tr>
+                                                        <tr class="mycontainer" id="cloneRow" style="display:none">
+                                                            <td class="col-md-3 col-xs-12">
+                                                                @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "materialId" })
+                                                                @Html.ValidationMessage("materialId", "", new { @class = "text-danger materialIdVal" })
+                                                                <input type="hidden" class="Id" value="" />
+                                                                <input type="hidden" class="TailorChalanDetailsId" value="" />
+                                                            </td>
+                                                            <td class="col-md-3 col-xs-12">
+                                                                <input type="text" class="materialQuantity" value="0" />
+                                                                @Html.ValidationMessage("materialQuantity", "", new { @class = "text-danger materialQuantityVal" })
+                                                            </td>
+                                                            <td class="remove"></td>
                                                         </tr>
                                                     </table>
                                                     <div id="orderItems">
@@ -237,13 +259,19 @@
             $("#addNewMaterial").click(function () {
                 var isAllValid = validatePopup();
                 if (isAllValid) {
-                    var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
-                    $('#materialId', $newRow).val($('#materialId').val());
-                    //$('.materialId', $newRow).text($('#materialId').text());
-                    $('#materialQuantity', $newRow).val($('#materialQuantity').val());
-                    $('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
-                    //$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
+                    //var $newRow = $('#mainrow').clone(true, true).removeAttr('id');
+                    //$('#materialId', $newRow).val($('#materialId').val());
+                    ////$('.materialId', $newRow).text($('#materialId').text());
+                    //$('#materialQuantity', $newRow).val($('#materialQuantity').val());
+                    //$('#addMaterial', $newRow).val('Remove').removeClass('btn-success').addClass('btn-danger');
+                    ////$('#materialId,#addMaterial,#materialQuantity', $newRow).removeAttr('id');
+                    //$('#tailorMaterialDetails').append($newRow);
+                    var $newRow = $('#cloneRow').clone(true, true).removeAttr('id').css('display', 'inline');
+                    $('.materialId', $newRow).removeAttr('id').val($('#materialId').val());
+                    $('.materialQuantity', $newRow).removeAttr('id').val($('#materialQuantity').val());                    
+                    $('.remove', $newRow).append('<button type="button" class="btn btn-danger btn-xs removeItem" title="Delete" ><i class="fa fa-trash-o"></i></button>');
                     $('#tailorMaterialDetails').append($newRow);
+                    $('#materialQuantity').val('');
                 }
             });
 
@@ -276,6 +304,10 @@
 
             //remove button click event
             $('#tailorChalanItems').on('click', '.remove', function () {
+                $(this).parents('tr').remove();
+            });
+
+            $('#tailorMaterialDetails').on('click', '.removeItem', function () {
                 $(this).parents('tr').remove();
             });
 
