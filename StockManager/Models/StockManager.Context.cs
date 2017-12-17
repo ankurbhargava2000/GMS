@@ -27,6 +27,9 @@ namespace StockManager.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<acc_group> acc_group { get; set; }
+        public virtual DbSet<acc_ledger> acc_ledger { get; set; }
+        public virtual DbSet<acc_transactions> acc_transactions { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<FinancialYear> FinancialYears { get; set; }

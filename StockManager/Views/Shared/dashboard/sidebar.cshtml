@@ -122,6 +122,25 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="nav-item start @Html.IsSelected(controller: "AccGroup")">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-line-chart fa-fw"></i>
+                    <span class="title">Accounting</span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "AccGroup")" class="nav-link ">
+                            <span class="title">Groups</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="@Url.Action("Index", "AccLedger")" class="nav-link ">
+                            <span class="title">Ledgers</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

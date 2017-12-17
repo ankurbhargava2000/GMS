@@ -174,7 +174,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccLedgerController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\AccGroupController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\InvoicesController.cs" />
@@ -194,6 +196,15 @@
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\GMailer.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
+    <Compile Include="Models\acc_group.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acc_ledger.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\acc_transactions.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CheckAuth.cs" />
     <Compile Include="Models\Company.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
@@ -756,6 +767,16 @@
     <Content Include="Views\Shared\_ChalanTop.cshtml" />
     <Content Include="Views\Shared\SinglePrint.cshtml" />
     <Content Include="Views\Report\VendorStockLedger.cshtml" />
+    <Content Include="Views\AccGroup\Create.cshtml" />
+    <Content Include="Views\AccGroup\Delete.cshtml" />
+    <Content Include="Views\AccGroup\Details.cshtml" />
+    <Content Include="Views\AccGroup\Edit.cshtml" />
+    <Content Include="Views\AccGroup\Index.cshtml" />
+    <Content Include="Views\AccLedger\Create.cshtml" />
+    <Content Include="Views\AccLedger\Delete.cshtml" />
+    <Content Include="Views\AccLedger\Details.cshtml" />
+    <Content Include="Views\AccLedger\Edit.cshtml" />
+    <Content Include="Views\AccLedger\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

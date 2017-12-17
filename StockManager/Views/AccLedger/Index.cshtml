@@ -1,0 +1,62 @@
+﻿@model IEnumerable<StockManager.Models.acc_ledger>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="portlet light">
+    <div class="portlet-title">
+        <div class="caption font-red-sunglo">
+            <i class="icon-speech font-red-sunglo"></i>
+            <span class="caption-subject bold uppercase">Account Ledgers</span>
+        </div>
+        <div class="actions">
+            <a href="@Url.Action("Create")" class="btn btn-circle btn-default">
+                <i class="fa fa-plus"></i> New
+            </a>
+            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title="">
+            </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+
+        <table class="jTable table-bordered table-hover table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Parent Group
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(Convert.ToString(item.name), "Details", new { id = item.id })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.acc_group.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.description)
+                        </td>
+                        
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning btn-xs" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { onclick = "return confirm('Are you sure you wish to delete this Vendor?');", @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -5,6 +5,40 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="StockManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="acc_group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="base_group" Type="int" />
+          <Property Name="company_id" Type="int" />
+          <Property Name="group_type" Type="varchar" MaxLength="50" />
+          <Property Name="is_base_group" Type="bit" />
+        </EntityType>
+        <EntityType Name="acc_ledger">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="group_id" Type="int" />
+          <Property Name="company_id" Type="int" />
+        </EntityType>
+        <EntityType Name="acc_transactions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="voucher_type" Type="int" Nullable="false" />
+          <Property Name="voucher_no" Type="int" />
+          <Property Name="voucher_date" Type="date" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+          <Property Name="company_id" Type="int" />
+          <Property Name="financial_year" Type="int" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
@@ -873,6 +907,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_acc_group_acc_group">
+          <End Role="acc_group" Type="Self.acc_group" Multiplicity="0..1" />
+          <End Role="acc_group1" Type="Self.acc_group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acc_group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="acc_group1">
+              <PropertyRef Name="base_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acc_group_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="acc_group" Type="Self.acc_group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="acc_group">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acc_ledger_acc_group">
+          <End Role="acc_group" Type="Self.acc_group" Multiplicity="0..1" />
+          <End Role="acc_ledger" Type="Self.acc_ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acc_group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="acc_ledger">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acc_ledger_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="acc_ledger" Type="Self.acc_ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="acc_ledger">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Company_FinancialYear">
           <End Role="FinancialYear" Type="Self.FinancialYear" Multiplicity="0..1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
@@ -1133,6 +1215,9 @@
           <Parameter Name="EndDate" Type="date" Mode="In" />
         </Function>
         <EntityContainer Name="StockManagerModelStoreContainer">
+          <EntitySet Name="acc_group" EntityType="Self.acc_group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="acc_ledger" EntityType="Self.acc_ledger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="acc_transactions" EntityType="Self.acc_transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FinancialYear" EntityType="Self.FinancialYear" Schema="dbo" store:Type="Tables" />
@@ -1319,6 +1404,22 @@
             <End Role="VendorType" EntitySet="VendorType" />
             <End Role="Vendor" EntitySet="Vendor" />
           </AssociationSet>
+          <AssociationSet Name="FK_acc_group_acc_group" Association="Self.FK_acc_group_acc_group">
+            <End Role="acc_group" EntitySet="acc_group" />
+            <End Role="acc_group1" EntitySet="acc_group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acc_group_Company" Association="Self.FK_acc_group_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="acc_group" EntitySet="acc_group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acc_ledger_acc_group" Association="Self.FK_acc_ledger_acc_group">
+            <End Role="acc_group" EntitySet="acc_group" />
+            <End Role="acc_ledger" EntitySet="acc_ledger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acc_ledger_Company" Association="Self.FK_acc_ledger_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="acc_ledger" EntitySet="acc_ledger" />
+          </AssociationSet>
           <AssociationSet Name="FK_Company_FinancialYear" Association="Self.FK_Company_FinancialYear">
             <End Role="FinancialYear" EntitySet="FinancialYear" />
             <End Role="Company" EntitySet="Company" />
@@ -1393,6 +1494,46 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="acc_group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="base_group" Type="Int32" />
+          <Property Name="company_id" Type="Int32" />
+          <Property Name="group_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="is_base_group" Type="Boolean" />
+          <NavigationProperty Name="acc_group1" Relationship="Self.FK_acc_group_acc_group" FromRole="acc_group" ToRole="acc_group1" />
+          <NavigationProperty Name="acc_group2" Relationship="Self.FK_acc_group_acc_group" FromRole="acc_group1" ToRole="acc_group" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_acc_group_Company" FromRole="acc_group" ToRole="Company" />
+          <NavigationProperty Name="acc_ledger" Relationship="Self.FK_acc_ledger_acc_group" FromRole="acc_group" ToRole="acc_ledger" />
+        </EntityType>
+        <EntityType Name="acc_ledger">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="group_id" Type="Int32" />
+          <Property Name="company_id" Type="Int32" />
+          <NavigationProperty Name="acc_group" Relationship="Self.FK_acc_ledger_acc_group" FromRole="acc_ledger" ToRole="acc_group" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_acc_ledger_Company" FromRole="acc_ledger" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="acc_transactions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="voucher_type" Type="Int32" Nullable="false" />
+          <Property Name="voucher_no" Type="Int32" />
+          <Property Name="voucher_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="company_id" Type="Int32" />
+          <Property Name="financial_year" Type="Int32" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
@@ -1409,6 +1550,8 @@
           <Property Name="PanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="GSTNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TenantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="acc_group" Relationship="Self.FK_acc_group_Company" FromRole="Company" ToRole="acc_group" />
+          <NavigationProperty Name="acc_ledger" Relationship="Self.FK_acc_ledger_Company" FromRole="Company" ToRole="acc_ledger" />
           <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Compan__3587F3E0" FromRole="Company" ToRole="Customer" />
           <NavigationProperty Name="InvoiceMasters" Relationship="Self.FK__InvoiceMa__Compa__3493CFA7" FromRole="Company" ToRole="InvoiceMaster" />
           <NavigationProperty Name="PrinterChalans" Relationship="Self.FK__PrinterCh__Compa__339FAB6E" FromRole="Company" ToRole="PrinterChalan" />
@@ -1855,6 +1998,54 @@
           <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Vendors" Relationship="Self.FK__Vendor__VendorTy__797309D9" FromRole="VendorType" ToRole="Vendor" />
         </EntityType>
+        <Association Name="FK_acc_group_acc_group">
+          <End Role="acc_group" Type="Self.acc_group" Multiplicity="0..1" />
+          <End Role="acc_group1" Type="Self.acc_group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acc_group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="acc_group1">
+              <PropertyRef Name="base_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acc_group_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="acc_group" Type="Self.acc_group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="acc_group">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acc_ledger_acc_group">
+          <End Role="acc_group" Type="Self.acc_group" Multiplicity="0..1" />
+          <End Role="acc_ledger" Type="Self.acc_ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="acc_group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="acc_ledger">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acc_ledger_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="acc_ledger" Type="Self.acc_ledger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="acc_ledger">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Customer__Compan__3587F3E0">
           <End Role="Company" Type="Self.Company" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2606,6 +2797,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="StockManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="acc_group" EntityType="Self.acc_group" />
+          <EntitySet Name="acc_ledger" EntityType="Self.acc_ledger" />
+          <EntitySet Name="acc_transactions" EntityType="Self.acc_transactions" />
           <EntitySet Name="Companies" EntityType="Self.Company" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="FinancialYears" EntityType="Self.FinancialYear" />
@@ -2632,6 +2826,22 @@
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="VendorTypes" EntityType="Self.VendorType" />
+          <AssociationSet Name="FK_acc_group_acc_group" Association="Self.FK_acc_group_acc_group">
+            <End Role="acc_group" EntitySet="acc_group" />
+            <End Role="acc_group1" EntitySet="acc_group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acc_group_Company" Association="Self.FK_acc_group_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="acc_group" EntitySet="acc_group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acc_ledger_acc_group" Association="Self.FK_acc_ledger_acc_group">
+            <End Role="acc_group" EntitySet="acc_group" />
+            <End Role="acc_ledger" EntitySet="acc_ledger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acc_ledger_Company" Association="Self.FK_acc_ledger_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="acc_ledger" EntitySet="acc_ledger" />
+          </AssociationSet>
           <AssociationSet Name="FK__Customer__Compan__3587F3E0" Association="Self.FK__Customer__Compan__3587F3E0">
             <End Role="Company" EntitySet="Companies" />
             <End Role="Customer" EntitySet="Customers" />
@@ -2945,6 +3155,43 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="StockManagerModelStoreContainer" CdmEntityContainer="StockManagerEntities">
+          <EntitySetMapping Name="acc_group">
+            <EntityTypeMapping TypeName="StockManagerModel.acc_group">
+              <MappingFragment StoreEntitySet="acc_group">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="base_group" ColumnName="base_group" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="group_type" ColumnName="group_type" />
+                <ScalarProperty Name="is_base_group" ColumnName="is_base_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="acc_ledger">
+            <EntityTypeMapping TypeName="StockManagerModel.acc_ledger">
+              <MappingFragment StoreEntitySet="acc_ledger">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="acc_transactions">
+            <EntityTypeMapping TypeName="StockManagerModel.acc_transactions">
+              <MappingFragment StoreEntitySet="acc_transactions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="voucher_type" ColumnName="voucher_type" />
+                <ScalarProperty Name="voucher_no" ColumnName="voucher_no" />
+                <ScalarProperty Name="voucher_date" ColumnName="voucher_date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="financial_year" ColumnName="financial_year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="StockManagerModel.Company">
               <MappingFragment StoreEntitySet="Company">
