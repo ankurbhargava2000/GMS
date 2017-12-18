@@ -30,9 +30,6 @@ namespace StockManager.Models
         public Nullable<int> created_by { get; set; }
         public Nullable<int> financial_year { get; set; }
         public int CompanyId { get; set; }
-        public Nullable<decimal> GrossCharges { get; set; }
-        public Nullable<decimal> Tax { get; set; }
-        public Nullable<decimal> NetCharges { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual FinancialYear FinancialYear { get; set; }

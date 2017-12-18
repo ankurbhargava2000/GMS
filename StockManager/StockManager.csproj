@@ -302,6 +302,9 @@
     <Compile Include="Models\UserRole.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\USP_GetStockAvailableQTY1_Result.cs">
+      <DependentUpon>StockManager.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USP_getStockAvailableQTY_Result.cs">
       <DependentUpon>StockManager.tt</DependentUpon>
     </Compile>
