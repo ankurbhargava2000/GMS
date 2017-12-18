@@ -4,13 +4,23 @@
     ViewBag.Title = "Stock Summary Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section css{
+    <style>
+        table.stable thead th {
+            white-space: normal !important;
+            max-width: 50px !important;
+        }
+    </style>
+}
+
 <div class="portlet light">
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
             <i class="icon-speech font-red-sunglo"></i>
             <span class="caption-subject bold uppercase">Stock Summary</span>
         </div>
-        <div class="actions">            
+        <div class="actions">
             <a href="@Url.Action("Print")" class="btn btn-circle btn-default">
                 <i class="fa fa-print"></i> Print
             </a>
@@ -19,44 +29,46 @@
         </div>
     </div>
     <div class="portlet-body">
-        <table class="jTable table table-striped table-bordered table-hover">
+
+        <table class="stable table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th>
                         Product Name
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Unit
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Opening Stock
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Total Purchase
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Issued to Printer
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Shrinkage
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Received from Printer
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Issued to Fabricator
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Received from Fabricator
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Total Sales
                     </th>
-                    <th style="width: 8%;word-wrap:break-word;">
+                    <th>
                         Stock In Hand
                     </th>
                 </tr>
             </thead>
+            <tbody>
                 @{
                     if (Model != null && Model != null)
                     {
@@ -64,7 +76,8 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.ActionLink(item.ProductName.ToString(), "StockLedger", new { productId = item.Id })
+                                    @*@Html.ActionLink(item.ProductName.ToString(), "StockLedger", new { productId = item.Id })*@
+                                    ASDF
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Unit)
@@ -101,8 +114,18 @@
                         }
                     }
                 }
+            </tbody>
         </table>
+
     </div>
 </div>
 
-
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.stable').DataTable({
+                autoWidth: false,
+            });
+        });
+    </script>
+}
