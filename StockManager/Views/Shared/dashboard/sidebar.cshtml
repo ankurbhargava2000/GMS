@@ -10,24 +10,33 @@
                     <span class="title">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item start @Html.IsSelected(controller: "Vendors")">
-                <a href="@Url.Action("Index", "Vendors")" class="nav-link nav-toggle">
-                    <i class="fa fa-industry fa-fw"></i>
-                    <span class="title">Vendor</span>
+            <li class="nav-item start">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="fa fa-line-chart fa-fw"></i>
+                    <span class="title">Master</span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="nav-item start @Html.IsSelected(controller: "Vendors")">
+                        <a href="@Url.Action("Index", "Vendors")" class="nav-link nav-toggle">
+                            <i class="fa fa-industry fa-fw"></i>
+                            <span class="title">Vendor</span>
+                        </a>
+                    </li>
+                    <li class="nav-item start @Html.IsSelected(controller: "Products")">
+                        <a href="@Url.Action("Index", "Products")" class="nav-link nav-toggle">
+                            <i class="fa fa-cube fa-fw"></i>
+                            <span class="title">Product</span>
+                        </a>
+                    </li>
+                    <li class="nav-item start @Html.IsSelected(controller: "Customers")">
+                        <a href="@Url.Action("Index", "Customers")" class="nav-link nav-toggle">
+                            <i class="fa fa-user fa-fw"></i>
+                            <span class="title">Customer</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="nav-item start @Html.IsSelected(controller: "Products")">
-                <a href="@Url.Action("Index", "Products")" class="nav-link nav-toggle">
-                    <i class="fa fa-cube fa-fw"></i>
-                    <span class="title">Product</span>
-                </a>
-            </li>
-            <li class="nav-item start @Html.IsSelected(controller: "Customers")">
-                <a href="@Url.Action("Index", "Customers")" class="nav-link nav-toggle">
-                    <i class="fa fa-user fa-fw"></i>
-                    <span class="title">Customer</span>
-                </a>
-            </li>
+            
             <li class="nav-item start @Html.IsSelected(controller: "PurchaseOrders")">
                 <a href="@Url.Action("Index", "PurchaseOrders")" class="nav-link nav-toggle">
                     <i class="fa fa-shopping-cart fa-fw"></i>
