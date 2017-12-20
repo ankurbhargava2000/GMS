@@ -10,7 +10,7 @@ using StockManager.Models;
 using PagedList;
 namespace StockManager.Controllers
 {
-    [CheckAuth]
+    [Authorize]
     public class PrintJobWorkReceivedController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();

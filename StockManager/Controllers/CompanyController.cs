@@ -11,7 +11,7 @@ using PagedList;
 
 namespace StockManager.Controllers
 {
-    [CheckAuth]
+    [Authorize]
     public class CompanyController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();

@@ -13,7 +13,7 @@ namespace StockManager.Controllers
 
         private StockManagerEntities db = new StockManagerEntities();
 
-        [CheckAuth]
+        [Authorize]
         public ActionResult Index()
         {            
             try

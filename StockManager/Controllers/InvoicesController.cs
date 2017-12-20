@@ -10,7 +10,7 @@ using Rotativa;
 
 namespace StockManager.Controllers
 {
-    [CheckAuth]
+    [Authorize]
     public class InvoicesController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();

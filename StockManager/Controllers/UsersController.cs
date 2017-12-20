@@ -16,9 +16,9 @@ namespace StockManager.Controllers
 {
     public class UsersController : Controller
     {
-       private StockManagerEntities db = new StockManagerEntities();
+        private StockManagerEntities db = new StockManagerEntities();
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Index(int? page)
         {
             var TenantId = Convert.ToInt32(Session["TenantID"]);
@@ -26,7 +26,7 @@ namespace StockManager.Controllers
             return View(users);
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,14 +41,14 @@ namespace StockManager.Controllers
             return View(user);
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             ViewBag.RoleId = new SelectList(db.UserRoles, "Id", "RoleName");
             return View();
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserId,UserName,Password,Email,Mobile,Phone,TenantId,RoleId")] User user)
@@ -64,7 +64,7 @@ namespace StockManager.Controllers
             return View(user);
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,7 +80,7 @@ namespace StockManager.Controllers
             return View(user);
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserId,UserName,Password,Email,Mobile,Phone,TenantId,RoleId")] User user)
@@ -99,7 +99,7 @@ namespace StockManager.Controllers
             return View(user);
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -114,7 +114,7 @@ namespace StockManager.Controllers
             return View(user);
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -127,13 +127,24 @@ namespace StockManager.Controllers
 
         public ActionResult Login(string returnURL)
         {
+
+            //string cookieName = FormsAuthentication.FormsCookieName;
+            //HttpCookie authCookie = HttpContext.Request.Cookies.Get(cookieName);
+
+            //if ( authCookie != null )
+            //{
+            //    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            //    string UserName = ticket.Name;
+            //}            
+
             return View(new LoginVM() { return_url = returnURL });
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginVM login)
-        {            
+        {
             try
             {
                 if (ModelState.IsValid)
@@ -141,15 +152,15 @@ namespace StockManager.Controllers
                     string password = Hash(login.password.Trim());
 
                     User user = db.Users
-                        .Where(x => x.UserName == login.username.Trim())
-                        .FirstOrDefault();
+                    .Where(x => x.UserName == login.username.Trim())
+                    .FirstOrDefault();
 
                     if (user == null)
                         return HttpNotFound();
 
                     if (user.Password == password)
                     {
-                        SignInRemember(login.username, login.remember_me);
+                        SignInRemember(login.username, user.UserRole.RoleName, login.remember_me);
 
                         Session["UserID"] = user.UserId;
                         Session["TenantID"] = user.TenantId;
@@ -170,7 +181,7 @@ namespace StockManager.Controllers
                             Session["YearStartDate"] = company.Company.FinancialYear.StartDate.ToString("MM/dd/yyyy");
                             Session["YearEndDate"] = company.Company.FinancialYear.EndDate.ToString("MM/dd/yyyy");
                             Session["CompanyName"] = company.Company.Name;
-                            
+
                         }
                         return RedirectToLocal(login.return_url);
                     }
@@ -183,20 +194,42 @@ namespace StockManager.Controllers
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
             }
             return View(login);
         }
-        
-        private void SignInRemember(string userName, bool isPersistent = false)
+
+        private void SignInRemember(string userName, string role, bool isPersistent = false)
         {
             // Clear any lingering authencation data
             FormsAuthentication.SignOut();
 
-            // Write the authentication cookie
             FormsAuthentication.SetAuthCookie(userName, isPersistent);
+
+            var authTicket = new FormsAuthenticationTicket(
+            1,
+            userName,
+            DateTime.Now,
+            DateTime.Now.AddDays(30),
+            isPersistent,
+            role,
+            "/"
+            );
+
+            //encrypt the ticket and add it to a cookie
+            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket));
+
+            if ( authTicket.IsPersistent)
+            {
+                cookie.Expires = authTicket.Expiration;
+            }
+
+            Response.Cookies.Add(cookie);
+
+            // Write the authentication cookie
+
         }
 
         private void EnsureLoggedOut()
@@ -205,7 +238,7 @@ namespace StockManager.Controllers
             if (Request.IsAuthenticated)
                 Logout();
         }
-        
+
         public ActionResult Logout()
         {
             try
@@ -265,7 +298,7 @@ namespace StockManager.Controllers
                 string token = Guid.NewGuid().ToString();
 
                 var url = ResolveServerUrl(VirtualPathUtility.ToAbsolute("/Users/ResetPassword"), false)
-                     + "?token=" + token;
+                + "?token=" + token;
                 var message = "<a href='" + url + "'>Click here to reset your password.</a>";
 
                 var user = db.Users.Where(x => x.Email == email).FirstOrDefault();
@@ -344,13 +377,13 @@ namespace StockManager.Controllers
             }
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public JsonResult IsUserExists(string UserName)
         {
             return Json(!db.Users.Any(x => x.UserName == UserName), JsonRequestBehavior.AllowGet);
         }
 
-        [CheckAuth(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public JsonResult IsEmailExists(string Email)
         {
             return Json(!db.Users.Any(x => x.Email == Email), JsonRequestBehavior.AllowGet);
@@ -364,7 +397,7 @@ namespace StockManager.Controllers
             string newUrl = serverUrl;
             Uri originalUri = System.Web.HttpContext.Current.Request.Url;
             newUrl = (forceHttps ? "https" : originalUri.Scheme) +
-                "://" + originalUri.Authority + newUrl;
+            "://" + originalUri.Authority + newUrl;
             return newUrl;
         }
 
@@ -373,19 +406,19 @@ namespace StockManager.Controllers
             return View();
         }
 
-        [CheckAuth]
+        [Authorize]
         public ActionResult profile()
         {
             var user_id = Session["UserID"] as int?;
 
             var user = db.Users.Find(user_id);
-            
+
             return View(user);
 
         }
 
         [HttpPost]
-        [CheckAuth]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult profile(string btnUpdateProfile, string btnUpdateEmail, string btnUpdatePassword, User user)
         {
@@ -393,8 +426,8 @@ namespace StockManager.Controllers
             var user_id = Session["UserID"] as int?;
 
             var db_user = db.Users.Find(user_id);
-            
-            if ( db_user.Email != user.Email )
+
+            if (db_user.Email != user.Email)
             {
                 if (db.Users.Where(x => x.Email == user.Email).FirstOrDefault() == null)
                 {
@@ -402,11 +435,11 @@ namespace StockManager.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("User.Email", "This email address is already associated with a different account.");        
+                    ModelState.AddModelError("User.Email", "This email address is already associated with a different account.");
                 }
             }
 
-            if (db_user.UserName!= user.UserName)
+            if (db_user.UserName != user.UserName)
             {
                 if (db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault() == null)
                 {
@@ -433,7 +466,7 @@ namespace StockManager.Controllers
             }
 
             return View(user);
-            
+
         }
 
     }

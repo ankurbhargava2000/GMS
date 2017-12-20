@@ -11,7 +11,7 @@ using System.Data.Entity.Validation;
 
 namespace StockManager.Controllers
 {
-    [CheckAuth]
+    [Authorize]
     public class TailorChalanController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();

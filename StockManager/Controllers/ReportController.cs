@@ -14,7 +14,7 @@ using System.Web.Script.Serialization;
 
 namespace StockManager.Controllers
 {
-    [CheckAuth]
+    [Authorize]
     public class ReportController : Controller
     {
         private StockManagerEntities db = new StockManagerEntities();
