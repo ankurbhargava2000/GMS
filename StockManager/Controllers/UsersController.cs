@@ -241,7 +241,7 @@ namespace StockManager.Controllers
                     return Redirect(returnURL);
 
                 // If we cannot verify if the url is local to our host we redirect to a default location
-                return RedirectToAction("Index", "PurchaseOrders");
+                return RedirectToAction("Index", "dashboard");
             }
             catch
             {
