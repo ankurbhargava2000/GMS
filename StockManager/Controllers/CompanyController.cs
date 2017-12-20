@@ -58,7 +58,9 @@ namespace StockManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Companies.Add(vendor);
+                var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+                vendor.CurrentFinYear = year_id;
+                db.Companies.Add(vendor);                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -93,6 +95,8 @@ namespace StockManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                var year_id = Convert.ToInt32(Session["FinancialYearID"]);
+                vendor.CurrentFinYear = year_id;
                 db.Entry(vendor).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -147,7 +151,7 @@ namespace StockManager.Controllers
                 .Where(x => x.CompanyId == company_id)
                 .ToList();
 
-            var users = db.Users.ToList();
+            var users = db.Users.Where(x => x.TenantId == TenantId).ToList();
             var addUser = new List<AddUser>();
 
             foreach (var item in users)
